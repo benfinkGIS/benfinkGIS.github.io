@@ -4,12 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tucson Golf Course Water Map | Fink Geospatial</title>
-  <meta name="description" content="Placeholder page for an interactive map exploring water use at golf courses in the Tucson area.">
+  <meta name="description" content="Interactive satellite map of the active golf courses in the Tucson area, the first layer of a project exploring golf course water use.">
   <meta name="theme-color" content="#008080">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Tucson Golf Course Water Map | Fink Geospatial">
   <meta property="og:url" content="https://finkgeo.com/tucson-golf-water/">
   <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
@@ -25,7 +26,7 @@
     </header>
 
     <div class="ticker" role="note">
-      <p>*** Tucson Golf Course Water Map: under construction *** Check back soon ***</p>
+      <p>*** Tucson Golf Course Water Map: now showing active course boundaries on satellite imagery *** Water-use layers coming soon ***</p>
     </div>
 
     <div class="layout">
@@ -59,41 +60,58 @@
             <h1>Tucson Golf Course Water Map</h1>
 
             <div class="stripe" aria-hidden="true"></div>
-            <p class="construction">UNDER CONSTRUCTION. This page is a placeholder while the project is built.</p>
-            <p>An interactive map exploring water use at golf courses in the Tucson area.</p>
+            <p class="construction">WORK IN PROGRESS. Step one is done: the footprint of every active course, on satellite imagery.</p>
+            <p>An interactive map exploring water use at golf courses in the Tucson area. Click a course on the map, or pick one from the list below it, for details.</p>
 
-            <!-- TODO: replace this placeholder viewer with the embedded map (iframe or script) when ready. -->
             <div class="viewer">
               <div class="titlebar">
                 <img src="/assets/globe.svg" alt="" width="16" height="16">
-                <span class="t">Water Map Viewer</span>
+                <span class="t">Water Map Viewer: Active Course Footprints</span>
                 <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
               </div>
               <div class="toolbar">
-                <button type="button" disabled>Zoom In</button>
-                <button type="button" disabled>Zoom Out</button>
-                <button type="button" disabled>Pan</button>
-                <button type="button" disabled>Identify</button>
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Full Extent</button>
+                <button type="button" id="tb-labels" aria-pressed="true">Labels</button>
               </div>
-              <div class="canvas">
-                <div class="dialog" role="status">
-                  <div class="titlebar"><span class="t">Map Viewer</span></div>
-                  <div class="body"><p><strong>No data loaded.</strong><br>The Tucson golf course water map will appear here.</p></div>
-                </div>
+              <div class="map-canvas">
+                <div id="map" role="region" aria-label="Satellite map of golf courses in the Tucson area"></div>
+                <p id="map-error" class="map-error" role="alert" hidden></p>
+                <noscript><p class="map-error">The map needs JavaScript. The list of courses below works without it.</p></noscript>
               </div>
-              <div class="statusbar" aria-hidden="true"><span>Tucson, AZ</span><span>32.2226&deg; N, 110.9747&deg; W</span></div>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">32.2226&deg; N, 110.9747&deg; W</span></div>
             </div>
+
+            <hr>
+            <h2 class="sec">Courses on the map (<span data-course-count>&hellip;</span>)</h2>
+            <p>Acres are the area of each mapped boundary, not a measure of irrigated turf. Holes and access appear only where OpenStreetMap records them; a blank access does not mean a course is public.</p>
+            <div class="table-wrap">
+              <table class="grid courses">
+                <thead><tr><th scope="col">Course</th><th scope="col" class="num">Acres</th><th scope="col">Holes</th><th scope="col">Access</th></tr></thead>
+                <tbody id="course-rows"><tr><td colspan="4">Loading&hellip;</td></tr></tbody>
+              </table>
+            </div>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>Course boundaries:</strong> OpenStreetMap (<code>leisure=golf_course</code>), pulled 9 November 2026 and saved with the site, so the map does not depend on a live query. &copy; OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">ODbL</a>.</li>
+              <li><strong>Imagery and labels:</strong> Esri World Imagery, with Esri road and place-name layers on top (switch them off with the Labels button).</li>
+              <li><strong>Study area:</strong> courses within about 32 miles of downtown Tucson, which takes in Oro Valley, Marana, Vail, Green Valley, Sahuarita, and the SaddleBrooke communities. Tubac and San Manuel fall outside it.</li>
+              <li><strong>What counts as active:</strong> OpenStreetMap does not flag closed courses in this area, so closures were checked against news reports. Removed as closed: Del Lago Golf Club in Vail (closed August 2026), Quail Canyon Golf Course (closed, rezoned for housing), and the Blanchard course at Davis-Monthan Air Force Base (closed 2018). Other courses are assumed open if nothing turned up saying otherwise, so a recent closure could still be on the map.</li>
+              <li><strong>Known gaps:</strong> the SaddleBrooke Ranch boundary in OpenStreetMap covers only part of the course (19 acres for 18 holes), so it is flagged. I checked that one against the imagery; the other 40 outlines were not checked one by one. Where a resort has several courses, each is drawn separately.</li>
+            </ul>
 
             <hr>
             <h2 class="sec">Project checklist</h2>
             <ul class="checklist">
+              <li class="done">Course boundaries on satellite imagery</li>
               <li>Project overview</li>
-              <li>Interactive map</li>
-              <li>Data sources and methods</li>
+              <li>Water-use layers on the map</li>
               <li>Findings and takeaways</li>
             </ul>
-            <hr>
-            <p>Content, data sources, and the map itself are still to come. Check back soon, or <a href="/#contact">get in touch</a>.</p>
+            <p>More layers are still to come. Check back soon, or <a href="/#contact">get in touch</a>.</p>
           </div>
         </section>
       </main>
@@ -108,5 +126,8 @@
       <p>&copy; 2026 Fink Geospatial &bull; Last updated: 9 November 2026</p>
     </footer>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/tucson-golf-water/map.js"></script>
 </body>
 </html>
