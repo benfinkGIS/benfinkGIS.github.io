@@ -24,7 +24,6 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 
 - Replace the About placeholder text in `index.html` (search for `TODO`).
 - Tucson golf map: water use is in popups and the table only. Next: map layers (for example colour by supply, size by use).
-- Tucson golf map: the SaddleBrooke Ranch outline in OpenStreetMap is incomplete (flagged on the map). Fix it in OSM, or digitize it by hand, then refresh the data.
 - Bump the "Last updated" date in each page footer when content changes.
 
 ## Refreshing the golf course data
@@ -33,8 +32,8 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 py tools/build_courses.py
 ```
 
-This queries OpenStreetMap (Overpass API, which is sometimes busy; the script retries) and rewrites
-`tucson-golf-water/data/courses.geojson`. OpenStreetMap does not mark closed courses here, so
+This queries OpenStreetMap (Overpass API, which is sometimes busy; the script retries) for golf courses
+inside Pima County and rewrites `tucson-golf-water/data/courses.geojson`. OpenStreetMap does not mark closed courses here, so
 the script keeps a hand-maintained list of closed courses to leave out (`EXCLUDE_CLOSED`). Re-check
 that list on each refresh, and update the "Data sources and methods" text on the page if it changes.
 

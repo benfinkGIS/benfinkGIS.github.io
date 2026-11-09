@@ -3,10 +3,18 @@
 
 Usage (from the repo root):
     py tools/build_courses.py                 # query Overpass, write the GeoJSON
-    py tools/build_courses.py --cache raw.json  # reuse a saved Overpass response
+    py tools/build_courses.py --cache raw.json  # reuse a response saved from the query below
 
 Needs Python 3 and shapely (pip install shapely). Not part of the site itself:
 the site only serves the GeoJSON this script writes.
+
+Study area
+----------
+Golf courses inside Pima County, Arizona (the query is limited to OpenStreetMap's
+Pima County boundary), and within RADIUS_MI of downtown Tucson. The radius only
+matters for Ajo, a Pima County course about 110 miles west. Courses in neighbouring
+counties (the SaddleBrooke communities in Pinal County, Tubac, San Manuel) are not
+fetched at all.
 
 What "active" means here
 ------------------------
@@ -34,9 +42,9 @@ from shapely.geometry.polygon import orient
 from shapely.ops import polygonize, unary_union
 
 # ---- study area ---------------------------------------------------------
+COUNTY = "Pima County"                 # OSM admin_level=6 boundary the query is limited to
 CENTER = (-110.9747, 32.2226)          # downtown Tucson (lon, lat)
 RADIUS_MI = 32                         # "Tucson area" = within ~32 miles of downtown
-BBOX = (31.6, -111.6, 32.8, -110.3)    # S, W, N, E: wide net; RADIUS_MI does the real cut
 
 OVERPASS = [
     "https://overpass-api.de/api/interpreter",
@@ -62,9 +70,9 @@ EXCLUDE_TECHNICAL = {
     "way/1108352200": "0.2-acre unnamed sliver next to the closed Del Lago course.",
     "node/1338978085": "Point feature for the JW Marriott resort; the Starr Pass polygon is used instead.",
 }
-# Boundaries checked against the imagery and found wanting; shown in the popup.
+# Boundaries checked against the imagery and found wanting; shown in the popup and flagged
+# in the course list. Empty right now: the only one found (SaddleBrooke Ranch) is in Pinal County.
 QUALITY_NOTES = {
-    "relation/3548873": "OpenStreetMap outlines only part of this course (checked against the imagery, Nov 2026).",
 }
 # Unnamed polygons that belong to a named course: {child: parent}.
 MERGE_INTO = {
@@ -118,10 +126,6 @@ WATER_MATCH = {
 NO_WATER = {
     "relation/3535004": "Not listed in the county memo.",                                  # Canoa Hills
     "way/191987768": "Not listed in the county memo.",                                     # Voyager RV Resort
-    "way/264439629": "Not in the county memo, which covers Pima County; this course is in Pinal County.",   # Mountain View (SaddleBrooke)
-    "way/264466053": "Not in the county memo, which covers Pima County; this course is in Pinal County.",   # The Preserve (SaddleBrooke)
-    "way/264149657": "Not in the county memo, which covers Pima County; this course is in Pinal County.",   # SaddleBrooke One
-    "relation/3548873": "Not in the county memo, which covers Pima County; this course is in Pinal County.",# SaddleBrooke Ranch
 }
 WATER_MEMO = Path(__file__).with_name("pima_golf_water_memo.json")
 
@@ -164,8 +168,11 @@ def log(*a):
 def fetch(cache):
     if cache:
         return json.loads(Path(cache).read_text(encoding="utf-8"))
-    s, w, n, e = BBOX
-    query = f'[out:json][timeout:120];nwr["leisure"="golf_course"]({s},{w},{n},{e});out geom;'
+    query = (
+        '[out:json][timeout:120];'
+        f'area["boundary"="administrative"]["admin_level"="6"]["name"="{COUNTY}"]->.a;'
+        'nwr["leisure"="golf_course"](area.a);out geom;'
+    )
     body = urllib.parse.urlencode({"data": query}).encode()
     wait = 5
     for attempt in range(1, 7):
@@ -316,7 +323,7 @@ def main():
             "source": "OpenStreetMap contributors (ODbL), leisure=golf_course, via Overpass API",
             "osm_data_timestamp": stamp,
             "built": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-            "area": f"within {RADIUS_MI} miles of downtown Tucson",
+            "area": f"{COUNTY}, within {RADIUS_MI} miles of downtown Tucson",
             "water_source": f'{memo["source"]["title"]}, {memo["source"]["publisher"]}, {memo["source"]["date"]}',
             "water_source_url": memo["source"]["url"],
             "excluded_closed": [
