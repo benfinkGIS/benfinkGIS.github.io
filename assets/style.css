@@ -424,6 +424,11 @@ table.grid { width: 100%; border-collapse: collapse; }
 }
 .linkbtn:hover { color: var(--navy); }
 .flag { color: #8a1c1c; font-size: 12px; }
+.yr { color: var(--dk); font-size: 12px; }
+.leaflet-popup-content .water { margin: 6px 0; padding: 6px 0; border-top: 1px solid var(--lo); border-bottom: 1px solid var(--hi); }
+.leaflet-popup-content .src { color: var(--dk); font-size: 12px; }
+.leaflet-popup-content em { font-size: 12px; }
+@media (max-width: 480px) { .courses .col-holes { display: none; } }
 .notes { margin: 0; padding-left: 20px; }
 .notes li { margin: 0 0 8px; }
 code { font: 13px "Courier New", Courier, monospace; }

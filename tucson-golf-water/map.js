@@ -55,6 +55,39 @@
   function safeUrl(u) { return /^https?:\/\//i.test(u || "") ? u : ""; }
   function acresText(n) { return n.toLocaleString("en-US") + " acres"; }
 
+  // ---- reported water use (Pima County memo, built into the GeoJSON by tools/build_courses.py) ----
+  var GAL_PER_AF = 325851;
+  var memoUrl = "";
+  function afText(n) { return Math.round(n).toLocaleString("en-US"); }
+  function mgText(af) {
+    var mg = af * GAL_PER_AF / 1e6;
+    return (mg >= 10 ? Math.round(mg) : mg.toFixed(1)).toLocaleString("en-US");
+  }
+  function yearText(y) { return y === 2023 ? "2023" : y + " figure"; }
+
+  function waterHtml(w) {
+    if (!w) return "";
+    if (w.none) return "<strong>Reported water use:</strong> not available.<br>" + esc(w.none);
+    var out = [];
+    if (w.items) {
+      out.push("<strong>Reported water use</strong> (" + yearText(w.year) + "):");
+      w.items.forEach(function (it) { out.push(esc(it[0]) + ": " + afText(it[1]) + " acre-feet"); });
+    } else {
+      out.push("<strong>Reported water use: " + afText(w.af) + " acre-feet</strong> (" + yearText(w.year) + ")");
+      out.push("&asymp; " + mgText(w.af) + " million gallons");
+      var parts = w.mix.filter(function (m) { return m[1] > 0; });
+      if (parts.length > 1) {
+        out.push(parts.map(function (m) { return esc(m[0]) + " " + afText(m[1]); }).join(" &bull; "));
+      }
+    }
+    out.push(esc(w.source_text));
+    if (w.note) out.push("<em>Note: " + esc(w.note) + "</em>");
+    var src = "County memo entry: " + esc(w.memo_name);
+    if (safeUrl(memoUrl)) src += ' (<a href="' + esc(safeUrl(memoUrl)) + '" target="_blank" rel="noopener">Pima County memo, Dec 2024</a>)';
+    out.push('<span class="src">' + src + "</span>");
+    return out.join("<br>");
+  }
+
   function popupHtml(p) {
     var rows = [];
     rows.push("<strong>" + esc(p.name) + "</strong>");
@@ -62,6 +95,7 @@
     if (p.holes) facts.push(esc(p.holes) + " holes");
     if (p.access) facts.push(esc(p.access.charAt(0).toUpperCase() + p.access.slice(1)));
     rows.push(facts.join(" &bull; "));
+    if (p.water) rows.push('<div class="water">' + waterHtml(p.water) + "</div>");
     var links = [];
     if (safeUrl(p.website)) links.push('<a href="' + esc(safeUrl(p.website)) + '" target="_blank" rel="noopener">Website</a>');
     if (safeUrl(p.osm)) links.push('<a href="' + esc(safeUrl(p.osm)) + '" target="_blank" rel="noopener">OpenStreetMap</a>');
@@ -80,6 +114,15 @@
     mapEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 
+  function waterCell(w) {
+    if (!w || w.none) return "&ndash;";
+    if (w.items) return "see popup";
+    return afText(w.af) + (w.year !== 2023 ? ' <span class="yr">(' + w.year + ")</span>" : "");
+  }
+  function supplyCell(w) {
+    return w && w.supply && w.supply.length ? esc(w.supply.join(" + ")) : "&ndash;";
+  }
+
   function buildTable(features) {
     if (!tableBody) return;
     var html = features.map(function (f, i) {
@@ -87,8 +130,9 @@
       return "<tr><td><button type=\"button\" class=\"linkbtn\" data-i=\"" + i + "\">" + esc(p.name) + "</button>" +
         (p.note ? " <span class=\"flag\" title=\"" + esc(p.note) + "\">(outline incomplete)</span>" : "") + "</td>" +
         "<td class=\"num\">" + p.acres.toLocaleString("en-US") + "</td>" +
-        "<td>" + (p.holes ? esc(p.holes) : "&ndash;") + "</td>" +
-        "<td>" + (p.access ? esc(p.access) : "&ndash;") + "</td></tr>";
+        "<td class=\"col-holes\">" + (p.holes ? esc(p.holes) : "&ndash;") + "</td>" +
+        "<td class=\"num\">" + waterCell(p.water) + "</td>" +
+        "<td>" + supplyCell(p.water) + "</td></tr>";
     }).join("");
     tableBody.innerHTML = html;
     tableBody.addEventListener("click", function (ev) {
@@ -107,11 +151,12 @@
     .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
     .then(function (data) {
       var features = data.features;
+      memoUrl = (data.metadata && data.metadata.water_source_url) || "";
       courses = L.geoJSON(data, {
         style: function () { return STYLE; },
         onEachFeature: function (f, layer) {
           layers.push(layer);
-          layer.bindPopup(popupHtml(f.properties), { maxWidth: 260 });
+          layer.bindPopup(popupHtml(f.properties), { maxWidth: 300 });
           layer.bindTooltip(esc(f.properties.name), { sticky: true, className: "course-tip", direction: "top" });
           layer.on("mouseover", function () { layer.setStyle(HOVER); setMsg(f.properties.name); });
           layer.on("mouseout", function () { courses.resetStyle(layer); setMsg(READY); });

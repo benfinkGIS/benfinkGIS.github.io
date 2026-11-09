@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tucson Golf Course Water Map | Fink Geospatial</title>
-  <meta name="description" content="Interactive satellite map of the active golf courses in the Tucson area, the first layer of a project exploring golf course water use.">
+  <meta name="description" content="Interactive satellite map of the active golf courses in the Tucson area, with the water use each course reported, as compiled by Pima County.">
   <meta name="theme-color" content="#008080">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Tucson Golf Course Water Map | Fink Geospatial">
@@ -26,7 +26,7 @@
     </header>
 
     <div class="ticker" role="note">
-      <p>*** Tucson Golf Course Water Map: now showing active course boundaries on satellite imagery *** Water-use layers coming soon ***</p>
+      <p>*** Tucson Golf Course Water Map: active course boundaries on satellite imagery, with reported water use in each popup *** More water layers coming soon ***</p>
     </div>
 
     <div class="layout">
@@ -60,8 +60,8 @@
             <h1>Tucson Golf Course Water Map</h1>
 
             <div class="stripe" aria-hidden="true"></div>
-            <p class="construction">WORK IN PROGRESS. Step one is done: the footprint of every active course, on satellite imagery.</p>
-            <p>An interactive map exploring water use at golf courses in the Tucson area. Click a course on the map, or pick one from the list below it, for details.</p>
+            <p class="construction">WORK IN PROGRESS. So far: the footprint of every active course on satellite imagery, with the water use each one reported.</p>
+            <p>An interactive map exploring water use at golf courses in the Tucson area. Click a course on the map, or pick one from the list below it, to see how much water it reported using and where that water came from.</p>
 
             <div class="viewer">
               <div class="titlebar">
@@ -85,11 +85,11 @@
 
             <hr>
             <h2 class="sec">Courses on the map (<span data-course-count>&hellip;</span>)</h2>
-            <p>Acres are the area of each mapped boundary, not a measure of irrigated turf. Holes and access appear only where OpenStreetMap records them; a blank access does not mean a course is public.</p>
+            <p>Water use is in acre-feet (AF) per year, as each course reported it to the state and as Pima County compiled it. One acre-foot is about 326,000 gallons. Most figures are for 2023; a few courses only have an older year, shown in brackets. Acres are the area of each mapped boundary, not a measure of irrigated turf.</p>
             <div class="table-wrap">
               <table class="grid courses">
-                <thead><tr><th scope="col">Course</th><th scope="col" class="num">Acres</th><th scope="col">Holes</th><th scope="col">Access</th></tr></thead>
-                <tbody id="course-rows"><tr><td colspan="4">Loading&hellip;</td></tr></tbody>
+                <thead><tr><th scope="col">Course</th><th scope="col" class="num">Acres</th><th scope="col" class="col-holes">Holes</th><th scope="col" class="num">Water use (AF)</th><th scope="col">Supply</th></tr></thead>
+                <tbody id="course-rows"><tr><td colspan="5">Loading&hellip;</td></tr></tbody>
               </table>
             </div>
 
@@ -97,16 +97,20 @@
             <h2 class="sec">Data sources and methods</h2>
             <ul class="notes">
               <li><strong>Course boundaries:</strong> OpenStreetMap (<code>leisure=golf_course</code>), pulled 9 November 2026 and saved with the site, so the map does not depend on a live query. &copy; OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">ODbL</a>.</li>
+              <li><strong>Water use:</strong> <a href="https://content.civicplus.com/api/assets/8e8abbf4-6775-4575-9a10-fedacb7cb2c1" target="_blank" rel="noopener">&ldquo;Water Use by Golf Courses in Pima County Based on 2023 Reporting&rdquo;</a>, a 26 December 2024 memo from the Pima County Administrator to the Board of Supervisors. County staff built its table from Arizona Department of Water Resources (ADWR) records, so the figures are what courses reported, not metered by this project. The county notes that some courses report irregularly, so a few figures come from earlier years. By the county's count, about 63% of the water used on Pima County golf courses in 2023 was reclaimed, 31% groundwater, 4% Central Arizona Project (CAP, Colorado River) water, and 2% surface water.</li>
+              <li><strong>How the memo was matched to the map:</strong> by course name and hole count. El Conquistador's Conquistador and Ca&ntilde;ada courses share one entry, The Golf Club at Dove Mountain is reported under two facility numbers, and The Gallery has two entries the memo does not reconcile; the popups say how each was handled. Courses outside Pima County (the SaddleBrooke communities) are not in the memo, and neither are Canoa Hills or Voyager RV Resort.</li>
+              <li><strong>Not used here:</strong> ADWR&rsquo;s own <a href="https://www.azwater.gov/ama/ama-data" target="_blank" rel="noopener">AMA data pages</a> hold newer and more detailed per-facility records, including turf acreage and annual allotments. ADWR&rsquo;s data disclaimer asks that people not pass its data on for re-use, so this map links to it instead of copying it.</li>
               <li><strong>Imagery and labels:</strong> Esri World Imagery, with Esri road and place-name layers on top (switch them off with the Labels button).</li>
               <li><strong>Study area:</strong> courses within about 32 miles of downtown Tucson, which takes in Oro Valley, Marana, Vail, Green Valley, Sahuarita, and the SaddleBrooke communities. Tubac and San Manuel fall outside it.</li>
               <li><strong>What counts as active:</strong> OpenStreetMap does not flag closed courses in this area, so closures were checked against news reports. Removed as closed: Del Lago Golf Club in Vail (closed August 2026), Quail Canyon Golf Course (closed, rezoned for housing), and the Blanchard course at Davis-Monthan Air Force Base (closed 2018). Other courses are assumed open if nothing turned up saying otherwise, so a recent closure could still be on the map.</li>
-              <li><strong>Known gaps:</strong> the SaddleBrooke Ranch boundary in OpenStreetMap covers only part of the course (19 acres for 18 holes), so it is flagged. I checked that one against the imagery; the other 40 outlines were not checked one by one. Where a resort has several courses, each is drawn separately.</li>
+              <li><strong>Known gaps:</strong> the SaddleBrooke Ranch boundary in OpenStreetMap covers only part of the course (19 acres for 18 holes), so it is flagged. I checked that one against the imagery and spot-checked a few others, but the outlines were not all checked one by one. Where a resort has several courses, each is drawn separately.</li>
             </ul>
 
             <hr>
             <h2 class="sec">Project checklist</h2>
             <ul class="checklist">
               <li class="done">Course boundaries on satellite imagery</li>
+              <li class="done">Reported water use in each course popup</li>
               <li>Project overview</li>
               <li>Water-use layers on the map</li>
               <li>Findings and takeaways</li>

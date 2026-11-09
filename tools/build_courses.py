@@ -71,6 +71,91 @@ MERGE_INTO = {
     "way/706498984": "relation/3540481",   # extra nine of Omni Tucson National, 29 m away
 }
 
+# ---- water use: Pima County memo (tools/pima_golf_water_memo.json) ------
+# Every mapped course needs a decision here, so a refresh that brings in a new course
+# fails loudly instead of silently showing no water data.
+#   rows:     memo row keys whose figures belong to the course (summed when more than one)
+#   separate: show the rows as separate lines instead of adding them
+#   note:     extra caveat shown in the popup
+WATER_MATCH = {
+    "relation/3524420": {"rows": ["arizona_national"]},                      # Arizona National
+    "relation/3534980": {"rows": ["canoa_ranch"]},                           # Canoa Ranch
+    "relation/12736703": {"rows": ["el_conquistador"], "note": "El Conquistador's two 18-hole courses (Conquistador and Cañada) share one figure in the county memo, so the same number appears on both. Do not add them."},   # Cañada
+    "way/264353987": {"rows": ["el_conquistador"], "note": "El Conquistador's two 18-hole courses (Conquistador and Cañada) share one figure in the county memo, so the same number appears on both. Do not add them."},      # Conquistador
+    "relation/3557520": {"rows": ["cc_green_valley"]},                       # Country Club of Green Valley
+    "way/263321891": {"rows": ["crooked_tree"]},                             # Crooked Tree
+    "relation/12317450": {"rows": ["dell_urich"]},                           # Dell Urich
+    "way/263223599": {"rows": ["desert_hills"]},                             # Desert Hills
+    "relation/3149820": {"rows": ["dorado"]},                                # Dorado
+    "relation/14083323": {"rows": ["el_rio"]},                               # El Rio
+    "relation/3295540": {"rows": ["forty_niners"]},                          # Forty Niner
+    "way/263348234": {"rows": ["fred_enke"]},                                # Fred Enke
+    "relation/3524385": {"rows": ["haven"]},                                 # Haven
+    "relation/3521496": {"rows": ["la_paloma"]},                             # La Paloma
+    "relation/3540481": {"rows": ["omni_tucson_national"]},                  # Omni Tucson National
+    "relation/3540695": {"rows": ["oro_valley_cc"]},                         # Oro Valley CC
+    "relation/3540824": {"rows": ["pusch_ridge"], "note": "Matched to the memo's 'Pusch Ridge Hilton Resort' entry (9 holes, same Oro Valley resort)."},    # Pusch Ridge
+    "relation/3545614": {"rows": ["quail_creek"], "note": "This is the largest figure in the memo and is reclaimed water delivered to a recharge facility, so it may not be comparable to other courses' irrigation use."},  # Quail Creek
+    "way/263063105": {"rows": ["quarry_pines"]},                             # Quarry Pines
+    "relation/12317451": {"rows": ["randolph"]},                             # Randolph (North)
+    "relation/3540831": {"rows": ["rolling_hills"]},                         # Rolling Hills
+    "relation/3535021": {"rows": ["san_ignacio"]},                           # San Ignacio
+    "way/875644322": {"rows": ["sewailo"], "note": "Last reported to ADWR in 2017, per the memo."},               # Sewailo
+    "way/263136208": {"rows": ["silverbell"]},                               # Silverbell
+    "relation/3255194": {"rows": ["skyline"]},                               # Skyline
+    "relation/14067367": {"rows": ["starr_pass"]},                           # Starr Pass
+    "relation/20674321": {"rows": ["gallery_dove_mt", "gallery_south"], "separate": True, "note": "The memo lists two entries for The Gallery and does not say whether the 36-hole entry already includes the South course, so they are shown separately, not added."},   # The Gallery
+    "relation/3526798": {"rows": ["dove_mt_1", "dove_mt_2"], "note": "The memo lists this 27-hole course under two facility numbers (546.36 and 299.04 acre-feet); the figure above is their sum."},       # The Golf Club at Dove Mountain
+    "relation/3286601": {"rows": ["highlands"]},                             # The Highlands at Dove Mountain
+    "relation/21163920": {"rows": ["stone_canyon"]},                         # The Stone Canyon Club
+    "relation/3533856": {"rows": ["views_sun_city_vistoso"]},                # The Views
+    "relation/3523210": {"rows": ["torres_blancas"]},                        # Torres Blancas
+    "way/108291873": {"rows": ["tucson_cc"]},                                # Tucson Country Club
+    "way/262948500": {"rows": ["tucson_estates"]},                           # Tucson Estates
+    "relation/14061123": {"rows": ["ventana_canyon"]},                       # Ventana Canyon
+}
+# Courses with no memo figure, and why (shown in the popup).
+NO_WATER = {
+    "relation/3535004": "Not listed in the county memo.",                                  # Canoa Hills
+    "way/191987768": "Not listed in the county memo.",                                     # Voyager RV Resort
+    "way/264439629": "Not in the county memo, which covers Pima County; this course is in Pinal County.",   # Mountain View (SaddleBrooke)
+    "way/264466053": "Not in the county memo, which covers Pima County; this course is in Pinal County.",   # The Preserve (SaddleBrooke)
+    "way/264149657": "Not in the county memo, which covers Pima County; this course is in Pinal County.",   # SaddleBrooke One
+    "relation/3548873": "Not in the county memo, which covers Pima County; this course is in Pinal County.",# SaddleBrooke Ranch
+}
+WATER_MEMO = Path(__file__).with_name("pima_golf_water_memo.json")
+
+
+def water_for(key, memo):
+    """The 'water' property for one course, from the transcribed county memo."""
+    if key in NO_WATER:
+        return {"none": NO_WATER[key]}
+    m = WATER_MATCH[key]
+    rows = [memo["rows"][k] for k in m["rows"]]
+    notes = [m["note"]] if m.get("note") else []
+    notes += [r["memo_note"] for r in rows if r.get("memo_note")]
+    out = {
+        "memo_name": " + ".join(r["memo_name"] for r in rows),
+        "source_text": rows[0]["source_text"],
+    }
+    if m.get("separate"):
+        out["year"] = rows[0]["year"]
+        out["items"] = [[f'{r["memo_name"]} ({r["holes"]} holes)', round(sum(a for _, a in r["use"]), 2)] for r in rows]
+    else:
+        years = {r["year"] for r in rows}
+        assert len(years) == 1, f"{key}: memo rows have different years {years}"
+        mix = {}
+        for r in rows:
+            for label, af in r["use"]:
+                mix[label] = round(mix.get(label, 0) + af, 2)
+        out["year"] = years.pop()
+        out["af"] = round(sum(mix.values()), 2)
+        out["mix"] = [[label, af] for label, af in mix.items()]
+    out["supply"] = list(dict.fromkeys(label for r in rows for label, af in r["use"] if af > 0))
+    if notes:
+        out["note"] = " ".join(notes)
+    return out
+
 
 def log(*a):
     print(*a, file=sys.stderr)
@@ -185,6 +270,18 @@ def main():
     if unnamed:
         sys.exit(f"Unnamed features need a decision (EXCLUDE_* or MERGE_INTO): {unnamed}")
 
+    memo = json.loads(WATER_MEMO.read_text(encoding="utf-8"))
+    undecided = [f'{k} ({e["tags"]["name"]})' for k, (e, _) in kept.items() if k not in WATER_MATCH and k not in NO_WATER]
+    if undecided:
+        sys.exit(f"Courses need a water-use decision (WATER_MATCH or NO_WATER): {undecided}")
+    stale = [k for k in list(WATER_MATCH) + list(NO_WATER) if k not in kept]
+    if stale:
+        log(f"Note: water rules for courses no longer on the map: {stale}")
+    used_rows = {r for m in WATER_MATCH.values() for r in m["rows"]}
+    unused = [k for k, r in memo["rows"].items() if k not in used_rows and not r.get("closed")]
+    if unused:
+        log(f"Note: memo rows not matched to any mapped course: {unused}")
+
     features = []
     for key, (e, g) in sorted(kept.items(), key=lambda kv: kv[1][0]["tags"]["name"].lower()):
         t = e["tags"]
@@ -206,6 +303,7 @@ def main():
             props["website"] = t["website"]
         if key in QUALITY_NOTES:
             props["note"] = QUALITY_NOTES[key]
+        props["water"] = water_for(key, memo)
         features.append({
             "type": "Feature",
             "properties": props,
@@ -219,6 +317,8 @@ def main():
             "osm_data_timestamp": stamp,
             "built": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
             "area": f"within {RADIUS_MI} miles of downtown Tucson",
+            "water_source": f'{memo["source"]["title"]}, {memo["source"]["publisher"]}, {memo["source"]["date"]}',
+            "water_source_url": memo["source"]["url"],
             "excluded_closed": [
                 v.split(" http")[0] for v in EXCLUDE_CLOSED.values()
             ],
