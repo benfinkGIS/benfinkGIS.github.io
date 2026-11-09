@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <path d="M7 3h13l5 5v21H7z" fill="#fff" stroke="#000" stroke-width="1"/>
+  <path d="M20 3v5h5" fill="#c0c0c0" stroke="#000" stroke-width="1"/>
+  <g stroke="#000080" stroke-width="1">
+    <line x1="10" y1="14" x2="22" y2="14"/>
+    <line x1="10" y1="18" x2="22" y2="18"/>
+    <line x1="10" y1="22" x2="18" y2="22"/>
+  </g>
+</svg>

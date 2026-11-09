@@ -3,24 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page not found | Fink Geospatial</title>
+  <title>404 File Not Found | Fink Geospatial</title>
   <meta name="robots" content="noindex">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#008080">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap bar">
-      <a class="brand" href="/">Fink <span>Geospatial</span></a>
-    </div>
-  </header>
-  <main id="main">
-    <div class="wrap page-head">
-      <p class="eyebrow">Error 404</p>
-      <h1>This location isn&rsquo;t on the map.</h1>
-      <p class="lede">The page you&rsquo;re looking for doesn&rsquo;t exist or has moved.</p>
-      <a class="btn" href="/">Back to the home page</a>
-    </div>
-  </main>
+  <div class="page">
+    <header class="banner">
+      <img src="/assets/globe.svg" alt="" width="64" height="64">
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <main id="main" style="margin-top: 12px;">
+      <section class="win">
+        <div class="titlebar">
+          <span class="t">Error</span>
+          <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+        </div>
+        <div class="win-body">
+          <h1>404 &mdash; File Not Found</h1>
+          <p>This location isn&rsquo;t on the map. The page you&rsquo;re looking for doesn&rsquo;t exist or has moved.</p>
+          <p class="actions"><a class="btn default" href="/">Back to Home</a></p>
+        </div>
+      </section>
+    </main>
+  </div>
 </body>
 </html>

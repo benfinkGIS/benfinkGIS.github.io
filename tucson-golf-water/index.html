@@ -5,70 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tucson Golf Course Water Map | Fink Geospatial</title>
   <meta name="description" content="Placeholder page for an interactive map exploring water use at golf courses in the Tucson area.">
-  <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#17140f" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#008080">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Tucson Golf Course Water Map | Fink Geospatial">
   <meta property="og:url" content="https://finkgeo.com/tucson-golf-water/">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="wrap bar">
-      <a class="brand" href="/">Fink <span>Geospatial</span></a>
-      <nav aria-label="Primary">
-        <a href="/#projects">Projects</a>
-        <a href="/#about">About</a>
-        <a href="/#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main">
-    <div class="wrap page-head">
-      <p class="crumbs"><a href="/#projects">&larr; All projects</a></p>
-      <span class="badge">In development</span>
-      <h1>Tucson Golf Course Water Map</h1>
-      <p class="lede">An interactive map exploring water use at golf courses in the Tucson area. This page is a placeholder while the project is built.</p>
-    </div>
-
-    <div class="wrap">
-      <!-- TODO: replace this placeholder with the embedded map (iframe or script) when ready. -->
-      <div class="map-placeholder" role="img" aria-label="Placeholder for the interactive map">
-        <div>
-          <strong>Interactive map coming soon</strong>
-          The Tucson golf course water map will appear here.
-        </div>
+  <div class="page">
+    <header class="banner">
+      <img src="/assets/globe.svg" alt="" width="64" height="64">
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
       </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** Tucson Golf Course Water Map: under construction *** Check back soon ***</p>
     </div>
 
-    <section class="block">
-      <div class="wrap grid">
-        <div class="card">
-          <h3>Planned sections</h3>
-          <ul class="checklist">
-            <li>Project overview</li>
-            <li>Interactive map</li>
-            <li>Data sources and methods</li>
-            <li>Findings and takeaways</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Status</h3>
-          <p>Content, data sources, and the map itself are still to come. Check back soon, or <a href="/#contact">get in touch</a>.</p>
-        </div>
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: Tucson Golf Course Water Map</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; Tucson Golf Course Water Map</p>
+            <h1>Tucson Golf Course Water Map</h1>
+
+            <div class="stripe" aria-hidden="true"></div>
+            <p class="construction">UNDER CONSTRUCTION. This page is a placeholder while the project is built.</p>
+            <p>An interactive map exploring water use at golf courses in the Tucson area.</p>
+
+            <!-- TODO: replace this placeholder viewer with the embedded map (iframe or script) when ready. -->
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Water Map Viewer</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" disabled>Zoom In</button>
+                <button type="button" disabled>Zoom Out</button>
+                <button type="button" disabled>Pan</button>
+                <button type="button" disabled>Identify</button>
+              </div>
+              <div class="canvas">
+                <div class="dialog" role="status">
+                  <div class="titlebar"><span class="t">Map Viewer</span></div>
+                  <div class="body"><p><strong>No data loaded.</strong><br>The Tucson golf course water map will appear here.</p></div>
+                </div>
+              </div>
+              <div class="statusbar" aria-hidden="true"><span>Tucson, AZ</span><span>32.2226&deg; N, 110.9747&deg; W</span></div>
+            </div>
+
+            <hr>
+            <h2 class="sec">Project checklist</h2>
+            <ul class="checklist">
+              <li>Project overview</li>
+              <li>Interactive map</li>
+              <li>Data sources and methods</li>
+              <li>Findings and takeaways</li>
+            </ul>
+            <hr>
+            <p>Content, data sources, and the map itself are still to come. Check back soon, or <a href="/#contact">get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
       </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="wrap">
-      <span>&copy; 2026 Fink Geospatial</span>
-      <a href="/">finkgeo.com</a>
-    </div>
-  </footer>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 9 November 2026</p>
+    </footer>
+  </div>
 </body>
 </html>

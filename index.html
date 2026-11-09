@@ -3,130 +3,159 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fink Geospatial | GIS Consulting</title>
-  <meta name="description" content="Fink Geospatial is a GIS consulting business offering spatial analysis, cartography, and web mapping.">
-  <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#17140f" media="(prefers-color-scheme: dark)">
+  <title>Fink Geospatial | GIS Portfolio &amp; Sandbox</title>
+  <meta name="description" content="Fink Geospatial is a portfolio and sandbox for personal GIS projects, including a Tucson golf course water map.">
+  <meta name="theme-color" content="#008080">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Fink Geospatial | GIS Consulting">
-  <meta property="og:description" content="Spatial analysis, cartography, and web mapping.">
+  <meta property="og:title" content="Fink Geospatial | GIS Portfolio &amp; Sandbox">
+  <meta property="og:description" content="A portfolio and sandbox for personal GIS projects.">
   <meta property="og:url" content="https://finkgeo.com/">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="wrap bar">
-      <a class="brand" href="/">Fink <span>Geospatial</span></a>
-      <nav aria-label="Primary">
-        <a href="/#projects">Projects</a>
-        <a href="/#about">About</a>
-        <a href="/#contact">Contact</a>
-      </nav>
+  <div class="page">
+    <header class="banner">
+      <img src="/assets/globe.svg" alt="" width="64" height="64">
+      <div>
+        <h1 class="logo"><a href="/">Fink Geospatial</a></h1>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** Welcome to the Fink Geospatial sandbox! *** New project in progress: Tucson Golf Course Water Map (under construction) *** More projects coming soon ***</p>
     </div>
-  </header>
 
-  <main id="main">
-    <section class="hero">
-      <!-- Decorative contour lines -->
-      <svg class="contours" aria-hidden="true" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="1.5">
-        <defs>
-          <path id="c" vector-effect="non-scaling-stroke"
-                d="M -120,-10 C -110,-70 -40,-100 30,-90 C 100,-80 140,-30 130,25 C 120,80 60,110 -10,100 C -80,90 -130,50 -120,-10 Z"/>
-        </defs>
-        <g transform="translate(900 250)">
-          <use href="#c" transform="scale(0.35) rotate(0)"/>
-          <use href="#c" transform="translate(4 -3) scale(0.7) rotate(6)"/>
-          <use href="#c" transform="translate(8 -6) scale(1.05) rotate(12)"/>
-          <use href="#c" transform="translate(12 -9) scale(1.45) rotate(18)"/>
-          <use href="#c" transform="translate(16 -12) scale(1.9) rotate(24)"/>
-          <use href="#c" transform="translate(20 -15) scale(2.4) rotate(30)"/>
-          <use href="#c" transform="translate(24 -18) scale(2.95) rotate(36)"/>
-          <use href="#c" transform="translate(28 -21) scale(3.5) rotate(42)"/>
-        </g>
-      </svg>
-      <div class="wrap">
-        <p class="eyebrow">GIS consulting</p>
-        <h1>Maps and spatial analysis that turn location data into decisions.</h1>
-        <p class="lede">Fink Geospatial helps organizations understand where things are, how they relate, and what to do about it.</p>
-        <div class="btn-row">
-          <a class="btn" href="/#projects">See projects</a>
-          <a class="btn ghost" href="/#contact">Get in touch</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="projects">
-      <div class="wrap">
-        <h2>Projects</h2>
-        <p class="section-intro">Selected work and works in progress.</p>
-        <div class="grid">
-          <a class="card project" href="/tucson-golf-water/">
-            <span class="badge">In development</span>
-            <h3>Tucson Golf Course Water Map</h3>
-            <p>An interactive map exploring water use at golf courses in the Tucson area.</p>
-            <span class="more">View project &rarr;</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="services">
-      <div class="wrap">
-        <h2>What I do</h2>
-        <!-- TODO: edit this list to match the services you actually offer. -->
-        <p class="section-intro">Draft service list &mdash; edit to match your practice.</p>
-        <div class="grid">
-          <div class="card">
-            <h3>Spatial analysis</h3>
-            <p>Answering location questions with overlay, proximity, and statistical analysis.</p>
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
           </div>
-          <div class="card">
-            <h3>Cartography</h3>
-            <p>Clear, well-designed maps for reports, presentations, and print.</p>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/" aria-current="page">Home</a></li>
+              <li><a href="/#projects">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
           </div>
-          <div class="card">
-            <h3>Web mapping</h3>
-            <p>Interactive maps and dashboards that people can explore on their own.</p>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win" id="welcome">
+          <h2 class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Welcome</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </h2>
+          <div class="win-body">
+            <p class="lead">A sandbox for my personal GIS projects.</p>
+            <p>Fink Geospatial is my portfolio and a sandbox for personal projects: a place to build maps, try out ideas, and show the work as it takes shape.</p>
+
+            <!-- Decorative topographic map -->
+            <div class="map-frame" aria-hidden="true">
+              <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <path id="h" fill="none" vector-effect="non-scaling-stroke"
+                        d="M -120,-10 C -110,-70 -40,-100 30,-90 C 100,-80 140,-30 130,25 C 120,80 60,110 -10,100 C -80,90 -130,50 -120,-10 Z"/>
+                </defs>
+                <rect width="600" height="300" fill="#f6f0dc"/>
+                <path d="M100 0V300M200 0V300M300 0V300M400 0V300M500 0V300M0 100H600M0 200H600" stroke="#d9cfae" stroke-width="1" fill="none"/>
+                <g transform="translate(390 140)" fill="none" stroke="#a8622a" stroke-width="1.2">
+                  <use href="#h" transform="scale(0.4)"/>
+                  <use href="#h" transform="translate(4 -3) scale(0.75) rotate(5)"/>
+                  <use href="#h" transform="translate(8 -6) scale(1.1) rotate(10)" stroke-width="2.4"/>
+                  <use href="#h" transform="translate(12 -9) scale(1.45) rotate(15)"/>
+                  <use href="#h" transform="translate(16 -12) scale(1.8) rotate(20)"/>
+                  <use href="#h" transform="translate(20 -15) scale(2.15) rotate(25)"/>
+                  <use href="#h" transform="translate(24 -18) scale(2.5) rotate(30)" stroke-width="2.4"/>
+                  <use href="#h" transform="translate(28 -21) scale(2.85) rotate(35)"/>
+                </g>
+                <path d="M-10,240 C70,215 130,262 210,238 S350,282 450,252 S560,222 610,236" fill="none" stroke="#3b84d8" stroke-width="3"/>
+                <g transform="translate(556 44)">
+                  <polygon points="0,-24 8,10 0,4 -8,10" fill="#222"/>
+                  <text y="28" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="14" fill="#222">N</text>
+                </g>
+                <g transform="translate(30 266)" font-family="Verdana, sans-serif" font-size="9" fill="#222">
+                  <rect x="0" y="0" width="40" height="6" fill="#222"/>
+                  <rect x="40" y="0" width="40" height="6" fill="#fff" stroke="#222"/>
+                  <rect x="80" y="0" width="40" height="6" fill="#222"/>
+                  <text x="0" y="18">0</text><text x="40" y="18">1</text><text x="80" y="18">2</text><text x="124" y="18">mi</text>
+                </g>
+              </svg>
+              <div class="statusbar"><span>Ready</span><span>Scale 1:24,000</span></div>
+            </div>
+
+            <p class="actions">
+              <a class="btn default" href="/#projects">See Projects</a>
+              <a class="btn" href="/#contact">Contact</a>
+            </p>
           </div>
-          <div class="card">
-            <h3>Data preparation</h3>
-            <p>Cleaning, joining, and documenting geospatial data so it is ready to use.</p>
+        </section>
+
+        <section class="win" id="projects">
+          <h2 class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Projects</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </h2>
+          <div class="win-body">
+            <p>Personal projects and works in progress.</p>
+            <ul class="files">
+              <li>
+                <img src="/assets/folder.svg" alt="" width="32" height="32">
+                <div>
+                  <a href="/tucson-golf-water/">Tucson Golf Course Water Map</a>
+                  <span class="meta">&mdash; under construction</span><br>
+                  An interactive map exploring water use at golf courses in the Tucson area.
+                </div>
+              </li>
+            </ul>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section class="block" id="about">
-      <div class="wrap about">
-        <div>
-          <h2>About</h2>
-          <!-- TODO: replace with your real bio, background, and credentials. -->
-          <p>Fink Geospatial is a GIS consulting business focused on practical, well-documented mapping and spatial analysis.</p>
-          <p>A fuller bio &mdash; background, experience, and the kinds of problems I like working on &mdash; is coming soon.</p>
-        </div>
-        <aside class="note" aria-label="Draft notice">
-          This section is a placeholder. Bio and credentials will be added.
-        </aside>
-      </div>
-    </section>
+        <section class="win" id="about">
+          <h2 class="titlebar">
+            <img src="/assets/doc.svg" alt="" width="16" height="16">
+            <span class="t">About</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </h2>
+          <div class="win-body">
+            <!-- TODO: replace with your real bio, background, and credentials. -->
+            <p>Fink Geospatial is a portfolio and sandbox for my personal GIS projects.</p>
+            <p>A fuller bio &mdash; background, experience, and the kinds of problems I like working on &mdash; is coming soon.</p>
+            <div class="note"><p>This section is a placeholder. Bio and credentials will be added.</p></div>
+          </div>
+        </section>
 
-    <section class="block" id="contact">
-      <div class="wrap">
-        <h2>Contact</h2>
-        <!-- TODO: add your real contact email (e.g. a mailto: link) here. -->
-        <p class="section-intro">Contact details are coming soon.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="wrap">
-      <span>&copy; 2026 Fink Geospatial</span>
-      <a href="/">finkgeo.com</a>
+        <section class="win" id="contact">
+          <h2 class="titlebar">
+            <img src="/assets/mail.svg" alt="" width="16" height="16">
+            <span class="t">Contact</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </h2>
+          <div class="win-body">
+            <p>Questions or ideas? Email me at <a href="mailto:ben@finkgeo.com">ben@finkgeo.com</a>.</p>
+          </div>
+        </section>
+      </main>
     </div>
-  </footer>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 9 November 2026</p>
+    </footer>
+  </div>
 </body>
 </html>
