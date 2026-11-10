@@ -69,7 +69,8 @@ hr {
   border: 2px solid;
   border-color: var(--hi) var(--dk) var(--dk) var(--hi);
 }
-.banner img { width: 64px; height: 64px; flex: none; }
+.banner picture { flex: none; line-height: 0; }
+.banner img { width: 64px; height: 64px; flex: none; image-rendering: pixelated; }
 .logo {
   margin: 0;
   font: 900 clamp(24px, 6.5vw, 36px)/1 "Arial Black", "Arial Bold", Gadget, sans-serif;
