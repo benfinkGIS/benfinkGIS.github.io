@@ -1,0 +1,75 @@
+{
+ "width_m": 46000,
+ "height_m": 42000,
+ "elev_min_m": 673.9,
+ "elev_max_m": 2793.4,
+ "height_cols": 2048,
+ "height_rows": 1870,
+ "height_step_m": 0.1,
+ "origin_utm_12n": [
+  496000,
+  3568000
+ ],
+ "summits": [
+  {
+   "name": "Mount Lemmon",
+   "x": 23895.7,
+   "y": 21550.4,
+   "elev_m": 2785.8
+  },
+  {
+   "name": "Mount Bigelow",
+   "x": 30841.0,
+   "y": 18524.8,
+   "elev_m": 2605.3
+  },
+  {
+   "name": "Mount Kimball",
+   "x": 15366.1,
+   "y": 14227.6,
+   "elev_m": 2210.1
+  },
+  {
+   "name": "Pusch Peak",
+   "x": 9739.3,
+   "y": 13674.2,
+   "elev_m": 1630.2
+  },
+  {
+   "name": "Table Mountain",
+   "x": 12651.8,
+   "y": 14799.1,
+   "elev_m": 1905.6
+  },
+  {
+   "name": "Thimble Peak",
+   "x": 25270.3,
+   "y": 9838.5,
+   "elev_m": 1606.3
+  },
+  {
+   "name": "Samaniego Peak",
+   "x": 21166.6,
+   "y": 24482.9,
+   "elev_m": 2339.9
+  },
+  {
+   "name": "Rice Peak",
+   "x": 27508.0,
+   "y": 29210.3,
+   "elev_m": 2303.1
+  },
+  {
+   "name": "Apache Peak",
+   "x": 27305.2,
+   "y": 33630.6,
+   "elev_m": 1961.7
+  },
+  {
+   "name": "Agua Caliente Hill",
+   "x": 35454.2,
+   "y": 5219.4,
+   "elev_m": 1636.4
+  }
+ ]
+}

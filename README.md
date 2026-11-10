@@ -19,6 +19,11 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tucson-loop-access/loop.js`, `loop.css` | Charts and map for both Loop pages (Leaflet), in the site's look |
 | `tucson-loop-access/data/*.json` | What the Loop pages read. Written by `tools/publish_loop_access.py`; don't edit by hand |
 | `tools/build_loop.py`, `build_network.py`, `build_access.py`, `test_segments.py`, `publish_loop_access.py` | The Loop analysis, run in that order (see below). Not used by the site at runtime |
+| `catalinas-3d/index.html` | Santa Catalinas 3D page: the interactive model, two rendered stills, data notes |
+| `catalinas-3d/viewer.js`, `catalinas.css` | The 3D viewer (three.js). Lifts a flat grid from the height image and works out light and shadows in the shader |
+| `catalinas-3d/data/` | What the viewer loads: `height.png`, `texture_4k.jpg`, `texture_8k.jpg`, `meta.json`. Written by `tools/export_catalinas_web.py`; don't edit by hand |
+| `catalinas-3d/img/` | Stills rendered in Blender |
+| `tools/build_catalinas.py`, `deshade_catalinas.py`, `blender_catalinas.py`, `export_catalinas_web.py` | The Catalinas model pipeline (see below). Not used by the site at runtime |
 | `tools/loop-review/` | Working pages for checking the Loop analysis (a satellite review map and a plain draft of the charts). Marked noindex; not linked from the site |
 | `404.html` | Not-found page |
 | `assets/style.css` | Shared styles (late-90s desktop look; plain CSS, no web fonts) |
@@ -31,6 +36,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 - Replace the About placeholder text in `index.html` (search for `TODO`).
 - Tucson golf map: water use is in popups and the table only. Next: map layers (for example colour by supply, size by use).
 - Tucson Loop Access: check the draft Loop extent section by section (use `tools/loop-review/`), then count traffic stress in the ride times.
+- Santa Catalinas 3D: close-up views from 1 m lidar; roads, trails and canyon names; test touch gestures on a real phone.
 - Bump the "Last updated" date in each page footer when content changes.
 
 ## Refreshing the golf course data
@@ -81,7 +87,33 @@ request copies from the department. Get ADWR's OK (earp@azwater.gov) before publ
 
 When the county publishes a newer memo, add its rows to the JSON and re-run the build.
 
+## Rebuilding the Santa Catalinas 3D model
+
+Needs Python with `numpy`, `scipy`, `pillow`, `pyproj` and `matplotlib`, and Blender (built with 5.2)
+for the stills. The big working files go to `catalinas-3d/work/`, which is not in the repository
+(about 2 GB).
+
+```
+py tools/build_catalinas.py          # USGS elevation (10 m) and NAIP imagery (4 m) for a 46 x 42 km frame
+py tools/deshade_catalinas.py        # takes the photos' own sunlight out of the imagery
+blender -b --factory-startup -P tools/blender_catalinas.py -- --view front --sun-el 7 --haze 150
+blender -b --factory-startup -P tools/blender_catalinas.py -- --view south --sun-el 7 --exposure -2.8
+py tools/export_catalinas_web.py     # writes catalinas-3d/data/ for the viewer
+```
+
+- The USGS image servers time out on large requests, so the build script asks for 2000-pixel tiles
+  and retries. Tiles are cached in `catalinas-3d/work/tiles/`.
+- The aerial photos were flown at different times, so there is no single sun direction to remove.
+  `deshade_catalinas.py` fits brightness against slope direction in a moving window instead, and
+  recolours fully shadowed slopes from the sunlit ground beside them. Its docstring lists the limits.
+- `blender_catalinas.py --draft` renders a quick look in a few seconds. The stills in
+  `catalinas-3d/img/` are the 4K renders scaled to 1920 pixels.
+- Summit positions come from the USGS Geographic Names service; heights shown are read from the
+  elevation grid at those points.
+
 ## External services
+
+The Catalinas page loads three.js 0.170.0 from jsDelivr through an import map with integrity hashes.
 
 The map pages load Leaflet from cdnjs (pinned version, with integrity hashes) and basemap tiles from
 Esri's public tile servers (satellite imagery and labels on the golf map, the light gray canvas on the

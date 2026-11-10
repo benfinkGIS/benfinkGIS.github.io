@@ -1,0 +1,59 @@
+/* Santa Catalinas 3D page. Loaded after /assets/style.css, which supplies the
+   windows, toolbar buttons, status bar and notes. */
+
+/* this page is wider than the rest of the site so the model has room */
+.cat3d .page { max-width: 1240px; }
+
+.cat3d .viewer:fullscreen { display: flex; flex-direction: column; margin: 0; }
+.cat3d .viewer:fullscreen .map-canvas { flex: 1 1 auto; min-height: 0; }
+.cat3d .viewer:fullscreen .scene { aspect-ratio: auto; max-height: none; height: 100%; }
+
+.cat3d .scene {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  max-height: 78vh;
+  width: 100%;
+  background: #0d0e10;
+  overflow: hidden;
+  touch-action: none;            /* the viewer handles drags and pinches itself */
+}
+@media (max-width: 700px) { .cat3d .scene { aspect-ratio: 4 / 5; } }
+.cat3d .scene canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+.cat3d .scene canvas:active { cursor: grabbing; }
+.cat3d .scene canvas:focus-visible { outline: 2px dotted #ffff66; outline-offset: -4px; }
+
+/* summit names: the classic pale-yellow tooltip */
+.cat3d .labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.cat3d .peak {
+  position: absolute; left: 0; top: 0;
+  padding: 1px 5px;
+  background: #ffffe1; color: #000;
+  border: 1px solid #000;
+  font: 11px/1.4 Tahoma, Verdana, sans-serif;
+  white-space: nowrap;
+}
+.cat3d .peak::after {              /* a short leader down to the summit */
+  content: ""; position: absolute; left: 50%; top: 100%;
+  height: 6px; border-left: 1px solid #ffffe1;
+}
+.cat3d .peak[hidden] { display: none; }
+
+.cat3d .toolbar { align-items: center; }
+.cat3d .toolbar .sep { width: 2px; align-self: stretch; margin: 0 3px; border-left: 1px solid var(--lo); border-right: 1px solid var(--hi); }
+.cat3d .toolbar .lab { font-size: 13px; padding: 0 2px 0 4px; }
+.cat3d .sunrow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; padding: 2px 4px 6px; font-size: 13px; }
+.cat3d .sunrow .track { flex: 1 1 240px; display: flex; align-items: center; gap: 6px; min-width: 0; }
+.cat3d .sunrow input[type="range"] { flex: 1 1 auto; min-width: 60px; accent-color: var(--navy); }
+.cat3d .sunrow .ends { color: var(--dk); font-size: 12px; }
+.cat3d .statusbar { flex-wrap: wrap; }
+.cat3d .statusbar span { flex: 1 1 auto; }
+
+.cat3d .stills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 0 12px; }
+@media (max-width: 560px) { .cat3d .stills { grid-template-columns: 1fr; } }
+.cat3d .stills figure { margin: 0; }
+.cat3d .stills img {
+  display: block; width: 100%; height: auto;
+  border: 2px solid;
+  border-color: var(--lo) var(--hi) var(--hi) var(--lo);
+}
+.cat3d .stills figcaption { font-size: 13px; color: var(--dk); margin-top: 4px; }

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Santa Catalinas in 3D | Fink Geospatial</title>
+  <meta name="description" content="A true-scale 3D model of the Santa Catalina Mountains north of Tucson, built from USGS elevation and aerial imagery. Orbit, pan and zoom it, and move the sun.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Santa Catalinas in 3D | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/catalinas-3d/">
+  <meta property="og:image" content="https://finkgeo.com/catalinas-3d/img/front-golden.jpg">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/catalinas-3d/catalinas.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    },
+    "integrity": {
+      "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js": "sha384-IDC7sAMAIMB/TZ6dgKKPPAKZ2bXXXP8+FBMBC8cU319eBhKITx+PaalhfDkDNH28",
+      "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js": "sha384-aJoe4qqS/DgF2jh9njAuvA6QIveJYoCuYOfYjdFY8P3eawzmc9bEQ40jq2TvOyuP"
+    }
+  }
+  </script>
+</head>
+<body class="cat3d">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** The Santa Catalinas in 3D *** True scale, no vertical stretch *** Drag to orbit, scroll to zoom, slide the sun across the sky ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: Santa Catalinas 3D</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; Santa Catalinas 3D</p>
+            <h1>The Santa Catalinas in 3D</h1>
+
+            <div class="stripe" aria-hidden="true"></div>
+            <p class="construction">WORK IN PROGRESS. The model and the viewer are a first version.</p>
+            <p>The Santa Catalina Mountains stand over the north side of Tucson. Inside this model the ground climbs about 6,950 feet (2,120 m), from the desert floor to the top of Mount Lemmon. It is a model of the whole range at true scale, built from USGS elevation data with aerial photos laid over it.</p>
+            <p>The photos&rsquo; own sunlight and shadows were removed first, so the light you see is worked out from the shape of the ground. Move the sun and the shadows follow.</p>
+            <noscript><div class="note"><p>The 3D viewer needs JavaScript. The still images below show the same model.</p></div></noscript>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Catalinas 3D Viewer</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <span class="lab" id="lab-view">View</span>
+                <button type="button" id="view-block" aria-describedby="lab-view">Whole Range</button>
+                <button type="button" id="view-front" aria-describedby="lab-view">Front Range</button>
+                <button type="button" id="view-west" aria-describedby="lab-view">Pusch Ridge</button>
+                <button type="button" id="view-top" aria-describedby="lab-view">Top Down</button>
+                <span class="sep" aria-hidden="true"></span>
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <span class="sep" aria-hidden="true"></span>
+                <button type="button" id="tb-labels" aria-pressed="true">Summits</button>
+                <button type="button" id="tb-hd" aria-pressed="false">Sharper Imagery</button>
+                <button type="button" id="tb-full" aria-pressed="false">Full Screen</button>
+              </div>
+              <div class="toolbar" role="group" aria-labelledby="lab-exag">
+                <span class="lab" id="lab-exag">Height</span>
+                <button type="button" data-exag="1" aria-pressed="true">True Scale</button>
+                <button type="button" data-exag="1.5" aria-pressed="false">&times;1.5</button>
+                <button type="button" data-exag="2" aria-pressed="false">&times;2</button>
+              </div>
+              <div class="sunrow">
+                <label for="sun">Sun</label>
+                <span class="track">
+                  <span class="ends">sunrise</span>
+                  <input type="range" id="sun" min="360" max="1080" step="1" value="1047">
+                  <span class="ends">sunset</span>
+                </span>
+                <span class="toolbar"><button type="button" id="sun-golden">Golden Hour</button></span>
+              </div>
+              <div class="map-canvas">
+                <div class="scene" id="scene">
+                  <div class="labels" id="labels"></div>
+                </div>
+                <p id="scene-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-sun">&nbsp;</span></div>
+            </div>
+            <p class="cap">Drag to orbit. Right-drag, Ctrl-drag or two fingers to pan. Scroll or pinch to zoom. With the viewer selected, the arrow keys pan.</p>
+
+            <h2 class="sec">Rendered at golden hour</h2>
+            <p>The same model rendered in Blender, with the sun 7&deg; above the horizon just south of west.</p>
+            <div class="stills">
+              <figure>
+                <a href="/catalinas-3d/img/front-golden.jpg"><img src="/catalinas-3d/img/front-golden.jpg" alt="The front range of the Santa Catalinas seen from above the Tucson foothills in low evening light, with long shadows in the canyons." width="1920" height="1080" loading="lazy"></a>
+                <figcaption>The front range from above the Foothills, looking north.</figcaption>
+              </figure>
+              <figure>
+                <a href="/catalinas-3d/img/south-golden.jpg"><img src="/catalinas-3d/img/south-golden.jpg" alt="The whole range as a block of terrain on a dark background, lit from the west, with the mountains casting shadows to the east." width="1920" height="1080" loading="lazy"></a>
+                <figcaption>The whole range from the south-west. Tucson is at the lower left.</figcaption>
+              </figure>
+            </div>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>Area:</strong> a rectangle 46 km wide and 42 km tall (about 29 by 26 miles), from Oro Valley east to the San Pedro side and from the Rillito north to Oracle.</li>
+              <li><strong>Elevation:</strong> USGS 3D Elevation Program, read at 10 m cells for the Blender renders. The viewer uses a lighter copy at 22.5 m cells so it loads quickly. Heights are true scale unless you switch the Height setting.</li>
+              <li><strong>Imagery:</strong> USDA National Agriculture Imagery Program aerial photos, served by the USGS, at 4 m per pixel for the renders. The viewer starts at about 11 m per pixel; Sharper Imagery loads about 6 m.</li>
+              <li><strong>Removing the photos&rsquo; sunlight:</strong> the photos were flown at different times of day, so each strip has its own shadows. A fit of photo brightness against the direction each slope faces, made separately around every spot, is divided out. Slopes in full shadow are recoloured from the sunlit ground next to them. Slopes that are darker because more grows on them, mostly north-facing ones, get lightened too, and the join between two flight strips is still faintly visible.</li>
+              <li><strong>Light in the viewer:</strong> the sun follows its real path over Tucson on a day near the equinox (late March or late September). Times are sun time, where noon is when the sun is due south; clock time in Tucson runs about half an hour later. Shadows are found by stepping across the terrain toward the sun. Sky colour and brightness are set by eye.</li>
+              <li><strong>Light in the renders:</strong> Blender&rsquo;s physical sky model and Cycles renderer. The haze and the flat ground beyond the model in the first image are there for looks.</li>
+              <li><strong>Summits:</strong> names and positions from the USGS Geographic Names Information System. Heights shown are read from the elevation data at those points and can differ from surveyed heights by a few feet to a few tens of feet.</li>
+            </ul>
+
+            <hr>
+            <h2 class="sec">Project checklist</h2>
+            <ul class="checklist">
+              <li class="done">Elevation and imagery for the whole range</li>
+              <li class="done">Photo sunlight removed from the imagery</li>
+              <li class="done">Golden-hour renders in Blender</li>
+              <li class="done">Interactive viewer with a movable sun</li>
+              <li>Close-up views from 1 m lidar</li>
+              <li>Roads, trails and canyon names</li>
+            </ul>
+            <p>Questions or corrections? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 10 November 2026</p>
+    </footer>
+  </div>
+
+  <script type="module" src="/catalinas-3d/viewer.js"></script>
+</body>
+</html>
