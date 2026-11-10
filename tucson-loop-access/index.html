@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Who Lives Far from The Loop? | Fink Geospatial</title>
+  <meta name="description" content="A network analysis of how long it takes Tucson-area residents to bike from home to the Chuck Huckelberry Loop, and where the people who live far from it are.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Who Lives Far from The Loop? | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/tucson-loop-access/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+</head>
+<body class="loopviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** Tucson Loop Access: how long is the bike ride from home to The Loop? *** First-cut numbers, traffic not yet counted *** See also: where could The Loop grow? ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: Tucson Loop Access</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; Tucson Loop Access</p>
+            <h1>Who Lives Far from The Loop?</h1>
+
+            <div class="stripe" aria-hidden="true"></div>
+            <p class="construction">WORK IN PROGRESS. These are first-cut numbers: the ride times do not yet account for traffic.</p>
+            <p>The Chuck Huckelberry Loop is Tucson&rsquo;s network of shared-use paths, running mostly along the rivers and washes. This project measures how long it takes to bike from home to the nearest point on it, for everyone in the Tucson area, and maps where the people with the longest rides live.</p>
+            <p>The ride is the shortest legal route over the real street and path network, so a path that passes under a road with no way up to it does not count as an entrance.</p>
+            <noscript><div class="note"><p>The figures, charts and map on this page need JavaScript.</p></div></noscript>
+
+            <fieldset class="groupbox">
+              <legend>Settings</legend>
+              <div class="row">
+                <span id="far-label">Count a home as far when the ride is more than</span>
+                <div class="toolbar" id="far-buttons" role="group" aria-labelledby="far-label"></div>
+              </div>
+            </fieldset>
+
+            <div class="stats" aria-live="polite">
+              <div class="stat lead-stat">
+                <div class="counter" id="hero-num">&hellip;</div>
+                <div class="lab" id="hero-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="share-num">&hellip;</div>
+                <div class="lab" id="share-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="dist-num">&hellip;</div>
+                <div class="lab" id="dist-lab">&nbsp;</div>
+              </div>
+            </div>
+
+            <h2 class="sec">Everyone, by ride time to the Loop</h2>
+            <div class="chartbox">
+              <p class="cap" id="split-cap">&nbsp;</p>
+              <div class="split" id="split" role="img"></div>
+              <div class="bracket" id="bracket"><i></i><b></b></div>
+              <ul class="legend" id="split-legend"></ul>
+            </div>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Loop Access Viewer: Where the Far-Away Residents Live</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Full Extent</button>
+                <button type="button" id="tb-labels" aria-pressed="true">Labels</button>
+              </div>
+              <div class="map-canvas">
+                <div id="map" role="region" aria-label="Map of residents far from the Loop, by hexagon cell"></div>
+                <p id="map-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <ul class="legend" id="map-legend"></ul>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+            </div>
+            <p class="cap" id="map-cap">&nbsp;</p>
+
+            <h2 class="sec">Communities with the most residents far from the Loop</h2>
+            <div class="chartbox">
+              <p class="cap" id="rank-cap">&nbsp;</p>
+              <div class="rank" id="rank"></div>
+              <details class="tables">
+                <summary>Show the numbers as tables</summary>
+                <div class="table-wrap"><table class="grid wrap" id="t-bands"></table></div>
+                <div class="table-wrap"><table class="grid wrap" id="t-places"></table></div>
+              </details>
+            </div>
+
+            <div class="note"><p>At the 20-minute setting, one of the biggest groups of far-away residents is not at the edge of town. It sits inside the Loop, east of central Tucson, where the paths ring a wide area without crossing it.</p></div>
+            <p class="actions next">
+              <a class="btn default" href="/tucson-loop-access/grow/" data-carry="/tucson-loop-access/grow/">Next: Where could The Loop grow? &raquo;</a>
+            </p>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>Ride time:</strong> the shortest legal route from home to the nearest point on the Loop, at 10 mph on streets and paved paths, slower on unpaved trails, and walking pace on footways. One-way streets are one-way. Freeways and roads signed no-bikes are left out. Private streets, such as those in gated communities, can only be used by the people who live on them, to get out.</li>
+              <li><strong>What is not counted yet:</strong> traffic. A mile on a fast arterial costs the same as a mile on a quiet street, and most people would not ride every one of these routes. The real reach of the Loop is smaller than shown here, so the count of far-away residents is a low estimate.</li>
+              <li><strong>Streets and paths:</strong> OpenStreetMap, from copies of the map dated between July and November 2026. &copy; OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">ODbL</a>. Two paths only connect where the map data joins them, which is how underpasses and overpasses are kept from counting as entrances.</li>
+              <li><strong>The Loop:</strong> a draft extent of <span data-fill="loop_miles">&hellip;</span> miles assembled from OpenStreetMap, because no single route there covers all of it. It has not been checked section by section, so a few pieces may be missing or extra.</li>
+              <li><strong>Residents:</strong> 2020 Census population by block, from the U.S. Census Bureau. Each block&rsquo;s people are placed at the block&rsquo;s centre point and joined to the nearest street. That is rough for the large blocks at the desert edge.</li>
+              <li><strong>Communities:</strong> 2020 Census cities, towns and census-designated places. &ldquo;Tucson&rdquo; means inside the city limits.</li>
+              <li><strong>Study area:</strong> <span data-fill="bbox">&hellip;</span>, covering <span data-fill="total">&hellip;</span> residents. Another <span data-fill="outside_pop">&hellip;</span> Pima County residents live outside it, in Green Valley, Sahuarita, Ajo and other places. The closest of them is <span data-fill="outside_nearest">&hellip;</span> miles from the Loop in a straight line. They are not in any figure on this page.</li>
+              <li><strong>Map:</strong> hexagon cells <span data-fill="hex_m">&hellip;</span> m from centre to corner, about 0.6 square miles each, on Esri&rsquo;s light gray basemap.</li>
+            </ul>
+
+            <hr>
+            <h2 class="sec">Project checklist</h2>
+            <ul class="checklist">
+              <li class="done">Draft extent of the Loop from OpenStreetMap</li>
+              <li class="done">Street and path network, with underpasses kept separate</li>
+              <li class="done">Residents joined to the network</li>
+              <li class="done">First-cut ride times to the Loop</li>
+              <li class="done">First look at <a href="/tucson-loop-access/grow/" data-carry="/tucson-loop-access/grow/">where the Loop could grow</a></li>
+              <li>Check the Loop extent section by section</li>
+              <li>Count traffic stress in the ride times</li>
+              <li>Findings and takeaways</li>
+            </ul>
+            <p>Questions or corrections? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 10 November 2026</p>
+    </footer>
+  </div>
+  <div id="tip" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/tucson-loop-access/loop.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Where Could The Loop Grow? | Fink Geospatial</title>
+  <meta name="description" content="A screening of washes and existing bike paths around Tucson: how many residents each would bring within reach of the Chuck Huckelberry Loop if it became part of it.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Where Could The Loop Grow? | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/tucson-loop-access/grow/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+</head>
+<body class="loopviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** Where could The Loop grow? *** Washes and existing bike paths, ranked by the residents each would bring within reach *** A screening, not a set of proposals ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: Tucson Loop Access &mdash; Growth</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; <a href="/tucson-loop-access/" data-carry="/tucson-loop-access/">Tucson Loop Access</a> &raquo; Where could it grow?</p>
+            <h1>Where Could The Loop Grow?</h1>
+
+            <div class="stripe" aria-hidden="true"></div>
+            <p class="construction">A SCREENING, NOT A PLAN. These are corridors worth a closer look. Nobody has checked that a path would fit.</p>
+            <p>The <a href="/tucson-loop-access/" data-carry="/tucson-loop-access/">first page</a> shows who lives far from the Loop. This one asks what would change that. The Loop is built along washes, so I tested every named wash in the area, plus every existing paved bike path that is not part of the Loop: <span data-fill="tested">&hellip;</span> corridors in all. Each one is scored as if it were Loop, by counting the residents it would bring within the ride-time limit.</p>
+            <noscript><div class="note"><p>The charts and map on this page need JavaScript.</p></div></noscript>
+
+            <fieldset class="groupbox">
+              <legend>Settings</legend>
+              <div class="row">
+                <span id="far-label">Count a home as far when the ride is more than</span>
+                <div class="toolbar" id="far-buttons" role="group" aria-labelledby="far-label"></div>
+              </div>
+              <div class="row">
+                <span id="mode-label">Build-out picks by</span>
+                <div class="toolbar" id="mode-buttons" role="group" aria-labelledby="mode-label"></div>
+              </div>
+            </fieldset>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Loop Access Viewer: Candidate Segments</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Full Extent</button>
+                <button type="button" id="tb-labels" aria-pressed="true">Labels</button>
+              </div>
+              <div class="map-canvas">
+                <div id="map" role="region" aria-label="Map of candidate new Loop segments over residents far from the Loop"></div>
+                <p id="map-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <ul class="legend" id="map-legend"></ul>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+            </div>
+            <p class="cap" id="map-cap">&nbsp;</p>
+
+            <h2 class="sec">What one new segment would do</h2>
+            <div class="chartbox">
+              <p class="cap" id="cand-cap">&nbsp;</p>
+              <div class="rank cand" id="cands"></div>
+              <p id="cand-together" style="margin: 12px 0 0"></p>
+              <details class="tables">
+                <summary>Show every candidate as a table</summary>
+                <div class="table-wrap"><table class="grid wrap" id="t-cands"></table></div>
+              </details>
+            </div>
+
+            <div id="pack-box">
+              <h2 class="sec">If the best of them were built together</h2>
+              <div class="chartbox">
+                <p class="cap" id="pack-cap">&nbsp;</p>
+                <div class="packlead">
+                  <div>
+                    <div class="num" id="pack-num">&hellip;</div>
+                    <div class="lab" id="pack-lab">&nbsp;</div>
+                  </div>
+                  <div>
+                    <div class="progress" id="pack-progress" role="img"><i></i></div>
+                    <div class="lab" id="pack-progress-lab">&nbsp;</div>
+                  </div>
+                </div>
+                <div class="rank cand" id="pack"></div>
+                <details class="tables">
+                  <summary>Show the steps as a table</summary>
+                  <div class="table-wrap"><table class="grid wrap" id="t-pack"></table></div>
+                </details>
+              </div>
+            </div>
+
+            <div class="note"><p>Two things stand out at the 20-minute setting. Paths that already exist, starting with the Aviation Bikeway, do a lot of the work without any new construction. And choosing by residents per mile of new path gets most of the benefit for a fraction of the mileage.</p></div>
+            <p class="actions next">
+              <a class="btn" href="/tucson-loop-access/" data-carry="/tucson-loop-access/">&laquo; Back: Who lives far from The Loop?</a>
+            </p>
+
+            <hr>
+            <h2 class="sec">How to read this</h2>
+            <ul class="notes">
+              <li><strong>Candidates:</strong> every named wash in OpenStreetMap inside the study area, leaving out the parts that already have the Loop within <span data-fill="loop_near_m">&hellip;</span> m, and every named paved bike path of <span data-fill="min_path_miles">&hellip;</span> miles or more that is not in the draft Loop. Names are as OpenStreetMap has them.</li>
+              <li><strong>Scoring:</strong> the candidate is treated as part of the Loop, and the count is the residents whose ride drops from over the limit to within it. An existing path is entered at its real junctions.</li>
+              <li><strong>Entrances are generous:</strong> a path that does not exist yet is assumed reachable from any public street or path within <span data-fill="access_m">&hellip;</span> m of it. A real path would have fewer ways on, so the true numbers would be lower.</li>
+              <li><strong>Nothing here says a path can be built:</strong> some washes have no room for one, and some run through private land. &ldquo;Existing path&rdquo; comes from how OpenStreetMap tags it; I have not checked the surface or condition of each one.</li>
+              <li><strong>Built together:</strong> segments are added one at a time and a resident is counted once, however many segments reach them. By residents per new mile, an existing path costs no new miles and goes first, and a step has to add at least 2,000 residents to count.</li>
+              <li><strong>Same first-cut ride times</strong> as the <a href="/tucson-loop-access/" data-carry="/tucson-loop-access/">first page</a>: shortest legal route at 10 mph, with traffic not yet counted. The sources and the rest of the method are listed there.</li>
+            </ul>
+            <p>Questions or corrections? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 10 November 2026</p>
+    </footer>
+  </div>
+  <div id="tip" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/tucson-loop-access/loop.js"></script>
+</body>
+</html>

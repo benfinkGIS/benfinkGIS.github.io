@@ -1,0 +1,106 @@
+{
+  "generated": "2026-11-10 21:18 UTC",
+  "status": "DRAFT baseline: shortest travel time, no traffic-stress weighting",
+  "study_bbox_south_west_north_east": [
+    32.03,
+    -111.3,
+    32.5,
+    -110.7
+  ],
+  "speeds_mph": {
+    "bike": 10.0,
+    "trail": 5.0,
+    "walk": 3.0,
+    "steps": 1.5
+  },
+  "network": {
+    "osm_data_as_of": [
+      "2026-10-04"
+    ],
+    "ways_added_from_loop_build": 22,
+    "ways": 169588,
+    "nodes": 288967,
+    "edges": 381982,
+    "one_way_edges": 38756,
+    "miles_total": 14839.5,
+    "miles_by_class": {
+      "trunk": 40.8,
+      "primary": 415.2,
+      "secondary": 577.5,
+      "tertiary": 701.4,
+      "unclassified": 327.5,
+      "residential": 3982.3,
+      "living_street": 0.6,
+      "service": 4993.3,
+      "road": 0.0,
+      "cycleway": 329.8,
+      "path": 978.4,
+      "track": 728.6,
+      "footway": 1762.7,
+      "steps": 1.4
+    },
+    "private_streets": {
+      "edges": 33138,
+      "miles": 1531.1,
+      "nodes_only_on_private_streets": 22123,
+      "nodes_that_reach_the_loop_only_through_them": 25009
+    },
+    "loop_nodes": 1361,
+    "loop_ways_not_in_network": [
+      1534170302
+    ],
+    "nodes_that_cannot_reach_loop": 7573,
+    "street_nodes_that_cannot_reach_loop": 3967
+  },
+  "residents": {
+    "blocks_in_county": 16635,
+    "population_county": 1043433,
+    "housing_units_county": 470132,
+    "blocks_in_study_area": 12953,
+    "populated_blocks_in_study_area": 10945,
+    "population_study_area": 933590,
+    "housing_units_study_area": 417454,
+    "population_outside_study_area": 109843,
+    "blocks_attached_from_over_300_m": {
+      "blocks": 104,
+      "population": 11416
+    },
+    "blocks_attached_to_private_streets": {
+      "blocks": 1297,
+      "population": 105576
+    },
+    "blocks_whose_nearest_street_is_cut_off": {
+      "blocks": 12,
+      "population": 1862
+    },
+    "median_attach_distance_m": 49.6
+  },
+  "baseline_ride_time_to_loop": {
+    "within_5_min": {
+      "population": 147347,
+      "share_of_study_area": 0.1578,
+      "share_of_county": 0.1412
+    },
+    "within_10_min": {
+      "population": 397241,
+      "share_of_study_area": 0.4255,
+      "share_of_county": 0.3807
+    },
+    "within_15_min": {
+      "population": 595863,
+      "share_of_study_area": 0.6382,
+      "share_of_county": 0.5711
+    },
+    "within_20_min": {
+      "population": 723385,
+      "share_of_study_area": 0.7748,
+      "share_of_county": 0.6933
+    },
+    "within_30_min": {
+      "population": 837095,
+      "share_of_study_area": 0.8966,
+      "share_of_county": 0.8023
+    }
+  },
+  "attribution": "Streets (c) OpenStreetMap contributors, ODbL; population: U.S. Census Bureau, 2020 Census"
+}

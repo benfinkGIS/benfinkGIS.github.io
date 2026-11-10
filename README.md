@@ -14,6 +14,12 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tucson-golf-water/data/courses.geojson` | Active course boundaries, built from OpenStreetMap by `tools/build_courses.py` |
 | `tools/build_courses.py` | Refreshes `courses.geojson` (needs Python and `pip install shapely`). Not used by the site at runtime |
 | `tools/pima_golf_water_memo.json` | The Pima County water-use table, typed from the memo (see below). `build_courses.py` merges it into the GeoJSON |
+| `tucson-loop-access/index.html` | Tucson Loop Access, page 1: who lives far from The Loop (headline figures, split bar, map, communities) |
+| `tucson-loop-access/grow/index.html` | Tucson Loop Access, page 2: where The Loop could grow (candidate segments and combined build-outs) |
+| `tucson-loop-access/loop.js`, `loop.css` | Charts and map for both Loop pages (Leaflet), in the site's look |
+| `tucson-loop-access/data/*.json` | What the Loop pages read. Written by `tools/publish_loop_access.py`; don't edit by hand |
+| `tools/build_loop.py`, `build_network.py`, `build_access.py`, `test_segments.py`, `publish_loop_access.py` | The Loop analysis, run in that order (see below). Not used by the site at runtime |
+| `tools/loop-review/` | Working pages for checking the Loop analysis (a satellite review map and a plain draft of the charts). Marked noindex; not linked from the site |
 | `404.html` | Not-found page |
 | `assets/style.css` | Shared styles (late-90s desktop look; plain CSS, no web fonts) |
 | `assets/*.svg` | Pixel-style icons. `globe.svg` doubles as the favicon. |
@@ -24,6 +30,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 
 - Replace the About placeholder text in `index.html` (search for `TODO`).
 - Tucson golf map: water use is in popups and the table only. Next: map layers (for example colour by supply, size by use).
+- Tucson Loop Access: check the draft Loop extent section by section (use `tools/loop-review/`), then count traffic stress in the ride times.
 - Bump the "Last updated" date in each page footer when content changes.
 
 ## Refreshing the golf course data
@@ -36,6 +43,28 @@ This queries OpenStreetMap (Overpass API, which is sometimes busy; the script re
 inside Pima County and rewrites `tucson-golf-water/data/courses.geojson`. OpenStreetMap does not mark closed courses here, so
 the script keeps a hand-maintained list of closed courses to leave out (`EXCLUDE_CLOSED`). Re-check
 that list on each refresh, and update the "Data sources and methods" text on the page if it changes.
+
+## Refreshing the Loop access data
+
+```
+py tools/build_loop.py
+py tools/build_network.py
+py tools/build_access.py
+py tools/test_segments.py
+py tools/publish_loop_access.py
+```
+
+Needs Python with numpy, scipy and shapely. In order, these assemble a draft extent of The Loop from
+OpenStreetMap, build the street-and-path network and attach 2020 Census blocks to it, summarise residents
+by ride time, score candidate new segments, and copy the results into `tucson-loop-access/data/`.
+Downloads are cached in the system temp folder (`finkgeo_loop_cache`), and the network itself is kept
+there, not in the repo. If the main Overpass servers are down, pass
+`--server https://overpass.openstreetmap.fr/api/interpreter` to the first, second and fourth scripts;
+that server's copy of the map can be weeks old.
+
+The numbers are a first cut: ride times ignore traffic, the Loop extent is a draft, and candidate
+segments get generous entrances. Each script's header says what it assumes. If a rebuild changes the
+picture, re-read the two notes boxes on the pages, which describe the 20-minute results in words.
 
 ## Water-use data
 
@@ -54,8 +83,9 @@ When the county publishes a newer memo, add its rows to the JSON and re-run the 
 
 ## External services
 
-The map page loads Leaflet from cdnjs (pinned version, with integrity hashes) and satellite imagery
-and labels from Esri's public tile servers, with the attribution Esri requires. The site itself sets no
+The map pages load Leaflet from cdnjs (pinned version, with integrity hashes) and basemap tiles from
+Esri's public tile servers (satellite imagery and labels on the golf map, the light gray canvas on the
+Loop pages), with the attribution Esri requires. The site itself sets no
 cookies, but visitors' browsers do contact those two services when the map loads. If the site ever
 becomes commercial, re-read Esri's terms for those tiles.
 

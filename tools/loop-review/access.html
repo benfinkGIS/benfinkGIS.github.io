@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Who lives far from The Loop? | Draft</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    /* Roles, not raw hex: light values here, dark values below. */
+    .viz-root {
+      color-scheme: light;
+      --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+      --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+      --series-1: #2a78d6;
+      /* ride-time bands, near to far (ordinal ramp, validated) */
+      --band-1: #86b6ef; --band-2: #5598e7; --band-3: #2a78d6; --band-4: #1c5cab; --band-5: #0d366b;
+      /* residents far from the Loop per map cell, few to many (sequential) */
+      --seq-1: #b7d3f6; --seq-2: #6da7ec; --seq-3: #2a78d6; --seq-4: #104281;
+      --near: #d9d8d2;            /* cells where everyone is within the limit */
+      --loop: #0b0b0b; --loop-casing: #fcfcfb;
+      --cand: #eb6834;            /* candidate new segments (second categorical slot) */
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:where(:not([data-theme="light"])) .viz-root {
+        color-scheme: dark;
+        --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+        --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+        --series-1: #3987e5;
+        --band-1: #184f95; --band-2: #256abf; --band-3: #3987e5; --band-4: #6da7ec; --band-5: #b7d3f6;
+        --seq-1: #104281; --seq-2: #256abf; --seq-3: #5598e7; --seq-4: #9ec5f4;
+        --near: #3a3a37;
+        --loop: #f0efec; --loop-casing: #1a1a19;
+        --cand: #d95926;
+      }
+    }
+    :root[data-theme="dark"] .viz-root {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+      --band-1: #184f95; --band-2: #256abf; --band-3: #3987e5; --band-4: #6da7ec; --band-5: #b7d3f6;
+      --seq-1: #104281; --seq-2: #256abf; --seq-3: #5598e7; --seq-4: #9ec5f4;
+      --near: #3a3a37;
+      --loop: #f0efec; --loop-casing: #1a1a19;
+      --cand: #d95926;
+    }
+
+    html, body { margin: 0; }
+    body.viz-root { background: var(--page); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 56px; }
+    h1 { font-size: 28px; line-height: 1.2; margin: 0 0 6px; font-weight: 650; }
+    .sub { color: var(--ink-2); margin: 0 0 4px; max-width: 70ch; }
+    .draft { display: inline-block; margin: 0 0 18px; padding: 2px 8px; border: 1px solid var(--axis); border-radius: 4px; color: var(--ink-2); font-size: 13px; }
+
+    .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 16px; }
+    .filters .lab { color: var(--ink-2); }
+    .seg { display: inline-flex; border: 1px solid var(--axis); border-radius: 6px; overflow: hidden; background: var(--surface); }
+    .seg label { cursor: pointer; }
+    .seg input { position: absolute; opacity: 0; pointer-events: none; }
+    .seg span { display: block; padding: 6px 14px; border-left: 1px solid var(--axis); color: var(--ink-2); }
+    .seg label:first-child span { border-left: 0; }
+    .seg input:checked + span { background: var(--ink); color: var(--surface); }
+    .seg input:focus-visible + span { outline: 2px solid var(--series-1); outline-offset: -2px; }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin: 0 0 16px; }
+    .card h2 { font-size: 16px; margin: 0 0 2px; font-weight: 650; }
+    .card .cap { color: var(--ink-2); margin: 0 0 14px; font-size: 14px; }
+
+    .lead { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin: 0 0 16px; }
+    .lead .card { margin: 0; }
+    .hero .num { font-size: 56px; line-height: 1.05; font-weight: 650; letter-spacing: -0.01em; }
+    .tile .num { font-size: 30px; line-height: 1.15; font-weight: 650; }
+    .lead .lab { color: var(--ink-2); margin-top: 6px; }
+
+    /* tall segmented bar */
+    .split { display: flex; gap: 2px; height: 28px; }
+    .split .part { border-radius: 4px; min-width: 0; display: flex; align-items: center; cursor: default; outline-offset: 2px; }
+    .split .part span { padding: 0 8px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+    .split .part:hover, .split .part:focus-visible { filter: brightness(1.08); }
+    .bracket { position: relative; height: 34px; margin-top: 6px; }
+    .bracket i { position: absolute; top: 0; right: 0; height: 6px; border: 1px solid var(--ink-2); border-top: 0; border-radius: 0 0 3px 3px; }
+    .bracket b { position: absolute; top: 10px; right: 0; font-weight: 400; color: var(--ink-2); font-size: 13px; white-space: nowrap; }
+    .bracket b strong { color: var(--ink); font-weight: 650; }
+    .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 10px 0 0; padding: 0; list-style: none; color: var(--ink-2); font-size: 13px; }
+    .legend li { display: flex; align-items: center; gap: 6px; }
+    .legend .sw { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+    .legend .line { width: 18px; height: 0; border-top: 3px solid var(--loop); flex: none; }
+    .legend .dash { width: 18px; height: 0; border-top: 3px dashed var(--cand); flex: none; }
+
+    #map { height: 540px; border-radius: 6px; background: var(--grid); }
+    .leaflet-container { font: inherit; }
+    .hex { transition: fill-opacity .08s; }
+
+    /* ranked bars */
+    .rank { display: grid; grid-template-columns: minmax(110px, 200px) 1fr; gap: 8px 12px; align-items: center; }
+    .rank .name { color: var(--ink); overflow-wrap: anywhere; }
+    .rank .track { display: flex; align-items: center; gap: 8px; min-width: 0; border-left: 1px solid var(--axis); padding: 2px 0; outline-offset: 2px; }
+    .rank .bar { height: 16px; background: var(--series-1); border-radius: 0 4px 4px 0; flex: none; }
+    .rank .track:hover .bar, .rank .track:focus-visible .bar { filter: brightness(1.12); }
+    .rank .val { color: var(--ink); font-variant-numeric: tabular-nums; flex: 1 1 0; min-width: 0; }
+    .rank .val small { color: var(--ink-2); font-size: 13px; }
+    .rank.cand .bar { background: var(--cand); }
+    .rank .pick { font: inherit; color: var(--ink); background: none; border: 0; padding: 0; text-align: left; cursor: pointer; overflow-wrap: anywhere; }
+    .rank .pick:hover, .rank .pick:focus-visible { text-decoration: underline; }
+    .rank .pick[aria-pressed="true"] { font-weight: 650; }
+    .rank .pick small { display: block; color: var(--ink-2); font-size: 13px; font-weight: 400; }
+
+    .packlead { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 24px; align-items: end; margin: 0 0 18px; }
+    .packlead .num { font-size: 30px; line-height: 1.15; font-weight: 650; }
+    .packlead .lab { color: var(--ink-2); margin-top: 6px; font-size: 14px; }
+    .meter { height: 12px; border-radius: 6px; overflow: hidden; background: color-mix(in srgb, var(--cand) 24%, var(--surface)); }
+    .meter i { display: block; height: 100%; background: var(--cand); border-radius: 6px 0 0 6px; }
+    @media (max-width: 760px) { .packlead { grid-template-columns: 1fr; gap: 12px; } }
+
+    details { margin-top: 14px; }
+    summary { cursor: pointer; color: var(--ink-2); }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; font-size: 14px; }
+    th, td { text-align: left; padding: 5px 10px 5px 0; border-bottom: 1px solid var(--grid); }
+    th { color: var(--ink-2); font-weight: 600; }
+    td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; padding-right: 0; padding-left: 10px; }
+    .tablewrap { overflow-x: auto; }
+
+    .notes { color: var(--ink-2); font-size: 14px; padding-left: 18px; margin: 0; }
+    .notes li { margin: 0 0 6px; }
+    .notes strong { color: var(--ink); font-weight: 600; }
+
+    #tip { position: fixed; z-index: 2000; pointer-events: none; max-width: 260px; background: var(--surface); color: var(--ink-2);
+           border: 1px solid var(--axis); border-radius: 6px; padding: 8px 10px; font-size: 13px; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+    #tip strong { display: block; color: var(--ink); font-size: 15px; font-weight: 650; }
+    #err { color: #a00000; font-weight: 600; }
+
+    @media (max-width: 760px) {
+      .lead { grid-template-columns: 1fr 1fr; }
+      .lead .hero { grid-column: 1 / -1; }
+      .hero .num { font-size: 48px; }
+      #map { height: 420px; }
+    }
+  </style>
+</head>
+<body class="viz-root">
+  <main>
+    <h1>Who lives far from The Loop?</h1>
+    <p class="sub">Residents of the Tucson area by how long it takes to bike from home to the nearest point on the Chuck Huckelberry Loop.</p>
+    <p class="draft">Draft: unweighted ride times at 10 mph. See the notes at the bottom before quoting a number.</p>
+    <p id="err" role="alert" hidden></p>
+
+    <div class="filters">
+      <span class="lab" id="flab">Count a home as far when the ride is more than</span>
+      <span class="seg" id="thresholds" role="radiogroup" aria-labelledby="flab"></span>
+      <span class="lab" id="mlab" hidden>Combined build-out picks by</span>
+      <span class="seg" id="modes" role="radiogroup" aria-labelledby="mlab" hidden></span>
+    </div>
+
+    <div class="lead">
+      <section class="card hero" aria-live="polite">
+        <div class="num" id="hero-num">&hellip;</div>
+        <div class="lab" id="hero-lab">&nbsp;</div>
+      </section>
+      <section class="card tile">
+        <div class="num" id="share-num">&hellip;</div>
+        <div class="lab" id="share-lab">&nbsp;</div>
+      </section>
+      <section class="card tile">
+        <div class="num" id="dist-num">&hellip;</div>
+        <div class="lab" id="dist-lab">&nbsp;</div>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2>Everyone, by ride time to the Loop</h2>
+      <p class="cap" id="split-cap">&nbsp;</p>
+      <div class="split" id="split" role="img"></div>
+      <div class="bracket" id="bracket"><i></i><b></b></div>
+      <ul class="legend" id="split-legend"></ul>
+    </section>
+
+    <section class="card">
+      <h2 id="map-title">Where the far-away residents live</h2>
+      <p class="cap" id="map-cap">&nbsp;</p>
+      <div id="map" role="region" aria-labelledby="map-title"></div>
+      <ul class="legend" id="map-legend"></ul>
+    </section>
+
+    <section class="card">
+      <h2 id="rank-title">Communities with the most residents far from the Loop</h2>
+      <p class="cap" id="rank-cap">&nbsp;</p>
+      <div class="rank" id="rank"></div>
+      <details>
+        <summary>Show the numbers as tables</summary>
+        <div class="tablewrap"><table id="t-bands"></table></div>
+        <div class="tablewrap"><table id="t-places"></table></div>
+      </details>
+    </section>
+
+    <section class="card" id="cand-card" hidden>
+      <h2>What a new segment would do</h2>
+      <p class="cap" id="cand-cap">&nbsp;</p>
+      <div class="rank cand" id="cands"></div>
+      <p class="cap" id="cand-together" style="margin: 14px 0 0; color: var(--ink)"></p>
+      <details>
+        <summary>Show every candidate as a table</summary>
+        <div class="tablewrap"><table id="t-cands"></table></div>
+      </details>
+    </section>
+
+    <section class="card" id="pack-card" hidden>
+      <h2>If the best of them were built together</h2>
+      <p class="cap" id="pack-cap">&nbsp;</p>
+      <div class="packlead">
+        <div>
+          <div class="num" id="pack-num">&hellip;</div>
+          <div class="lab" id="pack-lab">&nbsp;</div>
+        </div>
+        <div>
+          <div class="meter" id="pack-meter" role="img"><i></i></div>
+          <div class="lab" id="pack-meter-lab">&nbsp;</div>
+        </div>
+      </div>
+      <div class="rank cand" id="pack"></div>
+      <details>
+        <summary>Show the steps as a table</summary>
+        <div class="tablewrap"><table id="t-pack"></table></div>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2>What these numbers are, and are not</h2>
+      <ul class="notes" id="notes"></ul>
+    </section>
+  </main>
+  <div id="tip" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="access.js"></script>
+</body>
+</html>

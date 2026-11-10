@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Loop Draft Review | Fink Geospatial</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { font: 13px/1.35 Tahoma, "MS Sans Serif", Verdana, sans-serif; color: #000; background: #008080; }
+    #map { position: absolute; inset: 0 0 24px 0; background: #1b1b1b; }
+    .panel { position: absolute; z-index: 1000; top: 10px; left: 10px; width: 290px; max-height: calc(100% - 60px);
+             display: flex; flex-direction: column; background: #c0c0c0;
+             border: 2px solid; border-color: #fff #404040 #404040 #fff; box-shadow: 1px 1px 0 #000; }
+    .titlebar { background: #000080; color: #fff; font-weight: bold; padding: 3px 6px; display: flex; justify-content: space-between; align-items: center; }
+    .titlebar button { font: inherit; font-weight: bold; width: 20px; height: 18px; padding: 0; line-height: 1; background: #c0c0c0;
+                       border: 2px solid; border-color: #fff #404040 #404040 #fff; cursor: pointer; }
+    .body { padding: 8px; overflow: auto; }
+    .panel.min .body { display: none; }
+    h2 { font-size: 12px; margin: 10px 0 4px; border-bottom: 1px solid #808080; padding-bottom: 2px; }
+    h2:first-child { margin-top: 0; }
+    label.row { display: flex; align-items: center; gap: 6px; margin: 3px 0; cursor: pointer; }
+    label.row span.n { margin-left: auto; color: #333; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .sw { flex: none; width: 22px; height: 0; border-top: 4px solid; }
+    .sw.dash { border-top: 2px dashed #fff; background: #555; height: 2px; }
+    .dot { flex: none; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #000; box-sizing: border-box; margin: 0 6px; }
+    .dot.plain { border: 0; }
+    .dot.ring { background: transparent; border: 2px solid #fff; outline: 1px solid #000; }
+    .note { margin: 6px 0 0; color: #222; }
+    .draft { background: #ffff00; border: 1px solid #000; padding: 3px 5px; font-weight: bold; margin-bottom: 6px; }
+    #status { position: absolute; left: 0; right: 0; bottom: 0; height: 24px; box-sizing: border-box; background: #c0c0c0;
+              border-top: 2px solid #fff; padding: 3px 8px; display: flex; gap: 16px; white-space: nowrap; overflow: hidden; }
+    #status span { border: 1px solid; border-color: #808080 #fff #fff #808080; padding: 0 6px; }
+    #err { color: #a00000; font-weight: bold; }
+    .leaflet-popup-content { font: 12px/1.4 Tahoma, Verdana, sans-serif; margin: 10px 12px; }
+    @media (max-width: 600px) { .panel { width: calc(100% - 20px); max-height: 55%; } }
+  </style>
+</head>
+<body>
+  <div id="map" role="region" aria-label="Satellite map of the draft Loop extent"></div>
+
+  <div class="panel" id="panel">
+    <div class="titlebar"><span>Loop Draft Review</span><button type="button" id="min" aria-label="Minimize or restore the legend">_</button></div>
+    <div class="body">
+      <div class="draft">DRAFT: built from OpenStreetMap by rule. Not checked on the ground.</div>
+
+      <h2>Loop draft (<span id="total">&hellip;</span> mi)</h2>
+      <div id="tiers"></div>
+
+      <h2>Where the Loop meets something else</h2>
+      <div id="points"></div>
+
+      <h2>Residents: baseline minutes to the Loop</h2>
+      <div id="blocks"><p class="note">Not built yet. Run: py tools/build_network.py</p></div>
+
+      <h2>Context</h2>
+      <label class="row"><input type="checkbox" data-layer="others"><i class="sw dash"></i>Other paved bike paths<span class="n" id="n-others"></span></label>
+      <label class="row"><input type="checkbox" data-layer="labels" checked>Road and place labels</label>
+
+      <p class="note">Click any line or dot for details and a link to it on OpenStreetMap. The address bar tracks where you are looking, so you can copy it to point at a spot.</p>
+      <p class="note" id="built"></p>
+    </div>
+  </div>
+
+  <div id="status"><span id="pos">&nbsp;</span><span id="msg">Loading&hellip;</span><span id="err" hidden></span></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="review.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+/* Tucson Loop Access pages: charts and map in the site's circa-1999 look.
+   Loaded after /assets/style.css, which supplies the windows, toolbar buttons and tables. */
+
+.loopviz {
+  /* ride-time bands, near to far: one hue, light to dark (checked with the dataviz palette validator) */
+  --band-1: #86b6ef; --band-2: #5598e7; --band-3: #2a78d6; --band-4: #1c5cab; --band-5: #0d366b;
+  /* residents far from the Loop per map cell, few to many */
+  --seq-1: #b7d3f6; --seq-2: #6da7ec; --seq-3: #2a78d6; --seq-4: #104281;
+  --near: #d4d0c8;          /* map cells where everyone is within the limit */
+  --series: #2a78d6;        /* bars: residents far away */
+  --cand: #eb6834;          /* candidate new segments */
+  --loopline: #000;
+}
+
+/* ---------- Settings (a group box) ---------- */
+.groupbox {
+  margin: 14px 0;
+  padding: 8px 10px 10px;
+  border: 2px groove #fff;
+  background: var(--face);
+}
+.groupbox legend { padding: 0 4px; font: bold 13px/1.2 Tahoma, Verdana, sans-serif; }
+.groupbox .row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.groupbox .row + .row { margin-top: 6px; }
+.groupbox .row > span { font-size: 13px; }
+.groupbox .toolbar { padding: 0; }
+
+/* ---------- Headline figures ---------- */
+.stats { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin: 0 0 14px; }
+.stat {
+  padding: 8px 10px;
+  background: var(--face);
+  border: 2px solid;
+  border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+  box-shadow: inset -1px -1px var(--lo);
+}
+.stat .lab { font-size: 13px; margin-top: 6px; }
+.stat .num { font: bold 26px/1.15 Tahoma, Verdana, sans-serif; color: var(--navy); }
+/* the lead figure reads like an old hit counter */
+.counter {
+  display: inline-block;
+  padding: 4px 10px 2px;
+  background: #000; color: #33ff33;
+  font: bold clamp(34px, 8vw, 50px)/1.1 "Courier New", Courier, monospace;
+  letter-spacing: 2px;
+  border: 2px solid;
+  border-color: var(--lo) var(--hi) var(--hi) var(--lo);
+}
+@media (max-width: 560px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stats .lead-stat { grid-column: 1 / -1; }
+}
+
+/* ---------- Sunken chart panel ---------- */
+.chartbox {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 2px solid;
+  border-color: var(--lo) var(--hi) var(--hi) var(--lo);
+  box-shadow: inset 1px 1px var(--dk);
+}
+.cap { font-size: 13px; color: var(--dk); margin: 0 0 8px; }
+
+/* split bar: one whole, five parts */
+.split { display: flex; gap: 2px; height: 28px; }
+.split .part { min-width: 0; display: flex; align-items: center; cursor: default; }
+.split .part span { padding: 0 6px; font: bold 12px/1 Tahoma, Verdana, sans-serif; white-space: nowrap; }
+.split .part:hover, .split .part:focus-visible { filter: brightness(1.1); }
+.bracket { position: relative; height: 32px; margin-top: 5px; }
+.bracket i { position: absolute; top: 0; right: 0; height: 6px; border: 1px solid #000; border-top: 0; }
+.bracket b { position: absolute; top: 10px; right: 0; font-weight: normal; font-size: 13px; white-space: nowrap; }
+.bracket b strong { font-weight: bold; }
+@media (max-width: 480px) { .bracket b { white-space: normal; text-align: right; left: 0; } .bracket { height: 48px; } }
+
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 12px; }
+.legend li { display: flex; align-items: center; gap: 5px; }
+.legend .sw { width: 12px; height: 12px; border: 1px solid #000; flex: none; }
+.legend .line { width: 18px; height: 0; border-top: 3px solid var(--loopline); flex: none; }
+.legend .dash { width: 18px; height: 0; border-top: 3px dashed var(--cand); flex: none; }
+.viewer .legend { margin: 0; padding: 5px 6px; background: var(--face); }
+
+/* ranked bars */
+.rank { display: grid; grid-template-columns: minmax(96px, 170px) 1fr; gap: 6px 10px; align-items: center; }
+.rank .name { overflow-wrap: anywhere; }
+.rank .track { display: flex; align-items: center; gap: 6px; min-width: 0; border-left: 1px solid #000; padding: 2px 0; }
+.rank .bar { height: 14px; background: var(--series); flex: none; }
+.rank.cand .bar { background: var(--cand); }
+.rank .track:hover .bar, .rank .track:focus-visible .bar { filter: brightness(1.15); }
+.rank .val { flex: 1 1 0; min-width: 0; font-size: 14px; }
+.rank .val small { color: var(--dk); font-size: 12px; }
+.rank .pick { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-align: left; cursor: pointer; overflow-wrap: anywhere; }
+.rank .pick .nm { text-decoration: underline; }
+.rank .pick:hover { color: var(--navy); }
+.rank .pick[aria-pressed="true"] { font-weight: bold; color: #000; }
+.rank .pick[aria-pressed="true"] .nm { text-decoration: none; }
+.rank .pick small { display: block; color: var(--dk); font-size: 12px; font-weight: normal; }
+
+/* progress bar, Windows-setup style */
+.progress {
+  height: 20px; padding: 2px;
+  background: #fff;
+  border: 2px solid;
+  border-color: var(--lo) var(--hi) var(--hi) var(--lo);
+}
+.progress i { display: block; height: 100%; background: repeating-linear-gradient(90deg, var(--cand) 0 10px, #fff 10px 12px); }
+.packlead { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 16px; align-items: end; margin: 0 0 12px; }
+.packlead .num { font: bold 26px/1.15 Tahoma, Verdana, sans-serif; color: var(--navy); }
+.packlead .lab { font-size: 13px; margin-top: 4px; }
+@media (max-width: 560px) { .packlead { grid-template-columns: 1fr; gap: 10px; } }
+
+/* tables behind a disclosure */
+details.tables { margin: 8px 0 0; }
+details.tables summary { cursor: pointer; color: var(--link); text-decoration: underline; font-size: 14px; }
+details.tables table { margin-top: 8px; font-size: 13px; }
+details.tables caption { text-align: left; font-weight: bold; padding: 6px 0 4px; }
+.grid td.num, .grid th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.grid.wrap td:first-child { white-space: normal; font-weight: normal; }
+
+/* ---------- Map ---------- */
+.loopviz .map-canvas, .loopviz #map { background: #dcdcdc; }
+.loopviz #map { height: 500px; }
+@media (max-width: 700px) { .loopviz #map { height: 400px; } }
+.hex { transition: fill-opacity .08s; }
+/* The site caps every svg at its container's width. Leaflet lifts that cap only for its built-in
+   overlay pane, so the extra panes used here (the Loop, candidate segments) need it lifted too. */
+.leaflet-container .leaflet-pane svg { max-width: none; max-height: none; }
+
+/* tooltip: the classic pale-yellow box */
+#tip {
+  position: fixed; z-index: 2000; pointer-events: none; max-width: 250px;
+  padding: 4px 7px;
+  background: #ffffe1; color: #000;
+  border: 1px solid #000;
+  font: 12px/1.4 Tahoma, Verdana, sans-serif;
+}
+#tip strong { display: block; font-size: 13px; }
+
+.next { margin-top: 12px; }
