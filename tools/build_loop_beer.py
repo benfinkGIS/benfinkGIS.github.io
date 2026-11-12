@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DRAFT: find places to grab a beer near The Loop and work out the ride off the path to each.
+"""Find places to grab a beer near The Loop and work out the ride off the path to each.
 
 Usage (from the repo root, after tools/build_loop.py and tools/build_network.py):
     py tools/build_loop_beer.py             # uses cached downloads where it has them
@@ -434,7 +434,7 @@ def main():
     out.sort(key=lambda s: (s["min"], s["name"]))
 
     meta = {"generated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-            "status": "DRAFT: places as the licence list has them, not checked on the ground",
+            "status": "Places as the licence list has them, not checked on the ground",
             "licences_downloaded": lic["downloaded"], "osm_names_as_of": osm_date,
             "max_minutes": MAX_MIN, "speed_mph": SPEED_MPH["bike"],
             "places_in_study_area": len(places), "places_within_max": len(out),

@@ -210,7 +210,7 @@
       li.appendChild(el("span", null, k[1]));
       legend.appendChild(li);
     });
-    [["line", "The Loop (draft extent)"], ["routeline", "Ride to the chosen place"]].forEach(function (x) {
+    [["line", "The Loop"], ["routeline", "Ride to the chosen place"]].forEach(function (x) {
       var li = el("li");
       li.appendChild(el("span", x[0]));
       li.appendChild(el("span", null, x[1]));
