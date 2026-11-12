@@ -19,6 +19,10 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tucson-loop-access/loop.js`, `loop.css` | Charts and map for both Loop pages (Leaflet), in the site's look |
 | `tucson-loop-access/data/*.json` | What the Loop pages read. Written by `tools/publish_loop_access.py`; don't edit by hand |
 | `tools/build_loop.py`, `build_network.py`, `build_access.py`, `test_segments.py`, `publish_loop_access.py` | The Loop analysis, run in that order (see below). Not used by the site at runtime |
+| `tucson-loop-beer/index.html` | A Beer Off The Loop: places licensed to pour within a short ride of The Loop (map, list, long-way-round table) |
+| `tucson-loop-beer/beer.js`, `beer.css` | Map and list for that page (Leaflet). Also loads `tucson-loop-access/loop.css` and `data/loop.json` |
+| `tucson-loop-beer/data/spots.json` | What the page reads. Written by `tools/build_loop_beer.py`; don't edit by hand |
+| `tools/build_loop_beer.py`, `loop_beer_edits.json` | Builds `spots.json` from the state liquor licence list and the Loop network (see below). The JSON file holds hand edits: places to drop, re-class or move |
 | `catalinas-3d/index.html` | Santa Catalinas 3D page: the interactive model, two rendered stills, data notes |
 | `catalinas-3d/viewer.js`, `catalinas.css` | The 3D viewer (three.js). Lifts a flat grid from the height image and works out light and shadows in the shader |
 | `catalinas-3d/data/` | What the viewer loads: `height.png`, `texture_4k.jpg`, `texture_8k.jpg`, `meta.json`. Written by `tools/export_catalinas_web.py`; don't edit by hand |
@@ -71,6 +75,20 @@ that server's copy of the map can be weeks old.
 The numbers are a first cut: ride times ignore traffic, the Loop extent is a draft, and candidate
 segments get generous entrances. Each script's header says what it assumes. If a rebuild changes the
 picture, re-read the two notes boxes on the pages, which describe the 20-minute results in words.
+
+## Refreshing the Loop beer stops
+
+```
+py tools/build_loop_beer.py --refresh
+```
+
+Run it after the Loop access scripts above, because it reuses their network (`network.npz` in the temp
+cache) and the draft Loop. It downloads the City of Tucson's "Liquor License - Active" layer (the state
+licence list for Pima County, read-only queries, business name and address only, never the licensee
+names), keeps the licences to pour on the premises, tidies the names against OpenStreetMap, and works
+out the ride from the Loop to each place. The licence points are the City's geocoding and a few are
+wrong: the script moves the ones OpenStreetMap can vouch for and lists every move in `spots.json`.
+Fix the rest, drop closed places, or change a place's kind in `tools/loop_beer_edits.json`.
 
 ## Water-use data
 

@@ -1,0 +1,61 @@
+/* A Beer Off The Loop: additions to the site's look.
+   Loaded after /assets/style.css and /tucson-loop-access/loop.css, which supply the windows,
+   toolbar buttons, group box, counter, chart panel, legend, map frame and tooltip. */
+
+.beerviz {
+  /* one colour per kind of place: the first five categorical slots of the dataviz palette, in order */
+  --k-bar: #2a78d6;
+  --k-brewery: #eb6834;
+  --k-beerwine: #1baf7a;
+  --k-restaurant: #eda100;
+  --k-venue: #e87ba4;
+  --route: #000080;
+}
+
+/* kind buttons carry their colour as a swatch, never as text colour */
+.groupbox .toolbar button .sw,
+.kind .sw {
+  display: inline-block; width: 10px; height: 10px; margin-right: 5px;
+  border: 1px solid #000; border-radius: 50%; vertical-align: -1px;
+}
+.groupbox .toolbar button .sw.brewery, .kind .sw.brewery, .legend .sw.brewery { border-radius: 0; transform: rotate(45deg) scale(.85); }
+.groupbox .toolbar button[aria-pressed="false"] .sw { background: transparent !important; }
+.legend .sw.dot { border-radius: 50%; }
+.legend .routeline { width: 18px; height: 0; border-top: 3px dashed var(--route); flex: none; }
+
+.stat .num.small { font-size: 19px; line-height: 1.25; overflow-wrap: anywhere; }
+
+/* map markers: breweries are diamonds, so kind is never colour alone */
+.beerviz #map { height: 540px; }
+@media (max-width: 700px) { .beerviz #map { height: 420px; } }
+.spot-mark { background: none; border: 0; }
+.spot-mark i {
+  display: block; width: 100%; height: 100%;
+  border: 1.5px solid #000; border-radius: 50%;
+  box-shadow: 0 0 0 1.5px #fff;
+}
+.spot-mark.brewery i { border-radius: 0; transform: rotate(45deg) scale(.8); }
+.spot-mark.on i { box-shadow: 0 0 0 2px #fff, 0 0 0 4.5px #000; }
+.spot-mark:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
+
+.leaflet-popup-content .kindline { margin: 2px 0 6px; }
+.leaflet-popup-content .ride { margin: 6px 0; padding: 6px 0; border-top: 1px solid var(--lo); border-bottom: 1px solid var(--hi); }
+.leaflet-popup-content .ride b { font-size: 15px; }
+
+/* section bars: clickable names, stacked by kind */
+.rank .stack { display: flex; gap: 2px; height: 14px; flex: none; }
+.rank .stack i { display: block; height: 100%; min-width: 2px; }
+
+/* the list */
+.list-scroll { max-height: 440px; overflow-y: auto; border: 1px solid var(--lo); margin-bottom: 0; }
+.list-scroll table { margin: 0; font-size: 13px; }
+.list-scroll thead th { position: sticky; top: 0; z-index: 1; text-align: left; }
+.list-scroll thead th.num { text-align: right; }
+#t-spots td, #t-gaps td { vertical-align: top; }
+#t-spots tr.on td { background: #ffffe1; }
+#t-spots .linkbtn, #t-gaps .linkbtn { font: inherit; font-weight: bold; }
+.kind { white-space: nowrap; }
+#t-gaps { font-size: 13px; }
+#t-gaps th { text-align: left; }
+#t-gaps th.num { text-align: right; }
+.empty { margin: 0; font-size: 13px; color: var(--dk); }

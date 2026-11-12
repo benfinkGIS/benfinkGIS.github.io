@@ -1,0 +1,10 @@
+{
+  "_about": "Hand edits for tools/build_loop_beer.py. Names are the licence list's, in capitals.",
+  "exclude": [],
+  "kind": {},
+  "move": {
+    "HI FI KITCHEN & COCKTAILS": [-110.96600, 32.22215],
+    "BASQUERIA": [-110.96585, 32.22190],
+    "OBON SUSHI + BAR + RAMEN": [-110.96585, 32.22190]
+  }
+}

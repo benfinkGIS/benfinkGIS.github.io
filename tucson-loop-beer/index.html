@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Beer Off The Loop | Fink Geospatial</title>
+  <meta name="description" content="Every brewery, bar and restaurant licensed to pour a beer within a short bike ride of Tucson's Chuck Huckelberry Loop, with the ride off the path to each one.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="A Beer Off The Loop | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/tucson-loop-beer/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+  <link rel="stylesheet" href="/tucson-loop-beer/beer.css">
+</head>
+<body class="loopviz beerviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** A Beer Off The Loop: every place licensed to pour within a short ride of the path *** Draft list, not yet checked on the ground *** Ride safe ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: A Beer Off The Loop</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; A Beer Off The Loop</p>
+            <h1>Where Can You Grab a Beer Along The Loop?</h1>
+
+            <div class="stripe" aria-hidden="true"></div>
+            <p class="construction">DRAFT. The places come straight from the state&rsquo;s liquor licence list and have not been checked on the ground.</p>
+            <p>The Chuck Huckelberry Loop is Tucson&rsquo;s network of shared-use paths along the rivers and washes. This map shows every brewery, bar and restaurant licensed to pour a beer within a short bike ride of it, and the way off the path to each one.</p>
+            <p>The ride is measured over the real street and path network from the nearest point where you can actually leave the Loop, so a bar just over the fence from the path can still be a long way round. It builds on the network from <a href="/tucson-loop-access/">Tucson Loop Access</a>.</p>
+            <noscript><div class="note"><p>The figures, map and list on this page need JavaScript.</p></div></noscript>
+
+            <fieldset class="groupbox">
+              <legend>Settings</legend>
+              <div class="row">
+                <span id="lim-label">Show places within a ride of</span>
+                <div class="toolbar" id="lim-buttons" role="group" aria-labelledby="lim-label"></div>
+              </div>
+              <div class="row">
+                <span id="kind-label">Show</span>
+                <div class="toolbar" id="kind-buttons" role="group" aria-labelledby="kind-label"></div>
+              </div>
+            </fieldset>
+
+            <div class="stats" aria-live="polite">
+              <div class="stat lead-stat">
+                <div class="counter" id="hero-num">&hellip;</div>
+                <div class="lab" id="hero-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="brew-num">&hellip;</div>
+                <div class="lab" id="brew-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="near-num">&hellip;</div>
+                <div class="lab" id="near-lab">&nbsp;</div>
+              </div>
+            </div>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Loop Beer Viewer: Places to Pour, and the Way There</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Full Extent</button>
+                <button type="button" id="tb-base" aria-pressed="false">Satellite</button>
+              </div>
+              <div class="map-canvas">
+                <div id="map" role="region" aria-label="Map of places to grab a beer near the Loop"></div>
+                <p id="map-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <ul class="legend" id="map-legend"></ul>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+            </div>
+            <p class="cap">Click a place to see the ride to it from the Loop. Every place is also in the list below.</p>
+
+            <h2 class="sec">Stops by part of the Loop</h2>
+            <div class="chartbox">
+              <p class="cap" id="sec-cap">&nbsp;</p>
+              <div class="rank" id="sections"></div>
+            </div>
+
+            <h2 class="sec">The list, nearest first</h2>
+            <div class="chartbox">
+              <p class="cap" id="list-cap">&nbsp;</p>
+              <div class="table-wrap list-scroll" tabindex="0" role="region" aria-label="List of places, nearest first">
+                <table class="grid wrap" id="t-spots"></table>
+              </div>
+            </div>
+
+            <h2 class="sec">So close, and yet so far</h2>
+            <div class="chartbox">
+              <p class="cap" id="gap-cap">&nbsp;</p>
+              <div class="table-wrap"><table class="grid wrap" id="t-gaps"></table></div>
+            </div>
+            <div class="note"><p>These are places you could nearly throw a bottle cap at from the path, where the legal way round is several times longer. The detour to Catalina Brewing is real: there is no direct way in from the path. The others have not been checked yet, and some may be a gate or a short link that the street map does not have.</p></div>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>Places:</strong> active Arizona liquor licences in Pima County, from the City of Tucson&rsquo;s public &ldquo;Liquor License - Active&rdquo; map layer, which copies the Arizona Department of Liquor Licenses and Control&rsquo;s list every day. Downloaded <span data-fill="licences">&hellip;</span>. Only licences to pour on the premises are used: microbrewery, bar, beer and wine bar, restaurant, and hotel. Shops, private clubs and one-off permits are left out. The data is provided &ldquo;as is&rdquo;.</li>
+              <li><strong>What a licence does not tell you:</strong> whether the taps are any good, the opening hours, or whether the doors are open today. A licence can stay active after a place shuts. A beer and wine bar licence is also held by some pizza places, a barber or two, and a grocery store.</li>
+              <li><strong>Kinds:</strong> a brewery holds a microbrewery licence or has &ldquo;brewing&rdquo;, &ldquo;brewery&rdquo; or &ldquo;cider house&rdquo; in its name. Hotels, golf clubs, cinemas and similar venues are picked out by name. Everything else goes by its licence.</li>
+              <li><strong>Locations:</strong> the City&rsquo;s geocoding of each licence address, which it calls approximate outside the city limits. About one in a hundred was well off. <span data-fill="moved">&hellip;</span> were moved, most to the OpenStreetMap place of the same name. Some wrong ones surely remain.</li>
+              <li><strong>Names:</strong> the licence list is in capitals. Where OpenStreetMap has the same place, its spelling is used. Otherwise the name is put in title case by rule, so a few read oddly.</li>
+              <li><strong>Ride:</strong> the fastest legal route from the Loop to the nearest street corner to each place, at <span data-fill="mph">&hellip;</span> mph, on the network from <a href="/tucson-loop-access/">Tucson Loop Access</a>. One-way streets are one-way and private streets cannot be cut through. Traffic is not counted: a mile on a fast arterial costs the same as a mile on a quiet street.</li>
+              <li><strong>The Loop:</strong> a draft extent assembled from OpenStreetMap. It has not been checked section by section. Parts of the Loop are named after the river or wash they follow.</li>
+              <li><strong>Streets, paths and names:</strong> &copy; OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">ODbL</a>.</li>
+            </ul>
+
+            <hr>
+            <h2 class="sec">Project checklist</h2>
+            <ul class="checklist">
+              <li class="done">Places to pour from the state licence list</li>
+              <li class="done">Ride from the Loop to each place</li>
+              <li class="done">Map, list and the long-way-round table</li>
+              <li>Check the places near the path on the ground</li>
+              <li>Weed out the licences that are not really a place to stop for a beer</li>
+              <li>Count traffic stress in the rides</li>
+            </ul>
+            <p>Know a place that is missing, shut, or in the wrong spot? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 12 November 2026</p>
+    </footer>
+  </div>
+  <div id="tip" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/tucson-loop-beer/beer.js"></script>
+</body>
+</html>
