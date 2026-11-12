@@ -217,7 +217,7 @@
     if (!legend) return;
     legend.textContent = "";
     function item(swatch, text) { var li = el("li"); li.appendChild(swatch); li.appendChild(el("span", null, text)); legend.appendChild(li); }
-    item(el("span", "line"), "The Loop (draft, " + loop.miles + " mi)");
+    item(el("span", "line"), "The Loop (" + loop.miles + " mi)");
     if (growPage && segs) item(el("span", "dash"), "Candidate segment (those listed below)");
     var near = el("span", "sw"); near.style.background = "var(--near)"; item(near, "Everyone within " + T() + " min");
     BREAK_LABELS.forEach(function (lab, k) {
