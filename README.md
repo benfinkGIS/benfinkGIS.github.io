@@ -29,6 +29,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `catalinas-3d/img/` | Stills rendered in Blender |
 | `tools/build_catalinas.py`, `deshade_catalinas.py`, `blender_catalinas.py`, `export_catalinas_web.py` | The Catalinas model pipeline (see below). Not used by the site at runtime |
 | `kit-fox-release/index.html` | Kit Fox Release Sites page: the step-by-step wizard, weight sliders, shortlist table, data notes |
+| `kit-fox-release/map/index.html` | The same wizard and map filling the whole window. The step and any changed weights carry over in the address |
 | `kit-fox-release/kitfox.js`, `kitfox.css` | The wizard and map (Leaflet). Recomputes the weighted score in the browser when a weight changes |
 | `kit-fox-release/data/` | What the page reads: `crit1.png` to `crit3.png` (the eight criterion scores) and `model.json`. Written by `tools/publish_kitfox.py`; don't edit by hand |
 | `tools/build_kitfox_shortlist.py`, `publish_kitfox.py` | The kit fox shortlist and page data (see below). Not used by the site at runtime |

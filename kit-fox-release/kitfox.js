@@ -18,7 +18,8 @@
     monument: ["National monuments and conservation areas", "#6250d6", "a national monument or conservation area"],
     acec: ["Areas of critical environmental concern", "#8a1c1c", "an area of critical environmental concern"]
   };
-  var LO = 3, HI = 9;      // scores at or beyond these take the ends of the ramp
+  var LO = 3, HI = 9;
+  var FULL = document.body.classList.contains("kitfull");   // the full-page map at /kit-fox-release/map/      // scores at or beyond these take the ends of the ramp
 
   /* What each criterion measures and how it was scored. The breaks are the ones used in the model. */
   var CRIT = {
@@ -186,7 +187,7 @@
 
   function initMap() {
     var b = D.grid.bounds;
-    map = L.map("map", { minZoom: 6, maxZoom: 10, zoomControl: false, zoomSnap: 0.25, scrollWheelZoom: false });
+    map = L.map("map", { minZoom: 6, maxZoom: 10, zoomControl: false, zoomSnap: 0.25, scrollWheelZoom: FULL });
     L.tileLayer(ESRI + "World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
       maxZoom: 10, attribution: "Basemap &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors"
     }).addTo(map);
@@ -314,6 +315,7 @@
           if (isNaN(i)) return;
           weights[i] = +e.target.value;
           showWeights();
+          carry();
           redrawSoon(showShare);
         });
         $("reset").addEventListener("click", function () {
@@ -321,6 +323,7 @@
           D.criteria.forEach(function (c, i) { $("w" + i).value = weights[i]; });
           view.weights = weights;
           showWeights();
+          carry();
           redrawSoon(showShare);
         });
         showWeights();
@@ -338,7 +341,8 @@
           "<p>Every possible " + s.radius_km + " km circle was scored, then kept only if it is nearly all open public land, close to flat, and away from highways.</p>" +
           "<p>The orange rings are the " + D.shortlist.length + " best that are left. Each ring is drawn large and off-centre on purpose: it shows the general area, not the spot.</p>" +
           "<p>The outlines are wilderness and other designated areas. Use the Designations button to hide them.</p>" +
-          '<p><a href="#shortlist">See the table below</a>.</p>' +
+          (FULL ? '<p><a href="/kit-fox-release/#shortlist" data-carry="/kit-fox-release/" data-hash="#shortlist">See the table on the project page</a>.</p>'
+                : '<p><a href="#shortlist">See the table below</a>.</p>') +
           (changed() ? "<p><em>This screen uses the original weights, not the ones you set.</em></p>" : "");
       }
     });
@@ -354,6 +358,30 @@
     if (!el) return;
     el.textContent = pct(share);
     $("share-base").textContent = changed() ? "With my weights: " + pct(baseShare) : "These are my weights.";
+  }
+
+  /* The step and any changed weights ride in the address, so they survive a reload and carry
+     between the project page and the full-page map. */
+  function query() {
+    var q = [];
+    if (step > 0) q.push("step=" + (step + 1));
+    if (changed()) q.push("w=" + weights.join(","));
+    return q.length ? "?" + q.join("&") : "";
+  }
+  function carry() {
+    var q = query();
+    Array.prototype.forEach.call(document.querySelectorAll("a[data-carry]"), function (a) {
+      a.href = a.getAttribute("data-carry") + q + (a.getAttribute("data-hash") || "");
+    });
+    try { history.replaceState(null, "", location.pathname + q + location.hash); } catch (e) { /* file: pages */ }
+  }
+  function readQuery() {
+    var m = /[?&]w=([\d,]+)/.exec(location.search), s = /[?&]step=(\d+)/.exec(location.search);
+    if (m) {
+      var w = m[1].split(",").map(Number);
+      if (w.length === base.length && w.every(function (x) { return x >= 0 && x <= 40; }) && w.some(function (x) { return x > 0; })) weights = w;
+    }
+    return s ? +s[1] - 1 : 0;
   }
 
   function go(n) {
@@ -372,6 +400,7 @@
     $("key-short").hidden = !s.shortlist;
     if (s.shortlist && !desigAuto) { desigAuto = true; showDesig(true); }   // on the first visit; the button still turns it off
     $("sb-msg").textContent = s.msg;
+    carry();
     redrawSoon(showShare);
   }
 
@@ -520,6 +549,7 @@
       }
       base = D.criteria.map(function (c) { return c.weight; });
       weights = base.slice();
+      var start = readQuery();
       view = { kind: "combo", weights: base };
       baseShare = draw();
 
@@ -529,8 +559,8 @@
       $("wiz-jump").addEventListener("change", function () { go(+this.value); });
       $("wiz-back").addEventListener("click", function () { go(step - 1); });
       $("wiz-next").addEventListener("click", function () { go(step + 1); });
-      fillPage();
-      go(0);
+      if ($("hero-num")) fillPage();      // the project page only; the full-page map has just the wizard
+      go(start);
     })
     .catch(function (e) { fail(e.message); });
 })();

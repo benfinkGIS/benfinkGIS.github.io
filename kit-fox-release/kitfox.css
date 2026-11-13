@@ -137,3 +137,30 @@ details.tables table { margin-top: 8px; font-size: 13px; }
 /* The site caps every svg at its container's width. Leaflet lifts that cap only for its built-in
    overlay pane, so the designation pane needs it lifted too. */
 .leaflet-container .leaflet-pane svg { max-width: none; max-height: none; }
+
+/* a link in the toolbar, dressed as a toolbar button */
+.toolbar .tb-link, .toolbar .tb-link:visited {
+  margin-left: auto;
+  padding: 3px 12px;
+  background: var(--face); color: #000;
+  font: bold 13px/1.3 Tahoma, Verdana, sans-serif; text-decoration: none;
+  border: 2px solid;
+  border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+  box-shadow: inset -1px -1px var(--lo);
+}
+.toolbar .tb-link:active { border-color: var(--dk) var(--hi) var(--hi) var(--dk); box-shadow: inset 1px 1px var(--lo); }
+
+/* ---------- Full-page map (/kit-fox-release/map/): the wizard as a maximised window ---------- */
+html:has(body.kitfull) { height: 100%; }
+body.kitfull { height: 100%; padding: 0; overflow: hidden; }
+.kitfull .viewer { margin: 0; height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
+.kitfull .wiz { flex: 1; min-height: 0; grid-template-columns: 300px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); }
+.kitfull .wiz-pane { height: auto; }
+.kitfull .map-canvas { display: flex; min-height: 0; }
+.kitfull #map { flex: 1; height: auto; min-width: 0; }
+@media (max-width: 760px) {
+  .kitfull .wiz { grid-template-columns: 1fr; grid-template-rows: minmax(0, 40%) minmax(0, 1fr); }
+  .kitfull .wiz-pane { max-height: none; }
+  .kitfull #map { height: auto; }
+  .kitfull .scalebar { font-size: 11px; }
+}
