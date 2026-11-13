@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Empty Homes | Fink Geospatial</title>
+  <meta name="description" content="How much housing in Pima County stands empty: winter homes owned from out of state, homes the Census finds vacant, buildings left unfinished and vacant-building cases, set against the count of people without a home.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Empty Homes | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/empty-homes/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+  <link rel="stylesheet" href="/empty-homes/empty.css">
+</head>
+<body class="loopviz emptyviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** Empty Homes: winter homes, vacant homes and unfinished buildings in Pima County *** Counted from the Assessor&rsquo;s tax roll and the Census *** Set against the people counted without a home ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: Empty Homes</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; Empty Homes</p>
+            <h1>How Many Homes Sit Empty?</h1>
+
+            <p>A part-built apartment complex on West Aerie Drive in Marana started this. The county Assessor lists it as a &ldquo;partially complete multiple residence&rdquo;, and its parcel record has not changed since 2022. <button type="button" class="linkbtn" id="aerie">Show it on the map</button>.</p>
+            <p>On one night in January 2026, volunteers counted <span data-fill="homeless">&hellip;</span> people without a home in Pima County. This page counts the housing that stands empty in the same county: homes kept for part of the year by owners who live in another state, homes the Census finds vacant, and buildings that were started and not finished.</p>
+            <noscript><div class="note"><p>The figures, map and tables on this page need JavaScript.</p></div></noscript>
+
+            <div class="stats" aria-live="polite">
+              <div class="stat lead-stat">
+                <div class="counter" id="hero-num">&hellip;</div>
+                <div class="lab">winter homes: not a main residence, not a rental, owned by people who get their tax bill outside Arizona</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="other-num">&hellip;</div>
+                <div class="lab" id="other-lab">homes vacant and not for rent, for sale or seasonal (Census estimate)</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="homeless-num">&hellip;</div>
+                <div class="lab" id="homeless-lab">people counted without a home</div>
+              </div>
+            </div>
+
+            <fieldset class="groupbox">
+              <legend>Settings</legend>
+              <div class="row">
+                <span id="shade-label">Shade the map by</span>
+                <div class="toolbar" id="shade-buttons" role="group" aria-labelledby="shade-label"></div>
+              </div>
+              <div class="row">
+                <span id="show-label">Show</span>
+                <div class="toolbar" id="show-buttons" role="group" aria-labelledby="show-label"></div>
+              </div>
+            </fieldset>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t" id="viewer-title">Empty Homes Viewer</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Full Extent</button>
+                <button type="button" id="tb-base" aria-pressed="false">Satellite</button>
+                <a class="tb-link" href="/empty-homes/map/" data-carry="/empty-homes/map/">Full-Page Map &raquo;</a>
+              </div>
+              <div class="map-canvas">
+                <div id="map" role="region" aria-label="Map of winter homes, vacant homes and unfinished buildings in Pima County"></div>
+                <p id="map-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <ul class="legend" id="map-legend"></ul>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+            </div>
+            <p class="cap">Point at a shaded area for its count. Click a square or a triangle for the record behind it. Winter homes are shown only as counts per hexagon, never as single houses.</p>
+
+            <h2 class="sec">Set against the count</h2>
+            <div class="chartbox">
+              <p class="cap">Homes in Pima County, and the people counted without one. The Census rows are estimates for <span data-fill="acs-years">&hellip;</span>.</p>
+              <div class="rank" id="compare"></div>
+            </div>
+            <p>There are about <span data-fill="ratio">&hellip;</span> winter homes for every person counted. The rows cannot be added together: the winter homes come from the Assessor&rsquo;s tax roll and the other three from the Census, and a house can be in both.</p>
+            <div class="note"><p>Empty is not the same as available. These homes have owners, some need repairs, and a vacancy for rent or for sale is a home between occupants. The count of people is a one-night count and is generally treated as an undercount.</p></div>
+
+            <h2 class="sec">What counts as a winter home</h2>
+            <p>The Census cannot pick these out. Its &ldquo;seasonal&rdquo; category also holds cabins, timeshares and short-term rentals, and it counts a winter home as occupied when the owners are in it for the season. The Assessor&rsquo;s tax roll can. A home is counted here when all four of these are true:</p>
+            <ol class="defn">
+              <li><strong>It is not a main home and not a rental.</strong> The Assessor taxes it as legal class 4.1: nobody has claimed it as a primary residence, and it is not registered as a rental.</li>
+              <li><strong>The tax bill goes out of state.</strong> The owner&rsquo;s mailing address is outside Arizona. Addresses in Canada and other countries count too.</li>
+              <li><strong>A person owns it.</strong> The owner is a person or a family trust, not a company or a bank.</li>
+              <li><strong>It is not on Mt Lemmon.</strong> Cabins in ZIP code 85619 are left out.</li>
+            </ol>
+            <div class="chartbox">
+              <div class="table-wrap"><table class="grid wrap" id="t-funnel"></table></div>
+            </div>
+            <p><span data-fill="both">&hellip;</span> of the <span data-fill="winter">&hellip;</span> were in the same class in both tax years the Assessor publishes (<span data-fill="taxyears">&hellip;</span>).</p>
+
+            <h2 class="sec">Where the owners get their mail</h2>
+            <div class="chartbox">
+              <p class="cap">Winter homes by the state or country the tax bill is sent to.</p>
+              <div class="rank" id="origin"></div>
+            </div>
+            <p>California leads, and not every California owner is here for the winter: some of these will be investments, inheritances or homes bought ahead of retirement. Washington, Minnesota, Colorado, Illinois, Wisconsin and Michigan follow.</p>
+
+            <h2 class="sec">Community by community</h2>
+            <div class="chartbox">
+              <p class="cap">Towns and named communities with <span data-fill="placemin">&hellip;</span> homes or more. Most winter homes first.</p>
+              <div class="table-wrap list-scroll" tabindex="0" role="region" aria-label="Table of communities">
+                <table class="grid wrap" id="t-places"></table>
+              </div>
+            </div>
+
+            <h2 class="sec">What they are worth</h2>
+            <div class="chartbox">
+              <p class="cap">The Assessor&rsquo;s full cash value, middle home of each kind. Assessed values run below sale prices.</p>
+              <div class="table-wrap"><table class="grid wrap" id="t-values"></table></div>
+            </div>
+            <p>Winter homes are assessed about the same as the homes people live in all year. <span data-fill="over1m">&hellip;</span> are assessed at $1 million or more, and <span data-fill="under250">&hellip;</span> at under $250,000.</p>
+
+            <h2 class="sec">Vacant for years?</h2>
+            <p>No public record says which homes have stood empty, or for how long. Three records come close:</p>
+            <ul class="notes">
+              <li><strong>Vacant-building cases.</strong> The City of Tucson has opened <span data-fill="cases-all">&hellip;</span> code enforcement cases about vacant or neglected buildings since <span data-fill="cases-since">&hellip;</span>. <span data-fill="cases-open">&hellip;</span> properties have a case still open, and <span data-fill="cases-old">&hellip;</span> of those have been open two years or more. These are buildings someone complained about, inside the city only.</li>
+              <li><strong>Unfinished buildings.</strong> The Assessor lists <span data-fill="unf-housing">&hellip;</span> parcels across the county with housing that is partially complete, <span data-fill="unf-apts">&hellip;</span> of them apartment sites, and <span data-fill="unf-comm">&hellip;</span> more with unfinished shops, offices and warehouses. The list includes sites where work is under way.</li>
+              <li><strong>The Census.</strong> About <span data-fill="other">&hellip;</span> homes in the county are vacant and not for rent, for sale or seasonal: foreclosures, homes in probate, homes needing repair and homes simply held empty. The Census does not ask how long.</li>
+            </ul>
+            <p>The Postal Service does record how long an address has gone without mail, and HUD publishes those counts by Census tract, including addresses vacant for more than two and more than three years. HUD releases them only to governments and non-profit organisations, so they are not on this page.</p>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>People without a home:</strong> the <span data-fill="pit-year">&hellip;</span> Point-in-Time Count by the Tucson Pima Collaboration to End Homelessness: <span data-fill="homeless">&hellip;</span> people in shelters and on the street on <span data-fill="pit-date">&hellip;</span>, against <span data-fill="pit-prior">&hellip;</span> the year before.</li>
+              <li><strong>Homes:</strong> the Pima County parcel layer published by the City of Tucson, residential parcels with a single-family house, a condominium or townhome, or a manufactured home: <span data-fill="homes">&hellip;</span> in all. Apartments and duplexes are left out.</li>
+              <li><strong>Legal class:</strong> the Pima County Assessor&rsquo;s Class Master files. Class 4.1 also covers homes that are vacant, for sale or owned by a bank, so a few of the winter homes will be those. <span data-fill="c41-az">&hellip;</span> more homes are in class 4.1 with an Arizona mailing address; those are not counted, though some will be second homes or stand empty.</li>
+              <li><strong>What the definition misses:</strong> winter residents who have their tax bill sent to the Tucson address, and those who claim the Arizona home as their main one. What it wrongly takes in: homes rented out by an out-of-state owner who has not registered the rental.</li>
+              <li><strong>Hexagons:</strong> <span data-fill="hexm">&hellip;</span> metres from centre to corner. A hexagon with fewer than <span data-fill="hexmin">&hellip;</span> winter homes is not drawn; <span data-fill="notdrawn">&hellip;</span> winter homes are counted in the totals and not shown on the map.</li>
+              <li><strong>Census vacancy:</strong> American Community Survey <span data-fill="acs-years">&hellip;</span>, tables B25002 and B25004. These are survey estimates. For a single tract the margin of error is often as large as the estimate, so read the tract map for the pattern and not for any one tract.</li>
+              <li><strong>Unfinished buildings:</strong> parcels the Assessor gives a &ldquo;partially complete&rdquo; use code. The map shows the housing ones.</li>
+              <li><strong>Vacant-building cases:</strong> City of Tucson code enforcement cases of the types Vacant/Nuisance Buildings, VANS Program and Lien Foreclosure Program. One triangle per property, dated from its oldest open case.</li>
+              <li><strong>Basemap:</strong> Esri. <strong>Script:</strong> <code>tools/build_empty_homes.py</code> in the site&rsquo;s repository. Data built <span data-fill="generated">&hellip;</span>.</li>
+            </ul>
+
+            <hr>
+            <p>Know a building on this map that is not what the record says? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 13 November 2026</p>
+    </footer>
+  </div>
+  <div id="tip" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/empty-homes/empty.js"></script>
+</body>
+</html>

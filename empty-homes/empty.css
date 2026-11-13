@@ -1,0 +1,55 @@
+/* Empty Homes: additions to the site's look.
+   Loaded after /assets/style.css and /tucson-loop-access/loop.css, which supply the windows,
+   toolbar buttons, group box, counter, chart panel, legend, ranked bars, map frame and tooltip. */
+
+.emptyviz {
+  /* counts and rates, low to high: one hue, light to dark (the site's blue ramp) */
+  --r-1: #cde2fb; --r-2: #86b6ef; --r-3: #3987e5; --r-4: #1c5cab; --r-5: #0d366b;
+  --series: #2a78d6;
+  --people: #eb6834;       /* the count of people: the palette's second hue */
+}
+
+.emptyviz #map { height: 560px; }
+@media (max-width: 700px) { .emptyviz #map { height: 430px; } }
+
+/* markers: shape tells them apart, not colour alone */
+.site-mark { background: none; border: 0; }
+.site-mark svg { display: block; overflow: visible; }
+.legend .sq { width: 11px; height: 11px; background: var(--people); border: 2px solid #000; flex: none; }
+.legend .sq.small { width: 7px; height: 7px; }
+.legend .tri { width: 0; height: 0; border: 7px solid transparent; border-top: 0; border-bottom: 12px solid #000; position: relative; flex: none; }
+.legend .tri::after { content: ""; position: absolute; left: -5px; top: 3px; border: 5px solid transparent; border-top: 0; border-bottom: 8px solid #ffff00; }
+.legend .tri.old::after { border-bottom-color: #000; }
+
+.groupbox .toolbar button .sw {
+  display: inline-block; width: 10px; height: 10px; margin-right: 5px;
+  border: 1px solid #000; vertical-align: -1px;
+}
+.groupbox .toolbar button .sw.sq { background: var(--people); }
+.groupbox .toolbar button .sw.tr { background: #ffff00; }
+.groupbox .toolbar button[aria-pressed="false"] .sw { opacity: .35; }
+
+/* the people row in the comparison is the one that is not housing */
+.rank .bar.people { background: repeating-linear-gradient(90deg, var(--people) 0 6px, #b84a1f 6px 8px); }
+.rank .name small { display: block; color: var(--dk); font-size: 12px; }
+/* on a phone the label sits above its bar, so the bar keeps the full width */
+@media (max-width: 560px) {
+  .emptyviz .rank { grid-template-columns: 1fr; gap: 2px 0; }
+  .emptyviz .rank .name small { display: inline; margin-left: 6px; }
+  .emptyviz .rank .track { margin-bottom: 8px; }
+}
+
+.linkbtn { font: inherit; color: var(--link); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+.linkbtn:hover { color: var(--navy); }
+
+ol.defn { margin: 0 0 12px; padding-left: 26px; }
+ol.defn li { margin-bottom: 5px; }
+
+.list-scroll { max-height: 420px; overflow-y: auto; border: 1px solid var(--lo); margin-bottom: 0; }
+.list-scroll table { margin: 0; font-size: 13px; }
+.list-scroll thead th { position: sticky; top: 0; z-index: 1; }
+.emptyviz table.grid th { text-align: left; }
+.emptyviz table.grid th.num { text-align: right; }
+#t-funnel, #t-values { font-size: 13px; }
+#t-funnel tr.result td { font-weight: bold; }
+code { font-family: "Courier New", Courier, monospace; font-size: 1em; }
