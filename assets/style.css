@@ -450,6 +450,28 @@ code { font: 13px "Courier New", Courier, monospace; }
 .b2 { background: #ffcc00; color: #000; }
 .b3 { background: #000; color: #33ff33; font-family: "Courier New", Courier, monospace; }
 
+/* ---------- Full-page maps (/<project>/map/): the viewer as a maximised window ---------- */
+/* a link in the toolbar, dressed as a toolbar button: to the full-page map and back again */
+.toolbar .tb-link, .toolbar .tb-link:visited {
+  margin-left: auto;
+  padding: 3px 12px;
+  background: var(--face); color: #000;
+  font: bold 13px/1.3 Tahoma, Verdana, sans-serif; text-decoration: none;
+  border: 2px solid;
+  border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+  box-shadow: inset -1px -1px var(--lo);
+}
+.toolbar .tb-link:active { border-color: var(--dk) var(--hi) var(--hi) var(--dk); box-shadow: inset 1px 1px var(--lo); }
+
+html:has(body.fullmap) { height: 100%; }
+body.fullmap { height: 100%; padding: 0; overflow: hidden; }
+.fullmap .viewer { margin: 0; height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow-y: auto; }
+.fullmap .viewer > * { flex: none; }
+.fullmap .viewer > .map-canvas { flex: 1 1 auto; display: flex; min-height: 240px; }
+body.fullmap #map { flex: 1; height: auto; min-width: 0; }
+.fullmap .viewer > .groupbox { margin: 0 0 3px; padding: 2px 8px 6px; }
+.fullmap .viewer > .note { margin: 4px; }
+
 @media (prefers-reduced-motion: reduce) {
   .ticker { white-space: normal; }
   .ticker p { animation: none; padding-left: 10px; }

@@ -39,6 +39,15 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `kxci-signal/data/` | What the page reads: `kxci.json` (licence, counts, contours) and `field.png` (the modelled field as a data image). Written by `tools/publish_kxci.py`; don't edit by hand |
 | `kxci-signal/kxci-reach.png` | Static map, also written by `tools/publish_kxci.py` |
 | `tools/build_kxci.py`, `model_kxci_terrain.py`, `publish_kxci.py`, `kxci_drive_logger.py` | The KXCI pipeline and the drive-test logger (see below). Not used by the site at runtime |
+| `empty-homes/index.html` | Empty Homes page: winter homes, vacant homes and unfinished buildings in Pima County, set against the homeless count |
+| `empty-homes/empty.js`, `empty.css` | The map (Leaflet), figures and tables |
+| `empty-homes/data/empty.json` | What the page reads. Written by `tools/build_empty_homes.py`; don't edit by hand |
+| `tools/build_empty_homes.py` | Builds the Empty Homes data (see below). Not used by the site at runtime |
+| `tucson-north-station/index.html` | A Northern Station page: candidate station sites beside the Union Pacific line north of Tucson, the map, ranked sites, tables, data notes |
+| `tucson-north-station/station.js`, `station.css` | The map (Leaflet), figures and tables |
+| `tucson-north-station/data/station.json` | What the page reads: the rail line, every screened site, drive areas. Written by `tools/build_north_station.py`; don't edit by hand |
+| `tools/build_north_station.py` | Screens the sites and runs the drive times (see below). Not used by the site at runtime |
+| `<project>/map/index.html` | Full-page map for each project (`catalinas-3d/viewer/` for the 3D model): only the viewer, filling the window. Same script and data as the project page; the settings carry over in the address. See "Full-page maps" below |
 | `tools/loop-review/` | Working pages for checking the Loop analysis (a satellite review map and a plain draft of the charts). Marked noindex; not linked from the site |
 | `404.html` | Not-found page |
 | `assets/style.css` | Shared styles (late-90s desktop look; plain CSS, no web fonts) |
@@ -189,6 +198,62 @@ itmlogic. Downloads go to `kxci-signal/work/`, which is not in the repository (a
 - `kxci_drive_logger.py` records signal strength from an RTL-SDR dongle on a drive (`log`), and adds
   positions from a GPX track afterwards (`join`). Its logs go to `kxci-signal/drives/`; keep them
   out of the repository, because they trace where the vehicle has been.
+
+## Refreshing the Empty Homes page
+
+```
+py tools/build_empty_homes.py            # from the cached downloads
+py tools/build_empty_homes.py --refresh  # download everything again, about 10 minutes
+```
+
+Needs Python with requests, pandas, geopandas, shapely and pyproj. Downloads go to
+`empty-homes/work/`, which is not in the repository.
+
+- A winter home is a house, condo/townhome or manufactured home in the Assessor's legal class 4.1
+  (not a primary residence, not a registered rental) whose tax bill is mailed outside Arizona, owned
+  by a person or family trust, and not in ZIP 85619 (Mt Lemmon). The rules are at the top of the script.
+- Winter homes are published only as counts per 800 m hexagon, and hexagons with fewer than five are
+  not drawn. Never publish them as points, and never publish owner names: the parcel download in
+  `empty-homes/work/` has both, which is why it is git-ignored.
+- The Assessor publishes Class Master files for two tax years only. When a new year appears on
+  asr.pima.gov (Downloads, Real Property), change `CLASS_YEARS` in the script.
+- The homeless count is typed into the script (`HOMELESS`) from the Tucson Pima Collaboration to End
+  Homelessness release. Update it when the next Point-in-Time Count comes out.
+- The Census API refuses requests without a key, so the script reads the ACS summary files instead.
+- Not on the page: how long homes have stood vacant. HUD's USPS vacancy data has it by tract, but
+  only governments and non-profits can register for it.
+
+## Refreshing the Northern Station page
+
+```
+py -I tools/build_north_station.py            # from the cached downloads
+py -I tools/build_north_station.py --refresh  # download everything again
+```
+
+Needs Python with requests, numpy, scipy, shapely and pyproj, and the 2020 Census block file that
+`tools/build_network.py` caches for the Loop pages. Downloads go to `tucson-north-station/work/`,
+which is not in the repository.
+
+- Everything comes from Pima County's open GIS services (railroad, parcels, street network,
+  building footprints, floodways, FEMA flood zones). The screening rules and drive speeds are
+  constants at the top of the script, and the page prints them from `station.json`.
+- The script also writes `work/sites_review.csv` with owner names and parcel numbers for checking
+  sites by hand. The published file names public owners only; private land shows as "Private owner".
+- Counts cover Pima County residents only: the county's street network and the cached blocks stop
+  at the Pinal County line.
+
+## Full-page maps
+
+Each project has a second page (`map/index.html`, or `viewer/index.html` for the Catalinas) that
+holds only the viewer window, with `fullmap` on the body. `assets/style.css` stretches it to the
+window. The page loads the same script as the project page, so:
+
+- When a viewer's toolbar, settings box or legend changes on a project page, make the same change
+  in its full-page copy.
+- A script must cope with the project page's other elements being absent. The Loop, golf and kit
+  fox scripts check for them; the others hand out a spare element for any id that is missing.
+- Links marked `data-carry` are rewritten with the current settings, so they survive the trip
+  between the two pages.
 
 ## External services
 

@@ -5,6 +5,7 @@
   "use strict";
 
   var mapEl = document.getElementById("map");
+  var FULL = document.body.classList.contains("fullmap");   // the full-page map at /tucson-golf-water/map/
   if (!mapEl || typeof L === "undefined") return;
 
   var statusMsg = document.getElementById("sb-msg");
@@ -19,12 +20,12 @@
     minZoom: 8,
     maxZoom: 20,
     zoomSnap: 0.5,
-    scrollWheelZoom: false,    // switched on by clicking the map, so the page can still scroll
+    scrollWheelZoom: FULL,     // otherwise switched on by clicking the map, so the page can still scroll
     center: [32.2226, -110.9747],
     zoom: 10
   });
   map.on("click focus", function () { map.scrollWheelZoom.enable(); });
-  mapEl.addEventListener("mouseleave", function () { map.scrollWheelZoom.disable(); });
+  mapEl.addEventListener("mouseleave", function () { if (!FULL) map.scrollWheelZoom.disable(); });
 
   L.tileLayer(ESRI + "World_Imagery/MapServer/tile/{z}/{y}/{x}", {
     maxNativeZoom: 19,

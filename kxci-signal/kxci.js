@@ -5,7 +5,11 @@
    Leaflet 1.9.4 is loaded by the page. */
 (function () {
   "use strict";
-  var $ = function (id) { return document.getElementById(id); };
+  /* The full-page map (map/index.html) has only the viewer. An id that is not on the page gets a
+     spare element, so the figures and tables written for the project page go nowhere there. */
+  var spare = {};
+  var $ = function (id) { return document.getElementById(id) || spare[id] || (spare[id] = document.createElement("div")); };
+  var FULL = document.body.classList.contains("fullmap");
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -48,6 +52,7 @@
   function writeQuery() {
     var show = SHOW.filter(function (s) { return on[s[0]]; }).map(function (s) { return s[0]; }).join(",");
     history.replaceState(null, "", location.pathname + "?rx=" + rx + "&show=" + show);
+    document.querySelectorAll("a[data-carry]").forEach(function (a) { a.href = a.getAttribute("data-carry") + location.search; });
   }
   function buildSettings() {
     RX.forEach(function (r) {
@@ -270,9 +275,9 @@
   function buildMap() {
     var mapEl = $("map"), lic = d.licence;
     var ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
-    map = L.map(mapEl, { zoomControl: false, minZoom: 8, maxZoom: 14, zoomSnap: 0.25, scrollWheelZoom: false });
+    map = L.map(mapEl, { zoomControl: false, minZoom: 8, maxZoom: 14, zoomSnap: 0.25, scrollWheelZoom: FULL });
     map.on("click focus", function () { map.scrollWheelZoom.enable(); });
-    mapEl.addEventListener("mouseleave", function () { map.scrollWheelZoom.disable(); });
+    mapEl.addEventListener("mouseleave", function () { if (!FULL) map.scrollWheelZoom.disable(); });
     ["field", "lines", "labels"].forEach(function (p, i) {
       map.createPane(p).style.zIndex = 410 + 5 * i;
       map.getPane(p).style.pointerEvents = "none";

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Santa Catalinas in 3D: Full-Page Viewer | Fink Geospatial</title>
+  <meta name="description" content="The 3D model of the Santa Catalina Mountains at full size: orbit, pan and zoom it, and move the sun.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Santa Catalinas in 3D: Full-Page Viewer | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/catalinas-3d/viewer/">
+  <link rel="canonical" href="https://finkgeo.com/catalinas-3d/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/catalinas-3d/catalinas.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    },
+    "integrity": {
+      "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js": "sha384-IDC7sAMAIMB/TZ6dgKKPPAKZ2bXXXP8+FBMBC8cU319eBhKITx+PaalhfDkDNH28",
+      "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js": "sha384-aJoe4qqS/DgF2jh9njAuvA6QIveJYoCuYOfYjdFY8P3eawzmc9bEQ40jq2TvOyuP"
+    }
+  }
+  </script>
+</head>
+<body class="cat3d fullmap">
+  <main class="viewer">
+    <h1 class="sr-only">The Santa Catalinas in 3D: full-page viewer</h1>
+    <div class="titlebar">
+      <img src="/assets/globe.svg" alt="" width="16" height="16">
+      <span class="t">Catalinas 3D Viewer</span>
+      <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+    </div>
+    <div class="toolbar">
+      <span class="lab" id="lab-view">View</span>
+      <button type="button" id="view-block" aria-describedby="lab-view">Whole Range</button>
+      <button type="button" id="view-front" aria-describedby="lab-view">Front Range</button>
+      <button type="button" id="view-west" aria-describedby="lab-view">Pusch Ridge</button>
+      <button type="button" id="view-top" aria-describedby="lab-view">Top Down</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button type="button" id="tb-in">Zoom In</button>
+      <button type="button" id="tb-out">Zoom Out</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button type="button" id="tb-labels" aria-pressed="true">Summits</button>
+      <button type="button" id="tb-hd" aria-pressed="false">Sharper Imagery</button>
+      <button type="button" id="tb-full" aria-pressed="false">Full Screen</button>
+      <a class="tb-link" href="/catalinas-3d/" data-carry="/catalinas-3d/">&laquo; Back to Project Page</a>
+    </div>
+    <div class="toolbar" role="group" aria-labelledby="lab-exag">
+      <span class="lab" id="lab-exag">Height</span>
+      <button type="button" data-exag="1" aria-pressed="true">True Scale</button>
+      <button type="button" data-exag="1.5" aria-pressed="false">&times;1.5</button>
+      <button type="button" data-exag="2" aria-pressed="false">&times;2</button>
+    </div>
+    <div class="sunrow">
+      <label for="sun">Sun</label>
+      <span class="track">
+        <span class="ends">sunrise</span>
+        <input type="range" id="sun" min="360" max="1080" step="1" value="1047">
+        <span class="ends">sunset</span>
+      </span>
+      <span class="toolbar"><button type="button" id="sun-golden">Golden Hour</button></span>
+    </div>
+    <noscript><div class="note"><p>The viewer needs JavaScript. <a href="/catalinas-3d/">Back to the project page</a>.</p></div></noscript>
+    <div class="map-canvas">
+      <div class="scene" id="scene">
+        <div class="labels" id="labels"></div>
+      </div>
+      <p id="scene-error" class="map-error" role="alert" hidden></p>
+    </div>
+    <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-sun">&nbsp;</span></div>
+  </main>
+
+  <script type="module" src="/catalinas-3d/viewer.js"></script>
+</body>
+</html>

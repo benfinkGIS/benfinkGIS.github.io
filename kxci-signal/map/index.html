@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KXCI Signal Reach: Full-Page Map | Fink Geospatial</title>
+  <meta name="description" content="The KXCI signal map at full size: the FCC's predicted service contour set against a terrain model of the signal.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KXCI Signal Reach: Full-Page Map | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/kxci-signal/map/">
+  <link rel="canonical" href="https://finkgeo.com/kxci-signal/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+  <link rel="stylesheet" href="/kxci-signal/kxci.css">
+</head>
+<body class="loopviz kxciviz fullmap">
+  <main class="viewer">
+    <h1 class="sr-only">KXCI Signal Reach: full-page map</h1>
+    <div class="titlebar">
+      <img src="/assets/globe.svg" alt="" width="16" height="16">
+      <span class="t">Signal Viewer: the FCC&rsquo;s Line and the Terrain Model</span>
+      <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+    </div>
+    <div class="toolbar">
+      <button type="button" id="tb-in">Zoom In</button>
+      <button type="button" id="tb-out">Zoom Out</button>
+      <button type="button" id="tb-full">Full Extent</button>
+      <button type="button" id="tb-base" aria-pressed="false">Satellite</button>
+      <a class="tb-link" href="/kxci-signal/" data-carry="/kxci-signal/">&laquo; Back to Project Page</a>
+    </div>
+    <noscript><div class="note"><p>The map needs JavaScript. <a href="/kxci-signal/">Back to the project page</a>.</p></div></noscript>
+    <fieldset class="groupbox">
+      <legend>Settings</legend>
+      <div class="row">
+        <span id="rx-label">Model the signal at</span>
+        <div class="toolbar" id="rx-buttons" role="group" aria-labelledby="rx-label"></div>
+      </div>
+      <div class="row">
+        <span id="show-label">Show</span>
+        <div class="toolbar" id="show-buttons" role="group" aria-labelledby="show-label"></div>
+      </div>
+    </fieldset>
+    <div class="map-canvas">
+      <div id="map" role="region" aria-label="Map of KXCI's predicted and terrain-modelled signal"></div>
+      <p id="map-error" class="map-error" role="alert" hidden></p>
+    </div>
+    <ul class="legend" id="map-legend"></ul>
+    <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+  </main>
+
+  <div id="tip" hidden></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/kxci-signal/kxci.js"></script>
+</body>
+</html>

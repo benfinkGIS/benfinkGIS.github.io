@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tucson Golf Course Water Map: Full-Page Map | Fink Geospatial</title>
+  <meta name="description" content="The Tucson golf course water map at full size: every active course on satellite imagery, with the water each one reported using.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tucson Golf Course Water Map: Full-Page Map | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/tucson-golf-water/map/">
+  <link rel="canonical" href="https://finkgeo.com/tucson-golf-water/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="fullmap">
+  <main class="viewer">
+    <h1 class="sr-only">Tucson Golf Course Water Map: full-page map</h1>
+    <div class="titlebar">
+      <img src="/assets/globe.svg" alt="" width="16" height="16">
+      <span class="t">Water Map Viewer: Active Course Footprints</span>
+      <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+    </div>
+    <div class="toolbar">
+      <button type="button" id="tb-in">Zoom In</button>
+      <button type="button" id="tb-out">Zoom Out</button>
+      <button type="button" id="tb-full">Full Extent</button>
+      <button type="button" id="tb-labels" aria-pressed="true">Labels</button>
+      <a class="tb-link" href="/tucson-golf-water/" data-carry="/tucson-golf-water/">&laquo; Back to Project Page</a>
+    </div>
+    <noscript><div class="note"><p>The map needs JavaScript. <a href="/tucson-golf-water/">Back to the project page</a>.</p></div></noscript>
+    <div class="map-canvas">
+      <div id="map" role="region" aria-label="Satellite map of golf courses in the Tucson area"></div>
+      <p id="map-error" class="map-error" role="alert" hidden></p>
+    </div>
+    <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">32.2226&deg; N, 110.9747&deg; W</span></div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/tucson-golf-water/map.js"></script>
+</body>
+</html>

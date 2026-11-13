@@ -24,7 +24,8 @@
   var data, segs = null, loop = null;
   var ti = 2, mode = "per_mile", picked = null;
   var map, labels, hexLayers = [], candGroup = null, fullBounds = null;
-  var growPage = !!$("cands");                       // the second page shows candidate segments
+  var FULL = document.body.classList.contains("fullmap");            // the full-page maps: only the viewer
+  var growPage = !!$("cands") || document.body.classList.contains("growmap");   // the second page shows candidate segments
 
   // ---- tooltip: one pale-yellow box; the same readout on hover and on keyboard focus ----
   var tip = $("tip");
@@ -155,9 +156,9 @@
     var mapEl = $("map");
     if (!mapEl || typeof L === "undefined") return;
     var ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
-    map = L.map(mapEl, { zoomControl: false, minZoom: 9, maxZoom: 17, zoomSnap: 0.25, scrollWheelZoom: false });
+    map = L.map(mapEl, { zoomControl: false, minZoom: 9, maxZoom: 17, zoomSnap: 0.25, scrollWheelZoom: FULL });
     map.on("click focus", function () { map.scrollWheelZoom.enable(); });
-    mapEl.addEventListener("mouseleave", function () { map.scrollWheelZoom.disable(); hideTip(); });
+    mapEl.addEventListener("mouseleave", function () { if (!FULL) map.scrollWheelZoom.disable(); hideTip(); });
     ["loop", "cands", "labels"].forEach(function (p, i) { map.createPane(p).style.zIndex = 450 + 5 * i; });
     map.getPane("loop").style.pointerEvents = map.getPane("labels").style.pointerEvents = "none";
     L.tileLayer(ESRI + "World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom: 16, maxZoom: 17,
@@ -218,7 +219,7 @@
     legend.textContent = "";
     function item(swatch, text) { var li = el("li"); li.appendChild(swatch); li.appendChild(el("span", null, text)); legend.appendChild(li); }
     item(el("span", "line"), "The Loop (" + loop.miles + " mi)");
-    if (growPage && segs) item(el("span", "dash"), "Candidate segment (those listed below)");
+    if (growPage && segs) item(el("span", "dash"), FULL ? "Candidate segment" : "Candidate segment (those listed below)");
     var near = el("span", "sw"); near.style.background = "var(--near)"; item(near, "Everyone within " + T() + " min");
     BREAK_LABELS.forEach(function (lab, k) {
       var sw = el("span", "sw"); sw.style.background = "var(--seq-" + (k + 1) + ")";
@@ -312,6 +313,7 @@
   }
   function renderCands() {
     var key = String(T()), host = $("cands"), rows = topRows();
+    if (!host) return;
     $("cand-cap").textContent = "The " + TOP + " corridors that would bring the most residents within " + T() +
       " minutes if a path there counted as Loop. Pick one to see it on the map.";
     var tg = segs.top_together && segs.top_together[key];
@@ -334,6 +336,7 @@
   }
   function renderPackage() {
     var steps = packSteps(), box = $("pack-box");
+    if (!box) return;
     box.hidden = !steps.length;
     if (!steps.length) return;
     var last = steps[steps.length - 1], far = farTotal(), host = $("pack");

@@ -3,7 +3,11 @@
    Tucson Loop Access project. Leaflet 1.9.4 is loaded by the page. */
 (function () {
   "use strict";
-  var $ = function (id) { return document.getElementById(id); };
+  /* The full-page map (map/index.html) has only the viewer. An id that is not on the page gets a
+     spare element, so the figures and tables written for the project page go nowhere there. */
+  var spare = {};
+  var $ = function (id) { return document.getElementById(id) || spare[id] || (spare[id] = document.createElement("div")); };
+  var FULL = document.body.classList.contains("fullmap");
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -52,6 +56,7 @@
   function writeQuery() {
     var show = KINDS.filter(function (k) { return on[k[0]]; }).map(function (k) { return k[0]; }).join(",");
     history.replaceState(null, "", location.pathname + "?within=" + lim + "&show=" + show);
+    document.querySelectorAll("a[data-carry]").forEach(function (a) { a.href = a.getAttribute("data-carry") + location.search; });
   }
   function buildSettings() {
     LIMITS.forEach(function (t) {
@@ -144,9 +149,9 @@
   function buildMap() {
     var mapEl = $("map");
     var ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
-    map = L.map(mapEl, { zoomControl: false, minZoom: 9, maxZoom: 18, zoomSnap: 0.25, scrollWheelZoom: false });
+    map = L.map(mapEl, { zoomControl: false, minZoom: 9, maxZoom: 18, zoomSnap: 0.25, scrollWheelZoom: FULL });
     map.on("click focus", function () { map.scrollWheelZoom.enable(); });
-    mapEl.addEventListener("mouseleave", function () { map.scrollWheelZoom.disable(); });
+    mapEl.addEventListener("mouseleave", function () { if (!FULL) map.scrollWheelZoom.disable(); });
     ["loop", "route", "labels"].forEach(function (p, i) { map.createPane(p).style.zIndex = 420 + 5 * i; });
     ["loop", "route", "labels"].forEach(function (p) { map.getPane(p).style.pointerEvents = "none"; });
     base = L.tileLayer(ESRI + "Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom: 16, maxZoom: 18,

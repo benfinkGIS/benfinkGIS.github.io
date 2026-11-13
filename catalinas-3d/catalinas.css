@@ -7,6 +7,8 @@
 .cat3d .viewer:fullscreen { display: flex; flex-direction: column; margin: 0; }
 .cat3d .viewer:fullscreen .map-canvas { flex: 1 1 auto; min-height: 0; }
 .cat3d .viewer:fullscreen .scene { aspect-ratio: auto; max-height: none; height: 100%; }
+/* the full-page viewer (/catalinas-3d/viewer/): the scene takes whatever the window has left */
+.cat3d.fullmap .scene { flex: 1; min-width: 0; aspect-ratio: auto; max-height: none; height: auto; }
 
 .cat3d .scene {
   position: relative;
