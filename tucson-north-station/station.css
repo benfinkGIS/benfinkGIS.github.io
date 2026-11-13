@@ -1,0 +1,54 @@
+/* A Northern Station: additions to the site's look.
+   Loaded after /assets/style.css, /tucson-loop-access/loop.css and /kxci-signal/kxci.css,
+   which supply the windows, toolbar buttons, group box, counter, chart panel, legend,
+   ranked bars, scrolling tables, map frame and tooltip. */
+
+.stationviz {
+  --site: #eb6834;        /* sites that pass (the palette's second hue) */
+  --site-dk: #b84a1f;
+  --out: #8a8a8a;         /* sites ruled out */
+  --reach: #2a78d6;       /* drive area of the chosen site */
+}
+
+.stationviz #map { height: 580px; }
+@media (max-width: 700px) { .stationviz #map { height: 440px; } }
+
+/* Esri's road overlay draws highways in orange, the colour used here for sites: grey it out */
+.stationviz .leaflet-labels-pane .leaflet-tile { filter: grayscale(1) brightness(1.15); }
+
+/* lettered site markers: a small beveled tag */
+.site-tag { background: none; border: 0; }
+.site-tag b {
+  display: block; min-width: 18px; height: 18px; padding: 0 3px; box-sizing: border-box;
+  font: bold 12px/16px Tahoma, Verdana, sans-serif; text-align: center;
+  color: #000; background: #ffffe1; border: 1px solid #000;
+}
+.site-tag.on b { background: #000; color: #ffff00; }
+.mile-tag { background: none; border: 0; }
+.mile-tag span {
+  display: block; font: bold 11px/1 Tahoma, Verdana, sans-serif; color: #000; text-align: center;
+  text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 3px #fff, 0 0 3px #fff;
+}
+.depot-mark { background: none; border: 0; }
+.depot-mark svg { display: block; overflow: visible; }
+
+.legend .sw.pass { background: var(--site); }
+.legend .sw.out { background: repeating-linear-gradient(135deg, var(--out) 0 3px, #d4d0c8 3px 5px); }
+.legend .sw.reach { background: rgba(42, 120, 214, .35); border-color: var(--reach); }
+.legend .dline { width: 20px; height: 0; border-top: 3px dashed #000; flex: none; }
+.legend .rail { width: 20px; height: 4px; flex: none; background: repeating-linear-gradient(90deg, #000 0 5px, #fff 5px 8px); border: 1px solid #000; }
+.legend .star { font-size: 14px; line-height: 12px; }
+
+.groupbox .toolbar button .sw.pass { background: var(--site); }
+.groupbox .toolbar button .sw.out { background: var(--out); }
+.groupbox .toolbar button .sw.reach { background: var(--reach); }
+.groupbox .toolbar button .sw.dl { height: 0; border: 0; border-top: 3px dashed #000; vertical-align: 3px; }
+
+.rank .val small { white-space: nowrap; }
+.list-scroll.short { max-height: 300px; }
+#t-pass td.watch { min-width: 220px; white-space: normal; }
+#t-pass tr.on td { background: #ffffe1; font-weight: bold; }
+#t-pass td button { font: inherit; color: var(--link); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
+#t-pass tr.on td button { color: #000; text-decoration: none; }
+.leaflet-popup-content { font: 12px/1.45 Tahoma, Verdana, sans-serif; }
+.leaflet-popup-content strong { font-size: 13px; }

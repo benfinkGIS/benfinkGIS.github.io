@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Northern Station for the Phoenix-Tucson Train | Fink Geospatial</title>
+  <meta name="description" content="Arizona is studying passenger rail between Phoenix and Tucson. This page screens the land beside the Union Pacific line north of downtown Tucson for a second station, and counts who could drive to each site.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="A Northern Station for the Phoenix-Tucson Train | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/tucson-north-station/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+  <link rel="stylesheet" href="/kxci-signal/kxci.css">
+  <link rel="stylesheet" href="/tucson-north-station/station.css">
+</head>
+<body class="loopviz kxciviz stationviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** Now boarding: a second Tucson-area station for the Phoenix train *** Open land beside the track, checked for floodway, frontage and a way in *** All aboard ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: A Northern Station</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; A Northern Station</p>
+            <h1>Where Could the Train Stop North of Tucson?</h1>
+
+            <p>The Arizona Department of Transportation is <a href="https://azdot.gov/planning/transportation-programs/state-rail-plan/passenger-rail-study-tucson-phoenix">studying passenger trains between Phoenix and Tucson</a> on the Union Pacific line. Its Service Development Plan, due in two to three years, is to settle how many stations the route gets and where they go. Nothing is funded to build yet.</p>
+            <p>Tucson already has a depot downtown. This page asks where a second, northern station could go: it takes every piece of open land beside the track from <span data-fill="minmi">&hellip;</span> rail miles out to the Pinal County line, <span data-fill="linemi">&hellip;</span> miles out, drops the ones a station would not fit on, and counts who could drive to the rest.</p>
+            <noscript><div class="note"><p>The figures, map and tables on this page need JavaScript.</p></div></noscript>
+
+            <fieldset class="groupbox">
+              <legend>Settings</legend>
+              <div class="row">
+                <span id="limit-label">A station is in reach if the drive is under</span>
+                <div class="toolbar" id="limit-buttons" role="group" aria-labelledby="limit-label"></div>
+              </div>
+              <div class="row">
+                <span id="show-label">Show</span>
+                <div class="toolbar" id="show-buttons" role="group" aria-labelledby="show-label"></div>
+              </div>
+            </fieldset>
+
+            <div class="stats" aria-live="polite">
+              <div class="stat lead-stat">
+                <div class="counter" id="hero-num">&hellip;</div>
+                <div class="lab" id="hero-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="pass-num">&hellip;</div>
+                <div class="lab" id="pass-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="depot-num">&hellip;</div>
+                <div class="lab" id="depot-lab">&nbsp;</div>
+              </div>
+            </div>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Station Viewer: Open Land Beside the Union Pacific Line</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Full Extent</button>
+                <button type="button" id="tb-site">Zoom to Site</button>
+                <button type="button" id="tb-base" aria-pressed="true">Satellite</button>
+                <a class="tb-link" href="/tucson-north-station/map/" data-carry="/tucson-north-station/map/">Full-Page Map &raquo;</a>
+              </div>
+              <div class="map-canvas">
+                <div id="map" role="region" aria-label="Map of candidate station sites along the Union Pacific line north of Tucson"></div>
+                <p id="map-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <ul class="legend" id="map-legend"></ul>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+            </div>
+            <p class="cap">Click a site for its details. Lettered sites pass the screen, south to north. The numbers along the track are rail miles from the downtown depot.</p>
+
+            <h2 class="sec">Who each site would bring within reach</h2>
+            <div class="chartbox">
+              <p class="cap" id="rank-cap">&nbsp;</p>
+              <div class="rank cand" id="rank"></div>
+            </div>
+            <p>The bars count Pima County residents who could drive to the site within the limit and could <em>not</em> drive to the downtown depot in that time. That is the case for a second station: people the first one leaves out. A site close to town reaches more people in all, but most of them already have the depot.</p>
+
+            <h2 class="sec">The sites that pass</h2>
+            <div class="chartbox">
+              <div class="table-wrap list-scroll" tabindex="0" role="region" aria-label="Table of sites that pass the screen">
+                <table class="grid wrap" id="t-pass"></table>
+              </div>
+            </div>
+            <div class="note"><p>Passing the screen means a station would physically fit and a street reaches the land. It does not mean the owner would sell, the town would rezone it, or Union Pacific would agree to a platform there. <span data-fill="wet">&hellip;</span> of the <span data-fill="npass">&hellip;</span> sites are more than half inside a mapped 1% flood zone, which a station can be built in but has to be raised for.</p></div>
+
+            <h2 class="sec">What ruled the others out</h2>
+            <div class="chartbox">
+              <p class="cap"><span data-fill="open">&hellip;</span> pieces of open land touch the railroad&rsquo;s right-of-way. <span data-fill="failed">&hellip;</span> of them fail at least one test.</p>
+              <div class="table-wrap list-scroll short" tabindex="0" role="region" aria-label="Table of sites that were ruled out">
+                <table class="grid wrap" id="t-fail"></table>
+              </div>
+            </div>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>The line:</strong> the Union Pacific main line from Pima County&rsquo;s railroad layer. Rail miles are measured along it from the downtown depot on Toole Avenue. The county line is <span data-fill="linemi">&hellip;</span> miles out; land in Pinal County (Red Rock and beyond) is not screened.</li>
+              <li><strong>Land:</strong> Pima County&rsquo;s regional parcel layer, <span data-fill="parcels">&hellip;</span> parcels within <span data-fill="corridor">&hellip;</span> ft of the track. A parcel is open if the assessor&rsquo;s use code says vacant, farm or ranch, or publicly owned. Parcels with the interstate or a frontage road running through them are treated as highway right-of-way. Touching open parcels with the same owner are joined into one site.</li>
+              <li><strong>Beside the track:</strong> the site has to come within <span data-fill="gap">&hellip;</span> ft of Union Pacific&rsquo;s own land, along at least <span data-fill="frontage">&hellip;</span> ft of straight track, enough for a platform.</li>
+              <li><strong>Room:</strong> at least <span data-fill="acres">&hellip;</span> acres that are outside the regulatory floodway and at least <span data-fill="depth">&hellip;</span> ft across, for a platform, a small building, a bus loop and a few hundred parking spaces. Building footprints may cover no more than <span data-fill="built">&hellip;</span> of the site.</li>
+              <li><strong>Flood:</strong> Pima County Regional Flood Control District floodways, and FEMA&rsquo;s 1% annual chance zones (A, AE, AH, AO). Floodway land does not count as room. The flood zone share is reported, not used to rule a site out.</li>
+              <li><strong>A way in:</strong> the nearest county street that a driveway could reach without crossing the track or Interstate 10. A site with none is ruled out, even if a farm crossing exists.</li>
+              <li><strong>Drive times:</strong> Pima County&rsquo;s street network, <span data-fill="speeds">&hellip;</span>. No traffic and no signal delay, so trips on surface streets come out a few minutes fast. Each 2020 Census block is placed at its internal point and joined to the nearest street junction.</li>
+              <li><strong>Who is counted:</strong> residents of Pima County only (<span data-fill="county">&hellip;</span> in 2020). People in SaddleBrooke, Red Rock and the rest of Pinal County would use a northern station too and are not in these numbers. Jobs, bus connections and time saved on the train itself are not counted either.</li>
+              <li><strong>Not checked:</strong> who would sell, zoning changes, utilities, drainage design, environmental review, and Union Pacific&rsquo;s own track plans. The drive areas on the map are rough outlines.</li>
+              <li><strong>Basemap:</strong> Esri. <strong>Script:</strong> <code>tools/build_north_station.py</code> in the site&rsquo;s repository.</li>
+            </ul>
+
+            <hr>
+            <p>Know one of these sites on the ground? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 13 November 2026</p>
+    </footer>
+  </div>
+  <div id="tip" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/tucson-north-station/station.js"></script>
+</body>
+</html>
