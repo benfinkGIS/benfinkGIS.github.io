@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Where Do You Release a Rescued Kit Fox? | Fink Geospatial</title>
+  <meta name="description" content="A habitat suitability model for releasing a rehabilitated kit fox within 100 miles of a wildlife rehabilitation center in central Arizona. Step through the eight criteria and change the weights yourself.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Where Do You Release a Rescued Kit Fox? | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/kit-fox-release/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/kit-fox-release/kitfox.css">
+</head>
+<body class="kitviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** Kit Fox Release Sites: where could a rescued kit fox go back to the desert? *** Scores are judgment calls, not checked on the ground *** Change the weights and watch the map redraw ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: Kit Fox Release Sites</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; Kit Fox Release Sites</p>
+            <h1>Where Do You Release a Rescued Kit Fox?</h1>
+
+            <div class="note"><p>The scores are judgment calls, and nothing here has been checked on the ground.</p></div>
+            <p>A wildlife rehabilitation center in central Arizona rescued and rehabilitated a kit fox and needed somewhere to release it. This project scores the land within 100 miles of the center for how well it suits a kit fox, then narrows the result to a short list of areas worth a closer look.</p>
+            <p>The model weighs eight things, from vegetation and soil to how far the nearest town is. Step through them below, then change the weights yourself to see how much the answer depends on them.</p>
+            <noscript><div class="note"><p>The figures, map and charts on this page need JavaScript.</p></div></noscript>
+
+            <div class="stats" aria-live="polite">
+              <div class="stat lead-stat">
+                <div class="counter" id="hero-num">&hellip;</div>
+                <div class="lab" id="hero-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="crit-num">&hellip;</div>
+                <div class="lab" id="crit-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="short-num">&hellip;</div>
+                <div class="lab" id="short-lab">&nbsp;</div>
+              </div>
+            </div>
+
+            <div class="viewer" id="wizard">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Kit Fox Release Wizard</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Full Extent</button>
+                <button type="button" id="tb-labels" aria-pressed="true">Labels</button>
+                <button type="button" id="tb-desig" aria-pressed="false">Designations</button>
+              </div>
+              <div class="wiz">
+                <div class="wiz-pane">
+                  <label class="wiz-jump"><span>Go to</span>
+                    <select id="wiz-jump" aria-label="Go to a step"></select>
+                  </label>
+                  <div class="wiz-text" id="wiz-text" aria-live="polite"></div>
+                  <div class="wiz-foot">
+                    <div class="progress" aria-hidden="true"><i id="wiz-bar"></i></div>
+                    <div class="wiz-nav">
+                      <span id="wiz-count">&nbsp;</span>
+                      <button type="button" class="btn" id="wiz-back">&lt; Back</button>
+                      <button type="button" class="btn default" id="wiz-next">Next &gt;</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="map-canvas">
+                  <div id="map" role="region" aria-label="Map of kit fox suitability scores within 100 miles of the center"></div>
+                  <p id="map-error" class="map-error" role="alert" hidden></p>
+                </div>
+              </div>
+              <div class="scalebar" id="scalebar">
+                <span>Poor: 3 or less</span><i id="scale-ramp"></i><span>Good: 9 or more</span>
+                <span class="key"><i class="ring"></i>Search area</span>
+                <span class="key" id="key-short" hidden><i class="cand"></i>Shortlisted area, shown to within about 10 km</span>
+                <span class="key desig" id="key-desig" hidden></span>
+              </div>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+            </div>
+            <p class="cap" id="map-cap">The map is drawn in cells about 500 m across, each the average of the model&rsquo;s 30 m cells. Point at the map to read a score.</p>
+
+            <h2 class="sec" id="shortlist">The shortlist</h2>
+            <p id="short-how">&nbsp;</p>
+            <div class="table-wrap">
+              <table class="grid wrap" id="t-short"></table>
+            </div>
+            <p class="cap">Positions are deliberately rough. This page gives each area&rsquo;s direction and distance from the center and marks it on the map to within about 10 km, and nothing more exact.</p>
+
+            <p id="desig-note">&nbsp;</p>
+
+            <div class="note"><p id="alone-note">&nbsp;</p></div>
+
+            <h2 class="sec">Who manages the high-scoring land</h2>
+            <div class="chartbox">
+              <p class="cap" id="mgr-cap">&nbsp;</p>
+              <div class="rank" id="mgr"></div>
+              <details class="tables">
+                <summary>Show the numbers as a table</summary>
+                <div class="table-wrap"><table class="grid wrap" id="t-mgr"></table></div>
+              </details>
+            </div>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>The model:</strong> a weighted overlay built in ArcGIS Pro&rsquo;s Suitability Modeler. Each criterion is scored from 1 to 10 on a 30 m grid, and the final score is the weighted average. The weights add up to 100. The search area is a 100-mile circle around the center, <span data-fill="study_km2">&hellip;</span> km&sup2;.</li>
+              <li><strong>Vegetation type and cover:</strong> LANDFIRE 2024 Existing Vegetation Type and Existing Vegetation Cover.</li>
+              <li><strong>Soils:</strong> USDA NRCS SSURGO soil map units.</li>
+              <li><strong>Night lights:</strong> VIIRS Nighttime Lights, 2024 annual composite.</li>
+              <li><strong>Elevation and slope:</strong> USGS 30 m elevation model.</li>
+              <li><strong>Development and farmland:</strong> the developed and agricultural classes of LANDFIRE 2024, and straight-line distance from them.</li>
+              <li><strong>Water:</strong> streams, washes and water bodies from the USGS National Hydrography Dataset, and straight-line distance from them. In this desert most of the mapped streams are washes that run only after rain.</li>
+              <li><strong>The shortlist:</strong> every possible <span data-fill="radius_km">&hellip;</span> km circle was given its average score. A circle stays in only if at least <span data-fill="min_public">&hellip;</span> of it is open public land, its average slope is <span data-fill="max_slope_deg">&hellip;</span>&deg; or less, and no primary or secondary road comes within <span data-fill="road_gap_km">&hellip;</span> km of its edge. The best <span data-fill="top">&hellip;</span> were then picked so that no two are closer than <span data-fill="spacing_km">&hellip;</span> km. Those limits are first guesses.</li>
+              <li><strong>Land managers:</strong> Bureau of Land Management Arizona, Surface Management Agency, with the Arizona State Land Department and ALRIS. &ldquo;Open public land&rdquo; here means everything except private, tribal, military and other restricted federal land.</li>
+              <li><strong>Designations:</strong> wilderness from the U.S. Forest Service and the Bureau of Land Management, and the BLM&rsquo;s national monuments, national conservation areas and areas of critical environmental concern. Wilderness managed by the National Park Service or the Fish and Wildlife Service is not in these layers. A shortlisted area is tied to a named place only when it lies mostly inside it.</li>
+              <li><strong>Roads:</strong> U.S. Census Bureau TIGER/Line 2023 primary and secondary roads. Roads are used only to screen the shortlist. They are not one of the model&rsquo;s criteria.</li>
+              <li><strong>What this cannot tell you:</strong> whether kit foxes already live in a place, whether there is prey, or whether a release there would be allowed. The scores have not been tested against kit fox sightings. A release needs the agreement of whoever manages the land and of the wildlife agency, and a visit first.</li>
+              <li><strong>Map:</strong> scores on Esri&rsquo;s light gray basemap. The weight sliders work on the 500 m cells, so the share of land scoring <span data-fill="high_cutoff">&hellip;</span> or more reads a little lower there than on the full 30 m model (<span data-fill="high_km2">&hellip;</span> km&sup2;).</li>
+            </ul>
+
+            <hr>
+            <p>Questions or corrections? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 13 November 2026</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/kit-fox-release/kitfox.js"></script>
+</body>
+</html>

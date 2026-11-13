@@ -28,6 +28,11 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `catalinas-3d/data/` | What the viewer loads: `height.png`, `texture_4k.jpg`, `texture_8k.jpg`, `meta.json`. Written by `tools/export_catalinas_web.py`; don't edit by hand |
 | `catalinas-3d/img/` | Stills rendered in Blender |
 | `tools/build_catalinas.py`, `deshade_catalinas.py`, `blender_catalinas.py`, `export_catalinas_web.py` | The Catalinas model pipeline (see below). Not used by the site at runtime |
+| `kit-fox-release/index.html` | Kit Fox Release Sites page: the step-by-step wizard, weight sliders, shortlist table, data notes |
+| `kit-fox-release/kitfox.js`, `kitfox.css` | The wizard and map (Leaflet). Recomputes the weighted score in the browser when a weight changes |
+| `kit-fox-release/data/` | What the page reads: `crit1.png` to `crit3.png` (the eight criterion scores) and `model.json`. Written by `tools/publish_kitfox.py`; don't edit by hand |
+| `tools/build_kitfox_shortlist.py`, `publish_kitfox.py` | The kit fox shortlist and page data (see below). Not used by the site at runtime |
+| `tools/kitfox-review/` | Local review map of the shortlisted areas at full detail. Git-ignored on purpose: never publish it |
 | `kxci-signal/index.html` | KXCI Signal Reach page: headline counts, signal map, town table, data notes |
 | `kxci-signal/kxci.js`, `kxci.css` | The map (Leaflet), figures and tables. Colours the signal layer in the browser from `data/field.png` |
 | `kxci-signal/data/` | What the page reads: `kxci.json` (licence, counts, contours) and `field.png` (the modelled field as a data image). Written by `tools/publish_kxci.py`; don't edit by hand |
@@ -46,6 +51,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 - Tucson golf map: water use is in popups and the table only. Next: map layers (for example colour by supply, size by use).
 - Tucson Loop Access: check the draft Loop extent section by section (use `tools/loop-review/`), then count traffic stress in the ride times.
 - Santa Catalinas 3D: close-up views from 1 m lidar; roads, trails and canyon names; test touch gestures on a real phone.
+- Kit Fox Release Sites: the center is left unnamed until they agree (keep its name out of the page, the scripts and this file); say what the soil score is based on (`TODO` in `kitfox.js`); decide whether wilderness and monument land should be screened out of the shortlist.
 - KXCI Signal Reach: run drive tests with `tools/kxci_drive_logger.py` (not yet tried on a real dongle), then compare measured signal with the two predictions.
 - Bump the "Last updated" date in each page footer when content changes.
 
@@ -135,6 +141,31 @@ py tools/export_catalinas_web.py     # writes catalinas-3d/data/ for the viewer
 - Summit positions come from the USGS Geographic Names service; heights shown are read from the
   elevation grid at those points.
 
+## Refreshing the kit fox page
+
+```
+py tools/build_kitfox_shortlist.py
+py tools/publish_kitfox.py
+```
+
+Needs Python with numpy, scipy, geopandas, pyogrio, pyproj, pillow and rasterio, and the ArcGIS Pro
+project the model was built in (read only). Its folder and layer names are read from
+`tools/kitfox-review/project.json`, which is git-ignored so the repo does not name the project. The model itself lives in that project: change weights or scores there, in the
+Suitability Modeler, then re-run both scripts.
+
+- `build_kitfox_shortlist.py` reads the finished suitability surface, finds the best 3 km circles, and
+  screens them by land manager (BLM Arizona surface management, fetched and cached in the system temp
+  folder `finkgeo_kitfox_cache`), slope and distance from highways. It also reports which wilderness
+  areas, national monuments and other designations each area touches, without screening on them. The limits are command-line flags
+  and are first guesses. It writes `tools/kitfox-review/`, which has a review map on satellite imagery.
+- `publish_kitfox.py` scores the eight criteria the way the model does, averages them to 500 m cells,
+  and writes `kit-fox-release/data/`. It prints how closely the rebuilt surface matches the model's.
+- The page gives shortlisted areas only as rounded positions (0.1 degree) with a direction and distance.
+  Keep it that way, and keep `tools/kitfox-review/` out of git: neither the page nor the repo should
+  point at a spot where a released animal could be found.
+- The step text and scoring tables on the page are written out in `kitfox.js` (`CRIT`). If a class
+  break or score changes in the model, change it there too.
+
 ## Refreshing the KXCI signal page
 
 ```
@@ -164,7 +195,7 @@ The Catalinas page loads three.js 0.170.0 from jsDelivr through an import map wi
 
 The map pages load Leaflet from cdnjs (pinned version, with integrity hashes) and basemap tiles from
 Esri's public tile servers (satellite imagery and labels on the golf map, the light gray canvas on the
-Loop pages), with the attribution Esri requires. The site itself sets no
+Loop and kit fox pages), with the attribution Esri requires. The site itself sets no
 cookies, but visitors' browsers do contact those two services when the map loads. If the site ever
 becomes commercial, re-read Esri's terms for those tiles.
 

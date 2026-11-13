@@ -1,0 +1,139 @@
+/* Kit fox release page: the wizard, map and charts in the site's circa-1999 look.
+   Loaded after /assets/style.css, which supplies the windows, toolbar buttons and tables. */
+
+.kitviz {
+  --series: #2a78d6;        /* bars */
+  --cand: #eb6834;          /* shortlisted areas */
+  --ring: #000;             /* search-area outline */
+}
+
+/* ---------- Headline figures ---------- */
+.stats { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin: 14px 0; }
+.stat {
+  padding: 8px 10px;
+  background: var(--face);
+  border: 2px solid;
+  border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+  box-shadow: inset -1px -1px var(--lo);
+}
+.stat .lab { font-size: 13px; margin-top: 6px; }
+.stat .num { font: bold 26px/1.15 Tahoma, Verdana, sans-serif; color: var(--navy); }
+.counter {
+  display: inline-block;
+  padding: 4px 10px 2px;
+  background: #000; color: #33ff33;
+  font: bold clamp(34px, 8vw, 50px)/1.1 "Courier New", Courier, monospace;
+  letter-spacing: 2px;
+  border: 2px solid;
+  border-color: var(--lo) var(--hi) var(--hi) var(--lo);
+}
+@media (max-width: 560px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stats .lead-stat { grid-column: 1 / -1; }
+}
+
+/* ---------- Wizard ---------- */
+.wiz { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 3px; }
+.wiz-pane {
+  display: flex; flex-direction: column; min-height: 0; height: 520px;
+  background: var(--face);
+  border: 2px solid;
+  border-color: var(--lo) var(--hi) var(--hi) var(--lo);
+}
+.wiz-jump { display: flex; align-items: center; gap: 6px; padding: 6px 8px; font-size: 13px; border-bottom: 1px solid var(--lo); }
+.wiz-jump select { flex: 1; min-width: 0; font: 13px Tahoma, Verdana, sans-serif; }
+.wiz-text { flex: 1; min-height: 0; overflow: auto; padding: 8px 10px; font-size: 13px; line-height: 1.45; background: #fff; }
+.wiz-text h3 { margin: 0 0 6px; font-size: 16px; line-height: 1.25; }
+.wiz-text p { margin: 0 0 8px; }
+.wiz-text .weight { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-weight: bold; }
+.wiz-text .weight i { flex: 1; height: 12px; background: #fff; border: 1px solid #000; }
+.wiz-text .weight i b { display: block; height: 100%; background: var(--series); }
+.wiz-text table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 0 0 8px; }
+.wiz-text th, .wiz-text td { border: 1px solid var(--lo); padding: 2px 5px; text-align: left; vertical-align: top; }
+.wiz-text th { background: var(--face); }
+.wiz-text td:last-child, .wiz-text th:last-child { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.wiz-foot { padding: 6px 8px 8px; border-top: 1px solid var(--lo); }
+.wiz-nav { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.wiz-nav span { margin-right: auto; font-size: 12px; white-space: nowrap; }
+.wiz-nav .btn { padding: 3px 8px; font-size: 13px; cursor: pointer; white-space: nowrap; }
+.wiz-nav .btn:disabled { color: var(--lo); text-shadow: 1px 1px var(--hi); cursor: not-allowed; }
+.progress {
+  height: 16px; padding: 2px;
+  background: #fff;
+  border: 2px solid;
+  border-color: var(--lo) var(--hi) var(--hi) var(--lo);
+}
+.progress i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(90deg, var(--navy) 0 10px, #fff 10px 12px); }
+
+/* weight sliders */
+.sliders { display: grid; grid-template-columns: minmax(0, 1fr) 40px; gap: 0 6px; align-items: center; margin: 0 0 8px; }
+.sliders label { grid-column: 1 / -1; font-size: 12px; margin-top: 4px; }
+.sliders input[type=range] { width: 100%; margin: 0; }
+.sliders output { text-align: right; font-size: 12px; font-variant-numeric: tabular-nums; }
+.readout { padding: 6px 8px; background: #ffffe1; border: 1px solid #000; margin: 0 0 8px; }
+.readout strong { font-size: 18px; color: var(--navy); }
+.wiz-text .btn { padding: 3px 12px; font-size: 13px; cursor: pointer; }
+
+.kitviz .map-canvas, .kitviz #map { background: #dcdcdc; }
+.kitviz #map { height: 520px; }
+.kitviz .leaflet-image-layer { image-rendering: auto; }
+@media (max-width: 760px) {
+  .wiz { grid-template-columns: 1fr; }
+  .wiz-pane { height: auto; max-height: 420px; }
+  .kitviz #map { height: 380px; }
+}
+
+.scalebar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; padding: 5px 6px; background: var(--face); font-size: 12px; }
+.scalebar > i { width: 150px; height: 12px; border: 1px solid #000; }
+.scalebar .key { display: flex; align-items: center; gap: 5px; margin-left: 10px; }
+.scalebar .key[hidden] { display: none; }
+.scalebar .ring { width: 18px; height: 0; border-top: 2px dashed var(--ring); }
+.scalebar .cand { width: 12px; height: 12px; border-radius: 50%; border: 3px solid var(--cand); }
+
+.cand-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #fff; border: 2px solid var(--cand); color: #000;
+  font: bold 11px/18px Tahoma, Verdana, sans-serif; text-align: center;
+}
+.leaflet-tooltip.kit-tip {
+  background: #ffffe1; color: #000; border: 1px solid #000; border-radius: 0; box-shadow: none;
+  font: 12px/1.4 Tahoma, Verdana, sans-serif; padding: 3px 6px;
+}
+.leaflet-tooltip.kit-tip::before { display: none; }
+
+/* ---------- Charts and tables ---------- */
+.chartbox {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 2px solid;
+  border-color: var(--lo) var(--hi) var(--hi) var(--lo);
+  box-shadow: inset 1px 1px var(--dk);
+}
+.cap { font-size: 13px; color: var(--dk); margin: 0 0 8px; }
+.rank { display: grid; grid-template-columns: minmax(96px, 190px) 1fr; gap: 6px 10px; align-items: center; }
+.rank .name { overflow-wrap: anywhere; }
+.rank .name small { display: block; color: var(--dk); font-size: 12px; }
+.rank .track { display: flex; align-items: center; gap: 6px; min-width: 0; border-left: 1px solid #000; padding: 2px 0; }
+.rank .bar { height: 14px; background: var(--series); flex: none; border-radius: 0 4px 4px 0; }
+.rank .track:hover .bar, .rank .track:focus-visible .bar { filter: brightness(1.15); }
+.rank .val { flex: 1 1 0; min-width: 0; font-size: 14px; }
+.rank .val small { color: var(--dk); font-size: 12px; }
+
+details.tables { margin: 8px 0 0; }
+details.tables summary { cursor: pointer; color: var(--link); text-decoration: underline; font-size: 14px; }
+details.tables table { margin-top: 8px; font-size: 13px; }
+.grid caption { text-align: left; font-weight: bold; padding: 6px 0 4px; }
+.grid td.num, .grid th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.grid.wrap td:first-child { white-space: normal; font-weight: normal; }
+#t-short { font-size: 13px; }
+#t-short tbody tr { cursor: pointer; }
+#t-short tbody tr:hover, #t-short tbody tr:focus-visible { background: #ffffe1; }
+
+/* designations: a coloured line on a white casing, so it reads on any score */
+.scalebar .desig { gap: 4px 10px; flex-wrap: wrap; }
+.scalebar .desig b { display: flex; align-items: center; gap: 5px; font-weight: normal; }
+.scalebar .desig i { width: 18px; height: 0; border-top: 3px solid; }
+/* The site caps every svg at its container's width. Leaflet lifts that cap only for its built-in
+   overlay pane, so the designation pane needs it lifted too. */
+.leaflet-container .leaflet-pane svg { max-width: none; max-height: none; }
