@@ -1,0 +1,52 @@
+/* KXCI Signal Reach: additions to the site's look.
+   Loaded after /assets/style.css and /tucson-loop-access/loop.css, which supply the windows,
+   toolbar buttons, group box, counter, chart panel, legend, map frame and tooltip. */
+
+.kxciviz {
+  /* modelled field strength, weak to strong: one hue, light to dark (dataviz palette, blue ramp) */
+  --f-40: #cde2fb; --f-50: #86b6ef; --f-60: #3987e5; --f-70: #1c5cab; --f-80: #0d366b;
+  /* inside the FCC contour but under 60 dBu in the model: the palette's second hue, always striped */
+  --shadow: #eb6834; --shadow-dk: #b84a1f;
+  --series: #2a78d6;
+}
+
+.kxciviz #map { height: 560px; }
+@media (max-width: 700px) { .kxciviz #map { height: 430px; } }
+/* the signal layer is drawn from a 1000 px data image: keep its cells crisp when zoomed in */
+.kxciviz .leaflet-field-pane img { image-rendering: pixelated; }
+
+.legend .sw.hatch { background: repeating-linear-gradient(135deg, var(--shadow) 0 3px, var(--shadow-dk) 3px 5px); }
+.legend .cline { width: 20px; height: 0; border-top: 3px solid #000; flex: none; }
+.legend .oline { width: 20px; height: 0; border-top: 3px dashed #5b2a86; flex: none; }
+.legend .tri { width: 0; height: 0; border: 7px solid transparent; border-top: 0; border-bottom: 12px solid #000; position: relative; flex: none; }
+.legend .tri::after { content: ""; position: absolute; left: -5px; top: 3px; border: 5px solid transparent; border-top: 0; border-bottom: 8px solid #ffff00; }
+
+.groupbox .toolbar button .sw {
+  display: inline-block; width: 10px; height: 10px; margin-right: 5px;
+  border: 1px solid #000; vertical-align: -1px;
+}
+.groupbox .toolbar button .sw.hatch { background: repeating-linear-gradient(135deg, var(--shadow) 0 2px, var(--shadow-dk) 2px 4px); }
+.groupbox .toolbar button .sw.field { background: var(--f-60); }
+.groupbox .toolbar button .sw.cl { height: 0; border: 0; border-top: 3px solid #000; vertical-align: 3px; }
+.groupbox .toolbar button .sw.ol { height: 0; border: 0; border-top: 3px dashed #5b2a86; vertical-align: 3px; }
+.groupbox .toolbar button[aria-pressed="false"] .sw { opacity: .35; }
+
+/* transmitter markers: shape tells them apart, not colour */
+.tx-mark { background: none; border: 0; }
+.tx-mark svg { display: block; overflow: visible; }
+
+.stat .num.small { font-size: 19px; line-height: 1.25; }
+
+.rank .bar.alt { background: repeating-linear-gradient(90deg, var(--series) 0 6px, #86b6ef 6px 8px); }
+
+.list-scroll { max-height: 460px; overflow-y: auto; border: 1px solid var(--lo); margin-bottom: 0; }
+.list-scroll table { margin: 0; font-size: 13px; }
+.list-scroll thead th { position: sticky; top: 0; z-index: 1; text-align: left; }
+.list-scroll thead th.num { text-align: right; }
+#t-places td.gap { background: #ffe9df; }
+#t-old { font-size: 13px; }
+#t-old th { text-align: left; }
+#t-old th.num { text-align: right; }
+
+img.static { display: block; width: 100%; max-width: 620px; height: auto; border: 2px solid; border-color: var(--lo) var(--hi) var(--hi) var(--lo); }
+code { font-family: "Courier New", Courier, monospace; font-size: 1em; }

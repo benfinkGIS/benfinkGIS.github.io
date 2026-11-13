@@ -28,6 +28,11 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `catalinas-3d/data/` | What the viewer loads: `height.png`, `texture_4k.jpg`, `texture_8k.jpg`, `meta.json`. Written by `tools/export_catalinas_web.py`; don't edit by hand |
 | `catalinas-3d/img/` | Stills rendered in Blender |
 | `tools/build_catalinas.py`, `deshade_catalinas.py`, `blender_catalinas.py`, `export_catalinas_web.py` | The Catalinas model pipeline (see below). Not used by the site at runtime |
+| `kxci-signal/index.html` | KXCI Signal Reach page: headline counts, signal map, town table, data notes |
+| `kxci-signal/kxci.js`, `kxci.css` | The map (Leaflet), figures and tables. Colours the signal layer in the browser from `data/field.png` |
+| `kxci-signal/data/` | What the page reads: `kxci.json` (licence, counts, contours) and `field.png` (the modelled field as a data image). Written by `tools/publish_kxci.py`; don't edit by hand |
+| `kxci-signal/kxci-reach.png` | Static map, also written by `tools/publish_kxci.py` |
+| `tools/build_kxci.py`, `model_kxci_terrain.py`, `publish_kxci.py`, `kxci_drive_logger.py` | The KXCI pipeline and the drive-test logger (see below). Not used by the site at runtime |
 | `tools/loop-review/` | Working pages for checking the Loop analysis (a satellite review map and a plain draft of the charts). Marked noindex; not linked from the site |
 | `404.html` | Not-found page |
 | `assets/style.css` | Shared styles (late-90s desktop look; plain CSS, no web fonts) |
@@ -41,6 +46,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 - Tucson golf map: water use is in popups and the table only. Next: map layers (for example colour by supply, size by use).
 - Tucson Loop Access: check the draft Loop extent section by section (use `tools/loop-review/`), then count traffic stress in the ride times.
 - Santa Catalinas 3D: close-up views from 1 m lidar; roads, trails and canyon names; test touch gestures on a real phone.
+- KXCI Signal Reach: run drive tests with `tools/kxci_drive_logger.py` (not yet tried on a real dongle), then compare measured signal with the two predictions.
 - Bump the "Last updated" date in each page footer when content changes.
 
 ## Refreshing the golf course data
@@ -128,6 +134,29 @@ py tools/export_catalinas_web.py     # writes catalinas-3d/data/ for the viewer
   `catalinas-3d/img/` are the 4K renders scaled to 1920 pixels.
 - Summit positions come from the USGS Geographic Names service; heights shown are read from the
   elevation grid at those points.
+
+## Refreshing the KXCI signal page
+
+```
+py tools/build_kxci.py
+py tools/model_kxci_terrain.py
+py tools/publish_kxci.py
+```
+
+Needs Python with requests, pandas, geopandas, shapely, numpy, scipy, pillow, pyproj, matplotlib and
+itmlogic. Downloads go to `kxci-signal/work/`, which is not in the repository (about 500 MB).
+
+- `build_kxci.py` reads the station's licence from the FCC's FM Query, asks the FCC Contours API for
+  the 60 dBu contour computed from those figures, and counts 2020 Census residents and households
+  inside it (blocks cut by the contour count by area).
+- Do not fetch the contour by call sign: as of November 2026 the API answers with a 1991 licence on
+  Mt. Bigelow. The script keeps that contour only for the comparison on the page.
+- `model_kxci_terrain.py` downloads USGS 3DEP elevation and runs the Irregular Terrain Model
+  (Longley-Rice) along 720 radials at two receiver heights, then reads the result at every block.
+- `publish_kxci.py` writes `kxci-signal/data/` and the static map.
+- `kxci_drive_logger.py` records signal strength from an RTL-SDR dongle on a drive (`log`), and adds
+  positions from a GPX track afterwards (`join`). Its logs go to `kxci-signal/drives/`; keep them
+  out of the repository, because they trace where the vehicle has been.
 
 ## External services
 

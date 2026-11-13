@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KXCI Signal Reach | Fink Geospatial</title>
+  <meta name="description" content="Who can hear KXCI 91.3 FM in Tucson? The FCC's predicted service contour, set against a terrain model that knows about the mountains, counted in 2020 Census residents.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KXCI Signal Reach | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/kxci-signal/">
+  <meta property="og:image" content="https://finkgeo.com/kxci-signal/kxci-reach.png">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+  <link rel="stylesheet" href="/kxci-signal/kxci.css">
+</head>
+<body class="loopviz kxciviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** KXCI Signal Reach: 91.3 FM, 18,000 watts, one tower and four mountain ranges *** Who is inside the line, and who is in a shadow *** Stay tuned ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: KXCI Signal Reach</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; KXCI Signal Reach</p>
+            <h1>Who Can Hear KXCI?</h1>
+
+            <p>KXCI 91.3 FM is Tucson&rsquo;s community radio station. Its licence allows <span data-fill="erp">&hellip;</span> watts from an antenna <span data-fill="agl">&hellip;</span> metres up a tower southeast of the city, a few miles north of Corona de Tucson.</p>
+            <p>The FCC draws every FM station&rsquo;s service area as a single line, the 60&nbsp;dBu contour. It works that line out from the station&rsquo;s power, the height of its antenna, and the average height of the ground 3 to 16&nbsp;km out in each direction. A ridge 30&nbsp;km away does not come into it. Tucson has four mountain ranges in the way, so this page runs a terrain model over the same ground and counts who the line misses.</p>
+            <noscript><div class="note"><p>The figures, map and tables on this page need JavaScript. <a href="/kxci-signal/kxci-reach.png">The static map</a> works without it.</p></div></noscript>
+
+            <fieldset class="groupbox">
+              <legend>Settings</legend>
+              <div class="row">
+                <span id="rx-label">Model the signal at</span>
+                <div class="toolbar" id="rx-buttons" role="group" aria-labelledby="rx-label"></div>
+              </div>
+              <div class="row">
+                <span id="show-label">Show</span>
+                <div class="toolbar" id="show-buttons" role="group" aria-labelledby="show-label"></div>
+              </div>
+            </fieldset>
+
+            <div class="stats" aria-live="polite">
+              <div class="stat lead-stat">
+                <div class="counter" id="hero-num">&hellip;</div>
+                <div class="lab">residents inside the FCC&rsquo;s predicted service contour</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="hh-num">&hellip;</div>
+                <div class="lab">households inside the contour</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="shadow-num">&hellip;</div>
+                <div class="lab" id="shadow-lab">&nbsp;</div>
+              </div>
+            </div>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Signal Viewer: the FCC&rsquo;s Line and the Terrain Model</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Full Extent</button>
+                <button type="button" id="tb-base" aria-pressed="false">Satellite</button>
+              </div>
+              <div class="map-canvas">
+                <div id="map" role="region" aria-label="Map of KXCI's predicted and terrain-modelled signal"></div>
+                <p id="map-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <ul class="legend" id="map-legend"></ul>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+            </div>
+            <p class="cap">Point at the map to read the modelled signal there. Click a marker for the transmitter&rsquo;s details.</p>
+
+            <h2 class="sec">Three ways to count the audience</h2>
+            <div class="chartbox">
+              <p class="cap">Residents at or above 60 dBu, out of <span data-fill="study">&hellip;</span> who live within <span data-fill="radius">&hellip;</span> km of the tower.</p>
+              <div class="rank" id="counts"></div>
+            </div>
+            <p>At rooftop height the two predictions nearly agree on the total and disagree on the places. The terrain model drops <span data-fill="roof-shadow">&hellip;</span> residents inside the line, and adds <span data-fill="roof-extra">&hellip;</span> outside it, most of them in Marana, down the Santa Cruz valley where nothing stands in the way. Lower the antenna to car height and <span data-fill="car-shadow">&hellip;</span> residents inside the line fall under 60&nbsp;dBu.</p>
+            <div class="note"><p>60 dBu is the level the FCC protects from interference. It is not the edge of hearing: a decent car radio keeps playing well below it. Read the shadows as &ldquo;weaker than the map promises&rdquo;, not as silence.</p></div>
+
+            <h2 class="sec">Town by town</h2>
+            <div class="chartbox">
+              <p class="cap">Residents at or above 60 dBu in each town of <span data-fill="minpop">&hellip;</span> people or more within <span data-fill="radius">&hellip;</span> km. Largest first.</p>
+              <div class="table-wrap list-scroll" tabindex="0" role="region" aria-label="Table of towns">
+                <table class="grid wrap" id="t-places"></table>
+              </div>
+            </div>
+            <p>Oro Valley is the largest gap. The FCC&rsquo;s line takes in <span data-fill="ov-fcc">&hellip;</span> of its <span data-fill="ov-pop">&hellip;</span> residents, and the terrain model puts <span data-fill="ov-shadow">&hellip;</span> of those under 60&nbsp;dBu: the town sits behind the west end of the Santa Catalinas as seen from the tower. On the west side, in the Tucson Mountains foothills and Valencia West, most residents clear 60&nbsp;dBu at rooftop height and most do not at car height.</p>
+
+            <h2 class="sec">Ask for KXCI, get 1991</h2>
+            <p>The FCC has a public service that returns a station&rsquo;s contour by call sign. Ask it for KXCI and it answers with a licence from 1991: <span data-fill="old-erp">&hellip;</span> watts on Mt.&nbsp;Bigelow in the Catalinas, <span data-fill="old-km">&hellip;</span> km from where the station&rsquo;s licence puts it now. The FCC&rsquo;s own licence database shows the present site, licensed on 4 April 2024. The contour on this page is computed from that record. The old one is on the map as a dashed line (switch it on under Settings).</p>
+            <div class="chartbox">
+              <div class="table-wrap"><table class="grid wrap" id="t-old"></table></div>
+            </div>
+
+            <h2 class="sec">Static map</h2>
+            <p><a href="/kxci-signal/kxci-reach.png"><img class="static" src="/kxci-signal/kxci-reach.png" alt="Map of KXCI's modelled field strength at rooftop height around Tucson, with the FCC 60 dBu contour and the shadowed areas inside it." width="1170" height="1326" loading="lazy"></a></p>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>Licence:</strong> the FCC&rsquo;s FM Query (licence file <span data-fill="file">&hellip;</span>, facility <span data-fill="facility">&hellip;</span>): class <span data-fill="class">&hellip;</span>, <span data-fill="erp">&hellip;</span> watts, non-directional, antenna centre <span data-fill="amsl">&hellip;</span> m above sea level. The elevation data puts the ground at the tower <span data-fill="agl">&hellip;</span> m below that, which matches the licence. The station also holds a licence for a backup transmitter in central Tucson, shown on the map and not modelled.</li>
+              <li><strong>FCC contour:</strong> the 60 dBu F(50,50) contour from the FCC&rsquo;s Contours API, computed from the licence figures along 360 radials with 1 arc-second terrain. It runs <span data-fill="kmmin">&hellip;</span> to <span data-fill="kmmax">&hellip;</span> km from the tower and covers <span data-fill="area">&hellip;</span> square km. It is a prediction, not a measurement.</li>
+              <li><strong>People:</strong> 2020 Census blocks: residents, and occupied housing units as households (PL 94-171 table H1). A block wholly inside the contour counts in full, and a block the contour cuts counts by the share of its area inside.</li>
+              <li><strong>Terrain model:</strong> the Irregular Terrain Model (Longley-Rice) in point-to-point mode, run with the itmlogic Python package over USGS 3DEP elevation at 30&nbsp;m. 720 radials from the tower, a terrain profile every 100&nbsp;m, a receiver every 200&nbsp;m out to <span data-fill="radius">&hellip;</span> km. Median in time, place and situation, to line up with the FCC&rsquo;s F(50,50). Each block takes the value at its internal point.</li>
+              <li><strong>Receiver heights:</strong> 9.1&nbsp;m is the rooftop antenna the FCC&rsquo;s curves assume, so it is the fair comparison with the contour. 1.5&nbsp;m is a car aerial or a radio on a table.</li>
+              <li><strong>What the model leaves out:</strong> buildings, trees, reflections, interference from other stations, and the vertical pattern of the antenna. The ground is bare earth with average soil. The model flags <span data-fill="warn">&hellip;</span> of its own points, mostly far ones behind mountains, as outside the terrain geometry it was built on, so treat the edges of the shadows as soft.</li>
+              <li><strong>Measurements:</strong> there are none on this page. Both maps are predictions.</li>
+              <li><strong>Basemap:</strong> Esri. <strong>Scripts:</strong> <code>tools/build_kxci.py</code>, <code>model_kxci_terrain.py</code> and <code>publish_kxci.py</code> in the site&rsquo;s repository.</li>
+            </ul>
+
+            <hr>
+            <p>Live somewhere the map says you should hear KXCI and you cannot, or the other way round? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 13 November 2026</p>
+    </footer>
+  </div>
+  <div id="tip" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/kxci-signal/kxci.js"></script>
+</body>
+</html>
