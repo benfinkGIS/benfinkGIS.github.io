@@ -130,6 +130,17 @@ def main():
         shade = json.loads((d / "shade.json").read_text())
         carbon = json.loads((d / "carbon.json").read_text())
         check = json.loads((d / "shade_photo_check.json").read_text())
+        ctx = json.loads((d / "context.json").read_text())
+        rec = json.loads((d / "species_records.json").read_text())
+
+        def area(block):
+            return dict(
+                km2=block["km2"], records=block["all"]["records"],
+                species=block["all"]["species"], palette=block["palette"],
+                datasets=block["datasets"][:2],
+                groups={g: dict(records=t["records"], species=t["species"],
+                                top=[x["common"] or x["latin"] for x in t["top"][:3]])
+                        for g, t in block["groups"].items()})
         summ = json.loads((d / "summary.json").read_text())
         a = acc["sites"][s["id"]]
         share = land["share_pct"]
@@ -149,6 +160,11 @@ def main():
             sun=dict(azimuth=shade["sun_azimuth"], elevation=shade["sun_elevation"]),
             photo_check=dict(time=check["time"], agreement=check["agreement"]),
             lst=heat["sites"][s["id"]]["mean_lst_degC"],
+            context=ctx["context"], gap_m=ctx["rules"]["gap_m"],
+            structure=[ctx["structure"][n] for n in ["Today"] + SCEN],
+            records=dict(since=rec["since"], queried=rec["queried"],
+                         inside=area(rec["areas"]["inside"]),
+                         near=area(rec["areas"]["within_1km"])),
             today=dict(canopy=scen["existing"]["canopy_pct"],
                        edge=shade["scenarios"]["Today"]["street edge"],
                        pavement=shade["scenarios"]["Today"]["pavement"],

@@ -49,8 +49,8 @@ is one more entry, not a new workflow.
 
 ## Results so far (13 November 2026)
 
-Steps 0 to 9c have run for both sites, and the land cover has been scored
-against 300 hand-labelled points. Still to do: baseline and context (step 4), habitat, and the products.
+Steps 0 to 9c and step 4 have run for both sites, and the land cover has been scored
+against 300 hand-labelled points. Still to do: canopy change over time, and the remaining products.
 
 Land cover inside each neighborhood boundary. "Mapped" is what the map says;
 "corrected" is the share after allowing for the errors the accuracy check
@@ -333,6 +333,70 @@ on:
 Check: in `work/lst_check.jpg` the coolest pixels sit on the irrigated turf
 fields and the wash, so the temperature grid is in the right place.
 
+### Habitat context and species records
+
+Where each neighborhood sits (`16_context.py`, county layers):
+
+| | Dunbar Spring | Western Hills |
+| --- | --- | --- |
+| Washes through or along it | Tucson Arroyo, West University Wash | 18th Street Wash, Greyhound Wash |
+| Next nearest | Santa Cruz River, 367 m | Sunland Vista Wash, 172 m |
+| Nearest mapped riparian habitat | 330 m | 4 m |
+| Riparian habitat within 1 km | 196 ha | 65 ha |
+| Adjoining open space | Estevan Park, Anza Park | Ajo Detention Basin, Willie Blake Jr. Community Park |
+
+How broken up the canopy is. Crowns no more than 10 m apart count as one
+cluster:
+
+| | Dunbar Spring | | | Western Hills | | |
+| --- | --- | --- | --- | --- | --- | --- |
+| | Mean distance to a crown | Canopy in largest cluster | Linked to riparian | Mean distance to a crown | Canopy in largest cluster | Linked to riparian |
+| Today | 6.3 m | 73% | 0% | 6.3 m | 5% | 1% |
+| 1 Street trees | 4.4 m | 77% | 0% | 3.4 m | 98% | 98% |
+| 2 Streets and homes | 4.1 m | 77% | 0% | 2.4 m | 99% | 99% |
+| 3 Full build-out | 4.0 m | 78% | 0% | 1.8 m | 99% | 99% |
+
+Dunbar Spring's canopy already hangs together: three-quarters of it is one
+cluster. Western Hills' is scattered, with its largest cluster holding 5% of
+its canopy and 1% reaching the riparian habitat mapped along the 18th Street
+Wash on its edge. A row of street trees every 8 m joins nearly all of it into
+one network that reaches the wash. This is a threshold effect: the 10 m gap
+is a round number for illustration, not a crossing distance for any animal,
+and a different gap would move these figures a long way. It describes how
+broken up the canopy is, not habitat for a named species.
+
+Species records (`17_species_records.py`): GBIF occurrence records since
+2015, queried 14 November 2026. GBIF carries iNaturalist's research-grade
+observations and eBird's observation dataset.
+
+| | Dunbar Spring | | Western Hills | |
+| --- | --- | --- | --- | --- |
+| | Inside | Within 1 km | Inside | Within 1 km |
+| All records | 1,833 | 18,236 | 2 | 109,208 |
+| Species | 152 | 646 | 2 | 391 |
+| Bird records | 1,698 | 16,732 | 0 | 108,870 |
+| Bird species | 61 | 182 | 0 | 246 |
+| Vascular plant species | 38 | 201 | 2 | 61 |
+| Insect species | 33 | 178 | 0 | 63 |
+| Reptile species | 5 | 27 | 0 | 7 |
+
+These are records, not wildlife counts, and the table is mostly a picture of
+where people look. Western Hills has two records inside it and 109,000
+within a kilometre, 99% of them eBird checklists, almost all from the
+detention basin next door (the insect list there is led by dragonflies,
+which fits standing water). Nothing can be said about what lives on Western
+Hills' own streets from this; nobody has recorded there. What it does show
+is that a place with 246 recorded bird species sits a street's width from a
+neighborhood whose canopy does not reach it.
+
+All four trees in the planting have been recorded within a kilometre of both
+neighborhoods.
+
+Limits: GBIF's search API has no citable DOI; a formal report should repeat
+the query as a GBIF download and cite that. Riparian class letters are the
+county's and have not been looked up. The Ajo Detention Basin is named as
+the county's park layer names it.
+
 ## Data
 
 | Layer | Source | Notes |
@@ -376,14 +440,16 @@ Analyst and 3D Analyst), shown below as `propy`:
 | 9b | `12_carbon.py` | py | Carbon stored and taken up by the canopy each scenario adds, from `carbon_factors.json` |
 | 9c | `ee_signin.py`, `13_surface_temperature.py` | py | One-time Earth Engine sign-in; median June to August Landsat surface temperature for each site |
 | 9c | `14_heat.py` | propy | Fits surface temperature to land cover in 90 m blocks and applies it to the scenarios |
+| 4 | `16_context.py` | propy | Washes, riparian habitat and parks within 1 km, and how broken up the canopy is today and under each scenario |
+| 4b | `17_species_records.py` | py | GBIF occurrence records since 2015 inside each boundary and within 1 km, by group |
 | 10a | `15_publish_web.py` | propy | Writes `tucson-canopy/data/`: the page's figures and its overlay images |
 | 9a | `11_shade.py` | propy | Casts shadows for a date and time (default 15 July, 4 p.m.) today and under each scenario; `--check-photo` tests the shadow caster against the shadows in the 2023 photo |
 
 Still to build:
 
-4. **Baseline.** Canopy and impervious share, canopy height structure, canopy
-   patches and gaps, canopy change since the 2015 lidar flight and older NAIP
-   years, distance to washes, riparian habitat and parks, species records.
+4. **Baseline change over time.** Canopy change since the February 2015
+   lidar flight and across older NAIP years. Not done; the 2015 flight was
+   leaf-off, so it would undercount mesquite.
 9. **Outcomes**, per site and scenario: canopy %, shaded sidewalk length at a
    July 4 p.m. sun, estimated surface temperature change (from the citywide
    canopy to Landsat temperature relationship), carbon stored at maturity,

@@ -153,6 +153,78 @@
     t.appendChild(head);
     t.appendChild(body);
   }
+  function list(items) {
+    if (items.length < 2) return items.join("");
+    return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+  }
+  function renderHabitat() {
+    var s = S(), c = s.context, t = $("t-link");
+    // where the neighborhood sits
+    var through = c.washes.filter(function (w) { return w.distance_m === 0; }).map(function (w) { return w.name; });
+    var near = c.washes.filter(function (w) { return w.distance_m > 0; }).slice(0, 2)
+      .map(function (w) { return w.name + " (" + fmt(w.distance_m) + " m)"; });
+    var parks = c.parks.slice(0, 3).map(function (p) {
+      return p.name + (p.distance_m ? " (" + fmt(p.distance_m) + " m)" : " (adjoining)");
+    });
+    var txt = through.length
+      ? "The county\u2019s wash map shows " + list(through) + " running through or along " + s.name + ". "
+      : "No mapped wash runs through " + s.name + ". ";
+    if (near.length) txt += "The next nearest are " + list(near) + ". ";
+    txt += c.riparian.nearest_m == null
+      ? "No mapped riparian habitat lies within a kilometre. "
+      : "The nearest mapped riparian habitat is " + fmt(c.riparian.nearest_m) + " m from the boundary, with " +
+        fmt(c.riparian.total_ha) + " hectares of it within a kilometre. ";
+    if (parks.length) txt += "The nearest parks and open spaces are " + list(parks) + ".";
+    $("ctx-text").textContent = txt;
+
+    t.textContent = "";
+    var head = el("thead"), body = el("tbody");
+    head.appendChild(row(["", "Average distance to the nearest crown", "Ground within 5 m of a crown",
+                          "Canopy in the largest linked cluster", "Canopy linked to riparian habitat"], true));
+    s.structure.forEach(function (r, i) {
+      var tr = row([i ? s.scenarios[i - 1].name : "Today", r.mean_distance_to_canopy_m.toFixed(1) + " m",
+                    p0(r.within_5m_pct), p0(r.largest_cluster_share * 100),
+                    r.linked_to_riparian_share == null ? "none in reach" : p0(r.linked_to_riparian_share * 100)]);
+      if (i === scen + 1) tr.className = "on";
+      body.appendChild(tr);
+    });
+    t.appendChild(head);
+    t.appendChild(body);
+
+    var rec = s.records, tr2 = $("t-rec");
+    tr2.textContent = "";
+    head = el("thead");
+    body = el("tbody");
+    head.appendChild(row(["Group", "Records inside", "Species inside", "Records within 1 km",
+                          "Species within 1 km", "Most recorded within 1 km"], true));
+    Object.keys(rec.near.groups).forEach(function (g) {
+      var a = rec.inside.groups[g], b = rec.near.groups[g];
+      var tr = row([g, fmt(a.records), fmt(a.species), fmt(b.records), fmt(b.species), b.top.join(", ")]);
+      tr.lastChild.className = "";
+      body.appendChild(tr);
+    });
+    var total = row(["Everything", fmt(rec.inside.records), fmt(rec.inside.species), fmt(rec.near.records),
+                     fmt(rec.near.species), ""]);
+    total.className = "on";
+    body.appendChild(total);
+    tr2.appendChild(head);
+    tr2.appendChild(body);
+
+    var top = rec.near.datasets[0], palette = [];
+    d.species.forEach(function (sp) {
+      var n = rec.near.palette[sp.name];
+      if (n) palette.push(sp.name.toLowerCase() + " (" + n + ")");
+    });
+    $("rec-text").textContent =
+      "Inside " + s.name + " there " + (rec.inside.records === 1 ? "is " : "are ") + fmt(rec.inside.records) + " record" + (rec.inside.records === 1 ? "" : "s") +
+      "; within a kilometre there are " + fmt(rec.near.records) + ", " + p0(top.records / rec.near.records * 100) +
+      " of them from " + (/eBird/.test(top.title) ? "eBird" : top.title) + ". " +
+      (palette.length ? "The planting\u2019s own species have been recorded within that kilometre: " + list(palette) + "."
+        : "None of the planting\u2019s four species has been recorded within that kilometre.");
+    fill("gap", String(s.gap_m));
+    fill("rec-since", String(rec.since));
+    fill("rec-date", new Date(rec.queried + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }));
+  }
   function renderAccuracy() {
     var a = d.accuracy.both, t = $("t-acc");
     t.textContent = "";
@@ -396,6 +468,7 @@
     renderScenTable();
     renderBars();
     renderSpecies();
+    renderHabitat();
     fillSite();
     renderMap(refit);
   }

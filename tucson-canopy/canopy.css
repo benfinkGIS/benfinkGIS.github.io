@@ -64,7 +64,10 @@
 @media (max-width: 480px) { .bars { grid-template-columns: 1fr; gap: 2px 0; } .bars .track { margin-bottom: 5px; } }
 
 /* ---------- tables ---------- */
-#t-scen tr.on td { background: #ffffe1; font-weight: bold; }
+#t-scen tr.on td, #t-link tr.on td, #t-rec tr.on td { background: #ffffe1; font-weight: bold; }
+#t-link td:first-child, #t-rec td:first-child { white-space: nowrap; }
+#t-rec td:last-child { text-align: left; min-width: 200px; white-space: normal; font-weight: normal; }
+#t-rec th:last-child { text-align: left; }
 #t-scen td small, #t-species td small { font-weight: normal; white-space: nowrap; }
 #t-species .dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 1px solid #000; margin-right: 5px; vertical-align: -1px; }
 .grid td.num small { display: block; }

@@ -145,6 +145,24 @@
             </div>
             <p>All four are Sonoran Desert natives. Each is placed at the mature size the Arizona Municipal Water Users Association publishes, at least <span data-fill="spacing">&hellip;</span> m from the next new trunk. Spots that collect the most runoff from roofs and pavement are filled first, because a basin or a curb cut can water a tree there. In <span data-fill="site-name">&hellip;</span>, <span data-fill="fed">&hellip;</span> of the trees in this planting sit where at least <span data-fill="fed-m2">&hellip;</span> m&sup2; of roof and pavement drains to them.</p>
 
+            <h2 class="sec">What lives nearby, and whether the canopy reaches it</h2>
+            <p id="ctx-text">&hellip;</p>
+            <div class="chartbox">
+              <p class="cap">How broken up the tree canopy of <span data-fill="site-name">&hellip;</span> is, today and with each planting.</p>
+              <div class="table-wrap" tabindex="0" role="region" aria-label="Table of canopy connectivity">
+                <table class="grid wrap" id="t-link"></table>
+              </div>
+            </div>
+            <p>Crowns no more than <span data-fill="gap">&hellip;</span> m apart are counted as one linked cluster. That distance is a round number for illustration, not a measured crossing distance for any animal, and the result swings sharply around it: a row of trees every 8 m joins scattered crowns into one chain. Read it as how broken up the canopy is, not as habitat for a named species.</p>
+            <div class="chartbox">
+              <p class="cap">Records of living things since <span data-fill="rec-since">&hellip;</span> in the Global Biodiversity Information Facility, inside <span data-fill="site-name">&hellip;</span> and within 1 km of it.</p>
+              <div class="table-wrap" tabindex="0" role="region" aria-label="Table of species records">
+                <table class="grid wrap" id="t-rec"></table>
+              </div>
+            </div>
+            <p id="rec-text">&hellip;</p>
+            <div class="note"><p>These are records, not wildlife counts. They show where people have looked. A birding spot can hold a thousand times the records of the streets beside it, so the two neighborhoods&rsquo; totals say more about observers than about animals.</p></div>
+
             <h2 class="sec">How far to trust the map underneath</h2>
             <div class="chartbox">
               <div class="table-wrap" tabindex="0" role="region" aria-label="Table of land cover accuracy">
@@ -168,6 +186,8 @@
               <li><strong>Shade:</strong> shadows cast from tree crowns and roofs at 4 p.m. on 15 July, when the sun is <span data-fill="sun-el">&hellip;</span>&deg; up and due west. Trees are treated as solid, so this is where shade falls, not how deep it is; palo verde shade is thin. &ldquo;Street edge&rdquo; is the 2 m beside the pavement on both sides, <span data-fill="edge-km">&hellip;</span> km of it in <span data-fill="site-name">&hellip;</span>. Neither neighborhood has a mapped sidewalk layer. The same method reproduces the shadows in the 2023 photo: <span data-fill="check">&hellip;</span> of bare-ground cells agree in <span data-fill="site-name">&hellip;</span>.</li>
               <li><strong>Carbon:</strong> the canopy each planting adds, times <span data-fill="c-store">&hellip;</span> kg of carbon per square metre of urban tree cover, the U.S. average in <a data-href="carbon" href="https://www.nrs.fs.usda.gov/pubs/jrnl/2013/nrs_2013_nowak_001.pdf">Nowak and others (2013)</a>. The range uses the lowest and highest city in that study (<span data-fill="c-low">&hellip;</span> and <span data-fill="c-high">&hellip;</span>). None of its cities is in the Sonoran Desert, and open-crowned desert trees probably sit low. It counts the trees alone, once mature.</li>
               <li><strong>Surface temperature:</strong> Landsat 8 and 9, the median of June to August scenes for 2021 to 2023, through Google Earth Engine. It is the temperature of roofs, pavement and soil at about 11 a.m., not of the air, and the sensor sees 100 m at a time. The change is estimated from how temperature varies with land cover across <span data-fill="blocks">&hellip;</span> blocks of <span data-fill="block-m">&hellip;</span> m in the two neighborhoods. That relationship is weak: it explains <span data-fill="r2">&hellip;</span> of the variation, and the scatter left over (<span data-fill="scatter">&hellip;</span> &deg;C) is larger than any change in the table. Read it as &ldquo;slightly cooler&rdquo;.</li>
+              <li><strong>Linked canopy:</strong> tree crowns, including those just outside the boundary, are grouped into clusters with gaps of <span data-fill="gap">&hellip;</span> m or less. &ldquo;Linked to riparian habitat&rdquo; means the cluster reaches ground on Pima County&rsquo;s riparian classification map. Washes and parks are from Pima County GIS.</li>
+              <li><strong>Species records:</strong> the <a href="https://www.gbif.org/">Global Biodiversity Information Facility</a> search service, queried <span data-fill="rec-date">&hellip;</span>, which carries iNaturalist&rsquo;s research-grade observations and eBird&rsquo;s observation dataset among others. Records since <span data-fill="rec-since">&hellip;</span> with coordinates and no flagged location problem. This is a search, not a citable download.</li>
               <li><strong>Boundaries:</strong> City of Tucson neighborhood associations; the city registers Western Hills as &ldquo;Western Hills II&rdquo;. Both neighborhoods were picked from a screen of all 154 by how green they are in the 2023 imagery. <strong>Other layers:</strong> Pima County GIS (parcels, streets, parks). <strong>Basemap:</strong> Esri.</li>
               <li><strong>Scripts:</strong> <code>tools/canopy/</code> in the site&rsquo;s repository, run in order; the analysis runs in ArcGIS Pro&rsquo;s Python. <code>tucson-canopy/README.md</code> has the full method and every figure.</li>
             </ul>
