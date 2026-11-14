@@ -63,6 +63,13 @@
 .bars .on .lab, .bars .on .val { font-weight: bold; }
 @media (max-width: 480px) { .bars { grid-template-columns: 1fr; gap: 2px 0; } .bars .track { margin-bottom: 5px; } }
 
+/* ---------- 3D renders: two up, today beside planted ---------- */
+.renders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 8px; }
+.renders figure { margin: 0; padding: 3px; background: var(--face); border: 2px solid; border-color: var(--lo) var(--hi) var(--hi) var(--lo); }
+.renders img { display: block; width: 100%; height: auto; }
+.renders figcaption { font: bold 12px/1.5 Tahoma, Verdana, sans-serif; padding: 2px 4px 1px; }
+@media (max-width: 560px) { .renders { grid-template-columns: 1fr; } }
+
 /* ---------- tables ---------- */
 #t-scen tr.on td, #t-link tr.on td, #t-rec tr.on td { background: #ffffe1; font-weight: bold; }
 #t-link td:first-child, #t-rec td:first-child { white-space: nowrap; }

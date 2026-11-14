@@ -122,6 +122,27 @@
             </div>
             <p class="cap">Drag the divider, or focus it and use the arrow keys. Left of it is today; right of it is the choice above. Click a proposed tree for its species. Trees are drawn at mature size.</p>
 
+            <h2 class="sec">The same streets in three dimensions</h2>
+            <div class="renders">
+              <figure>
+                <img src="/tucson-canopy/img/western_hills_ii_today.jpg" width="1600" height="900" loading="lazy" alt="3D view of a 400 metre block of Western Hills today: houses on bare lots with scattered trees.">
+                <figcaption>Western Hills today</figcaption>
+              </figure>
+              <figure>
+                <img src="/tucson-canopy/img/western_hills_ii_street_trees.jpg" width="1600" height="900" loading="lazy" alt="The same block of Western Hills with rows of proposed trees lining every street.">
+                <figcaption>Western Hills with street trees</figcaption>
+              </figure>
+              <figure>
+                <img src="/tucson-canopy/img/dunbar_spring_today.jpg" width="1600" height="900" loading="lazy" alt="3D view of a 400 metre block of Dunbar Spring today: houses among dense tree canopy along the streets.">
+                <figcaption>Dunbar Spring today</figcaption>
+              </figure>
+              <figure>
+                <img src="/tucson-canopy/img/dunbar_spring_street_trees.jpg" width="1600" height="900" loading="lazy" alt="The same block of Dunbar Spring with a few proposed trees filling the gaps between existing ones.">
+                <figcaption>Dunbar Spring with street trees</figcaption>
+              </figure>
+            </div>
+            <p class="cap">A 400 m block of each neighborhood, built in Blender from the lidar with no vertical exaggeration and lit by the sun at 4 p.m. on 15 July, the same sun the shade figures use. Dark green is today&rsquo;s canopy at the size and shape the laser measured. Proposed trees are at mature size, in each species&rsquo; own colours: grey-green velvet mesquite, yellow blue palo verde, yellow-green foothill palo verde and pink desert willow.</p>
+
             <h2 class="sec">What each planting would change in <span data-fill="site-name">&hellip;</span></h2>
             <div class="chartbox">
               <div class="table-wrap" tabindex="0" role="region" aria-label="Table of results for each planting scenario">
@@ -199,6 +220,7 @@
               <li><strong>Linked canopy:</strong> tree crowns, including those just outside the boundary, are grouped into clusters with gaps of <span data-fill="gap">&hellip;</span> m or less. &ldquo;Linked to riparian habitat&rdquo; means the cluster reaches ground on Pima County&rsquo;s riparian classification map. Washes and parks are from Pima County GIS.</li>
               <li><strong>Species records:</strong> the <a href="https://www.gbif.org/">Global Biodiversity Information Facility</a> search service, queried <span data-fill="rec-date">&hellip;</span>, which carries iNaturalist&rsquo;s research-grade observations and eBird&rsquo;s observation dataset among others. Records since <span data-fill="rec-since">&hellip;</span> with coordinates and no flagged location problem. This is a search, not a citable download.</li>
               <li><strong>Boundaries:</strong> City of Tucson neighborhood associations; the city registers Western Hills as &ldquo;Western Hills II&rdquo;. Both neighborhoods were picked from a screen of all 154 by how green they are in the 2023 imagery. <strong>Other layers:</strong> Pima County GIS (parcels, streets, parks). <strong>Basemap:</strong> Esri.</li>
+              <li><strong>3D views:</strong> ground and buildings are the lidar surface with the 2023 photo draped over it; walls are tinted plain. Today&rsquo;s trees are the lidar canopy surface itself. Each proposed tree is a simple crown at its published mature height and width. Rendered in Blender.</li>
               <li><strong>Scripts:</strong> <code>tools/canopy/</code> in the site&rsquo;s repository, run in order; the analysis runs in ArcGIS Pro&rsquo;s Python. <code>tucson-canopy/README.md</code> has the full method and every figure.</li>
             </ul>
 

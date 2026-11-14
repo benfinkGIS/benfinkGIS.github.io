@@ -445,6 +445,8 @@ Analyst and 3D Analyst), shown below as `propy`:
 | 10b | `18_layouts.py` | propy | Builds an ArcGIS Pro project from the blank one that ships with Pro, styles the maps, and exports four 16:9 layouts as PDF and PNG |
 | 10c | `19_summary_workbook.py` | py | The Excel summary: every result, with gains, carbon and totals as formulas pointing at an Assumptions sheet |
 | 10d | `20_package.py` | propy | Hand-over copy of each site's GIS files in open formats: a GeoPackage, GeoTIFFs and a layer list |
+| 10e | `21_blender_export.py` | propy | Cuts a 400 m block of each site into plain arrays for Blender: ground, roof heights, canopy heights, the photo, and the proposed trees |
+| 10e | `22_blender_render.py` | Blender | Builds the block in 3D and renders it, today or under a planting, lit by the 15 July 4 p.m. sun |
 | 10a | `15_publish_web.py` | propy | Writes `tucson-canopy/data/`: the page's figures and its overlay images |
 | 9a | `11_shade.py` | propy | Casts shadows for a date and time (default 15 July, 4 p.m.) today and under each scenario; `--check-photo` tests the shadow caster against the shadows in the 2023 photo |
 
@@ -535,4 +537,15 @@ Made 14 November 2026.
   GeoPackage of eight vector layers, ten GeoTIFFs and `LAYERS.txt` for each
   site, 15 to 19 MB zipped. The parcel layer is left out.
 
-Still to make: Blender renders.
+- **3D renders** (`img/*.jpg`; full size in `work/<site>/blender/renders/`):
+  a 400 m block of each neighborhood, today and with street trees, from
+  `22_blender_render.py`. Run it headless:
+
+      blender -b --factory-startup -P tools/canopy/22_blender_render.py -- --site western_hills_ii --scenario 1
+
+  Ground and buildings are one surface (lidar ground plus roof heights) with
+  the photo draped on it; today's trees are the lidar canopy surface; proposed
+  trees are simple crowns at mature size. No vertical exaggeration. The sun
+  is where the shade analysis puts it. Proposed trees use foliage and bloom
+  colours here, not the map colours, because a blue tree looks wrong in a
+  rendered scene. A render takes about nine seconds on the RTX 5080.
