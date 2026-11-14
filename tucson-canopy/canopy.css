@@ -1,0 +1,75 @@
+/* Neighborhood Canopy: additions to the site's look.
+   Loaded after /assets/style.css, /tucson-loop-access/loop.css and /kxci-signal/kxci.css,
+   which supply the windows, toolbar buttons, group box, counter, chart panel, legend,
+   scrolling tables, map frame and status bar. */
+
+.canopyviz {
+  /* the site palette's categorical slots, in its fixed order */
+  --mesquite: #2a78d6;    /* slot 1 blue */
+  --foothill: #eb6834;    /* slot 2 orange */
+  --canopy: #1baf7a;      /* slot 3 aqua: canopy that exists today */
+  --bluepv: #eda100;      /* slot 4 yellow */
+  --willow: #e87ba4;      /* slot 5 magenta */
+  --shade: #104281;       /* one hue for shade */
+}
+
+.canopyviz #map { height: 600px; }
+@media (max-width: 700px) { .canopyviz #map { height: 460px; } }
+.canopyviz .leaflet-labels-pane .leaflet-tile { filter: grayscale(1) brightness(1.15); }
+
+/* ---------- the divider between today and the scenario ---------- */
+.swipe {
+  position: absolute; top: 0; bottom: 0; width: 44px; margin-left: -22px;
+  z-index: 650; cursor: ew-resize; touch-action: none;
+}
+.swipe::before {            /* the line */
+  content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; margin-left: -2px;
+  background: #fff; border-left: 1px solid #000; border-right: 1px solid #000;
+}
+.swipe .grip {
+  position: absolute; top: 50%; left: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px;
+  background: var(--face); border: 2px solid; border-color: var(--hi) var(--dk) var(--dk) var(--hi);
+  box-shadow: 1px 1px 0 #000; font: bold 14px/30px Tahoma, Verdana, sans-serif; text-align: center;
+  color: #000; user-select: none;
+}
+.swipe:focus-visible { outline: none; }
+.swipe:focus-visible .grip { outline: 2px dotted #000; outline-offset: 2px; background: #ffffe1; }
+.side-tag {
+  position: absolute; top: 8px; z-index: 640; padding: 2px 7px; pointer-events: none;
+  font: bold 12px/1.4 Tahoma, Verdana, sans-serif; color: #000; background: #ffffe1; border: 1px solid #000;
+  max-width: 44%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.side-tag.l { left: 8px; }
+.side-tag.r { right: 8px; }
+
+/* ---------- legend and button swatches ---------- */
+.legend .sw.canopy { background: var(--canopy); }
+.legend .sw.shade { background: var(--shade); }
+.legend .dot { width: 13px; height: 13px; border-radius: 50%; flex: none; border: 1px solid #000; }
+.legend .ring { width: 16px; height: 0; border-top: 3px solid #ffff00; flex: none; outline: 1px solid #000; }
+.groupbox .toolbar button .sw.canopy { background: var(--canopy); }
+.groupbox .toolbar button .sw.shade { background: var(--shade); }
+.groupbox .toolbar button .sw.cover { background: linear-gradient(90deg, #008300 0 34%, #6250d6 34% 67%, #eda100 67%); }
+
+/* ---------- bars: canopy today and with each planting ---------- */
+.bars { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 5px 10px; align-items: center; font-size: 13px; }
+.bars h3 { grid-column: 1 / -1; margin: 8px 0 0; font: bold 13px/1.3 Tahoma, Verdana, sans-serif; color: #000; }
+.bars h3:first-child { margin-top: 0; }
+.bars .lab { white-space: nowrap; }
+.bars .track { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.bars .bar { height: 16px; background: var(--canopy); border-radius: 0 4px 4px 0; flex: none; min-width: 2px; }
+.bars .bar.now { background: #0d7a52; }
+.bars .val { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bars .on .lab, .bars .on .val { font-weight: bold; }
+@media (max-width: 480px) { .bars { grid-template-columns: 1fr; gap: 2px 0; } .bars .track { margin-bottom: 5px; } }
+
+/* ---------- tables ---------- */
+#t-scen tr.on td { background: #ffffe1; font-weight: bold; }
+#t-scen td small, #t-species td small { font-weight: normal; white-space: nowrap; }
+#t-species .dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 1px solid #000; margin-right: 5px; vertical-align: -1px; }
+.grid td.num small { display: block; }
+
+.leaflet-popup-content { font: 12px/1.45 Tahoma, Verdana, sans-serif; }
+.leaflet-popup-content strong { font-size: 13px; }
+.leaflet-popup-content em { font-style: italic; }
+#t-scen td:first-child { white-space: nowrap; }

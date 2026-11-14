@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What Would Street Trees Do for a Bare Tucson Neighborhood? Full-Page Map | Fink Geospatial</title>
+  <meta name="description" content="The neighborhood canopy map at full size: tree canopy, afternoon shade and land cover in two Tucson neighborhoods, today and with a native tree planting.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="What Would Street Trees Do for a Bare Tucson Neighborhood? Full-Page Map | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/tucson-canopy/map/">
+  <link rel="canonical" href="https://finkgeo.com/tucson-canopy/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+  <link rel="stylesheet" href="/kxci-signal/kxci.css">
+  <link rel="stylesheet" href="/tucson-canopy/canopy.css">
+</head>
+<body class="loopviz kxciviz canopyviz fullmap">
+  <main class="viewer">
+    <h1 class="sr-only">What Would Street Trees Do for a Bare Tucson Neighborhood? Full-page map</h1>
+    <div class="titlebar">
+      <img src="/assets/globe.svg" alt="" width="16" height="16">
+      <span class="t">Canopy Viewer: Today and With Trees</span>
+      <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+    </div>
+    <div class="toolbar">
+      <button type="button" id="tb-in">Zoom In</button>
+      <button type="button" id="tb-out">Zoom Out</button>
+      <button type="button" id="tb-full">Whole Neighborhood</button>
+      <button type="button" id="tb-base" aria-pressed="true">Satellite</button>
+      <a class="tb-link" href="/tucson-canopy/" data-carry="/tucson-canopy/">&laquo; Back to Project Page</a>
+    </div>
+    <noscript><div class="note"><p>The map needs JavaScript. <a href="/tucson-canopy/">Back to the project page</a>.</p></div></noscript>
+    <fieldset class="groupbox">
+      <legend>Settings</legend>
+      <div class="row">
+        <span id="site-label">Neighborhood</span>
+        <div class="toolbar" id="site-buttons" role="group" aria-labelledby="site-label"></div>
+      </div>
+      <div class="row">
+        <span id="plant-label">Plant</span>
+        <div class="toolbar" id="plant-buttons" role="group" aria-labelledby="plant-label"></div>
+      </div>
+      <div class="row">
+        <span id="show-label">Show on the map</span>
+        <div class="toolbar" id="show-buttons" role="group" aria-labelledby="show-label"></div>
+      </div>
+    </fieldset>
+    <div class="map-canvas">
+      <div id="map" role="region" aria-label="Map comparing each neighborhood today with a tree planting scenario"></div>
+      <p id="map-error" class="map-error" role="alert" hidden></p>
+    </div>
+    <ul class="legend" id="map-legend"></ul>
+    <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/tucson-canopy/canopy.js"></script>
+</body>
+</html>

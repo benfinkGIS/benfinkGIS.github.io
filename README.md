@@ -47,6 +47,12 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tucson-north-station/station.js`, `station.css` | The map (Leaflet), figures and tables |
 | `tucson-north-station/data/station.json` | What the page reads: the rail line, every screened site, drive areas. Written by `tools/build_north_station.py`; don't edit by hand |
 | `tools/build_north_station.py` | Screens the sites and runs the drive times (see below). Not used by the site at runtime |
+| `tucson-canopy/index.html` | Neighborhood Canopy page: two Tucson neighborhoods, a native tree planting scenario, and what it changes in canopy, shade, carbon and surface heat |
+| `tucson-canopy/canopy.js`, `canopy.css` | The swipe map (Leaflet), figures and tables. Left of the divider is today, right is the chosen planting |
+| `tucson-canopy/data/` | What the page reads: `canopy.json` and transparent overlay images of canopy, land cover and shade. Written by `tools/canopy/15_publish_web.py`; don't edit by hand |
+| `tucson-canopy/README.md`, `sites.json`, `species.json`, `carbon_factors.json` | The project's method, every figure, and the settings its scripts read |
+| `tools/canopy/`, `tools/screen_canopy_sites.py` | The canopy analysis, numbered in run order (see `tucson-canopy/README.md`). Downloads run in the system Python; the analysis runs in ArcGIS Pro's Python. Not used by the site at runtime |
+| `tools/canopy-label/` | Local page for labelling land cover accuracy points. Marked noindex; not linked from the site |
 | `<project>/map/index.html` | Full-page map for each project (`catalinas-3d/viewer/` for the 3D model): only the viewer, filling the window. Same script and data as the project page; the settings carry over in the address. See "Full-page maps" below |
 | `tools/loop-review/` | Working pages for checking the Loop analysis (a satellite review map and a plain draft of the charts). Marked noindex; not linked from the site |
 | `404.html` | Not-found page |

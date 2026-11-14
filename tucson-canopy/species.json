@@ -1,0 +1,79 @@
+{
+  "_about": "Native tree palette for the planting scenario. Mature height and width are as published by the Arizona Municipal Water Users Association plant pages (read 13 November 2026), converted from feet. 'share' is the target mix the placement step steers toward; 'needs_runoff' restricts a species to spots that collect street or roof runoff. The shares and the runoff rule are modelling choices, not from the source. Colours are the site palette's categorical slots (blue, yellow, orange, magenta); existing canopy takes the aqua slot.",
+  "source": "https://www.amwua.org/plants",
+  "crown_base_m": 1.8,
+  "species": [
+    {
+      "id": "velvet_mesquite",
+      "common": "Velvet mesquite",
+      "latin": "Prosopis velutina",
+      "height_ft": 25,
+      "width_ft": 25,
+      "height_m": 7.6,
+      "radius_m": 3.8,
+      "water": "Very Low",
+      "share": 0.3,
+      "needs_runoff": false,
+      "colour": [
+        42,
+        120,
+        214
+      ],
+      "url": "https://www.amwua.org/plants/velvet-mesquite"
+    },
+    {
+      "id": "blue_palo_verde",
+      "common": "Blue palo verde",
+      "latin": "Parkinsonia florida",
+      "height_ft": 30,
+      "width_ft": 30,
+      "height_m": 9.1,
+      "radius_m": 4.6,
+      "water": "Very Low",
+      "share": 0.25,
+      "needs_runoff": false,
+      "colour": [
+        237,
+        161,
+        0
+      ],
+      "url": "https://www.amwua.org/plants/blue-palo-verde"
+    },
+    {
+      "id": "foothill_palo_verde",
+      "common": "Foothill palo verde",
+      "latin": "Parkinsonia microphylla",
+      "height_ft": 15,
+      "width_ft": 15,
+      "height_m": 4.6,
+      "radius_m": 2.3,
+      "water": "Very Low",
+      "share": 0.25,
+      "needs_runoff": false,
+      "colour": [
+        235,
+        104,
+        52
+      ],
+      "url": "https://www.amwua.org/plants/foothills-palo-verde"
+    },
+    {
+      "id": "desert_willow",
+      "common": "Desert willow",
+      "latin": "Chilopsis linearis",
+      "height_ft": 25,
+      "width_ft": 20,
+      "height_m": 7.6,
+      "radius_m": 3.05,
+      "water": "Low",
+      "share": 0.2,
+      "needs_runoff": true,
+      "colour": [
+        232,
+        123,
+        164
+      ],
+      "url": "https://www.amwua.org/plants/desert-willow"
+    }
+  ]
+}

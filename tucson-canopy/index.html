@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What Would Street Trees Do for a Bare Tucson Neighborhood? | Fink Geospatial</title>
+  <meta name="description" content="Two Tucson neighborhoods mapped from lidar and aerial imagery: one that planted its own native street trees, one with half the canopy. A planting scenario shows where trees would fit and what they would change.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="What Would Street Trees Do for a Bare Tucson Neighborhood? | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/tucson-canopy/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+  <link rel="stylesheet" href="/kxci-signal/kxci.css">
+  <link rel="stylesheet" href="/tucson-canopy/canopy.css">
+</head>
+<body class="loopviz kxciviz canopyviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** One Tucson neighborhood planted its own shade *** What would the same trees do a few miles south? *** Drag the divider on the map to compare ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: Neighborhood Canopy</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; Neighborhood Canopy</p>
+            <h1>What Would Street Trees Do for a Bare Tucson Neighborhood?</h1>
+
+            <p>Since 1996 the residents of Dunbar Spring, just north of downtown Tucson, have planted their own street trees: by <a href="https://dunbarspringneighborhoodforesters.org/welcome/accomplishments/">their count</a> more than 1,700 native trees, set in basins that catch rain off the street through cuts in the curb. Tree canopy now covers <span data-fill="ds-canopy">&hellip;</span> of the neighborhood.</p>
+            <p>Western Hills, about four miles to the south-east, is also mostly houses on small lots. Its canopy covers <span data-fill="wh-canopy">&hellip;</span>. This page maps both neighborhoods from aerial lidar and imagery, works out where a tree could go in each, and plants the same four native species Dunbar Spring uses to see what would change: canopy, afternoon shade, carbon and surface heat.</p>
+            <noscript><div class="note"><p>The figures, map and tables on this page need JavaScript.</p></div></noscript>
+
+            <fieldset class="groupbox">
+              <legend>Settings</legend>
+              <div class="row">
+                <span id="site-label">Neighborhood</span>
+                <div class="toolbar" id="site-buttons" role="group" aria-labelledby="site-label"></div>
+              </div>
+              <div class="row">
+                <span id="plant-label">Plant</span>
+                <div class="toolbar" id="plant-buttons" role="group" aria-labelledby="plant-label"></div>
+              </div>
+              <div class="row">
+                <span id="show-label">Show on the map</span>
+                <div class="toolbar" id="show-buttons" role="group" aria-labelledby="show-label"></div>
+              </div>
+            </fieldset>
+
+            <div class="stats" aria-live="polite">
+              <div class="stat lead-stat">
+                <div class="counter" id="hero-num">&hellip;</div>
+                <div class="lab" id="hero-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="tree-num">&hellip;</div>
+                <div class="lab" id="tree-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="shade-num">&hellip;</div>
+                <div class="lab" id="shade-lab">&nbsp;</div>
+              </div>
+            </div>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Canopy Viewer: Today and With Trees</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Whole Neighborhood</button>
+                <button type="button" id="tb-base" aria-pressed="true">Satellite</button>
+                <a class="tb-link" href="/tucson-canopy/map/" data-carry="/tucson-canopy/map/">Full-Page Map &raquo;</a>
+              </div>
+              <div class="map-canvas">
+                <div id="map" role="region" aria-label="Map comparing each neighborhood today with a tree planting scenario"></div>
+                <p id="map-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <ul class="legend" id="map-legend"></ul>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+            </div>
+            <p class="cap">Drag the divider, or focus it and use the arrow keys. Left of it is today; right of it is the choice above. Click a proposed tree for its species. Trees are drawn at mature size.</p>
+
+            <h2 class="sec">What each planting would change in <span data-fill="site-name">&hellip;</span></h2>
+            <div class="chartbox">
+              <div class="table-wrap" tabindex="0" role="region" aria-label="Table of results for each planting scenario">
+                <table class="grid wrap" id="t-scen"></table>
+              </div>
+            </div>
+            <p><strong>Street trees</strong> go only in the public strip beside the street, as Dunbar Spring&rsquo;s did. <strong>Streets and homes</strong> adds up to two trees on each home lot and the edges of parks. <strong>Full build-out</strong> fills every spot a tree would fit and is an upper bound, not a proposal. Each one includes the one before.</p>
+
+            <h2 class="sec">Tree canopy, both neighborhoods</h2>
+            <div class="chartbox">
+              <p class="cap">Share of each neighborhood under tree canopy, today and with each planting at mature size.</p>
+              <div class="bars" id="bars"></div>
+            </div>
+            <p>Street trees alone would take Western Hills from about half of Dunbar Spring&rsquo;s canopy to roughly where Dunbar Spring is now. Dunbar Spring has far less room left: <span data-fill="ds-room">&hellip;</span> of it is plantable, against <span data-fill="wh-room">&hellip;</span> of Western Hills.</p>
+
+            <h2 class="sec">The trees</h2>
+            <div class="chartbox">
+              <div class="table-wrap" tabindex="0" role="region" aria-label="Table of tree species in the chosen planting">
+                <table class="grid wrap" id="t-species"></table>
+              </div>
+            </div>
+            <p>All four are Sonoran Desert natives. Each is placed at the mature size the Arizona Municipal Water Users Association publishes, at least <span data-fill="spacing">&hellip;</span> m from the next new trunk. Spots that collect the most runoff from roofs and pavement are filled first, because a basin or a curb cut can water a tree there. In <span data-fill="site-name">&hellip;</span>, <span data-fill="fed">&hellip;</span> of the trees in this planting sit where at least <span data-fill="fed-m2">&hellip;</span> m&sup2; of roof and pavement drains to them.</p>
+
+            <h2 class="sec">How far to trust the map underneath</h2>
+            <div class="chartbox">
+              <div class="table-wrap" tabindex="0" role="region" aria-label="Table of land cover accuracy">
+                <table class="grid wrap" id="t-acc"></table>
+              </div>
+            </div>
+            <p>The land cover was checked against <span data-fill="acc-n">&hellip;</span> points chosen at random and labelled by hand from the 2023 aerial photo, without sight of the map. Tree canopy holds up: <span data-fill="ua-tree">&hellip;</span> of what the map calls canopy is canopy. What the ground is made of is harder. Only <span data-fill="ua-pave">&hellip;</span> of mapped pavement is pavement; packed dirt lots and shaded yards read as asphalt. That error hides plantable ground and does not invent it, so the plantings above err on the small side.</p>
+            <div class="note"><p>The map was revised once after the first scoring, which showed shade being mapped as low plants, and was scored again against the same labels. Canopy was not changed. The ground classes&rsquo; scores are therefore not a fully independent test. On the first map all six classes scored <span data-fill="first-all">&hellip;</span> and tree canopy <span data-fill="first-tree">&hellip;</span>.</p></div>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>What this is:</strong> a planning sketch. It shows where trees would fit and roughly what they would do. It is not a planting plan: nothing here checks buried utilities, who owns a strip of ground, or who would water a tree through its first summers.</li>
+              <li><strong>Lidar:</strong> the U.S. Geological Survey&rsquo;s 3D Elevation Program, Pima County, flown 27 September to 17 November 2021, about <span data-fill="density">&hellip;</span> points per square metre here. Mesquite was still in leaf. Canopy is anything 2.5 m or taller that is neither ground nor building and is green in the photo or lets the laser through. Roofs come from the lidar&rsquo;s own building class.</li>
+              <li><strong>Imagery:</strong> National Agriculture Imagery Program, four bands at 0.3 m, flown 18 October 2023. A tree planted or lost between the two flights counts as a map error.</li>
+              <li><strong>Land cover:</strong> lidar decides trees and roofs. A Random Trees classifier in ArcGIS Pro sorts the rest into pavement, low plants and bare ground from the imagery and the strength of the laser&rsquo;s return, trained on samples drawn by rule (the middle of a street is pavement) so that no training area is drawn by hand. Low plants and bare ground could not be told apart reliably and are shown together as open ground.</li>
+              <li><strong>Accuracy check:</strong> 25 points in each mapped class in each neighborhood. <span data-fill="cant">&hellip;</span> the labeller could not call were left out. Figures are weighted by each class&rsquo;s share of the map. The labels were made quickly, a second or two each.</li>
+              <li><strong>Where a tree can go:</strong> open ground at least 3 m from a roof, 1 m from pavement, 2 m from an existing crown, 3 m from overhead lines found in the lidar, and 10 m from a street corner. Street trees stay within 5 m of the pavement. Yards are home lots only; parks and schools take trees on their outer 10 m; shops, industry and railroad land are left out. These distances are assumptions for a sketch, not a city or utility standard.</li>
+              <li><strong>Which tree goes where:</strong> a species has to fit clear of roofs and wires. Among those that fit, the planting is steered toward a mix of 30% velvet mesquite, 25% each palo verde and 20% desert willow, and desert willow, the thirstiest of the four, goes only where runoff collects. The mix and that rule are choices made here.</li>
+              <li><strong>Runoff:</strong> water is routed downhill over the lidar ground surface, with roofs shedding outward. Tucson&rsquo;s normal rainfall is 10.61 inches a year (National Weather Service, 1991 to 2020), so <span data-fill="fed-m2">&hellip;</span> m&sup2; of roof and pavement sheds about 3,500 gallons a year before losses.</li>
+              <li><strong>Shade:</strong> shadows cast from tree crowns and roofs at 4 p.m. on 15 July, when the sun is <span data-fill="sun-el">&hellip;</span>&deg; up and due west. Trees are treated as solid, so this is where shade falls, not how deep it is; palo verde shade is thin. &ldquo;Street edge&rdquo; is the 2 m beside the pavement on both sides, <span data-fill="edge-km">&hellip;</span> km of it in <span data-fill="site-name">&hellip;</span>. Neither neighborhood has a mapped sidewalk layer. The same method reproduces the shadows in the 2023 photo: <span data-fill="check">&hellip;</span> of bare-ground cells agree in <span data-fill="site-name">&hellip;</span>.</li>
+              <li><strong>Carbon:</strong> the canopy each planting adds, times <span data-fill="c-store">&hellip;</span> kg of carbon per square metre of urban tree cover, the U.S. average in <a data-href="carbon" href="https://www.nrs.fs.usda.gov/pubs/jrnl/2013/nrs_2013_nowak_001.pdf">Nowak and others (2013)</a>. The range uses the lowest and highest city in that study (<span data-fill="c-low">&hellip;</span> and <span data-fill="c-high">&hellip;</span>). None of its cities is in the Sonoran Desert, and open-crowned desert trees probably sit low. It counts the trees alone, once mature.</li>
+              <li><strong>Surface temperature:</strong> Landsat 8 and 9, the median of June to August scenes for 2021 to 2023, through Google Earth Engine. It is the temperature of roofs, pavement and soil at about 11 a.m., not of the air, and the sensor sees 100 m at a time. The change is estimated from how temperature varies with land cover across <span data-fill="blocks">&hellip;</span> blocks of <span data-fill="block-m">&hellip;</span> m in the two neighborhoods. That relationship is weak: it explains <span data-fill="r2">&hellip;</span> of the variation, and the scatter left over (<span data-fill="scatter">&hellip;</span> &deg;C) is larger than any change in the table. Read it as &ldquo;slightly cooler&rdquo;.</li>
+              <li><strong>Boundaries:</strong> City of Tucson neighborhood associations; the city registers Western Hills as &ldquo;Western Hills II&rdquo;. Both neighborhoods were picked from a screen of all 154 by how green they are in the 2023 imagery. <strong>Other layers:</strong> Pima County GIS (parcels, streets, parks). <strong>Basemap:</strong> Esri.</li>
+              <li><strong>Scripts:</strong> <code>tools/canopy/</code> in the site&rsquo;s repository, run in order; the analysis runs in ArcGIS Pro&rsquo;s Python. <code>tucson-canopy/README.md</code> has the full method and every figure.</li>
+            </ul>
+
+            <hr>
+            <p>Know either neighborhood on the ground? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 14 November 2026</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/tucson-canopy/canopy.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "_about": "Carbon per square metre of urban tree cover, read from the paper on 14 November 2026. Storage is the US average across 28 cities and 6 states; none of the sampled cities is in the Sonoran Desert, so the range across cities is carried as the uncertainty. Sequestration is the paper's Arizona rate (the sample average adjusted for the state's growing season). These are for whole trees, in carbon, not carbon dioxide.",
+  "source": "Nowak, D.J., Greenfield, E.J., Hoehn, R.E., Lapoint, E. (2013). Carbon storage and sequestration by trees in urban and community areas of the United States. Environmental Pollution 178: 229-236.",
+  "url": "https://www.nrs.fs.usda.gov/pubs/jrnl/2013/nrs_2013_nowak_001.pdf",
+  "storage_kgC_per_m2": 7.69,
+  "storage_se": 1.36,
+  "storage_city_range": [3.1, 14.1],
+  "gross_sequestration_us_kgC_per_m2_yr": 0.277,
+  "gross_sequestration_arizona_kgC_per_m2_yr": 0.354,
+  "net_share_of_gross": 0.74,
+  "co2_per_c": 3.667
+}

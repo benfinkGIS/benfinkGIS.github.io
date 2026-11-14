@@ -1,0 +1,45 @@
+{
+  "_about": "One entry per study site. Every script in the canopy workflow reads this file, so adding a site here is all it takes to run the same analysis somewhere else. 'name' is what the page and tables show; 'boundary_name' is the name in the city's layer.",
+  "crs_epsg": 26912,
+  "buffer_m": 150,
+  "boundary_source": "City of Tucson neighborhood associations, PublicMaps/NeighborhoodsPlans/MapServer/0 (NAME, STATUS, WARD only)",
+  "sites": [
+    {
+      "id": "dunbar_spring",
+      "name": "Dunbar Spring",
+      "role": "reference",
+      "boundary_name": "Dunbar Spring",
+      "bbox_utm12n": [
+        501747,
+        3565668,
+        502663,
+        3566578
+      ],
+      "center_lonlat": [
+        -110.9766,
+        32.23174
+      ],
+      "area_km2": 0.615,
+      "screen_green_pct": 17.2
+    },
+    {
+      "id": "western_hills_ii",
+      "name": "Western Hills",
+      "role": "candidate",
+      "boundary_name": "Western Hills II",
+      "bbox_utm12n": [
+        505323,
+        3560400,
+        505987,
+        3561423
+      ],
+      "center_lonlat": [
+        -110.94001,
+        32.18471
+      ],
+      "area_km2": 0.467,
+      "screen_green_pct": 7.1,
+      "registered_as": "Western Hills II"
+    }
+  ]
+}
