@@ -151,6 +151,8 @@ def main():
                     lst_degC=round(float(b["lst"][r, c]), 2),
                     clear_scenes=int(b["count"][r, c]),
                     **{f"share_{n}": round(float(b["f"][n][r, c]), 3) for n in CLASSES},
+                    **{f"new_canopy_s{s}": round(float(b["change"][s]["tree"][r, c]), 4)
+                       for s in SCENARIOS},
                     **{f"change_s{s}_degC": round(float(b[f"d{s}"][r, c]), 3)
                        for s in SCENARIOS}))
     (WORK / "heat.json").write_text(json.dumps(out, indent=1))

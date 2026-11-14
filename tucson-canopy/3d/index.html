@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What Would Street Trees Do for a Bare Tucson Neighborhood? Full-Page 3D | Fink Geospatial</title>
+  <meta name="description" content="A block of two Tucson neighborhoods in 3D, built from lidar: today, and with native street trees at mature size. Move the sun through a July day.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="What Would Street Trees Do for a Bare Tucson Neighborhood? Full-Page 3D | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/tucson-canopy/3d/">
+  <link rel="canonical" href="https://finkgeo.com/tucson-canopy/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+  <link rel="stylesheet" href="/kxci-signal/kxci.css">
+  <link rel="stylesheet" href="/tucson-canopy/canopy.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    },
+    "integrity": {
+      "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js": "sha384-IDC7sAMAIMB/TZ6dgKKPPAKZ2bXXXP8+FBMBC8cU319eBhKITx+PaalhfDkDNH28",
+      "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js": "sha384-aJoe4qqS/DgF2jh9njAuvA6QIveJYoCuYOfYjdFY8P3eawzmc9bEQ40jq2TvOyuP"
+    }
+  }
+  </script>
+</head>
+<body class="loopviz kxciviz canopyviz fullmap">
+  <main class="viewer" id="viewer3d">
+    <h1 class="sr-only">What Would Street Trees Do for a Bare Tucson Neighborhood? Full-page 3D viewer</h1>
+    <div class="titlebar">
+      <img src="/assets/globe.svg" alt="" width="16" height="16">
+      <span class="t">3D Viewer: A Block of Each Neighborhood</span>
+      <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+    </div>
+    <div class="toolbar">
+      <button type="button" id="tb3-in">Zoom In</button>
+      <button type="button" id="tb3-out">Zoom Out</button>
+      <button type="button" id="tb3-home">Reset View</button>
+      <button type="button" id="tb3-top">From Above</button>
+      <a class="tb-link" href="/tucson-canopy/" data-carryback="/tucson-canopy/">&laquo; Back to Project Page</a>
+    </div>
+    <fieldset class="groupbox g3d">
+      <legend>Settings</legend>
+      <div class="row">
+        <span id="site3d-label">Neighborhood</span>
+        <div class="toolbar" id="site3d-buttons" role="group" aria-labelledby="site3d-label"></div>
+      </div>
+      <div class="row">
+        <span id="plant3d-label">Show</span>
+        <div class="toolbar" id="plant3d-buttons" role="group" aria-labelledby="plant3d-label"></div>
+      </div>
+      <div class="row sunrow">
+        <label for="sun3d">Time on 15 July</label>
+        <input type="range" id="sun3d" min="360" max="1140" step="5" value="960">
+        <span id="sun3d-label" class="sunclock">4:00 p.m.</span>
+      </div>
+    </fieldset>
+    <div class="map-canvas">
+      <div id="scene3d" class="scene3d"></div>
+      <p id="scene3d-error" class="map-error" role="alert" hidden></p>
+    </div>
+    <div class="statusbar"><span id="sb3-msg" aria-live="polite">Loading&hellip;</span><span id="sb3-sun">&nbsp;</span></div>
+    <noscript><div class="note"><p>The 3D viewer needs JavaScript. <a href="/tucson-canopy/">Back to the project page</a>.</p></div></noscript>
+  </main>
+
+  <script type="module" src="/tucson-canopy/canopy3d.js"></script>
+</body>
+</html>

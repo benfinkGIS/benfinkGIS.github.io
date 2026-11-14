@@ -50,6 +50,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tucson-canopy/index.html` | Neighborhood Canopy page: two Tucson neighborhoods, a native tree planting scenario, and what it changes in canopy, shade, carbon and surface heat |
 | `tucson-canopy/canopy.js`, `canopy.css` | The swipe map (Leaflet), figures and tables. Left of the divider is today, right is the chosen planting |
 | `tucson-canopy/data/` | What the page reads: `canopy.json` and transparent overlay images of canopy, land cover and shade. Written by `tools/canopy/15_publish_web.py`; don't edit by hand |
+| `tucson-canopy/canopy3d.js`, `3d/index.html`, `data/3d/` | The interactive 3D viewer (three.js) and its full-page version. Data written by `tools/canopy/24_web3d_export.py` |
 | `tucson-canopy/img/` | 3D stills of each neighborhood, today and with street trees, rendered in Blender by `tools/canopy/22_blender_render.py` |
 | `tucson-canopy/downloads/` | Map layouts exported from ArcGIS Pro (PDF and PNG) and the Excel summary of results. Written by `tools/canopy/18_layouts.py` and `19_summary_workbook.py` |
 | `tucson-canopy/README.md`, `sites.json`, `species.json`, `carbon_factors.json` | The project's method, every figure, and the settings its scripts read |

@@ -66,6 +66,8 @@ def main():
     acc = json.loads((WORK / "accuracy" / "accuracy.json").read_text())
     acc_first = json.loads((WORK / "accuracy" / "accuracy_first_map.json").read_text())
     heat = json.loads((WORK / "heat.json").read_text())
+    city = json.loads((WORK / "heat_citywide.json").read_text())
+    eco = json.loads((WORK / "heat_ecostress.json").read_text())
     doc = dict(
         species=[dict(name=s["common"], latin=s["latin"], height_ft=s["height_ft"],
                       width_ft=s["width_ft"], radius_m=s["radius_m"], water=s["water"],
@@ -78,8 +80,21 @@ def main():
                     high=CARBON["storage_city_range"][1],
                     uptake=CARBON["gross_sequestration_arizona_kgC_per_m2_yr"],
                     net=CARBON["net_share_of_gross"], url=CARBON["url"]),
-        heat=dict(blocks=heat["blocks"], block_m=heat["block_m"], r2=heat["r2_within_sites"],
-                  scatter=heat["residual_sd_degC"], coef=heat["coefficients_vs_open_ground"]),
+        heat=dict(blocks=city["blocks"], block_m=city["block_m"],
+                  canopy_r=city["calibration"]["r"], local_km=city["local_square_m"] / 1000,
+                  # degrees C of cooling for every ten points of (lidar) canopy
+                  per_ten_local=round(-city["local"]["canopy_lidar_units"] / 10, 2),
+                  per_ten_plain=round(-city["plain"]["canopy_lidar_units"] / 10, 2),
+                  # the same from ECOSTRESS in mid-afternoon (step 25)
+                  afternoon=dict(
+                      scenes=eco["scenes_used"], found=eco["scenes_found"],
+                      first_year=min(eco["years"]), last_year=max(eco["years"]),
+                      hour=eco["median_local_hour"], agreement=eco["agreement_with_landsat"],
+                      largest_moved_m=eco["largest_moved_m"],
+                      per_ten_local=round(-eco["local"]["canopy_lidar_units"] / 10, 2),
+                      per_ten_plain=round(-eco["plain"]["canopy_lidar_units"] / 10, 2)),
+                  two_site_blocks=heat["blocks"],
+                  per_ten_two_site=round(-heat["coefficients_vs_open_ground"]["tree"]["degC"] / 10, 2)),
         accuracy=dict(points=acc["sites"]["both sites"]["all classes"]["points"],
                       cant_tell=acc["skipped"]["cant_tell"], both={}, first_map={}),
         sites=[])
@@ -172,7 +187,8 @@ def main():
             scenarios=[])
         for name in SCEN:
             v, sh, c = scen["scenarios"][name], shade["scenarios"][name], carbon["scenarios"][name]
-            h = heat["sites"][s["id"]]["scenarios"][name]
+            h = city["sites"][s["id"]][name]
+            pm = eco["sites"][s["id"]][name]
             site["scenarios"].append(dict(
                 name=name, trees=v["trees"], by_species=[v["by_species"].get(n, 0) for n in names],
                 canopy=v["canopy_pct"], canopy_added_ha=v["canopy_added_ha"],
@@ -182,8 +198,9 @@ def main():
                 pavement=sh["pavement"], open=sh["open ground"],
                 carbon=c["stored_tC"], carbon_low=c["stored_tC_low"],
                 carbon_high=c["stored_tC_high"], uptake=c["uptake_net_tC_yr"],
-                lst=h["mean_change_degC"], lst_low=h["interval_95"][0],
-                lst_high=h["interval_95"][1]))
+                lst=h["local"]["change_degC"], lst_plain=h["plain"]["change_degC"],
+                lst_pm=pm["local"]["change_degC"], lst_pm_plain=pm["plain"]["change_degC"],
+                lst_two_site=heat["sites"][s["id"]]["scenarios"][name]["mean_change_degC"]))
         doc["sites"].append(site)
         print(s["id"], len(trees), "trees inside the boundary", flush=True)
 

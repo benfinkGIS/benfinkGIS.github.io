@@ -91,18 +91,25 @@
     f.appendChild(el("small", null, small));
     return f;
   }
+  // the typical hour of the afternoon scenes, to the nearest half hour: 14.6 -> "2:30 p.m."
+  function afternoonHour() {
+    var h = Math.round(d.heat.afternoon.hour * 2) / 2, whole = Math.floor(h);
+    return (whole > 12 ? whole - 12 : whole) + (h > whole ? ":30" : "") + (whole >= 12 ? " p.m." : " a.m.");
+  }
   function renderScenTable() {
     var s = S(), t = $("t-scen");
     t.textContent = "";
     var head = el("thead"), body = el("tbody");
+    function cooler(v) { return v.toFixed(1).replace("-", "−"); }
     head.appendChild(row(["", "Trees planted", "Tree canopy", "Street edge in shade", "Pavement in shade",
-                          "Carbon stored, tonnes", "Surface temperature"], true));
+                          "Carbon stored, tonnes", "Surface at 11 a.m.", "Surface at " + afternoonHour()], true));
     body.appendChild(row(["Today", "", p1(s.today.canopy), p0(s.today.edge), p0(s.today.pavement), "",
-                          s.lst.toFixed(1) + " °C"]));
+                          s.lst.toFixed(1) + " °C", ""]));
     s.scenarios.forEach(function (p, i) {
       var tr = row([p.name, fmt(p.trees), p1(p.canopy), p0(p.edge), p0(p.pavement),
                     withSmall(fmt(p.carbon), fmt(p.carbon_low) + " to " + fmt(p.carbon_high)),
-                    withSmall(p.lst.toFixed(1).replace("-", "−") + " °C", "weak estimate")]);
+                    withSmall(cooler(p.lst) + " °C", "up to " + cooler(p.lst_plain)),
+                    withSmall(cooler(p.lst_pm) + " °C", "up to " + cooler(p.lst_pm_plain))]);
       if (i === scen) tr.className = "on";
       body.appendChild(tr);
     });
@@ -258,8 +265,17 @@
     fill("c-high", String(d.carbon.high));
     fill("blocks", fmt(d.heat.blocks));
     fill("block-m", String(d.heat.block_m));
-    fill("r2", p0(d.heat.r2 * 100));
-    fill("scatter", d.heat.scatter.toFixed(1));
+    fill("canopy-r", d.heat.canopy_r.toFixed(2));
+    fill("local-km", d.heat.local_km.toFixed(1));
+    fill("ten-local", d.heat.per_ten_local.toFixed(1));
+    fill("ten-plain", d.heat.per_ten_plain.toFixed(1));
+    fill("ten-two", d.heat.per_ten_two_site.toFixed(1));
+    fill("ten-local-pm", d.heat.afternoon.per_ten_local.toFixed(1));
+    fill("ten-plain-pm", d.heat.afternoon.per_ten_plain.toFixed(1));
+    fill("pm-scenes", String(d.heat.afternoon.scenes));
+    fill("pm-found", String(d.heat.afternoon.found));
+    fill("pm-hour", afternoonHour());
+    fill("pm-moved", String(d.heat.afternoon.largest_moved_m));
     document.querySelectorAll('a[data-href="carbon"]').forEach(function (n) { n.href = d.carbon.url; });
   }
   function fillSite() {
@@ -471,6 +487,8 @@
     renderHabitat();
     fillSite();
     renderMap(refit);
+    // the 3D viewer, if it is on the page, follows these settings
+    document.dispatchEvent(new CustomEvent("canopy:state", { detail: { site: S().id, plant: scen + 1 } }));
   }
   function fail(msg) {
     var e = $("map-error");

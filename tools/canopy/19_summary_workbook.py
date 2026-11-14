@@ -64,6 +64,8 @@ def main():
     carbon = json.loads((PROJECT / "carbon_factors.json").read_text(encoding="utf-8"))
     acc = json.loads((WORK / "accuracy" / "accuracy.json").read_text())
     heat = json.loads((WORK / "heat.json").read_text())
+    city = json.loads((WORK / "heat_citywide.json").read_text())
+    eco = json.loads((WORK / "heat_ecostress.json").read_text())
     data = {}
     for s in sites():
         d = site_dir(s)
@@ -116,6 +118,23 @@ def main():
          "4 p.m. Mountain Standard Time, 15 July; NOAA solar equations"),
         ("sun_az", "Sun azimuth for the shade model", sh0["sun_azimuth"], "degrees", "Same"),
         ("tree_min", "Least height counted as tree canopy", 2.5, "m", "Lidar height above ground"),
+        ("heat_local", "Late-morning surface cooling per ten points of canopy, blocks compared within 1.8 km",
+         round(-city["local"]["canopy_lidar_units"] / 10, 2), "C",
+         f"Landsat summer median against canopy, pavement and elevation over {city['blocks']:,} built-up "
+         "90 m blocks in Tucson; step 23. Used in the Scenarios sheet"),
+        ("heat_plain", "The same, blocks compared across the whole city",
+         round(-city["plain"]["canopy_lidar_units"] / 10, 2), "C",
+         "Upper figure: includes whatever else differs between leafy and bare parts of town"),
+        ("heat_local_pm", "Afternoon surface cooling per ten points of canopy, blocks compared within 1.8 km",
+         round(-eco["local"]["canopy_lidar_units"] / 10, 2), "C",
+         f"ECOSTRESS, {eco['scenes_used']} clear scenes from June to August of {min(eco['years'])} to "
+         f"{max(eco['years'])}, typically about 2:30 p.m., on the same blocks; step 25. Used in the Scenarios sheet"),
+        ("heat_plain_pm", "The same, blocks compared across the whole city",
+         round(-eco["plain"]["canopy_lidar_units"] / 10, 2), "C",
+         "Upper figure for the afternoon"),
+        ("heat_two", "Late-morning cooling from the two study neighborhoods alone",
+         round(-heat["coefficients_vs_open_ground"]["tree"]["degC"] / 10, 2), "C",
+         f"Step 14, {heat['blocks']} blocks; canopy varies too little there to pin it down"),
     ]
     for key, label, value, unit, note in rows:
         wa.append([label, value, unit, note])
@@ -139,7 +158,8 @@ def main():
             "Canopy added, ha", "Street edge in shade, 4 p.m. 15 July", "Street edge gain, points",
             "Pavement in shade", "All open ground in shade", "Carbon stored once mature, t C",
             "Low, t C", "High, t C", "As carbon dioxide, t CO2", "Net uptake once mature, t C / yr",
-            "Mean summer surface temperature change, C (weak estimate)",
+            "Summer surface temperature change at about 11 a.m., C, citywide fit within 1.8 km",
+            "The same at about 2:30 p.m., C",
             "Mean distance to nearest crown, m", "Canopy in largest linked cluster",
             "Canopy linked to riparian habitat", "Trees where runoff collects"]
     ws.append(head)
@@ -150,7 +170,8 @@ def main():
             sh = dd["shade"]["scenarios"][name]
             st = dd["ctx"]["structure"][name]
             r = ws.max_row + 1
-            ht = heat["sites"][sid]["scenarios"].get(name)
+            ht = city["sites"][sid].get(name)
+            pm = eco["sites"][sid].get(name)
             ws.append([
                 dd["site"]["name"], name, sc["trees"] if sc else 0,
                 (sc["canopy_pct"] if sc else dd["scen"]["existing"]["canopy_pct"]) / 100,
@@ -160,18 +181,19 @@ def main():
                 f"=F{r}*10000*{ref['storage']}/1000", f"=F{r}*10000*{ref['storage_low']}/1000",
                 f"=F{r}*10000*{ref['storage_high']}/1000", f"=K{r}*{ref['co2']}",
                 f"=F{r}*10000*{ref['uptake']}*{ref['net']}/1000",
-                ht["mean_change_degC"] if ht else 0,
+                ht["local"]["change_degC"] if ht else 0,
+                pm["local"]["change_degC"] if pm else 0,
                 st["mean_distance_to_canopy_m"], st["largest_cluster_share"],
                 st["linked_to_riparian_share"] if st["linked_to_riparian_share"] is not None else "n/a",
                 sc["runoff_fed_share"] if sc else "n/a"])
             for col, fmt in ((3, NUM), (4, PCT1), (5, NUM1), (6, NUM2), (7, PCT), (8, NUM1), (9, PCT),
                              (10, PCT), (11, NUM), (12, NUM), (13, NUM), (14, NUM), (15, NUM1),
-                             (16, NUM2), (17, NUM1), (18, PCT), (19, PCT), (20, PCT)):
+                             (16, NUM2), (17, NUM2), (18, NUM1), (19, PCT), (20, PCT), (21, PCT)):
                 ws.cell(r, col).number_format = fmt
             if i == 0:
                 for c in ws[r]:
                     c.fill = BAND
-    style_sheet(ws, [18, 20] + [14] * 18, freeze="C2")
+    style_sheet(ws, [18, 20] + [14] * 19, freeze="C2")
     ws.row_dimensions[1].height = 66
     note = ws.max_row + 2
     ws.cell(note, 1, "Canopy, shade and carbon are for trees at their published mature size. Each planting "
@@ -337,15 +359,17 @@ def main():
         ("New trees are at their published mature size, which takes decades.", False),
         ("Tree canopy is mapped well (about 95% right on tree or not). Pavement is over-mapped inside "
          "lots, which hides plantable ground and does not invent it.", False),
-        ("The surface temperature change is a weak estimate from two neighborhoods at about 11 a.m. "
-         "Read it as 'slightly cooler'.", False),
+        ("The surface temperature changes are from how leafy and bare blocks differ across Tucson at "
+         "about 11 a.m. (Landsat) and about 2:30 p.m. (ECOSTRESS). They are surface, not air, "
+         "temperatures, and leafy blocks are often watered.", False),
         ("Carbon uses a US urban average. No desert city was in that study; the low figure is the safer one.", False),
         ("Species records show where people have looked, not what lives where.", False),
         ("", False),
         ("Sources", True),
         ("Lidar: USGS 3D Elevation Program, Pima County, flown 27 September to 17 November 2021.", False),
         ("Imagery: USDA National Agriculture Imagery Program, 18 October 2023.", False),
-        ("Surface temperature: Landsat 8 and 9, June to August 2021 to 2023, through Google Earth Engine.", False),
+        ("Surface temperature: Landsat 8 and 9, June to August 2021 to 2023, through Google Earth Engine; "
+         "NASA ECOSTRESS (ECO_L2T_LSTE version 2), June to August 2021 to 2025.", False),
         ("Boundaries: City of Tucson neighborhood associations (Western Hills is registered as Western Hills II).", False),
         ("Parcels, streets, washes, riparian habitat, parks: Pima County GIS.", False),
         ("Species records: Global Biodiversity Information Facility.", False),

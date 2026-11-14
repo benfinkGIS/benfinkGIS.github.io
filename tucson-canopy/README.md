@@ -290,45 +290,109 @@ means are 53.1 C in Dunbar Spring and 53.7 C in Western Hills (128 and
 129 F). Those are the temperatures of roofs, pavement, soil and leaves, not
 of the air.
 
-`14_heat.py` sums the land cover into 90 m blocks (309 across both sites)
-and regresses temperature on the share of each block under tree canopy, roof
-and pavement, with open ground as the baseline and a separate level for each
-site. A block fully covered by a class differs from a block of open ground
-by:
+**The estimate used on the page** is from `23_heat_citywide.py`, which fits
+temperature to tree canopy, pavement and elevation across 60,627 built-up
+90 m blocks covering the city, as the project first set out to do.
 
-| Class | Difference | Standard error |
+- Canopy across the city is Meta and the World Resources Institute's global
+  canopy height map (about 1 m), counted at 2 m or taller. Against the lidar
+  canopy in the two neighborhoods' 309 blocks it correlates at 0.91 and sees
+  78% as much canopy, so its coefficient is multiplied by 0.78 to put it in
+  lidar units. The Forest Service's national tree canopy layer was also
+  tried: it correlates at 0.70 and sees only 22% as much.
+- Pavement is NLCD 2021 impervious surface, which correlates at 0.76 with
+  the lidar roof-plus-pavement share.
+
+| Fit | Cooling for every ten points of canopy | 95% interval |
 | --- | --- | --- |
-| Tree canopy | -1.9 C | 0.8 |
-| Pavement | +2.6 C | 0.4 |
-| Roof | +2.9 C | 0.6 |
+| Blocks compared only within 1.8 km squares | 0.56 C | 0.49 to 0.62 |
+| Blocks compared across the whole city | 0.97 C | 0.81 to 1.12 |
+| The two neighborhoods alone (step 14, 309 blocks) | 0.19 C | wide |
 
-Applied to what the new crowns cover, the neighborhood's mean late-morning
-surface temperature changes by:
+Intervals come from resampling 2.7 km squares, so neighbouring blocks are
+not treated as independent. Elevation is worth 1.2 C per 100 m.
 
-| | Dunbar Spring | Western Hills |
-| --- | --- | --- |
-| 1 Street trees | -0.13 C | -0.28 C (-0.42 to -0.13) |
-| 2 Streets and homes | -0.17 C | -0.39 C (-0.61 to -0.16) |
-| 3 Full build-out | -0.19 C | -0.49 C (-0.79 to -0.20) |
+Change in mean late-morning surface temperature:
 
-That is a few tenths of a degree, half a degree Fahrenheit for street trees
-in Western Hills. Report it as "slightly cooler", not as a number to lean
-on:
+| | Dunbar Spring | | Western Hills | |
+| --- | --- | --- | --- | --- |
+| | Within 1.8 km | Across the city | Within 1.8 km | Across the city |
+| 1 Street trees | -0.25 C | -0.44 C | -0.56 C | -0.97 C |
+| 2 Streets and homes | -0.35 C | -0.60 C | -0.85 C | -1.48 C |
+| 3 Full build-out | -0.39 C | -0.68 C | -1.13 C | -1.96 C |
 
-- The fit is weak. Land cover explains 23% of the variation in temperature
-  within the sites, and the leftover scatter (1.05 C) is larger than every
-  change in the table.
-- The canopy effect is not stable. Fitted separately it is -2.5 C in Dunbar
-  Spring and -0.5 C in Western Hills, where canopy varies little from
-  block to block (2% to 20%). Pavement and roof effects are steadier.
-- The thermal sensor sees 100 m, so each block borrows from its neighbours.
-  That pulls every coefficient toward zero and makes the intervals above too
-  narrow.
-- It is surface temperature at 11 a.m. The shade table is the better guide
-  to what a person walking at 4 p.m. would feel.
-- The original plan was a citywide canopy-to-temperature relationship.
-  Canopy at this detail exists only for the two sites, so the fit comes from
-  those two neighborhoods.
+The page shows the within-1.8-km figure for each hour, with the
+across-the-city figure as "up to". The first is the safer one: it compares each block only with its
+neighbours, so differences between parts of town (soil, how much people
+water, distance from the mountains) drop out.
+
+What to keep in mind:
+
+- This is how leafy and bare blocks differ today, not an experiment. Leafy
+  blocks tend to be watered. Desert trees living on street runoff would cool
+  less by evaporation than a watered yard does, so the real effect may be
+  smaller.
+- It is surface temperature, seen by sensors with footprints of 70 to
+  100 m. The shade table is the better guide to what a person walking at
+  4 p.m. would feel.
+- The two-neighborhood fit (`14_heat.py`) gave a third as much. Canopy
+  varies too little inside Western Hills (2% to 20% of a block) for that fit
+  to pin the slope down; it is kept as a check, not used.
+
+**The afternoon** is from ECOSTRESS, NASA's thermal sensor on the space
+station, which sees 70 m and passes at varying hours (`25_ecostress.py`;
+needs a free NASA Earthdata login, `earthdata_signin.py`). Same blocks, same
+canopy layer, same calibration and same fits as above; only the temperature
+source and the hour change.
+
+- 70 scenes (product `ECO_L2T_LSTE` version 2, tiles 12SWA and 12SVA) were
+  taken between 1 and 6 p.m. in June to August of 2021 to 2025. Cloud and
+  everything within 700 m of it is dropped. 17 scenes were still at least
+  60% clear over the built-up city: 52 were lost to cloud (July and August
+  are the monsoon) and one because its detail matched Landsat nowhere.
+- ECOSTRESS scenes can sit a few hundred metres off. Each scene's fine
+  detail (what is left after taking away the 1.9 km average around each
+  block) is slid against the same detail in the Landsat map and the scene is
+  moved to where they agree best: 123 m at the median, 225 m at most.
+- Scenes fall on different days and hours (1:00 to 4:40 p.m., typically
+  about 2:30), so each is turned into a difference from its own citywide median
+  and the median difference across scenes is the afternoon map.
+- The afternoon map correlates with the Landsat map at 0.90 (0.84 on fine
+  detail alone). `work/ecostress_check.jpg` shows the two side by side.
+
+| Fit | Late morning (Landsat) | Afternoon (ECOSTRESS) | Afternoon 95% interval |
+| --- | --- | --- | --- |
+| Blocks compared only within 1.8 km squares | 0.56 C | 0.27 C | 0.22 to 0.31 |
+| Blocks compared across the whole city | 0.97 C | 0.58 C | 0.47 to 0.69 |
+
+Change in mean afternoon surface temperature:
+
+| | Dunbar Spring | | Western Hills | |
+| --- | --- | --- | --- | --- |
+| | Within 1.8 km | Across the city | Within 1.8 km | Across the city |
+| 1 Street trees | -0.12 C | -0.26 C | -0.27 C | -0.58 C |
+| 2 Streets and homes | -0.17 C | -0.36 C | -0.41 C | -0.88 C |
+| 3 Full build-out | -0.19 C | -0.41 C | -0.55 C | -1.18 C |
+
+The afternoon figure is about half the late-morning one. Two checks on that:
+
+- Fitted one scene at a time, the within-1.8-km figure runs from 0.19 to
+  0.34 C (median 0.26), so no single scene or the way they were combined
+  produces it.
+- ECOSTRESS is blurrier than Landsat. Blurring the Landsat map by 135 m
+  brings its within-1.8-km figure down from 0.56 to 0.36 C and its
+  across-the-city figure from 0.97 to 0.83 C. Blur explains part of the gap,
+  not all of it.
+
+Limits particular to ECOSTRESS: lining the scenes up against Landsat leans
+on Landsat as the reference; the sensor looks up to about 28 degrees off
+straight down, so some scenes see more wall and less roof; and 17 scenes is
+a small sample, 9 of them from June, before the rains.
+
+A first run of this step placed every scene 4.6 km too far west (the city
+box runs past the edge of tile 12SWA) and found almost no effect. That was a
+bug, caught because the map did not match Landsat; the figures above are
+from the corrected run.
 
 Check: in `work/lst_check.jpg` the coolest pixels sit on the irrigated turf
 fields and the wash, so the temperature grid is in the right place.
@@ -447,6 +511,9 @@ Analyst and 3D Analyst), shown below as `propy`:
 | 10d | `20_package.py` | propy | Hand-over copy of each site's GIS files in open formats: a GeoPackage, GeoTIFFs and a layer list |
 | 10e | `21_blender_export.py` | propy | Cuts a 400 m block of each site into plain arrays for Blender: ground, roof heights, canopy heights, the photo, and the proposed trees |
 | 10e | `22_blender_render.py` | Blender | Builds the block in 3D and renders it, today or under a planting, lit by the 15 July 4 p.m. sun |
+| 9d | `23_heat_citywide.py` | py | The canopy-to-temperature relationship across all of built-up Tucson, in Earth Engine, applied to the scenarios |
+| 9e | `25_ecostress.py` | py | Afternoon surface temperature from ECOSTRESS and the same citywide fit on it (after a one-time `earthdata_signin.py`) |
+| 10f | `24_web3d_export.py` | py | The 3D blocks as a height image, a photo and a tree list for the browser viewer |
 | 10a | `15_publish_web.py` | propy | Writes `tucson-canopy/data/`: the page's figures and its overlay images |
 | 9a | `11_shade.py` | propy | Casts shadows for a date and time (default 15 July, 4 p.m.) today and under each scenario; `--check-photo` tests the shadow caster against the shadows in the 2023 photo |
 
@@ -537,6 +604,14 @@ Made 14 November 2026.
   GeoPackage of eight vector layers, ten GeoTIFFs and `LAYERS.txt` for each
   site, 15 to 19 MB zipped. The parcel layer is left out.
 
+- **3D viewer** (`canopy3d.js`, `3d/index.html`, `data/3d/`): the same blocks
+  live in the browser with three.js. Drag to orbit, scroll to zoom, switch
+  between today and each planting, and move the sun through 15 July; the
+  shadows are cast live from the same solar equations as the shade analysis.
+  Ground and buildings are built from a height image at 0.5 m (1 m on small
+  screens), today's canopy from the lidar canopy heights, and the proposed
+  trees as instanced crowns. It loads only when scrolled into view on the
+  project page, and follows that page's neighborhood and planting settings.
 - **3D renders** (`img/*.jpg`; full size in `work/<site>/blender/renders/`):
   a 400 m block of each neighborhood, today and with street trees, from
   `22_blender_render.py`. Run it headless:

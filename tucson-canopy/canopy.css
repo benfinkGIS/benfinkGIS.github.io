@@ -63,6 +63,18 @@
 .bars .on .lab, .bars .on .val { font-weight: bold; }
 @media (max-width: 480px) { .bars { grid-template-columns: 1fr; gap: 2px 0; } .bars .track { margin-bottom: 5px; } }
 
+/* ---------- 3D viewer ---------- */
+.scene3d { height: 560px; background: #e7e6e0; }
+@media (max-width: 700px) { .scene3d { height: 420px; } }
+.scene3d canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+.scene3d canvas:active { cursor: grabbing; }
+.scene3d canvas:focus-visible { outline: 2px dotted #000; outline-offset: -4px; }
+.viewer > .groupbox { margin: 0 0 3px; padding: 2px 8px 6px; }
+.fullmap .viewer > .map-canvas > .scene3d { flex: 1; height: auto; min-width: 0; }
+.sunrow label { font-size: 13px; }
+.sunrow input[type="range"] { flex: 1 1 auto; min-width: 80px; max-width: 420px; accent-color: var(--navy); }
+.sunrow .sunclock { font: bold 13px/1 Tahoma, Verdana, sans-serif; min-width: 68px; font-variant-numeric: tabular-nums; }
+
 /* ---------- 3D renders: two up, today beside planted ---------- */
 .renders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 8px; }
 .renders figure { margin: 0; padding: 3px; background: var(--face); border: 2px solid; border-color: var(--lo) var(--hi) var(--hi) var(--lo); }
@@ -83,3 +95,6 @@
 .leaflet-popup-content strong { font-size: 13px; }
 .leaflet-popup-content em { font-style: italic; }
 #t-scen td:first-child { white-space: nowrap; }
+/* eight columns: a little tighter than the other tables so it fits the page column */
+#t-scen { font-size: 13px; }
+#t-scen th, #t-scen td { padding: 5px 5px; }
