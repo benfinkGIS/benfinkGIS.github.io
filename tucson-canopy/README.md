@@ -442,6 +442,9 @@ Analyst and 3D Analyst), shown below as `propy`:
 | 9c | `14_heat.py` | propy | Fits surface temperature to land cover in 90 m blocks and applies it to the scenarios |
 | 4 | `16_context.py` | propy | Washes, riparian habitat and parks within 1 km, and how broken up the canopy is today and under each scenario |
 | 4b | `17_species_records.py` | py | GBIF occurrence records since 2015 inside each boundary and within 1 km, by group |
+| 10b | `18_layouts.py` | propy | Builds an ArcGIS Pro project from the blank one that ships with Pro, styles the maps, and exports four 16:9 layouts as PDF and PNG |
+| 10c | `19_summary_workbook.py` | py | The Excel summary: every result, with gains, carbon and totals as formulas pointing at an Assumptions sheet |
+| 10d | `20_package.py` | propy | Hand-over copy of each site's GIS files in open formats: a GeoPackage, GeoTIFFs and a layer list |
 | 10a | `15_publish_web.py` | propy | Writes `tucson-canopy/data/`: the page's figures and its overlay images |
 | 9a | `11_shade.py` | propy | Casts shadows for a date and time (default 15 July, 4 p.m.) today and under each scenario; `--check-photo` tests the shadow caster against the shadows in the 2023 photo |
 
@@ -512,5 +515,24 @@ validator could not be run here (no Node on this machine).
 
 Every figure on the page comes from `data/canopy.json`, so re-running
 `15_publish_web.py` after any earlier step updates the page. No draft or
-under-construction labels. Still to make: Pro layouts, the Excel summary, a
-GeoPackage, Blender renders.
+under-construction labels.
+
+## Products besides the page
+
+Made 14 November 2026.
+
+- **Map layouts** (`downloads/*.pdf`, `*.png`): four 16:9 slides exported from
+  ArcGIS Pro by `18_layouts.py`. Land cover for both neighborhoods; tree
+  canopy today and with street trees for each; shade at 4 p.m. on 15 July in
+  Western Hills. The project file is `work/tucson_canopy.aprx`; open it in
+  Pro to restyle by hand. The legend and scale bar are drawn by the script,
+  because Pro's own legend could not be laid out cleanly from ArcPy.
+- **Summary workbook** (`downloads/tucson_canopy_summary.xlsx`): eight sheets.
+  Scenarios is the main one. Checked by opening it in Excel and
+  recalculating: 105 formulas, no errors, and the carbon figures match
+  `12_carbon.py`.
+- **GIS files** (`work/deliverable/<site>.zip`, not in the repository): a
+  GeoPackage of eight vector layers, ten GeoTIFFs and `LAYERS.txt` for each
+  site, 15 to 19 MB zipped. The parcel layer is left out.
+
+Still to make: Blender renders.

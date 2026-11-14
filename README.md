@@ -50,6 +50,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tucson-canopy/index.html` | Neighborhood Canopy page: two Tucson neighborhoods, a native tree planting scenario, and what it changes in canopy, shade, carbon and surface heat |
 | `tucson-canopy/canopy.js`, `canopy.css` | The swipe map (Leaflet), figures and tables. Left of the divider is today, right is the chosen planting |
 | `tucson-canopy/data/` | What the page reads: `canopy.json` and transparent overlay images of canopy, land cover and shade. Written by `tools/canopy/15_publish_web.py`; don't edit by hand |
+| `tucson-canopy/downloads/` | Map layouts exported from ArcGIS Pro (PDF and PNG) and the Excel summary of results. Written by `tools/canopy/18_layouts.py` and `19_summary_workbook.py` |
 | `tucson-canopy/README.md`, `sites.json`, `species.json`, `carbon_factors.json` | The project's method, every figure, and the settings its scripts read |
 | `tools/canopy/`, `tools/screen_canopy_sites.py` | The canopy analysis, numbered in run order (see `tucson-canopy/README.md`). Downloads run in the system Python; the analysis runs in ArcGIS Pro's Python. Not used by the site at runtime |
 | `tools/canopy-label/` | Local page for labelling land cover accuracy points. Marked noindex; not linked from the site |
