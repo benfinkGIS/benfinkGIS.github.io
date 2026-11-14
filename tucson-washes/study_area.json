@@ -1,0 +1,37 @@
+{
+  "_about": "Study area and focal species for the wash corridor project. Every script in tools/washes/ reads this file. The box is a draft until Ben confirms it.",
+  "crs_epsg": 26912,
+  "bbox_utm12n": [
+    487000,
+    3567000,
+    512000,
+    3588000
+  ],
+  "bbox_note": "North end of the Tucson Mountains (southwest) to Pusch Ridge in the Santa Catalinas (northeast); Grant Road (south) to Tangerine Road (north). 25 x 21 km, 525 km2. Takes in the Santa Cruz, the Rillito, the Canada del Oro and the urban washes of Casas Adobes, Flowing Wells and the Catalina Foothills. Sits inside twelve USGS 1 m elevation tiles.",
+  "species": [
+    {
+      "id": "bobcat",
+      "common": "Bobcat",
+      "scientific": "Lynx rufus",
+      "movement": "terrestrial"
+    },
+    {
+      "id": "flycatcher",
+      "common": "Vermilion flycatcher",
+      "scientific": "Pyrocephalus rubinus",
+      "movement": "patch-hopping"
+    },
+    {
+      "id": "queen",
+      "common": "Queen butterfly",
+      "scientific": "Danaus gilippus",
+      "movement": "floral resource"
+    }
+  ],
+  "bbox_first_draft": [
+    485000,
+    3560000,
+    504000,
+    3575000
+  ]
+}

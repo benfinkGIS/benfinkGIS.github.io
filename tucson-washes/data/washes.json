@@ -1,0 +1,2055 @@
+{
+ "built": "2026-11-14",
+ "box": [
+  -111.13828,
+  32.23958,
+  -110.87236,
+  32.4291
+ ],
+ "area_km2": 525,
+ "reaches": 14392,
+ "wash_km": 3335,
+ "street_km": 429,
+ "new_km": 1657,
+ "named_km": 608,
+ "canopy_along_washes_pct": 16.1,
+ "canopy_along_new_pct": 13.9,
+ "canopy_study_area_pct": 10.97,
+ "riparian_share_of_wash_length_pct": 30,
+ "county_found": {
+  "flow not stated": {
+   "found_pct": 88.5
+  },
+  "UNDER 500 CFS": {
+   "found_pct": 89.5
+  },
+  "500-1000 CFS": {
+   "found_pct": 90.2
+  },
+  "1000-2000 CFS": {
+   "found_pct": 89.8
+  },
+  "2000-5000 CFS": {
+   "found_pct": 96.2
+  },
+  "5000-10000 CFS": {
+   "found_pct": 93.0
+  },
+  "OVER 10000 CFS": {
+   "found_pct": 97.6
+  },
+  "all": {
+   "found_pct": 90.8,
+   "km": 1826
+  }
+ },
+ "sightings": {
+  "bobcat": {
+   "placed_to_100m": 393,
+   "within_50m_of_a_wash": 180
+  },
+  "flycatcher": {
+   "placed_to_100m": 1512,
+   "within_50m_of_a_wash": 619
+  },
+  "queen": {
+   "placed_to_100m": 684,
+   "within_50m_of_a_wash": 210
+  }
+ },
+ "canopy_rule": {
+  "cut": {
+   "ndvi": 0.16,
+   "nir": 70.0,
+   "spread": 7.0
+  },
+  "iou": 0.588,
+  "sites": {
+   "dunbar_spring": {
+    "agreement": 0.913,
+    "share_of_mapped_canopy_that_is_lidar_canopy": 0.708,
+    "share_of_lidar_canopy_found": 0.753,
+    "lidar_canopy_pct": 15.6,
+    "imagery_canopy_pct": 16.6,
+    "false_canopy_is_really": {
+     "roof": 10798,
+     "pavement": 4823,
+     "low vegetation": 47909,
+     "bare ground": 7552,
+     "water": 0
+    }
+   },
+   "western_hills_ii": {
+    "agreement": 0.948,
+    "share_of_mapped_canopy_that_is_lidar_canopy": 0.785,
+    "share_of_lidar_canopy_found": 0.734,
+    "lidar_canopy_pct": 11.0,
+    "imagery_canopy_pct": 10.3,
+    "false_canopy_is_really": {
+     "roof": 2040,
+     "pavement": 2391,
+     "low vegetation": 17459,
+     "bare ground": 6297,
+     "water": 0
+    }
+   }
+  },
+  "study_area_canopy_pct": 10.97
+ },
+ "imagery_dates": [
+  "2023-09-03",
+  "2023-10-15",
+  "2023-10-18"
+ ],
+ "settings": {
+  "min_area_ha": 2,
+  "near_m": 15,
+  "near_big_m": [
+   30,
+   60
+  ],
+  "min_named_km": 0.5,
+  "sight_m": 50,
+  "rip_min": 0.3,
+  "street_half_width_m": {
+   "Interstate highway": 12,
+   "Interstate ramp": 6,
+   "Frontage road": 7,
+   "State route": 12,
+   "State route ramp": 6,
+   "Major local road": 10,
+   "Minor local road": 6
+  }
+ },
+ "washes": [
+  {
+   "name": "Alamo Canyon Wash",
+   "km": 5.9,
+   "traced_km": 6.5,
+   "canopy_pct": 23.6,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 7.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.92467,
+    32.38596,
+    -110.902,
+    32.41847
+   ],
+   "blurb": "A long run: 5.9 km through the study area. About average for shade, with 24% canopy within 10 m. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Alamo Wash",
+   "km": 2.9,
+   "traced_km": 3.2,
+   "canopy_pct": 21.2,
+   "riparian_pct": 1,
+   "classes": {},
+   "drains_km2": 2.7,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.88886,
+    32.25082,
+    -110.87261,
+    32.2695
+   ],
+   "blurb": "A mid-sized wash, 2.9 km end to end. About average for shade, with 21% canopy within 10 m. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Animal Wash",
+   "km": 3.0,
+   "traced_km": 3.4,
+   "canopy_pct": 8.0,
+   "riparian_pct": 5,
+   "classes": {},
+   "drains_km2": 1.2,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.10713,
+    32.30509,
+    -111.08938,
+    32.32208
+   ],
+   "blurb": "A mid-sized wash, 3.0 km end to end. Thin on trees: 8% canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Anklam Wash",
+   "km": 1.3,
+   "traced_km": 0.8,
+   "canopy_pct": 33.6,
+   "riparian_pct": 53,
+   "classes": {
+    "H": 69
+   },
+   "drains_km2": 0.1,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.01145,
+    32.23965,
+    -111.00571,
+    32.2409
+   ],
+   "blurb": "Short: 1.3 km and done. Leafy, with 34% tree canopy within 10 m against 16% for washes overall. The county maps only 53% of it as riparian habitat. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Arcadia Wash",
+   "km": 2.1,
+   "traced_km": 2.7,
+   "canopy_pct": 19.0,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 1.6,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 1,
+    "queen": 0
+   },
+   "box": [
+    -110.88629,
+    32.24078,
+    -110.88349,
+    32.25816
+   ],
+   "blurb": "A mid-sized wash, 2.1 km end to end. About average for shade, with 19% canopy within 10 m. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "Bartlett Wash",
+   "km": 1.3,
+   "traced_km": 1.0,
+   "canopy_pct": 35.4,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 0.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.94901,
+    32.27414,
+    -110.94592,
+    32.28004
+   ],
+   "blurb": "Short: 1.3 km and done. Leafy, with 35% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Big Wash",
+   "km": 3.3,
+   "traced_km": 6.0,
+   "canopy_pct": 42.8,
+   "riparian_pct": 83,
+   "classes": {
+    "H": 48,
+    "B": 45
+   },
+   "drains_km2": 2.6,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.95344,
+    32.4123,
+    -110.94026,
+    32.42597
+   ],
+   "blurb": "A mid-sized wash, 3.3 km end to end. Leafy, with 43% tree canopy within 10 m against 16% for washes overall. The county maps 83% of it as riparian habitat, mostly class H. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Brichta Wash",
+   "km": 2.9,
+   "traced_km": 2.1,
+   "canopy_pct": 41.2,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 1.1,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.01563,
+    32.24154,
+    -111.00952,
+    32.25587
+   ],
+   "blurb": "A mid-sized wash, 2.9 km end to end. Leafy, with 41% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Bronx Wash",
+   "km": 2.2,
+   "traced_km": 2.1,
+   "canopy_pct": 23.6,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 1.7,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 1,
+    "queen": 0
+   },
+   "box": [
+    -110.98148,
+    32.23965,
+    -110.96135,
+    32.24473
+   ],
+   "blurb": "A mid-sized wash, 2.2 km end to end. About average for shade, with 24% canopy within 10 m. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "Camino De Oeste Wash",
+   "km": 7.4,
+   "traced_km": 7.6,
+   "canopy_pct": 24.1,
+   "riparian_pct": 86,
+   "classes": {
+    "C": 91
+   },
+   "drains_km2": 2.7,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 9,
+    "queen": 1
+   },
+   "box": [
+    -111.05919,
+    32.24108,
+    -111.0205,
+    32.27479
+   ],
+   "blurb": "A long run: 7.4 km through the study area. About average for shade, with 24% canopy within 10 m. The county maps 86% of it as riparian habitat, mostly class C. No bobcat records beside it yet."
+  },
+  {
+   "name": "Camino Real Wash",
+   "km": 7.3,
+   "traced_km": 6.1,
+   "canopy_pct": 42.0,
+   "riparian_pct": 59,
+   "classes": {
+    "B": 55,
+    "A": 11
+   },
+   "drains_km2": 3.7,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.93528,
+    32.28574,
+    -110.90492,
+    32.32394
+   ],
+   "blurb": "A long run: 7.3 km through the study area. Leafy, with 42% tree canopy within 10 m against 16% for washes overall. The county maps only 59% of it as riparian habitat. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Campbell Wash",
+   "km": 9.4,
+   "traced_km": 9.5,
+   "canopy_pct": 25.5,
+   "riparian_pct": 85,
+   "classes": {
+    "C": 22,
+    "B": 76
+   },
+   "drains_km2": 5.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.94495,
+    32.28873,
+    -110.91041,
+    32.3436
+   ],
+   "blurb": "A long run: 9.4 km through the study area. Leafy, with 26% tree canopy within 10 m against 16% for washes overall. The county maps 85% of it as riparian habitat, mostly class B. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Canada Agua 1 Wash",
+   "km": 11.6,
+   "traced_km": 10.8,
+   "canopy_pct": 2.0,
+   "riparian_pct": 86,
+   "classes": {
+    "C": 88,
+    "B": 4
+   },
+   "drains_km2": 4.0,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.09797,
+    32.36968,
+    -111.02851,
+    32.42721
+   ],
+   "blurb": "A long run: 11.6 km through the study area. Thin on trees: 2% canopy within 10 m against 16% for washes overall. The county maps 86% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Canada Agua 2 Wash",
+   "km": 11.6,
+   "traced_km": 11.3,
+   "canopy_pct": 2.5,
+   "riparian_pct": 90,
+   "classes": {
+    "C": 95
+   },
+   "drains_km2": 7.1,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.11714,
+    32.38599,
+    -111.05484,
+    32.42766
+   ],
+   "blurb": "A long run: 11.6 km through the study area. Thin on trees: 2% canopy within 10 m against 16% for washes overall. The county maps 90% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Canada Del Oro Wash",
+   "km": 28.4,
+   "traced_km": 44.7,
+   "canopy_pct": 24.3,
+   "riparian_pct": 65,
+   "classes": {
+    "H": 36,
+    "D": 2,
+    "C": 27,
+    "B": 8
+   },
+   "drains_km2": 105.8,
+   "sightings": {
+    "bobcat": 4,
+    "flycatcher": 6,
+    "queen": 1
+   },
+   "box": [
+    -111.06349,
+    32.32585,
+    -110.92457,
+    32.42876
+   ],
+   "blurb": "One of the five longest named washes here, at 28.4 km. Leafy, with 24% tree canopy within 10 m against 16% for washes overall. The county maps 65% of it as riparian habitat, mostly class H. iNaturalist has 4 bobcat records beside it."
+  },
+  {
+   "name": "Carmack Wash",
+   "km": 14.3,
+   "traced_km": 15.8,
+   "canopy_pct": 26.6,
+   "riparian_pct": 44,
+   "classes": {
+    "D": 1,
+    "C": 9,
+    "B": 41
+   },
+   "drains_km2": 15.7,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.05129,
+    32.3247,
+    -110.96782,
+    32.38432
+   ],
+   "blurb": "A long run: 14.3 km through the study area. Leafy, with 27% tree canopy within 10 m against 16% for washes overall. The county maps only 44% of it as riparian habitat. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Casas Adobes Wash",
+   "km": 10.1,
+   "traced_km": 8.9,
+   "canopy_pct": 24.9,
+   "riparian_pct": 51,
+   "classes": {
+    "H": 24,
+    "C": 30,
+    "B": 5
+   },
+   "drains_km2": 5.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.00989,
+    32.30198,
+    -110.96123,
+    32.348
+   ],
+   "blurb": "A long run: 10.1 km through the study area. Leafy, with 25% tree canopy within 10 m against 16% for washes overall. The county maps only 51% of it as riparian habitat. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Cemetery Wash",
+   "km": 4.5,
+   "traced_km": 2.2,
+   "canopy_pct": 35.3,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 4.3,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 3
+   },
+   "box": [
+    -110.98681,
+    32.25214,
+    -110.95535,
+    32.26435
+   ],
+   "blurb": "A mid-sized wash, 4.5 km end to end. Leafy, with 35% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "Christmas Wash",
+   "km": 6.2,
+   "traced_km": 2.1,
+   "canopy_pct": 50.9,
+   "riparian_pct": 1,
+   "classes": {},
+   "drains_km2": 6.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 1,
+    "queen": 0
+   },
+   "box": [
+    -110.93806,
+    32.24526,
+    -110.92102,
+    32.28135
+   ],
+   "blurb": "A long run: 6.2 km through the study area. Leafy, with 51% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "Christopher City Wash",
+   "km": 2.7,
+   "traced_km": 1.7,
+   "canopy_pct": 30.3,
+   "riparian_pct": 8,
+   "classes": {
+    "H": 10
+   },
+   "drains_km2": 0.5,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.9068,
+    32.26695,
+    -110.90118,
+    32.27294
+   ],
+   "blurb": "A mid-sized wash, 2.7 km end to end. Leafy, with 30% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Citrus Wash",
+   "km": 4.9,
+   "traced_km": 4.2,
+   "canopy_pct": 25.0,
+   "riparian_pct": 28,
+   "classes": {
+    "C": 27,
+    "B": 29
+   },
+   "drains_km2": 2.1,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.00549,
+    32.30269,
+    -110.98293,
+    32.3234
+   ],
+   "blurb": "A mid-sized wash, 4.9 km end to end. Leafy, with 25% tree canopy within 10 m against 16% for washes overall. The county maps only 28% of it as riparian habitat. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Columbus Wash",
+   "km": 3.6,
+   "traced_km": 0.6,
+   "canopy_pct": 15.4,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 1.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.9084,
+    32.24348,
+    -110.89907,
+    32.26445
+   ],
+   "blurb": "A mid-sized wash, 3.6 km end to end. About average for shade, with 15% canopy within 10 m. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Craycroft Wash",
+   "km": 5.9,
+   "traced_km": 6.0,
+   "canopy_pct": 12.7,
+   "riparian_pct": 74,
+   "classes": {
+    "D": 12,
+    "C": 70
+   },
+   "drains_km2": 1.6,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.87599,
+    32.26974,
+    -110.87256,
+    32.31369
+   ],
+   "blurb": "A long run: 5.9 km through the study area. About average for shade, with 13% canopy within 10 m. The county maps 74% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Creekside Wash",
+   "km": 2.1,
+   "traced_km": 1.5,
+   "canopy_pct": 27.1,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 2.1,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 1,
+    "queen": 0
+   },
+   "box": [
+    -110.89705,
+    32.26186,
+    -110.8944,
+    32.27082
+   ],
+   "blurb": "A mid-sized wash, 2.1 km end to end. Leafy, with 27% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "Del Cerro Wash",
+   "km": 5.2,
+   "traced_km": 5.7,
+   "canopy_pct": 24.6,
+   "riparian_pct": 29,
+   "classes": {
+    "C": 37
+   },
+   "drains_km2": 3.2,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.07731,
+    32.27809,
+    -111.04488,
+    32.29886
+   ],
+   "blurb": "A long run: 5.2 km through the study area. Leafy, with 25% tree canopy within 10 m against 16% for washes overall. The county maps only 29% of it as riparian habitat. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "East Idle Hour Wash",
+   "km": 9.5,
+   "traced_km": 9.3,
+   "canopy_pct": 11.7,
+   "riparian_pct": 91,
+   "classes": {
+    "D": 5,
+    "C": 94
+   },
+   "drains_km2": 15.9,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.11222,
+    32.2785,
+    -111.06111,
+    32.31937
+   ],
+   "blurb": "A long run: 9.5 km through the study area. About average for shade, with 12% canopy within 10 m. The county maps 91% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "El Rio Wash",
+   "km": 1.2,
+   "traced_km": 0.8,
+   "canopy_pct": 41.8,
+   "riparian_pct": 34,
+   "classes": {
+    "C": 54
+   },
+   "drains_km2": 0.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.00096,
+    32.23965,
+    -110.99508,
+    32.24607
+   ],
+   "blurb": "Short: 1.2 km and done. Leafy, with 42% tree canopy within 10 m against 16% for washes overall. The county maps only 34% of it as riparian habitat. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Finger Rock Wash",
+   "km": 15.6,
+   "traced_km": 17.9,
+   "canopy_pct": 22.8,
+   "riparian_pct": 48,
+   "classes": {
+    "H": 2,
+    "C": 30,
+    "B": 24
+   },
+   "drains_km2": 19.6,
+   "sightings": {
+    "bobcat": 1,
+    "flycatcher": 0,
+    "queen": 1
+   },
+   "box": [
+    -110.9254,
+    32.27835,
+    -110.87925,
+    32.37153
+   ],
+   "blurb": "A long run: 15.6 km through the study area. About average for shade, with 23% canopy within 10 m. The county maps only 48% of it as riparian habitat. iNaturalist has 1 bobcat record beside it."
+  },
+  {
+   "name": "Fletcha Caida Wash",
+   "km": 7.9,
+   "traced_km": 7.3,
+   "canopy_pct": 21.5,
+   "riparian_pct": 63,
+   "classes": {
+    "H": 4,
+    "C": 69
+   },
+   "drains_km2": 3.9,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 1
+   },
+   "box": [
+    -110.90104,
+    32.27417,
+    -110.87431,
+    32.3186
+   ],
+   "blurb": "A long run: 7.9 km through the study area. About average for shade, with 22% canopy within 10 m. The county maps 63% of it as riparian habitat, mostly class C. No bobcat records beside it yet."
+  },
+  {
+   "name": "Flowing Wells Wash",
+   "km": 2.9,
+   "traced_km": 3.3,
+   "canopy_pct": 12.6,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 15.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.01393,
+    32.26424,
+    -110.98681,
+    32.2704
+   ],
+   "blurb": "A mid-sized wash, 2.9 km end to end. About average for shade, with 13% canopy within 10 m. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Friendly Village Wash",
+   "km": 6.4,
+   "traced_km": 5.7,
+   "canopy_pct": 15.0,
+   "riparian_pct": 83,
+   "classes": {
+    "C": 91
+   },
+   "drains_km2": 3.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.97508,
+    32.29316,
+    -110.94741,
+    32.32494
+   ],
+   "blurb": "A long run: 6.4 km through the study area. About average for shade, with 15% canopy within 10 m. The county maps 83% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Garfield Wash",
+   "km": 4.8,
+   "traced_km": 4.3,
+   "canopy_pct": 42.6,
+   "riparian_pct": 71,
+   "classes": {
+    "C": 28,
+    "B": 51
+   },
+   "drains_km2": 4.6,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.02036,
+    32.35285,
+    -110.99167,
+    32.36382
+   ],
+   "blurb": "A mid-sized wash, 4.8 km end to end. Leafy, with 43% tree canopy within 10 m against 16% for washes overall. The county maps 71% of it as riparian habitat, mostly class B. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Geronimo Wash",
+   "km": 7.2,
+   "traced_km": 7.5,
+   "canopy_pct": 23.1,
+   "riparian_pct": 80,
+   "classes": {
+    "C": 48,
+    "B": 44
+   },
+   "drains_km2": 6.9,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.9706,
+    32.31909,
+    -110.92343,
+    32.34722
+   ],
+   "blurb": "A long run: 7.2 km through the study area. About average for shade, with 23% canopy within 10 m. The county maps 80% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Grant Road Wash",
+   "km": 2.0,
+   "traced_km": 0.9,
+   "canopy_pct": 2.0,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 0.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.99455,
+    32.24739,
+    -110.98023,
+    32.25052
+   ],
+   "blurb": "A mid-sized wash, 2.0 km end to end. Thin on trees: 2% canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Greasewood Wash",
+   "km": 2.3,
+   "traced_km": 2.6,
+   "canopy_pct": 46.1,
+   "riparian_pct": 63,
+   "classes": {
+    "C": 71
+   },
+   "drains_km2": 2.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.02415,
+    32.2408,
+    -111.01595,
+    32.25553
+   ],
+   "blurb": "A mid-sized wash, 2.3 km end to end. Leafy, with 46% tree canopy within 10 m against 16% for washes overall. The county maps 63% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Hacienda Del Sol Wash",
+   "km": 3.4,
+   "traced_km": 3.9,
+   "canopy_pct": 11.5,
+   "riparian_pct": 94,
+   "classes": {
+    "C": 96
+   },
+   "drains_km2": 1.6,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.92779,
+    32.28185,
+    -110.91441,
+    32.30401
+   ],
+   "blurb": "A mid-sized wash, 3.4 km end to end. About average for shade, with 12% canopy within 10 m. The county maps 94% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Hardy Wash",
+   "km": 13.2,
+   "traced_km": 11.5,
+   "canopy_pct": 8.7,
+   "riparian_pct": 64,
+   "classes": {
+    "D": 7,
+    "C": 67
+   },
+   "drains_km2": 18.6,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.11351,
+    32.3658,
+    -111.02582,
+    32.38054
+   ],
+   "blurb": "A long run: 13.2 km through the study area. Thin on trees: 9% canopy within 10 m against 16% for washes overall. The county maps 64% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Highlands Wash",
+   "km": 4.7,
+   "traced_km": 4.4,
+   "canopy_pct": 36.7,
+   "riparian_pct": 70,
+   "classes": {
+    "C": 25,
+    "B": 53
+   },
+   "drains_km2": 2.9,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.97416,
+    32.39639,
+    -110.97122,
+    32.42777
+   ],
+   "blurb": "A mid-sized wash, 4.7 km end to end. Leafy, with 37% tree canopy within 10 m against 16% for washes overall. The county maps 70% of it as riparian habitat, mostly class B. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Horsheoe Trail Wash",
+   "km": 1.5,
+   "traced_km": 1.0,
+   "canopy_pct": 41.8,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 0.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.01897,
+    32.24161,
+    -111.01711,
+    32.25257
+   ],
+   "blurb": "A mid-sized wash, 1.5 km end to end. Leafy, with 42% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Krueger Wash",
+   "km": 2.1,
+   "traced_km": 2.1,
+   "canopy_pct": 17.9,
+   "riparian_pct": 16,
+   "classes": {
+    "H": 18
+   },
+   "drains_km2": 1.7,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.00317,
+    32.2532,
+    -110.98667,
+    32.25917
+   ],
+   "blurb": "A mid-sized wash, 2.1 km end to end. About average for shade, with 18% canopy within 10 m. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "La Cholla Wash",
+   "km": 7.3,
+   "traced_km": 7.0,
+   "canopy_pct": 10.2,
+   "riparian_pct": 99,
+   "classes": {
+    "C": 100
+   },
+   "drains_km2": 6.0,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.01864,
+    32.37764,
+    -111.00834,
+    32.42728
+   ],
+   "blurb": "A long run: 7.3 km through the study area. About average for shade, with 10% canopy within 10 m. The county maps 99% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Las Lomitas Wash",
+   "km": 2.9,
+   "traced_km": 3.0,
+   "canopy_pct": 21.2,
+   "riparian_pct": 4,
+   "classes": {},
+   "drains_km2": 1.3,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.00111,
+    32.3026,
+    -110.98357,
+    32.31838
+   ],
+   "blurb": "A mid-sized wash, 2.9 km end to end. About average for shade, with 21% canopy within 10 m. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Massingale Wash",
+   "km": 6.3,
+   "traced_km": 6.1,
+   "canopy_pct": 18.5,
+   "riparian_pct": 54,
+   "classes": {
+    "C": 64
+   },
+   "drains_km2": 5.7,
+   "sightings": {
+    "bobcat": 1,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.06245,
+    32.34501,
+    -111.02642,
+    32.3712
+   ],
+   "blurb": "A long run: 6.3 km through the study area. About average for shade, with 18% canopy within 10 m. The county maps only 54% of it as riparian habitat. iNaturalist has 1 bobcat record beside it."
+  },
+  {
+   "name": "Nanini Wash",
+   "km": 9.5,
+   "traced_km": 9.6,
+   "canopy_pct": 27.3,
+   "riparian_pct": 52,
+   "classes": {
+    "D": 10,
+    "C": 28,
+    "B": 21
+   },
+   "drains_km2": 7.9,
+   "sightings": {
+    "bobcat": 1,
+    "flycatcher": 2,
+    "queen": 0
+   },
+   "box": [
+    -111.02096,
+    32.30671,
+    -110.97104,
+    32.34707
+   ],
+   "blurb": "A long run: 9.5 km through the study area. Leafy, with 27% tree canopy within 10 m against 16% for washes overall. The county maps only 52% of it as riparian habitat. iNaturalist has 1 bobcat record beside it."
+  },
+  {
+   "name": "Navajo Wash",
+   "km": 3.7,
+   "traced_km": 1.5,
+   "canopy_pct": 37.2,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 9.0,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.98729,
+    32.26303,
+    -110.95239,
+    32.26649
+   ],
+   "blurb": "A mid-sized wash, 3.7 km end to end. Leafy, with 37% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "North Mountain Avenue Wash",
+   "km": 2.3,
+   "traced_km": 1.1,
+   "canopy_pct": 54.6,
+   "riparian_pct": 2,
+   "classes": {},
+   "drains_km2": 1.1,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 1
+   },
+   "box": [
+    -110.95241,
+    32.27779,
+    -110.95214,
+    32.28705
+   ],
+   "blurb": "A mid-sized wash, 2.3 km end to end. Leafy, with 55% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "North Ranch Wash",
+   "km": 10.4,
+   "traced_km": 9.8,
+   "canopy_pct": 9.3,
+   "riparian_pct": 51,
+   "classes": {
+    "C": 39,
+    "B": 17
+   },
+   "drains_km2": 4.1,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 5,
+    "queen": 2
+   },
+   "box": [
+    -111.06198,
+    32.36725,
+    -111.01926,
+    32.42822
+   ],
+   "blurb": "A long run: 10.4 km through the study area. Thin on trees: 9% canopy within 10 m against 16% for washes overall. The county maps only 51% of it as riparian habitat. No bobcat records beside it yet."
+  },
+  {
+   "name": "Nursery Wash",
+   "km": 2.7,
+   "traced_km": 2.7,
+   "canopy_pct": 28.0,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 0.9,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.03332,
+    32.25057,
+    -111.01241,
+    32.25837
+   ],
+   "blurb": "A mid-sized wash, 2.7 km end to end. Leafy, with 28% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Old Peglar Wash",
+   "km": 1.0,
+   "traced_km": 0.8,
+   "canopy_pct": 19.4,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 0.3,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 7,
+    "queen": 0
+   },
+   "box": [
+    -111.03833,
+    32.31239,
+    -111.03096,
+    32.31273
+   ],
+   "blurb": "Short: 1.0 km and done. About average for shade, with 19% canopy within 10 m. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "Painted Hills Wash",
+   "km": 1.8,
+   "traced_km": 1.6,
+   "canopy_pct": 48.7,
+   "riparian_pct": 83,
+   "classes": {
+    "D": 30,
+    "C": 70
+   },
+   "drains_km2": 2.5,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.03154,
+    32.24015,
+    -111.01244,
+    32.25654
+   ],
+   "blurb": "A mid-sized wash, 1.8 km end to end. Leafy, with 49% tree canopy within 10 m against 16% for washes overall. The county maps 83% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Pantano Wash",
+   "km": 0.5,
+   "traced_km": 0.6,
+   "canopy_pct": 1.4,
+   "riparian_pct": 100,
+   "classes": {
+    "H": 100
+   },
+   "drains_km2": 1.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.87774,
+    32.26865,
+    -110.87527,
+    32.26974
+   ],
+   "blurb": "Short: 0.5 km and done. Thin on trees: 1% canopy within 10 m against 16% for washes overall. The county maps 100% of it as riparian habitat, mostly class H. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Pegler Wash",
+   "km": 9.4,
+   "traced_km": 10.2,
+   "canopy_pct": 29.3,
+   "riparian_pct": 79,
+   "classes": {
+    "C": 64,
+    "B": 17
+   },
+   "drains_km2": 7.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 14
+   },
+   "box": [
+    -111.03148,
+    32.31043,
+    -110.97862,
+    32.35864
+   ],
+   "blurb": "A long run: 9.4 km through the study area. Leafy, with 29% tree canopy within 10 m against 16% for washes overall. The county maps 79% of it as riparian habitat, mostly class C. No bobcat records beside it yet."
+  },
+  {
+   "name": "Picture Rocks Wash",
+   "km": 14.3,
+   "traced_km": 12.6,
+   "canopy_pct": 11.8,
+   "riparian_pct": 62,
+   "classes": {
+    "H": 3,
+    "C": 70
+   },
+   "drains_km2": 9.7,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.13203,
+    32.31056,
+    -111.11275,
+    32.38183
+   ],
+   "blurb": "A long run: 14.3 km through the study area. About average for shade, with 12% canopy within 10 m. The county maps 62% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Pima Wash",
+   "km": 16.9,
+   "traced_km": 19.4,
+   "canopy_pct": 24.6,
+   "riparian_pct": 42,
+   "classes": {
+    "H": 4,
+    "C": 7,
+    "B": 34,
+    "A": 3
+   },
+   "drains_km2": 25.1,
+   "sightings": {
+    "bobcat": 1,
+    "flycatcher": 0,
+    "queen": 7
+   },
+   "box": [
+    -110.98191,
+    32.29495,
+    -110.89211,
+    32.38193
+   ],
+   "blurb": "One of the five longest named washes here, at 16.9 km. Leafy, with 25% tree canopy within 10 m against 16% for washes overall. The county maps only 42% of it as riparian habitat. iNaturalist has 1 bobcat record beside it."
+  },
+  {
+   "name": "Pontatoc Canyon Wash",
+   "km": 5.0,
+   "traced_km": 5.7,
+   "canopy_pct": 10.5,
+   "riparian_pct": 5,
+   "classes": {
+    "B": 4
+   },
+   "drains_km2": 4.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.90756,
+    32.335,
+    -110.87622,
+    32.36011
+   ],
+   "blurb": "A long run: 5.0 km through the study area. About average for shade, with 10% canopy within 10 m. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Prospect Wash",
+   "km": 6.1,
+   "traced_km": 3.9,
+   "canopy_pct": 1.7,
+   "riparian_pct": 83,
+   "classes": {
+    "C": 90
+   },
+   "drains_km2": 0.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.12591,
+    32.39824,
+    -111.08911,
+    32.42462
+   ],
+   "blurb": "A long run: 6.1 km through the study area. Thin on trees: 2% canopy within 10 m against 16% for washes overall. The county maps 83% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Race Track Wash",
+   "km": 5.5,
+   "traced_km": 5.9,
+   "canopy_pct": 16.3,
+   "riparian_pct": 87,
+   "classes": {
+    "C": 89
+   },
+   "drains_km2": 3.9,
+   "sightings": {
+    "bobcat": 1,
+    "flycatcher": 3,
+    "queen": 0
+   },
+   "box": [
+    -110.9648,
+    32.29015,
+    -110.94365,
+    32.32124
+   ],
+   "blurb": "A long run: 5.5 km through the study area. About average for shade, with 16% canopy within 10 m. The county maps 87% of it as riparian habitat, mostly class C. iNaturalist has 1 bobcat record beside it."
+  },
+  {
+   "name": "Racetrack Wash",
+   "km": 2.4,
+   "traced_km": 2.4,
+   "canopy_pct": 28.7,
+   "riparian_pct": 74,
+   "classes": {
+    "C": 70,
+    "B": 23
+   },
+   "drains_km2": 1.9,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 1,
+    "queen": 0
+   },
+   "box": [
+    -110.9439,
+    32.32124,
+    -110.93223,
+    32.33509
+   ],
+   "blurb": "A mid-sized wash, 2.4 km end to end. Leafy, with 29% tree canopy within 10 m against 16% for washes overall. The county maps 74% of it as riparian habitat, mostly class C. No bobcat records beside it yet."
+  },
+  {
+   "name": "Rillito River",
+   "km": 23.2,
+   "traced_km": 35.5,
+   "canopy_pct": 8.9,
+   "riparian_pct": 89,
+   "classes": {
+    "H": 92,
+    "D": 3,
+    "C": 2
+   },
+   "drains_km2": 161.8,
+   "sightings": {
+    "bobcat": 7,
+    "flycatcher": 33,
+    "queen": 5
+   },
+   "box": [
+    -111.0522,
+    32.26726,
+    -110.87764,
+    32.31612
+   ],
+   "blurb": "One of the five longest named washes here, at 23.2 km. Thin on trees: 9% canopy within 10 m against 16% for washes overall. The county maps 89% of it as riparian habitat, mostly class H. iNaturalist has 7 bobcat records beside it."
+  },
+  {
+   "name": "Roger Wash",
+   "km": 19.7,
+   "traced_km": 21.4,
+   "canopy_pct": 24.2,
+   "riparian_pct": 74,
+   "classes": {
+    "C": 82
+   },
+   "drains_km2": 13.0,
+   "sightings": {
+    "bobcat": 1,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.11586,
+    32.23989,
+    -111.036,
+    32.2904
+   ],
+   "blurb": "One of the five longest named washes here, at 19.7 km. Leafy, with 24% tree canopy within 10 m against 16% for washes overall. The county maps 74% of it as riparian habitat, mostly class C. iNaturalist has 1 bobcat record beside it."
+  },
+  {
+   "name": "Rollercoaster Wash",
+   "km": 7.6,
+   "traced_km": 7.2,
+   "canopy_pct": 35.3,
+   "riparian_pct": 43,
+   "classes": {
+    "H": 6,
+    "B": 39
+   },
+   "drains_km2": 7.0,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 3
+   },
+   "box": [
+    -111.00989,
+    32.30131,
+    -110.97001,
+    32.33429
+   ],
+   "blurb": "A long run: 7.6 km through the study area. Leafy, with 35% tree canopy within 10 m against 16% for washes overall. The county maps only 43% of it as riparian habitat. No bobcat records beside it yet."
+  },
+  {
+   "name": "Romero Creek Wash",
+   "km": 3.2,
+   "traced_km": 3.1,
+   "canopy_pct": 11.7,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 1.5,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.88316,
+    32.4146,
+    -110.87382,
+    32.42905
+   ],
+   "blurb": "A mid-sized wash, 3.2 km end to end. About average for shade, with 12% canopy within 10 m. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Romp Channel",
+   "km": 2.3,
+   "traced_km": 2.6,
+   "canopy_pct": 43.2,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 0.6,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.03407,
+    32.28069,
+    -111.0191,
+    32.29126
+   ],
+   "blurb": "A mid-sized wash, 2.3 km end to end. Leafy, with 43% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Rooney Wash",
+   "km": 6.5,
+   "traced_km": 6.1,
+   "canopy_pct": 23.4,
+   "riparian_pct": 26,
+   "classes": {
+    "C": 27
+   },
+   "drains_km2": 8.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 1,
+    "queen": 0
+   },
+   "box": [
+    -110.96631,
+    32.38078,
+    -110.93253,
+    32.39778
+   ],
+   "blurb": "A long run: 6.5 km through the study area. About average for shade, with 23% canopy within 10 m. The county maps only 26% of it as riparian habitat. No bobcat records beside it yet."
+  },
+  {
+   "name": "Santa Cruz River",
+   "km": 35.9,
+   "traced_km": 54.4,
+   "canopy_pct": 35.9,
+   "riparian_pct": 91,
+   "classes": {
+    "H": 77,
+    "D": 3,
+    "C": 13,
+    "A": 1
+   },
+   "drains_km2": 484.0,
+   "sightings": {
+    "bobcat": 9,
+    "flycatcher": 22,
+    "queen": 6
+   },
+   "box": [
+    -111.13533,
+    32.24151,
+    -110.98768,
+    32.39688
+   ],
+   "blurb": "One of the five longest named washes here, at 35.9 km. Leafy, with 36% tree canopy within 10 m against 16% for washes overall. The county maps 91% of it as riparian habitat, mostly class H. iNaturalist has 9 bobcat records beside it."
+  },
+  {
+   "name": "Silvercroft Wash",
+   "km": 3.1,
+   "traced_km": 3.7,
+   "canopy_pct": 49.0,
+   "riparian_pct": 1,
+   "classes": {},
+   "drains_km2": 6.5,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 3,
+    "queen": 3
+   },
+   "box": [
+    -111.01286,
+    32.24126,
+    -111.00282,
+    32.2619
+   ],
+   "blurb": "A mid-sized wash, 3.1 km end to end. Leafy, with 49% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "Sky Club Wash",
+   "km": 5.6,
+   "traced_km": 6.1,
+   "canopy_pct": 32.9,
+   "riparian_pct": 62,
+   "classes": {
+    "C": 35,
+    "B": 26
+   },
+   "drains_km2": 2.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.90276,
+    32.28653,
+    -110.88221,
+    32.32646
+   ],
+   "blurb": "A long run: 5.6 km through the study area. Leafy, with 33% tree canopy within 10 m against 16% for washes overall. The county maps 62% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Steam Pump Wash",
+   "km": 8.5,
+   "traced_km": 9.0,
+   "canopy_pct": 27.9,
+   "riparian_pct": 17,
+   "classes": {
+    "B": 18
+   },
+   "drains_km2": 7.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 2,
+    "queen": 0
+   },
+   "box": [
+    -110.95243,
+    32.38277,
+    -110.91279,
+    32.40893
+   ],
+   "blurb": "A long run: 8.5 km through the study area. Leafy, with 28% tree canopy within 10 m against 16% for washes overall. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "Sutherland Wash",
+   "km": 3.3,
+   "traced_km": 3.5,
+   "canopy_pct": 16.2,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 11.2,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 2,
+    "queen": 4
+   },
+   "box": [
+    -110.92467,
+    32.41838,
+    -110.90417,
+    32.42782
+   ],
+   "blurb": "A mid-sized wash, 3.3 km end to end. About average for shade, with 16% canopy within 10 m. Almost none of it is on the county's riparian map. No bobcat records beside it yet."
+  },
+  {
+   "name": "Sweetwater Wash",
+   "km": 14.9,
+   "traced_km": 15.5,
+   "canopy_pct": 18.7,
+   "riparian_pct": 67,
+   "classes": {
+    "C": 72
+   },
+   "drains_km2": 12.9,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.13468,
+    32.26238,
+    -111.03746,
+    32.29219
+   ],
+   "blurb": "A long run: 14.9 km through the study area. About average for shade, with 19% canopy within 10 m. The county maps 67% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Trails End Wash",
+   "km": 9.8,
+   "traced_km": 9.7,
+   "canopy_pct": 26.4,
+   "riparian_pct": 88,
+   "classes": {
+    "C": 99
+   },
+   "drains_km2": 7.7,
+   "sightings": {
+    "bobcat": 4,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.08379,
+    32.2398,
+    -111.02964,
+    32.28112
+   ],
+   "blurb": "A long run: 9.8 km through the study area. Leafy, with 26% tree canopy within 10 m against 16% for washes overall. The county maps 88% of it as riparian habitat, mostly class C. iNaturalist has 4 bobcat records beside it."
+  },
+  {
+   "name": "Unnamed 1 Tucson Mountains",
+   "km": 2.7,
+   "traced_km": 2.3,
+   "canopy_pct": 14.1,
+   "riparian_pct": 79,
+   "classes": {
+    "H": 35,
+    "C": 56
+   },
+   "drains_km2": 2.1,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.08938,
+    32.32198,
+    -111.08081,
+    32.33524
+   ],
+   "blurb": "A mid-sized wash, 2.7 km end to end. About average for shade, with 14% canopy within 10 m. The county maps 79% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Unnamed 10 Tucson Mountains",
+   "km": 4.6,
+   "traced_km": 5.0,
+   "canopy_pct": 10.4,
+   "riparian_pct": 65,
+   "classes": {
+    "H": 6,
+    "C": 93
+   },
+   "drains_km2": 2.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.09107,
+    32.31052,
+    -111.07929,
+    32.33098
+   ],
+   "blurb": "A mid-sized wash, 4.6 km end to end. About average for shade, with 10% canopy within 10 m. The county maps 65% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Unnamed 2 Tucson Mountains",
+   "km": 2.1,
+   "traced_km": 1.6,
+   "canopy_pct": 4.6,
+   "riparian_pct": 55,
+   "classes": {
+    "C": 69
+   },
+   "drains_km2": 1.0,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.09103,
+    32.32848,
+    -111.08548,
+    32.34203
+   ],
+   "blurb": "A mid-sized wash, 2.1 km end to end. Thin on trees: 5% canopy within 10 m against 16% for washes overall. The county maps only 55% of it as riparian habitat. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Unnamed 3 Tucson Mountains",
+   "km": 2.9,
+   "traced_km": 2.3,
+   "canopy_pct": 12.8,
+   "riparian_pct": 64,
+   "classes": {
+    "C": 88
+   },
+   "drains_km2": 1.9,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.09549,
+    32.3269,
+    -111.08778,
+    32.34318
+   ],
+   "blurb": "A mid-sized wash, 2.9 km end to end. About average for shade, with 13% canopy within 10 m. The county maps 64% of it as riparian habitat, mostly class C. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Unnamed Wash 11 _Catalinas",
+   "km": 4.7,
+   "traced_km": 4.6,
+   "canopy_pct": 16.9,
+   "riparian_pct": 4,
+   "classes": {
+    "H": 11
+   },
+   "drains_km2": 0.9,
+   "sightings": {
+    "bobcat": 1,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.94321,
+    32.2839,
+    -110.92304,
+    32.31307
+   ],
+   "blurb": "A mid-sized wash, 4.7 km end to end. About average for shade, with 17% canopy within 10 m. Almost none of it is on the county's riparian map. iNaturalist has 1 bobcat record beside it."
+  },
+  {
+   "name": "Unnamed Wash 2 _Catalinas",
+   "km": 4.7,
+   "traced_km": 3.4,
+   "canopy_pct": 11.9,
+   "riparian_pct": 47,
+   "classes": {
+    "C": 74
+   },
+   "drains_km2": 0.7,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.91986,
+    32.27924,
+    -110.91159,
+    32.29028
+   ],
+   "blurb": "A mid-sized wash, 4.7 km end to end. About average for shade, with 12% canopy within 10 m. The county maps only 47% of it as riparian habitat. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Unnamed Wash 3 _Catalinas",
+   "km": 7.8,
+   "traced_km": 7.8,
+   "canopy_pct": 14.0,
+   "riparian_pct": 38,
+   "classes": {
+    "H": 16,
+    "C": 32
+   },
+   "drains_km2": 2.1,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 1
+   },
+   "box": [
+    -110.89194,
+    32.27127,
+    -110.87628,
+    32.29164
+   ],
+   "blurb": "A long run: 7.8 km through the study area. About average for shade, with 14% canopy within 10 m. The county maps only 38% of it as riparian habitat. No bobcat records beside it yet."
+  },
+  {
+   "name": "Valley View Wash",
+   "km": 9.5,
+   "traced_km": 9.8,
+   "canopy_pct": 30.1,
+   "riparian_pct": 87,
+   "classes": {
+    "C": 49,
+    "B": 47
+   },
+   "drains_km2": 7.8,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 1
+   },
+   "box": [
+    -110.90293,
+    32.2752,
+    -110.87379,
+    32.33342
+   ],
+   "blurb": "A long run: 9.5 km through the study area. Leafy, with 30% tree canopy within 10 m against 16% for washes overall. The county maps 87% of it as riparian habitat, mostly class C. No bobcat records beside it yet."
+  },
+  {
+   "name": "Via Entrada Wash",
+   "km": 7.1,
+   "traced_km": 6.8,
+   "canopy_pct": 26.7,
+   "riparian_pct": 77,
+   "classes": {
+    "C": 74,
+    "B": 17
+   },
+   "drains_km2": 4.4,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 1,
+    "queen": 0
+   },
+   "box": [
+    -110.95235,
+    32.28841,
+    -110.92671,
+    32.32917
+   ],
+   "blurb": "A long run: 7.1 km through the study area. Leafy, with 27% tree canopy within 10 m against 16% for washes overall. The county maps 77% of it as riparian habitat, mostly class C. No bobcat records beside it yet."
+  },
+  {
+   "name": "West Idle Hour Wash",
+   "km": 14.9,
+   "traced_km": 16.0,
+   "canopy_pct": 9.2,
+   "riparian_pct": 66,
+   "classes": {
+    "C": 61,
+    "B": 10
+   },
+   "drains_km2": 6.9,
+   "sightings": {
+    "bobcat": 1,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.13733,
+    32.26893,
+    -111.06666,
+    32.31503
+   ],
+   "blurb": "A long run: 14.9 km through the study area. Thin on trees: 9% canopy within 10 m against 16% for washes overall. The county maps 66% of it as riparian habitat, mostly class C. iNaturalist has 1 bobcat record beside it."
+  },
+  {
+   "name": "West Speedway Wash",
+   "km": 6.1,
+   "traced_km": 5.2,
+   "canopy_pct": 28.7,
+   "riparian_pct": 62,
+   "classes": {
+    "C": 69
+   },
+   "drains_km2": 9.2,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 8,
+    "queen": 1
+   },
+   "box": [
+    -111.04273,
+    32.24086,
+    -111.0113,
+    32.26509
+   ],
+   "blurb": "A long run: 6.1 km through the study area. Leafy, with 29% tree canopy within 10 m against 16% for washes overall. The county maps 62% of it as riparian habitat, mostly class C. No bobcat records beside it yet."
+  },
+  {
+   "name": "Wilson Avenue Wash",
+   "km": 4.1,
+   "traced_km": 0.8,
+   "canopy_pct": 12.1,
+   "riparian_pct": 0,
+   "classes": {},
+   "drains_km2": 1.3,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -110.93948,
+    32.24862,
+    -110.93521,
+    32.26144
+   ],
+   "blurb": "A mid-sized wash, 4.1 km end to end. About average for shade, with 12% canopy within 10 m. Almost none of it is on the county's riparian map. No records of the three focal species beside it yet."
+  },
+  {
+   "name": "Yuma Mine Wash",
+   "km": 11.0,
+   "traced_km": 10.5,
+   "canopy_pct": 10.0,
+   "riparian_pct": 83,
+   "classes": {
+    "C": 44,
+    "B": 46
+   },
+   "drains_km2": 10.5,
+   "sightings": {
+    "bobcat": 0,
+    "flycatcher": 0,
+    "queen": 0
+   },
+   "box": [
+    -111.13058,
+    32.28656,
+    -111.09305,
+    32.34079
+   ],
+   "blurb": "A long run: 11.0 km through the study area. About average for shade, with 10% canopy within 10 m. The county maps 83% of it as riparian habitat, mostly class B. No records of the three focal species beside it yet."
+  }
+ ]
+}

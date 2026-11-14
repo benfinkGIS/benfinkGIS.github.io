@@ -1,0 +1,66 @@
+/* Tucson Wash Field Guide: additions to the site's look.
+   Loaded after /assets/style.css, /tucson-loop-access/loop.css and /kxci-signal/kxci.css,
+   which supply the windows, toolbar buttons, group box, counter, chart panel, legend,
+   scrolling tables and map frame. The map itself is MapLibre GL JS. */
+
+.washviz {
+  /* county riparian classes: water blue for H, then green to orange as the vegetation thins */
+  --rip-h: #4cc9f0; --rip-a: #38b000; --rip-b: #9ef01a; --rip-c: #ffdd00; --rip-d: #ff9f1c;
+  --rip-none: #e8e8e8;
+  /* tree canopy within 10 m: sand to green */
+  --can-0: #f6e7b4; --can-1: #cfe58a; --can-2: #7fd34e; --can-3: #17a34a;
+  /* who has mapped it */
+  --src-county: #4cc9f0; --src-new: #ff5d8f;
+  --street: #ffffff;
+  --pick: #ffff00;
+}
+
+.washviz #map { height: 620px; }
+@media (max-width: 700px) { .washviz #map { height: 460px; } }
+.washviz .map-canvas, .washviz #map { background: #1c1c1c; }
+
+/* MapLibre's own chrome, squared off to match the windows */
+.washviz .maplibregl-popup-content {
+  font: 12px/1.45 Tahoma, Verdana, sans-serif; color: #000;
+  padding: 8px 10px; border-radius: 0; background: #ffffe1;
+  border: 1px solid #000; box-shadow: 2px 2px 0 rgba(0, 0, 0, .5);
+  max-width: 300px;
+}
+.washviz .maplibregl-popup-content strong { font-size: 13px; }
+.washviz .maplibregl-popup-content p { margin: 0 0 6px; }
+.washviz .maplibregl-popup-content ul { margin: 0; padding: 0 0 0 16px; }
+.washviz .maplibregl-popup-content .reach { margin-top: 6px; padding-top: 6px; border-top: 1px solid #b5b58a; color: #333; }
+.washviz .maplibregl-popup-close-button { font-size: 16px; padding: 0 5px; }
+.washviz .maplibregl-popup-anchor-bottom .maplibregl-popup-tip { border-top-color: #000; }
+.washviz .maplibregl-popup-anchor-top .maplibregl-popup-tip { border-bottom-color: #000; }
+.washviz .maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: #000; }
+.washviz .maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: #000; }
+.washviz .maplibregl-ctrl-attrib { font: 10px/1.3 Tahoma, Verdana, sans-serif; }
+
+/* legend keys: a short stroke in the layer's colour, on a dark chip so pale colours show */
+.legend .ln {
+  width: 22px; height: 8px; flex: none; background: #333; border: 1px solid #000; position: relative;
+}
+.legend .ln::after { content: ""; position: absolute; left: 2px; right: 2px; top: 2px; height: 3px; background: var(--k); }
+.legend .ln.dashed::after { background: repeating-linear-gradient(90deg, var(--k) 0 4px, transparent 4px 7px); }
+.legend .ramp {
+  width: 70px; height: 8px; flex: none; border: 1px solid #000;
+  background: linear-gradient(90deg, var(--can-0), var(--can-1) 25%, var(--can-2) 55%, var(--can-3));
+}
+.legend .wide { font-style: italic; }
+
+.groupbox .toolbar button .sw.small { height: 0; border: 0; border-top: 2px solid #000; vertical-align: 3px; }
+.groupbox .toolbar button .sw.street { height: 0; border: 0; border-top: 3px dashed #777; vertical-align: 3px; }
+
+#t-wash th button { font: inherit; font-weight: bold; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }
+#t-wash th[aria-sort] button::after { content: " \25BE"; }
+#t-wash th[aria-sort="ascending"] button::after { content: " \25B4"; }
+#t-wash td button { font: inherit; color: var(--link); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-align: left; }
+#t-wash tr.on td { background: #ffffe1; font-weight: bold; }
+#t-wash tr.on td button { color: #000; text-decoration: none; }
+#t-wash td.cls { white-space: nowrap; }
+.list-scroll.tall { max-height: 520px; }
+
+.classes { margin: 0 0 12px; padding: 0; list-style: none; font-size: 13px; }
+.classes li { display: flex; align-items: baseline; gap: 8px; margin: 3px 0; }
+.classes .ln { align-self: center; }

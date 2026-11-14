@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Field Guide to Northwest Tucson's Washes | Fink Geospatial</title>
+  <meta name="description" content="Every wash between the Tucson Mountains and the Santa Catalinas, traced from one-metre lidar down to channels no official map shows, with the name, riparian class, tree canopy and wildlife records for each.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="A Field Guide to Northwest Tucson's Washes | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/tucson-washes/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.css" integrity="sha512-qN/uDg9bS3IAldWq4lswyC+9ZSoShtfyNDp+FaJhdtXJqdgubHA+s4nB8BajW0m90Y0+RBGbqu2anzbxiQYdHA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tucson-loop-access/loop.css">
+  <link rel="stylesheet" href="/kxci-signal/kxci.css">
+  <link rel="stylesheet" href="/tucson-washes/washes.css">
+</head>
+<body class="loopviz kxciviz washviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** Now showing: every wash between the Tucson Mountains and the Catalinas *** Traced from lidar, one square metre at a time *** Click a wash for its field notes ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: Wash Field Guide</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; Wash Field Guide</p>
+            <h1>Every Wash Between the Tucson Mountains and the Catalinas</h1>
+
+            <p>Northwest Tucson sits between two mountain ranges, and the dry washes that cross it are the closest thing the city has to a habitat network: strips of mesquite, palo verde and open sand that run from the foothills to the Santa Cruz, the Rillito and the Ca&ntilde;ada del Oro. Pima County maps <span data-fill="countykm">&hellip;</span> km of them in this area. The lidar shows a good deal more.</p>
+            <p>This page traces every channel that drains at least <span data-fill="minha">&hellip;</span> hectares, from a one-metre elevation model, across <span data-fill="area">&hellip;</span> km&sup2; from Grant Road to Tangerine Road. Each reach carries the county&rsquo;s name for it where there is one, its riparian class, the tree canopy along it, and the bobcat, vermilion flycatcher and queen butterfly records beside it.</p>
+            <noscript><div class="note"><p>The figures, map and table on this page need JavaScript.</p></div></noscript>
+
+            <fieldset class="groupbox">
+              <legend>Settings</legend>
+              <div class="row">
+                <span id="mode-label">Colour the washes by</span>
+                <div class="toolbar" id="mode-buttons" role="group" aria-labelledby="mode-label"></div>
+              </div>
+              <div class="row">
+                <span id="show-label">Show</span>
+                <div class="toolbar" id="show-buttons" role="group" aria-labelledby="show-label"></div>
+              </div>
+            </fieldset>
+
+            <div class="stats" aria-live="polite">
+              <div class="stat lead-stat">
+                <div class="counter" id="hero-num">&hellip;</div>
+                <div class="lab" id="hero-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="new-num">&hellip;</div>
+                <div class="lab" id="new-lab">&nbsp;</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="can-num">&hellip;</div>
+                <div class="lab" id="can-lab">&nbsp;</div>
+              </div>
+            </div>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Wash Viewer: Channels Traced from Lidar</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="tb-in">Zoom In</button>
+                <button type="button" id="tb-out">Zoom Out</button>
+                <button type="button" id="tb-full">Full Extent</button>
+                <button type="button" id="tb-base" aria-pressed="true">Satellite</button>
+                <a class="tb-link" href="/tucson-washes/map/" data-carry="/tucson-washes/map/">Full-Page Map &raquo;</a>
+              </div>
+              <div class="map-canvas">
+                <div id="map" role="region" aria-label="Map of wash channels in northwest Tucson"></div>
+                <p id="map-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <ul class="legend" id="map-legend"></ul>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
+            </div>
+            <p class="cap">Click any wash for its notes. The smallest channels appear as you zoom in. Click the map once to zoom with the mouse wheel.</p>
+
+            <h2 class="sec">What the lidar adds</h2>
+            <p>Of the <span data-fill="washkm">&hellip;</span> km traced, <span data-fill="newkm">&hellip;</span> km (<span data-fill="newpct">&hellip;</span>) is more than <span data-fill="near">&hellip;</span> m from any wash on the county&rsquo;s layer: side channels, headwater fingers in the foothills, and neighborhood washes between back walls. Switch the map to &ldquo;Who has mapped it&rdquo; to see them. Going the other way, the lidar channels land on <span data-fill="found">&hellip;</span> of the county&rsquo;s network, which is the check that the method finds real washes and not noise.</p>
+            <p>A further <span data-fill="streetkm">&hellip;</span> km of traced flow runs down streets. In much of Tucson the street is the storm drain, and in older neighborhoods the street is where a wash used to be. Those are left off the map unless you turn on &ldquo;Storm water in streets&rdquo;.</p>
+
+            <h2 class="sec">The named washes</h2>
+            <div class="chartbox">
+              <p class="cap">The <span data-fill="named">&hellip;</span> washes the county names in this area. Length is the county&rsquo;s own centerline; the other figures are measured along the lidar channels that carry the name. Click a name to find it on the map, or a heading to sort.</p>
+              <div class="table-wrap list-scroll tall" tabindex="0" role="region" aria-label="Table of named washes">
+                <table class="grid" id="t-wash"></table>
+              </div>
+            </div>
+            <div class="note"><p>The record counts say where people have photographed these animals, not where the animals are. A wash with a path beside it will always out-score one behind a row of houses. &ldquo;Drains&rdquo; counts ground inside the study area only, so the Santa Cruz, the Rillito and the Ca&ntilde;ada del Oro, which arrive already carrying water from far upstream, are larger than their figures. Canopy is measured within 10 m of the channel line, so for those three wide rivers it describes what grows in the bed, not the trees on the banks.</p></div>
+
+            <h2 class="sec">Reading the riparian classes</h2>
+            <p>Pima County&rsquo;s riparian habitat map, adopted in 2005 and edited since, grades the vegetation along washes. <span data-fill="ripshare">&hellip;</span> of the traced wash length falls inside it.</p>
+            <ul class="classes">
+              <li><span class="ln" style="--k: var(--rip-h)"></span><span><strong>Class H</strong>, hydroriparian and mesoriparian: water at or near the surface for much of the year. Cottonwood and willow country.</span></li>
+              <li><span class="ln" style="--k: var(--rip-a)"></span><span><strong>Class A to D</strong>, xeroriparian: the usual dry wash, graded by how much vegetation it carries. A is the densest, D the sparsest.</span></li>
+              <li><span class="ln" style="--k: var(--rip-none)"></span><span><strong>Not mapped:</strong> either too sparse to qualify, or never surveyed. Most of the small channels the lidar adds are here.</span></li>
+            </ul>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>Elevation:</strong> U.S. Geological Survey 3DEP one-metre bare-ground model from the Pima County lidar flight of autumn 2021, twelve tiles.</li>
+              <li><strong>Channels:</strong> ArcGIS Pro Spatial Analyst. Pits are filled, each cell drains to its lowest neighbour, and a channel begins where <span data-fill="minha">&hellip;</span> hectares drain to one cell. Channels are split into reaches at each confluence.</li>
+              <li><strong>Culverts:</strong> bare-ground lidar keeps road and rail embankments but not the pipes under them. Where a county-mapped wash crosses a street or the railroad, a strip 20 m wide is lowered to channel-bed level so the water passes. Unmapped washes pond behind their roads in the model and spill over the low point of the crown, so their line can be off by some metres at a crossing.</li>
+              <li><strong>Storm water in streets:</strong> a reach with more than half its length on street pavement (the county centerline widened by 6 to 12 m a side, by road class).</li>
+              <li><strong>Names and the county network:</strong> Pima County Regional Flood Control District&rsquo;s Wash Network. A reach takes a name when at least half of it lies within <span data-fill="near">&hellip;</span> m of a county wash with that name; the distance is 30 m for washes the county rates at 2,000 cubic feet per second or more and 60 m for those over 10,000, whose beds are wider than the lidar&rsquo;s single thread. Where two named washes meet, the larger keeps its name. Share of the county network found by the lidar, by the county&rsquo;s flow class: <span data-fill="foundby">&hellip;</span>.</li>
+              <li><strong>Riparian classes:</strong> Pima County&rsquo;s regulatory riparian classification (2005). A reach takes the class that covers most of it, if at least 30% of the reach is mapped. Important Riparian Areas are shown by their underlying class.</li>
+              <li><strong>Tree canopy:</strong> National Agriculture Imagery Program aerial photos (<span data-fill="imagery">&hellip;</span>), four bands, resampled to 1 m. A cell is canopy with an <span data-fill="cut">&hellip;</span>. Those cut-offs are the ones that agree best with the lidar canopy map of two Tucson neighborhoods from <a href="/tucson-canopy/">a separate project</a>, where a person checked it point by point. Against that map the imagery rule agrees on <span data-fill="agree">&hellip;</span> of cells in the two neighborhoods, finds <span data-fill="canfound">&hellip;</span> of the lidar canopy, and <span data-fill="canright">&hellip;</span> of what it calls canopy is. Tall shrubs and reeds can pass for trees, and shaded crowns can be missed. The photos were flown on three dates, so the rule may read slightly greener on one flight line than the next.</li>
+              <li><strong>Wildlife records:</strong> research-grade iNaturalist observations with an open position stated to 100 m or better: <span data-fill="records">&hellip;</span>. Each is counted at the nearest wash reach within <span data-fill="sight">&hellip;</span> m. Individual points are not shown, since many were taken in people&rsquo;s yards.</li>
+              <li><strong>Not included:</strong> channel width, lining (natural, soil cement or concrete), and the type of each road crossing. Flow in the model is one-directional, so braided channels on the bajada are drawn as a single thread.</li>
+              <li><strong>Basemap:</strong> Esri. <strong>Scripts:</strong> <code>tools/washes/</code> in the site&rsquo;s repository.</li>
+            </ul>
+
+            <hr>
+            <p>Know one of these washes on the ground? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 14 November 2026</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js" integrity="sha512-dXgoFR02YHJ9Fa29P3D/1umNaZ0EXS2N0w29Lm3b/1BK8UDLMdLWDFwuujIyJJdU27/PLuk3dmS1V9NO8ABX1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/tucson-washes/washes.js"></script>
+</body>
+</html>
