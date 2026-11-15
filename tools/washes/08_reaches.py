@@ -353,6 +353,16 @@ def crossings_out(gdb, web, wgs):
     return dict(total=len(feats), by_type=dict(by_type), by_road=by_road), per_wash
 
 
+def flow_summary():
+    """What 16_connectivity.py and 17_validate.py found, with the settings used."""
+    folder = WORK / "connectivity"
+    out = json.loads((folder / "summary.json").read_text())
+    out["settings"] = json.loads((PROJECT / "resistance.json").read_text(encoding="utf-8"))
+    if (folder / "validation.json").exists():
+        out["validation"] = json.loads((folder / "validation.json").read_text())
+    return out
+
+
 def export(gdb, web, box):
     fc = f"{gdb}/reaches"
     extra = json.loads(EXTRA.read_text())
@@ -360,14 +370,21 @@ def export(gdb, web, box):
     wgs = arcpy.SpatialReference(4326)
     fields = ["SHAPE@", "name", "kind", "rip_class", "county_share", "street_share", "rip_share",
               "canopy_pct", "drain_ha", "strahler", "bobcat", "flycatcher", "queen", "SHAPE@LENGTH"]
+    # Modelled movement along each reach (16_connectivity.py), where it has been run.
+    flow_keys = [k for k in ("bobcat", "flycatcher", "queen")
+                 if f"flow_{k}" in [f.name for f in arcpy.ListFields(fc)]]
+    fields += [f"flow_{k}" for k in flow_keys]
     feats = []
     washes = defaultdict(lambda: dict(m=0.0, can=0.0, rip=defaultdict(float), ripm=0.0, ha=0.0,
                                       bobcat=0, flycatcher=0, queen=0, county_m=0.0,
+                                      flow=defaultdict(lambda: [0.0, 0.0]),
                                       box=[180, 90, -180, -90]))
     tot = dict(wash_m=0.0, street_m=0.0, path_m=0.0, new_m=0.0, named_m=0.0, can=0.0, rip_m=0.0,
                new_can=0.0, links=0, wash_links=0)
     with arcpy.da.SearchCursor(fc, fields) as cur:
-        for (shape, name, kind, rc, cty, st, rs, can, ha, order, bob, fly, qn, length) in cur:
+        for row in cur:
+            (shape, name, kind, rc, cty, st, rs, can, ha, order, bob, fly, qn, length) = row[:14]
+            flows = dict(zip(flow_keys, row[14:]))
             can = can or 0.0
             tot["links"] += 1
             if kind == "street":
@@ -395,6 +412,10 @@ def export(gdb, web, box):
             for key, val in (("b", bob), ("f", fly), ("q", qn)):
                 if val:
                     props[key] = val
+            if kind == "wash":
+                for k, v in flows.items():
+                    if v is not None:
+                        props["f" + k[0]] = round(v, 1)
             feats.append(dict(type="Feature", properties=props, geometry=dict(
                 type="LineString" if len(lines) == 1 else "MultiLineString",
                 coordinates=lines[0] if len(lines) == 1 else lines)))
@@ -409,6 +430,10 @@ def export(gdb, web, box):
                 w["bobcat"] += bob or 0
                 w["flycatcher"] += fly or 0
                 w["queen"] += qn or 0
+                for k, v in flows.items():
+                    if v is not None:
+                        w["flow"][k][0] += v * length
+                        w["flow"][k][1] += length
                 e = geom.extent
                 w["box"] = [min(w["box"][0], e.XMin), min(w["box"][1], e.YMin),
                             max(w["box"][2], e.XMax), max(w["box"][3], e.YMax)]
@@ -428,6 +453,7 @@ def export(gdb, web, box):
             drains_km2=round(w["ha"] / 100, 1),
             sightings=dict(bobcat=w["bobcat"], flycatcher=w["flycatcher"], queen=w["queen"]),
             crossings=crossings_by_wash.get(name, dict(open=0, culvert=0, grade=0)),
+            flow={k: round(v[0] / v[1], 1) for k, v in w["flow"].items() if v[1]},
             box=[round(v, 5) for v in w["box"]]))
     avg = tot["can"] / tot["wash_m"]
     longest = sorted((r["km"] for r in rows), reverse=True)[:5]
@@ -455,6 +481,7 @@ def export(gdb, web, box):
         check=json.loads((WORK / "check" / "results.json").read_text())
         if (WORK / "check" / "results.json").exists() else None,
         wash_rule=WASH_RULE,
+        flow=flow_summary() if flow_keys else None,
         canopy_rule=canopy_info, imagery_dates=naip.get("acquired"),
         settings=dict(min_area_ha=2, near_m=NEAR_M, near_big_m=sorted(set(NEAR_BIG_M.values())),
                       min_named_km=MIN_NAMED_KM, sight_m=SIGHT_M, rip_min=RIP_MIN,

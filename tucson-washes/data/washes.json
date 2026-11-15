@@ -285,6 +285,469 @@
   "riparian_min": 0.5,
   "street_max": 0.2
  },
+ "flow": {
+  "built": "2026-11-15",
+  "cell_m": 10,
+  "near_wash_m": 30,
+  "map_breaks": [
+   1.3,
+   1.7,
+   2.5,
+   4.0
+  ],
+  "funnel_breaks": [
+   0.7,
+   1.3,
+   1.7
+  ],
+  "funnel_names": [
+   "impeded",
+   "diffuse",
+   "intensified",
+   "channelled"
+  ],
+  "near_wash_share_of_area": 0.2834,
+  "species": {
+   "bobcat": {
+    "run": {
+     "radius_m": 2500,
+     "block": 25,
+     "minutes": 49.9,
+     "threads": 30
+    },
+    "top_tenth_near_wash": 0.3566,
+    "top_tenth_in_riparian": 0.0943,
+    "riparian_share_of_area": 0.1195,
+    "funnel_share_of_area": {
+     "impeded": 0.3567,
+     "diffuse": 0.5287,
+     "intensified": 0.0901,
+     "channelled": 0.0245
+    },
+    "channelled_near_wash": 0.5258,
+    "funnelled_near_wash": 0.449,
+    "wash_cells_funnelled": 0.2278,
+    "normalized_on_wash_cells": 1.068,
+    "current_on_wash_cells_vs_all": 1.311,
+    "interstate": {
+     "cells": 14970,
+     "open_span_cells": 290,
+     "share_of_current_at_open_spans": 0.2176,
+     "mean_current_vs_area": 0.2562,
+     "open_span_current_vs_area": 3.606
+    }
+   },
+   "flycatcher": {
+    "run": {
+     "radius_m": 1500,
+     "block": 15,
+     "minutes": 3.5,
+     "threads": 30
+    },
+    "top_tenth_near_wash": 0.2851,
+    "top_tenth_in_riparian": 0.1381,
+    "riparian_share_of_area": 0.1195,
+    "funnel_share_of_area": {
+     "impeded": 0.7205,
+     "diffuse": 0.23,
+     "intensified": 0.0247,
+     "channelled": 0.0248
+    },
+    "channelled_near_wash": 0.4904,
+    "funnelled_near_wash": 0.4454,
+    "wash_cells_funnelled": 0.104,
+    "normalized_on_wash_cells": 0.351,
+    "current_on_wash_cells_vs_all": 1.066
+   },
+   "queen": {
+    "run": {
+     "radius_m": 1000,
+     "block": 11,
+     "minutes": 29.3,
+     "threads": 30
+    },
+    "top_tenth_near_wash": 0.7089,
+    "top_tenth_in_riparian": 0.5439,
+    "riparian_share_of_area": 0.1195,
+    "funnel_share_of_area": {
+     "impeded": 0.2233,
+     "diffuse": 0.5696,
+     "intensified": 0.0925,
+     "channelled": 0.1146
+    },
+    "channelled_near_wash": 0.7769,
+    "funnelled_near_wash": 0.6617,
+    "wash_cells_funnelled": 0.9677,
+    "normalized_on_wash_cells": 1.987,
+    "current_on_wash_cells_vs_all": 2.184
+   }
+  },
+  "overlays": {
+   "funnel_bobcat": [
+    [
+     -111.13829,
+     32.429107
+    ],
+    [
+     -110.872298,
+     32.429107
+    ],
+    [
+     -110.872298,
+     32.239579
+    ],
+    [
+     -111.13829,
+     32.239579
+    ]
+   ],
+   "funnel_flycatcher": [
+    [
+     -111.13829,
+     32.429107
+    ],
+    [
+     -110.872298,
+     32.429107
+    ],
+    [
+     -110.872298,
+     32.239579
+    ],
+    [
+     -111.13829,
+     32.239579
+    ]
+   ],
+   "funnel_queen": [
+    [
+     -111.13829,
+     32.429107
+    ],
+    [
+     -110.872298,
+     32.429107
+    ],
+    [
+     -110.872298,
+     32.239579
+    ],
+    [
+     -111.13829,
+     32.239579
+    ]
+   ]
+  },
+  "bobcat_culverts": {
+   "cells_changing_over_10pct": 0.0128,
+   "cells_changing_over_25pct": 0.0029,
+   "wash_cells_changing_over_25pct": 0.0092,
+   "reach_rank_correlation_closed_open": 0.9816,
+   "top_tenth_reaches_kept_closed": 0.9034,
+   "top_tenth_reaches_kept_open": 0.8936
+  },
+  "reaches_ranked": 9202,
+  "settings": {
+   "_about": "Resistance and source settings for the connectivity model (tools/washes/14_surfaces.py and 15_omniscape.py). Resistance is how hard a 10 m cell is to cross, 1 being easiest. These numbers are set by judgement, with the published findings they lean on listed in the README; none is fitted to data.",
+   "cell_m": 10,
+   "bobcat": {
+    "radius_m": 2500,
+    "block": 25,
+    "variant_block": 51,
+    "built": {
+     "max": 50,
+     "power": 2
+    },
+    "cover_relief": 0.5,
+    "riparian": {
+     "D": 3,
+     "C": 3,
+     "B": 2,
+     "A": 2,
+     "H": 1
+    },
+    "wash": {
+     "small": 3,
+     "medium": 2,
+     "large": 1
+    },
+    "road": {
+     "minor": 0,
+     "railroad": 5,
+     "frontage": 10,
+     "major": 15,
+     "state_route": 40,
+     "interstate_ramp": 100,
+     "interstate": 1000
+    },
+    "crossing": {
+     "open_span": 2,
+     "culvert_share_of_road": 0.2,
+     "culvert_min": 10
+    },
+    "source": {
+     "built_within_m": 300,
+     "zero_at_pct": 30
+    }
+   },
+   "flycatcher": {
+    "radius_m": 1500,
+    "block": 15,
+    "cover_full_at": 0.3,
+    "bare_cost": 9,
+    "built_cost": 20,
+    "water_within_m": 200,
+    "water_relief": 0.5,
+    "source": {
+     "within_m": 100,
+     "turf_full_at": 0.2,
+     "tree_full_at": 0.05,
+     "water_within_m": 300,
+     "away_from_water": 0.5,
+     "floor": 0.1
+    }
+   },
+   "queen": {
+    "radius_m": 1000,
+    "block": 11,
+    "cover_full_at": 0.3,
+    "bare_cost": 4,
+    "built_cost": 25,
+    "wash_or_riparian": 1,
+    "source": {
+     "within_m": 100,
+     "cover_full_at": 0.3,
+     "built_penalty": 0.5,
+     "wash_within_m": 50,
+     "by_wash_floor": 0.7,
+     "floor": 0.1
+    }
+   }
+  },
+  "validation": {
+   "max_accuracy_m": 100,
+   "thin_m": 100,
+   "block_m": 1000,
+   "smooth_m": 50,
+   "reps": 1000,
+   "species": {
+    "bobcat": {
+     "group": "mammals",
+     "records": 331,
+     "records_thinned": 137,
+     "background_records": 2147,
+     "background_thinned": 1038,
+     "against_group": {
+      "current": {
+       "auc": 0.499,
+       "low": 0.447,
+       "high": 0.547
+      },
+      "normalized current": {
+       "auc": 0.511,
+       "low": 0.44,
+       "high": 0.569
+      },
+      "source strength": {
+       "auc": 0.476,
+       "low": 0.416,
+       "high": 0.527
+      },
+      "conductance": {
+       "auc": 0.481,
+       "low": 0.415,
+       "high": 0.543
+      },
+      "current, culverts closed": {
+       "auc": 0.501,
+       "low": 0.45,
+       "high": 0.546
+      },
+      "current, culverts open": {
+       "auc": 0.501,
+       "low": 0.443,
+       "high": 0.551
+      }
+     },
+     "against_random": {
+      "current": {
+       "auc": 0.436
+      },
+      "normalized current": {
+       "auc": 0.552
+      },
+      "source strength": {
+       "auc": 0.411
+      },
+      "conductance": {
+       "auc": 0.468
+      },
+      "current, culverts closed": {
+       "auc": 0.437
+      },
+      "current, culverts open": {
+       "auc": 0.437
+      }
+     },
+     "fifths_of_current": {
+      "focal": [
+       12,
+       50,
+       49,
+       20,
+       6
+      ],
+      "background": [
+       183,
+       277,
+       340,
+       183,
+       55
+      ],
+      "ratio_to_overall": [
+       0.5,
+       1.37,
+       1.09,
+       0.83,
+       0.83
+      ]
+     }
+    },
+    "flycatcher": {
+     "group": "birds",
+     "records": 1229,
+     "records_thinned": 485,
+     "background_records": 23311,
+     "background_thinned": 3816,
+     "against_group": {
+      "current": {
+       "auc": 0.681,
+       "low": 0.628,
+       "high": 0.73
+      },
+      "normalized current": {
+       "auc": 0.665,
+       "low": 0.615,
+       "high": 0.709
+      },
+      "source strength": {
+       "auc": 0.632,
+       "low": 0.598,
+       "high": 0.669
+      },
+      "conductance": {
+       "auc": 0.626,
+       "low": 0.583,
+       "high": 0.664
+      }
+     },
+     "against_random": {
+      "current": {
+       "auc": 0.777
+      },
+      "normalized current": {
+       "auc": 0.756
+      },
+      "source strength": {
+       "auc": 0.669
+      },
+      "conductance": {
+       "auc": 0.671
+      }
+     },
+     "fifths_of_current": {
+      "focal": [
+       0,
+       47,
+       60,
+       87,
+       291
+      ],
+      "background": [
+       0,
+       941,
+       746,
+       828,
+       1301
+      ],
+      "ratio_to_overall": [
+       null,
+       0.39,
+       0.63,
+       0.83,
+       1.76
+      ]
+     }
+    },
+    "queen": {
+     "group": "butterflies",
+     "records": 583,
+     "records_thinned": 244,
+     "background_records": 3503,
+     "background_thinned": 1083,
+     "against_group": {
+      "current": {
+       "auc": 0.502,
+       "low": 0.454,
+       "high": 0.542
+      },
+      "normalized current": {
+       "auc": 0.479,
+       "low": 0.435,
+       "high": 0.522
+      },
+      "source strength": {
+       "auc": 0.526,
+       "low": 0.481,
+       "high": 0.571
+      },
+      "conductance": {
+       "auc": 0.463,
+       "low": 0.413,
+       "high": 0.506
+      }
+     },
+     "against_random": {
+      "current": {
+       "auc": 0.58
+      },
+      "normalized current": {
+       "auc": 0.535
+      },
+      "source strength": {
+       "auc": 0.641
+      },
+      "conductance": {
+       "auc": 0.484
+      }
+     },
+     "fifths_of_current": {
+      "focal": [
+       33,
+       37,
+       51,
+       55,
+       68
+      ],
+      "background": [
+       158,
+       171,
+       195,
+       233,
+       326
+      ],
+      "ratio_to_overall": [
+       0.93,
+       0.96,
+       1.16,
+       1.05,
+       0.93
+      ]
+     }
+    }
+   }
+  }
+ },
  "canopy_rule": {
   "cut": {
    "ndvi": 0.16,
@@ -368,6 +831,11 @@
     "culvert": 0,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 0.0,
+    "queen": 1.7
+   },
    "box": [
     -110.92467,
     32.38596,
@@ -394,6 +862,11 @@
     "culvert": 2,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 0.6,
+    "flycatcher": 0.7,
+    "queen": 4.3
+   },
    "box": [
     -110.88886,
     32.25082,
@@ -419,6 +892,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 1
+   },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.0,
+    "queen": 2.1
    },
    "box": [
     -111.10713,
@@ -448,6 +926,11 @@
     "culvert": 1,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 2.8,
+    "flycatcher": 0.8,
+    "queen": 4.3
+   },
    "box": [
     -111.01145,
     32.23965,
@@ -474,6 +957,11 @@
     "culvert": 4,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 0.4,
+    "flycatcher": 0.3,
+    "queen": 5.0
+   },
    "box": [
     -110.88539,
     32.24376,
@@ -499,6 +987,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 2
+   },
+   "flow": {
+    "bobcat": 0.9,
+    "flycatcher": 0.7,
+    "queen": 4.2
    },
    "box": [
     -110.94901,
@@ -529,6 +1022,11 @@
     "culvert": 0,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 0.3,
+    "queen": 1.8
+   },
    "box": [
     -110.95344,
     32.4123,
@@ -555,6 +1053,11 @@
     "culvert": 2,
     "grade": 2
    },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 0.6,
+    "queen": 4.2
+   },
    "box": [
     -111.01563,
     32.24154,
@@ -580,6 +1083,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 4
+   },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 1.2,
+    "queen": 4.8
    },
    "box": [
     -110.98148,
@@ -608,6 +1116,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 9
+   },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 0.3,
+    "queen": 2.1
    },
    "box": [
     -111.05919,
@@ -638,6 +1151,11 @@
     "culvert": 6,
     "grade": 2
    },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 1.2,
+    "queen": 2.4
+   },
    "box": [
     -110.93379,
     32.28982,
@@ -666,6 +1184,11 @@
     "open": 0,
     "culvert": 6,
     "grade": 4
+   },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 0.8,
+    "queen": 2.1
    },
    "box": [
     -110.94495,
@@ -696,6 +1219,11 @@
     "culvert": 1,
     "grade": 14
    },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.3,
+    "queen": 1.6
+   },
    "box": [
     -111.09149,
     32.37424,
@@ -723,6 +1251,11 @@
     "open": 0,
     "culvert": 2,
     "grade": 7
+   },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.0,
+    "queen": 1.3
    },
    "box": [
     -111.11714,
@@ -755,6 +1288,11 @@
     "culvert": 2,
     "grade": 8
    },
+   "flow": {
+    "bobcat": 1.5,
+    "flycatcher": 1.0,
+    "queen": 1.9
+   },
    "box": [
     -111.06349,
     32.32585,
@@ -784,6 +1322,11 @@
     "open": 7,
     "culvert": 4,
     "grade": 11
+   },
+   "flow": {
+    "bobcat": 1.6,
+    "flycatcher": 0.9,
+    "queen": 3.4
    },
    "box": [
     -111.05129,
@@ -815,6 +1358,11 @@
     "culvert": 9,
     "grade": 8
    },
+   "flow": {
+    "bobcat": 1.6,
+    "flycatcher": 0.4,
+    "queen": 3.2
+   },
    "box": [
     -111.00989,
     32.30198,
@@ -841,6 +1389,11 @@
     "culvert": 1,
     "grade": 1
    },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 1.4,
+    "queen": 3.1
+   },
    "box": [
     -110.98681,
     32.25759,
@@ -866,6 +1419,11 @@
     "open": 0,
     "culvert": 1,
     "grade": 4
+   },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 1.2,
+    "queen": 4.2
    },
    "box": [
     -110.93806,
@@ -894,6 +1452,11 @@
     "open": 0,
     "culvert": 4,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 0.8,
+    "flycatcher": 0.8,
+    "queen": 3.7
    },
    "box": [
     -110.9068,
@@ -924,6 +1487,11 @@
     "culvert": 4,
     "grade": 3
    },
+   "flow": {
+    "bobcat": 1.7,
+    "flycatcher": 1.2,
+    "queen": 2.7
+   },
    "box": [
     -111.00549,
     32.30269,
@@ -949,6 +1517,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 0.8,
+    "flycatcher": 0.4,
+    "queen": 5.3
    },
    "box": [
     -110.9084,
@@ -979,6 +1552,11 @@
     "culvert": 5,
     "grade": 7
    },
+   "flow": {
+    "bobcat": 1.9,
+    "flycatcher": 0.2,
+    "queen": 2.5
+   },
    "box": [
     -110.87599,
     32.26974,
@@ -1004,6 +1582,11 @@
     "open": 0,
     "culvert": 1,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 0.8,
+    "flycatcher": 0.4,
+    "queen": 3.4
    },
    "box": [
     -110.89705,
@@ -1032,6 +1615,11 @@
     "open": 0,
     "culvert": 3,
     "grade": 7
+   },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 0.8,
+    "queen": 2.4
    },
    "box": [
     -111.07731,
@@ -1062,6 +1650,11 @@
     "culvert": 4,
     "grade": 2
    },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.0,
+    "queen": 2.0
+   },
    "box": [
     -111.11222,
     32.2785,
@@ -1089,6 +1682,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 3
+   },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 1.2,
+    "queen": 3.1
    },
    "box": [
     -111.00096,
@@ -1120,6 +1718,11 @@
     "culvert": 7,
     "grade": 6
    },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 1.0,
+    "queen": 2.2
+   },
    "box": [
     -110.92355,
     32.27835,
@@ -1149,6 +1752,11 @@
     "culvert": 8,
     "grade": 7
    },
+   "flow": {
+    "bobcat": 1.5,
+    "flycatcher": 0.8,
+    "queen": 2.6
+   },
    "box": [
     -110.90104,
     32.27417,
@@ -1174,6 +1782,11 @@
     "open": 0,
     "culvert": 5,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 1.6,
+    "flycatcher": 0.8,
+    "queen": 4.5
    },
    "box": [
     -111.01393,
@@ -1202,6 +1815,11 @@
     "open": 0,
     "culvert": 2,
     "grade": 3
+   },
+   "flow": {
+    "bobcat": 1.6,
+    "flycatcher": 0.4,
+    "queen": 2.7
    },
    "box": [
     -110.97508,
@@ -1232,6 +1850,11 @@
     "culvert": 2,
     "grade": 5
    },
+   "flow": {
+    "bobcat": 1.5,
+    "flycatcher": 0.5,
+    "queen": 2.6
+   },
    "box": [
     -111.02036,
     32.35285,
@@ -1261,6 +1884,11 @@
     "culvert": 5,
     "grade": 2
    },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 0.9,
+    "queen": 2.4
+   },
    "box": [
     -110.9706,
     32.31909,
@@ -1286,6 +1914,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 4
+   },
+   "flow": {
+    "bobcat": 1.8,
+    "flycatcher": 0.6,
+    "queen": 4.4
    },
    "box": [
     -110.99455,
@@ -1315,6 +1948,11 @@
     "culvert": 1,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 0.8,
+    "queen": 3.3
+   },
    "box": [
     -111.02415,
     32.2408,
@@ -1342,6 +1980,11 @@
     "open": 0,
     "culvert": 3,
     "grade": 1
+   },
+   "flow": {
+    "bobcat": 1.4,
+    "flycatcher": 0.7,
+    "queen": 2.3
    },
    "box": [
     -110.92779,
@@ -1372,6 +2015,11 @@
     "culvert": 2,
     "grade": 8
    },
+   "flow": {
+    "bobcat": 1.4,
+    "flycatcher": 0.8,
+    "queen": 2.2
+   },
    "box": [
     -111.11351,
     32.3658,
@@ -1401,6 +2049,11 @@
     "culvert": 2,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.4,
+    "flycatcher": 1.3,
+    "queen": 2.2
+   },
    "box": [
     -110.97416,
     32.39639,
@@ -1426,6 +2079,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 1
+   },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 0.5,
+    "queen": 3.7
    },
    "box": [
     -111.01897,
@@ -1455,6 +2113,11 @@
     "culvert": 1,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.9,
+    "flycatcher": 0.4,
+    "queen": 4.0
+   },
    "box": [
     -111.00317,
     32.2532,
@@ -1483,6 +2146,11 @@
     "culvert": 5,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 0.8,
+    "queen": 1.9
+   },
    "box": [
     -111.01864,
     32.37764,
@@ -1508,6 +2176,11 @@
     "open": 0,
     "culvert": 4,
     "grade": 5
+   },
+   "flow": {
+    "bobcat": 1.6,
+    "flycatcher": 1.2,
+    "queen": 3.1
    },
    "box": [
     -111.00111,
@@ -1536,6 +2209,11 @@
     "open": 0,
     "culvert": 5,
     "grade": 5
+   },
+   "flow": {
+    "bobcat": 1.6,
+    "flycatcher": 0.9,
+    "queen": 3.3
    },
    "box": [
     -111.06245,
@@ -1567,6 +2245,11 @@
     "culvert": 6,
     "grade": 10
    },
+   "flow": {
+    "bobcat": 1.5,
+    "flycatcher": 0.8,
+    "queen": 3.0
+   },
    "box": [
     -111.02096,
     32.30671,
@@ -1593,6 +2276,11 @@
     "culvert": 2,
     "grade": 1
    },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 1.2,
+    "queen": 3.4
+   },
    "box": [
     -110.98729,
     32.26303,
@@ -1618,6 +2306,11 @@
     "open": 0,
     "culvert": 2,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 1.8,
+    "flycatcher": 1.2,
+    "queen": 4.0
    },
    "box": [
     -110.95241,
@@ -1648,6 +2341,11 @@
     "culvert": 5,
     "grade": 8
    },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.8,
+    "queen": 2.1
+   },
    "box": [
     -111.06198,
     32.36725,
@@ -1674,6 +2372,11 @@
     "culvert": 2,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.5,
+    "flycatcher": 0.9,
+    "queen": 3.5
+   },
    "box": [
     -111.02336,
     32.2546,
@@ -1699,6 +2402,11 @@
     "open": 0,
     "culvert": 1,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 1.2,
+    "queen": 2.3
    },
    "box": [
     -111.03833,
@@ -1729,6 +2437,11 @@
     "culvert": 1,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.2,
+    "queen": 3.3
+   },
    "box": [
     -111.03154,
     32.24015,
@@ -1756,6 +2469,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 0.9,
+    "queen": 1.5
    },
    "box": [
     -110.87774,
@@ -1786,6 +2504,11 @@
     "culvert": 4,
     "grade": 11
    },
+   "flow": {
+    "bobcat": 1.4,
+    "flycatcher": 0.7,
+    "queen": 3.0
+   },
    "box": [
     -111.03148,
     32.31043,
@@ -1814,6 +2537,11 @@
     "open": 1,
     "culvert": 2,
     "grade": 1
+   },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 0.4,
+    "queen": 2.0
    },
    "box": [
     -111.13203,
@@ -1846,6 +2574,11 @@
     "culvert": 9,
     "grade": 3
    },
+   "flow": {
+    "bobcat": 1.4,
+    "flycatcher": 0.4,
+    "queen": 1.9
+   },
    "box": [
     -110.98191,
     32.29495,
@@ -1873,6 +2606,11 @@
     "open": 0,
     "culvert": 1,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 0.0,
+    "queen": 2.1
    },
    "box": [
     -110.90756,
@@ -1902,6 +2640,11 @@
     "culvert": 0,
     "grade": 1
    },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 0.2,
+    "queen": 1.7
+   },
    "box": [
     -111.12591,
     32.39824,
@@ -1929,6 +2672,11 @@
     "open": 0,
     "culvert": 5,
     "grade": 1
+   },
+   "flow": {
+    "bobcat": 1.4,
+    "flycatcher": 0.9,
+    "queen": 2.6
    },
    "box": [
     -110.9648,
@@ -1958,6 +2706,11 @@
     "open": 0,
     "culvert": 2,
     "grade": 3
+   },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 1.2,
+    "queen": 2.7
    },
    "box": [
     -110.9439,
@@ -1989,6 +2742,11 @@
     "culvert": 1,
     "grade": 3
    },
+   "flow": {
+    "bobcat": 1.8,
+    "flycatcher": 1.1,
+    "queen": 2.2
+   },
    "box": [
     -111.0522,
     32.26726,
@@ -2016,6 +2774,11 @@
     "open": 0,
     "culvert": 14,
     "grade": 4
+   },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.5,
+    "queen": 2.1
    },
    "box": [
     -111.11586,
@@ -2046,6 +2809,11 @@
     "culvert": 5,
     "grade": 8
    },
+   "flow": {
+    "bobcat": 1.5,
+    "flycatcher": 0.9,
+    "queen": 3.3
+   },
    "box": [
     -111.00989,
     32.30131,
@@ -2072,6 +2840,11 @@
     "culvert": 0,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 0.0,
+    "queen": 2.0
+   },
    "box": [
     -110.88316,
     32.4146,
@@ -2097,6 +2870,11 @@
     "open": 1,
     "culvert": 0,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 1.6,
+    "queen": 2.8
    },
    "box": [
     -111.03407,
@@ -2125,6 +2903,11 @@
     "open": 0,
     "culvert": 2,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 1.0,
+    "queen": 2.1
    },
    "box": [
     -110.96631,
@@ -2157,6 +2940,11 @@
     "culvert": 1,
     "grade": 3
    },
+   "flow": {
+    "bobcat": 1.6,
+    "flycatcher": 1.4,
+    "queen": 1.6
+   },
    "box": [
     -111.13533,
     32.24151,
@@ -2182,6 +2970,11 @@
     "open": 2,
     "culvert": 0,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 1.5,
+    "flycatcher": 0.8,
+    "queen": 3.6
    },
    "box": [
     -111.01286,
@@ -2212,6 +3005,11 @@
     "culvert": 5,
     "grade": 9
    },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 1.1,
+    "queen": 2.6
+   },
    "box": [
     -110.90276,
     32.28653,
@@ -2240,6 +3038,11 @@
     "culvert": 0,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 0.3,
+    "queen": 2.0
+   },
    "box": [
     -110.95243,
     32.38277,
@@ -2265,6 +3068,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 0
+   },
+   "flow": {
+    "bobcat": 1.0,
+    "flycatcher": 0.0,
+    "queen": 1.5
    },
    "box": [
     -110.92467,
@@ -2294,6 +3102,11 @@
     "culvert": 1,
     "grade": 7
    },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.4,
+    "queen": 2.0
+   },
    "box": [
     -111.13468,
     32.26238,
@@ -2321,6 +3134,11 @@
     "open": 0,
     "culvert": 2,
     "grade": 6
+   },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 0.2,
+    "queen": 2.1
    },
    "box": [
     -111.08379,
@@ -2351,6 +3169,11 @@
     "culvert": 0,
     "grade": 3
    },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.0,
+    "queen": 2.0
+   },
    "box": [
     -111.08938,
     32.32198,
@@ -2380,6 +3203,11 @@
     "culvert": 4,
     "grade": 2
    },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.1,
+    "queen": 2.1
+   },
    "box": [
     -111.09107,
     32.31052,
@@ -2407,6 +3235,11 @@
     "open": 0,
     "culvert": 0,
     "grade": 1
+   },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 0.4,
+    "queen": 1.8
    },
    "box": [
     -111.09103,
@@ -2436,6 +3269,11 @@
     "culvert": 3,
     "grade": 0
    },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 1.0,
+    "queen": 1.9
+   },
    "box": [
     -111.09549,
     32.3269,
@@ -2464,6 +3302,11 @@
     "culvert": 1,
     "grade": 10
    },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 0.6,
+    "queen": 2.3
+   },
    "box": [
     -110.94321,
     32.2839,
@@ -2491,6 +3334,11 @@
     "open": 0,
     "culvert": 3,
     "grade": 2
+   },
+   "flow": {
+    "bobcat": 1.2,
+    "flycatcher": 0.8,
+    "queen": 2.2
    },
    "box": [
     -110.9184,
@@ -2521,6 +3369,11 @@
     "culvert": 1,
     "grade": 10
    },
+   "flow": {
+    "bobcat": 1.4,
+    "flycatcher": 0.4,
+    "queen": 2.4
+   },
    "box": [
     -110.89194,
     32.27127,
@@ -2549,6 +3402,11 @@
     "open": 1,
     "culvert": 5,
     "grade": 6
+   },
+   "flow": {
+    "bobcat": 1.5,
+    "flycatcher": 1.4,
+    "queen": 2.5
    },
    "box": [
     -110.90293,
@@ -2579,6 +3437,11 @@
     "culvert": 8,
     "grade": 5
    },
+   "flow": {
+    "bobcat": 1.4,
+    "flycatcher": 1.1,
+    "queen": 2.7
+   },
    "box": [
     -110.95235,
     32.28841,
@@ -2608,6 +3471,11 @@
     "culvert": 1,
     "grade": 14
    },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.0,
+    "queen": 2.0
+   },
    "box": [
     -111.13733,
     32.26893,
@@ -2635,6 +3503,11 @@
     "open": 0,
     "culvert": 2,
     "grade": 1
+   },
+   "flow": {
+    "bobcat": 1.3,
+    "flycatcher": 0.4,
+    "queen": 2.7
    },
    "box": [
     -111.04273,
@@ -2664,6 +3537,11 @@
     "open": 0,
     "culvert": 1,
     "grade": 3
+   },
+   "flow": {
+    "bobcat": 1.1,
+    "flycatcher": 0.2,
+    "queen": 1.9
    },
    "box": [
     -111.13058,

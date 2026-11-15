@@ -53,6 +53,9 @@
   width: 70px; height: 8px; flex: none; border: 1px solid #000;
   background: linear-gradient(90deg, var(--can-0), var(--can-1) 25%, var(--can-2) 55%, var(--can-3));
 }
+.legend .ramp.flow {
+  background: linear-gradient(90deg, #8c2981 0 25%, #de4968 25% 50%, #fe9f6d 50% 75%, #fcfdbf 75%);
+}
 .legend .wide { font-style: italic; }
 
 .groupbox .toolbar button .sw.small { height: 0; border: 0; border-top: 2px solid #000; vertical-align: 3px; }

@@ -1,0 +1,77 @@
+{
+  "_about": "Resistance and source settings for the connectivity model (tools/washes/14_surfaces.py and 15_omniscape.py). Resistance is how hard a 10 m cell is to cross, 1 being easiest. These numbers are set by judgement, with the published findings they lean on listed in the README; none is fitted to data.",
+  "cell_m": 10,
+  "bobcat": {
+    "radius_m": 2500,
+    "block": 25,
+    "variant_block": 51,
+    "built": {
+      "max": 50,
+      "power": 2
+    },
+    "cover_relief": 0.5,
+    "riparian": {
+      "D": 3,
+      "C": 3,
+      "B": 2,
+      "A": 2,
+      "H": 1
+    },
+    "wash": {
+      "small": 3,
+      "medium": 2,
+      "large": 1
+    },
+    "road": {
+      "minor": 0,
+      "railroad": 5,
+      "frontage": 10,
+      "major": 15,
+      "state_route": 40,
+      "interstate_ramp": 100,
+      "interstate": 1000
+    },
+    "crossing": {
+      "open_span": 2,
+      "culvert_share_of_road": 0.2,
+      "culvert_min": 10
+    },
+    "source": {
+      "built_within_m": 300,
+      "zero_at_pct": 30
+    }
+  },
+  "flycatcher": {
+    "radius_m": 1500,
+    "block": 15,
+    "cover_full_at": 0.3,
+    "bare_cost": 9,
+    "built_cost": 20,
+    "water_within_m": 200,
+    "water_relief": 0.5,
+    "source": {
+      "within_m": 100,
+      "turf_full_at": 0.2,
+      "tree_full_at": 0.05,
+      "water_within_m": 300,
+      "away_from_water": 0.5,
+      "floor": 0.1
+    }
+  },
+  "queen": {
+    "radius_m": 1000,
+    "block": 11,
+    "cover_full_at": 0.3,
+    "bare_cost": 4,
+    "built_cost": 25,
+    "wash_or_riparian": 1,
+    "source": {
+      "within_m": 100,
+      "cover_full_at": 0.3,
+      "built_penalty": 0.5,
+      "wash_within_m": 50,
+      "by_wash_floor": 0.7,
+      "floor": 0.1
+    }
+  }
+}

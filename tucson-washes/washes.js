@@ -1,6 +1,7 @@
 /* Tucson Wash Field Guide: map, figures and table.
    Reads data/washes.json, data/channels.geojson and data/crossings.geojson
-   (written by tools/washes/08_reaches.py --export).
+   (written by tools/washes/08_reaches.py --export), and the modelled-movement
+   overlays data/funnel_<species>.png (written by tools/washes/16_connectivity.py).
    MapLibre GL JS 4.7.1 is loaded by the page. */
 (function () {
   "use strict";
@@ -32,8 +33,9 @@
                 grade: ["At-grade crossing", "at-grade", "--x-grade"] };
   var SPECIES = [["bobcat", "bobcat", "b"], ["flycatcher", "vermilion flycatcher", "f"], ["queen", "queen butterfly", "q"]];
   var SMALL_HA = 20;
+  var FLOW = [["off", "Off"], ["bobcat", "Bobcat"], ["flycatcher", "Vermilion flycatcher"], ["queen", "Queen butterfly"]];
 
-  var d, map, popup, mode = "rip", on = { small: true, cross: false, path: false, street: false }, pick = null, sat = true;
+  var d, map, popup, mode = "rip", on = { small: true, cross: false, path: false, street: false }, pick = null, sat = true, flow = "off";
   var sortKey = "km", sortDir = -1, byName = {};
 
   function setMsg(t) { $("sb-msg").textContent = t; }
@@ -45,10 +47,12 @@
     if (MODES.some(function (x) { return x[0] === m; })) mode = m;
     if (show !== null) { var want = show.split(","); SHOW.forEach(function (s) { on[s[0]] = want.indexOf(s[0]) >= 0; }); }
     if (q.get("wash")) pick = q.get("wash");
+    if (FLOW.some(function (x) { return x[0] === q.get("flow"); })) flow = q.get("flow");
   }
   function writeQuery() {
     var show = SHOW.filter(function (s) { return on[s[0]]; }).map(function (s) { return s[0]; }).join(",");
-    var q = "?color=" + mode + "&show=" + show + (pick ? "&wash=" + encodeURIComponent(pick) : "");
+    var q = "?color=" + mode + "&show=" + show + (flow !== "off" ? "&flow=" + flow : "") +
+      (pick ? "&wash=" + encodeURIComponent(pick) : "");
     history.replaceState(null, "", location.pathname + q);
     document.querySelectorAll("a[data-carry]").forEach(function (a) { a.href = a.getAttribute("data-carry") + q; });
   }
@@ -67,10 +71,20 @@
       b.addEventListener("click", function () { on[s[0]] = !on[s[0]]; render(); });
       $("show-buttons").appendChild(b);
     });
+    FLOW.forEach(function (f) {
+      var b = el("button", null, f[1]);
+      b.type = "button";
+      b.addEventListener("click", function () { flow = f[0]; render(); });
+      $("flow-buttons").appendChild(b);
+    });
   }
   function renderSettings() {
     MODES.forEach(function (m, i) { $("mode-buttons").children[i].setAttribute("aria-pressed", m[0] === mode ? "true" : "false"); });
     SHOW.forEach(function (s, i) { $("show-buttons").children[i].setAttribute("aria-pressed", on[s[0]] ? "true" : "false"); });
+    FLOW.forEach(function (f, i) {
+      var b = $("flow-buttons").children[i];
+      if (b) b.setAttribute("aria-pressed", f[0] === flow ? "true" : "false");
+    });
     writeQuery();
   }
 
@@ -139,6 +153,37 @@
     }
   }
   function rng(o) { return Math.round(o.pct) + "% (" + Math.round(o.low) + " to " + Math.round(o.high) + ")"; }
+  function pct(x) { return Math.round(100 * x) + "%"; }
+  function fillFlow() {
+    var f = d.flow;
+    if (!f) return;
+    fill("fl-near-area", pct(f.near_wash_share_of_area));
+    fill("fl-near-m", f.near_wash_m);
+    SPECIES.forEach(function (s) {
+      var k = "fl-" + s[2] + "-", sp = f.species[s[0]], v = f.validation && f.validation.species[s[0]];
+      if (!sp) return;
+      fill(k + "near", pct(sp.top_tenth_near_wash));
+      fill(k + "km", f.settings[s[0]].radius_m / 1000);
+      fill(k + "chan", pct(sp.funnel_share_of_area.channelled));
+      fill(k + "chan-near", pct(sp.channelled_near_wash));
+      fill(k + "fun", pct(sp.funnel_share_of_area.intensified + sp.funnel_share_of_area.channelled));
+      fill(k + "fun-near", pct(sp.funnelled_near_wash));
+      fill(k + "washfun", pct(sp.wash_cells_funnelled));
+      if (!v) return;
+      var a = v.against_group.current, src = v.against_group["source strength"], top = v.fifths_of_current.ratio_to_overall;
+      fill(k + "auc", pct(a.auc) + " (" + Math.round(100 * a.low) + " to " + Math.round(100 * a.high) + ")");
+      fill(k + "auc-src", pct(src.auc));
+      fill(k + "auc-raw", pct(v.against_random.current.auc));
+      fill(k + "n", fmt(v.records_thinned));
+      fill(k + "bg", fmt(v.background_thinned));
+      fill(k + "top", top[top.length - 1].toFixed(1));
+    });
+    var i = f.species.bobcat && f.species.bobcat.interstate, c = f.bobcat_culverts;
+    if (i) fill("fl-i10x", Math.round(i.open_span_current_vs_area / i.mean_current_vs_area));
+    if (c) {
+      fill("fl-culv-cells", (100 * c.wash_cells_changing_over_25pct).toFixed(1) + "%");
+    }
+  }
   function renderLead() {
     $("hero-num").textContent = fmt(d.wash_km);
     $("hero-lab").textContent = "km of wash channel traced from lidar in " + fmt(d.area_km2) + " km² of northwest Tucson, down to washes that drain " + d.settings.min_area_ha + " hectares";
@@ -180,7 +225,25 @@
     map.setFilter("pa", pathFilter());
     map.setLayoutProperty("pa", "visibility", on.path ? "visible" : "none");
     map.setLayoutProperty("xs", "visibility", on.cross ? "visible" : "none");
+    showFlow();
+    // With a movement overlay on, the wash lines step back so the overlay under them can be read.
+    map.setPaintProperty("ch", "line-opacity", flow === "off" ? 1 : 0.4);
+    map.setPaintProperty("ch-case", "line-opacity", flow === "off" ? 0.6 : 0.1);
     map.setFilter("ch-pick", ["all", ["==", ["get", "k"], 0], ["==", ["coalesce", ["get", "n"], ""], pick || "\u0000"]]);
+  }
+  /* The movement overlays are pictures of half a megabyte or so each, so one is fetched only
+     when its species is first picked. */
+  function showFlow() {
+    var have = d.flow && d.flow.overlays;
+    FLOW.slice(1).forEach(function (f) {
+      var id = "fl-" + f[0], corners = have && have["funnel_" + f[0]];
+      if (f[0] === flow && corners && !map.getLayer(id)) {
+        map.addSource(id, { type: "image", url: BASE + "data/funnel_" + f[0] + ".png", coordinates: corners });
+        map.addLayer({ id: id, type: "raster", source: id,
+          paint: { "raster-opacity": 0.9, "raster-fade-duration": 0 } }, "st-case");
+      }
+      if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", f[0] === flow ? "visible" : "none");
+    });
   }
   function buildMap() {
     var b = d.box;
@@ -302,6 +365,8 @@
       line(ul, "Drains " + one(w.drains_km2) + " km² inside the study area");
       if (classMix(w)) line(ul, "Riparian classes by length: " + classMix(w));
       line(ul, "Records within " + d.settings.sight_m + " m: " + SPECIES.map(function (s) { return w.sightings[s[0]] + " " + s[1]; }).join(", "));
+      if (w.flow && Object.keys(w.flow).length) line(ul, "Modelled movement, as a multiple of what open ground would carry: " +
+        SPECIES.filter(function (s) { return w.flow[s[0]] != null; }).map(function (s) { return s[0] + " " + one(w.flow[s[0]]); }).join(", "));
       if (w.crossings) line(ul, "Road crossings: " + crossTotal(w) + " (" + w.crossings.open + " open spans, " + w.crossings.culvert + " culverts, " + w.crossings.grade + " at-grade)");
       box.appendChild(ul);
     } else if (p.n) {
@@ -312,6 +377,9 @@
     var r = el("div", "reach");
     r.textContent = "This reach: " + one(p.km) + " km, drains " + haText(p.ha) + ", " + p.c + "% canopy within 10 m, " + ripText(p.r) + ".";
     box.appendChild(r);
+    var ranks = SPECIES.filter(function (s) { return p["f" + s[2]] != null; })
+      .map(function (s) { return s[0] + " " + one(p["f" + s[2]]); });
+    if (ranks.length) box.appendChild(el("div", "reach", "Modelled movement along this reach, as a multiple of what open ground would carry: " + ranks.join(", ") + "."));
     if (popup) popup.remove();
     popup = new maplibregl.Popup({ maxWidth: "300px" }).setLngLat(lngLat).setDOMContent(box).addTo(map);
   }
@@ -358,6 +426,11 @@
     } else {
       host.appendChild(key("ln", "--src-county", "On the county's wash layer"));
       host.appendChild(key("ln", "--src-new", "Traced from lidar only"));
+    }
+    if (flow !== "off" && d.flow) {
+      var name = SPECIES.filter(function (s) { return s[0] === flow; })[0][1];
+      var b = d.flow.map_breaks;
+      host.appendChild(key("ramp flow", null, "Modelled " + name + " movement gathered into a strip: " + b[0] + " to over " + b[b.length - 1] + " times what open ground would carry"));
     }
     if (on.cross) Object.keys(XTYPE).forEach(function (k) { host.appendChild(key("dot " + k, XTYPE[k][2], XTYPE[k][0])); });
     if (on.path) host.appendChild(key("ln dotted", "--path", "Flow path with no channel"));
@@ -448,6 +521,7 @@
     if (pick && !byName[pick]) pick = null;
     buildSettings();
     fillStatic();
+    fillFlow();
     renderLead();
     if (window.maplibregl) buildMap(); else fail("The map library did not load.");
     render();

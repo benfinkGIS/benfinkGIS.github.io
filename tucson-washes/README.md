@@ -11,11 +11,12 @@ outline. Project 1 is `tucson-canopy/`.
 
 ## Where it stands (15 November 2026)
 
-Stages 1 and 2 are built. The page at `/tucson-washes/` (with `/map/` and a
+Stages 1 to 3 are built. The page at `/tucson-washes/` (with `/map/` and a
 home page entry) shows the wash network, its attributes and the road
-crossings, and reports a hand check of all three. Stage 1 was published on
-14 November; the stage 2 version of the page is built and checked locally.
-Stages 3 and 4 (connectivity, gaps) are not started.
+crossings, reports a hand check of all three, and carries a movement model
+for the three species with a check against sightings. Stages 1 and 2 were
+published on 14 and 15 November; the stage 3 version of the page is built and
+checked locally. Stage 4 (gaps) is not started.
 
 ### Results
 
@@ -31,6 +32,7 @@ Stages 3 and 4 (connectivity, gaps) are not started.
 | Tree canopy within 10 m of a wash | 16.7%, against 11.0% across the study area |
 | Wash length inside mapped riparian habitat | 38% |
 | Road crossings on washes | 2,637: 102 open spans, 996 culverts, 1,539 at-grade |
+| Movement model checked against sightings (0.5 is chance) | Flycatcher 0.68 (0.63 to 0.73); bobcat 0.50 (0.45 to 0.55); queen 0.50 (0.46 to 0.54) |
 
 ### The hand check (14 and 15 November 2026)
 
@@ -102,6 +104,167 @@ Labelling rules agreed while labelling:
 - A channel-bed mark that lands on a bridge deck or a road over the wash is
   labelled as the channel is on either side of it; "can't tell" if the sides
   differ or neither can be seen.
+
+### Stage 3: connectivity (15 November 2026)
+
+For each of the three species the study area is a 10 m grid (2,500 by 2,100
+cells) with two surfaces: resistance, the cost of crossing a cell (1 is
+easiest), and source strength, how much the cell counts as habitat (0 to 1).
+Omniscape 0.6.2 (Julia 1.10.13) moves a circular window over the grid; at
+each stop current is injected at the source cells inside the window and drawn
+out at the centre, and the current through every cell is summed over all
+stops. Dividing by the same sum run with resistance 1 everywhere ("flow
+potential") gives normalized current, which shows where the ground
+concentrates movement or blocks it.
+
+Ground layers behind the surfaces (`14_surfaces.py`, all on the 10 m grid):
+
+| Layer | From |
+| --- | --- |
+| Percent built on | NLCD 2021 impervious surface, 30 m, resampled |
+| Tree canopy share | The 1 m imagery canopy from stage 1 |
+| Green ground that is not canopy; turf | 2023 imagery: NDVI of 0.16 and up outside canopy; turf is NDVI of 0.30 and up with a smooth near-infrared texture |
+| Roads by class | County centerlines widened by 5 to 12 m a side; the highest class in a cell wins, so a road cannot be slipped through diagonally |
+| Washes by size | Reaches kept as washes: small (under 20 ha), medium, large (1,000 ha and up) |
+| Riparian class | County riparian layer |
+| Standing water | NHDPlus HR ponds and reservoirs (7,506 cells) plus water seen in the imagery on flat ground in patches of 300 m2 or more (280 cells) |
+| Crossings | Stage 2 types within 25 m of each crossing point, plus the 43 National Bridge Inventory bridges over water as open spans across the whole road |
+
+The numbers are in `resistance.json`. They are set by judgement. What each
+leans on:
+
+**Bobcat** (window radius 2.5 km; one solve per 25 by 25 cells).
+
+- Radius: the Bobcats in Tucson collar study (Mollohan and others, technical
+  report to Arizona Game and Fish, November 2024; 38 collared cats on the
+  west side of Tucson) gives 95% kernel home ranges of 8.1 km2 for females
+  and 19.6 km2 for males. A circle of 19.6 km2 has a radius of 2.5 km.
+- Built ground: resistance rises with the square of percent impervious, from
+  1 to 50, and is cut by up to half under vegetation cover. The same study
+  found cats closer to buildings than random points and calls housing of up
+  to about 500 buildings per km2 with native plants and intact washes high
+  quality habitat, so light development is kept cheap. The Arizona Missing
+  Linkages design for the Tucson, Tortolita and Santa Catalina Mountains
+  (Beier and others 2006) scores desert scrub 4, low-intensity development 7
+  and denser development 9 on a 1 to 10 cost scale, a much flatter scale
+  than this one.
+- Roads: the collar study counted road crossings against simulated random
+  movement. Minor roads were crossed 8% less than chance (weak evidence),
+  major roads 26% less, and Interstate 10 was "apparently a barrier", crossed
+  by one cat, under an underpass. So minor streets add nothing, major roads
+  15, Oracle Road 40, the interstate 1,000.
+- Crossings: the study found the cats "did not select for culverts or under
+  or overpasses when crossing roads" (1.3% of crossings were within 7 m of a
+  structure), apart from two cats living along the Santa Cruz that went under
+  the river bridges. So a typed culvert only cuts a road's cost to a fifth
+  (never below 10), which matters on the interstate and little elsewhere; an
+  open span costs 2.
+- Sources: a cell is habitat in proportion to how little of the ground within
+  300 m is built on, reaching zero at 30% impervious.
+
+**Vermilion flycatcher** (radius 1.5 km). No published territory size
+or movement distance was found, so the radius is a guess. Tucson Audubon
+describes resident pairs in the city's parks; the species account in
+California Bird Species of Special Concern (2008) lists golf courses, parks
+and open ground with trees near water, and notes the bird avoids dense
+riparian growth. Habitat
+here is turf with at least some tree canopy within 100 m, halved away from
+water. Resistance is low where trees and turf together cover 30% of a cell,
+higher over bare desert (10) and higher again over solid development (to 30).
+
+**Queen butterfly** (radius 1 km). No local movement distance was
+found either; monarchs, as a stand-in, pick out host plants from up to 125 m
+(Fisher and Bradbury 2021). The queen's larval hosts in the Sonoran Desert
+include the climbing milkweeds (*Funastrum*), which grow along washes
+(Saul-Gershenz and others 2020), so wash and riparian cells cost 1. Other
+ground costs 1 to 5 by how green it is, plus up to 25 by percent impervious.
+Roads carry no extra cost. Habitat is green cover within 100 m, with a floor
+of 0.7 within 50 m of a wash or riparian strip.
+
+Normalized current is classed impeded (under 0.7), diffuse (0.7 to 1.3),
+intensified (1.3 to 1.7) and channelled (over 1.7). The breaks are attributed
+to Cameron and others 2022 (doi 10.1111/csp2.12698); they were read in a
+secondary source, not the paper.
+
+#### Results
+
+| | Bobcat | Vermilion flycatcher | Queen butterfly |
+| --- | --- | --- | --- |
+| Window radius | 2.5 km | 1.5 km | 1 km |
+| Run time, 30 threads | 49.9 min | 3.5 min | 29.3 min |
+| Area impeded (normalized current under 0.7) | 36% | 72% | 22% |
+| Area diffuse (0.7 to 1.3) | 53% | 23% | 57% |
+| Area intensified (1.3 to 1.7) | 9.0% | 2.5% | 9.2% |
+| Area channelled (over 1.7) | 2.5% | 2.5% | 11.5% |
+| Intensified or channelled ground within 30 m of a wash (28% of the area is) | 45% | 45% | 66% |
+| Wash cells that are intensified or channelled | 23% | 10% | 97% |
+| Median normalized current on wash cells | 1.07 | 0.35 | 1.99 |
+
+Interstate 10 (bobcat run): 290 of 14,970 interstate cells are under an inventoried river bridge (the Rillito and the Canada del Oro). They carry 22% of the current on interstate cells, at 3.6 times the area's mean; the rest of the interstate carries 0.26 times the mean. Omniscape injects a fixed current, so a barrier redirects movement to the nearest weak point inside the window and cannot stop it; current on the closed cells is the model forcing its way through, not a prediction that cats cross there.
+
+Culverts (bobcat): with every typed culvert closed against every one open (both at a coarser step of 51 cells), normalized current changes by more than 25% on 0.9% of wash cells and 0.3% of all cells. Reach values under the two runs correlate at 0.982 by rank, and 89% or more of the top tenth of reaches in the main run stay in the top tenth under either; part of that difference is the coarser step, not the culverts.
+
+#### Check against sightings (`17_validate.py`)
+
+Sightings follow observers, so each species' records are compared with every
+other research-grade iNaturalist record of its group in the box (mammals,
+birds, butterflies; 4,294, 43,480 and 6,838 records).
+Records placed to 100 m or better, one per 100 m square; each surface
+averaged over 50 m. The score is the chance that a record of the species sits
+on a higher value than a record of something else in its group (0.5 is a coin
+toss). Ranges are 95%, from resampling 1 km squares.
+
+| | Bobcat | Vermilion flycatcher | Queen butterfly |
+| --- | --- | --- | --- |
+| Squares with a record of the species | 137 (from 331 records) | 485 (from 1,229 records) | 244 (from 583 records) |
+| Squares with a record of the rest of its group | 1,038 | 3,816 | 1,083 |
+| Current | 0.50 (0.45 to 0.55) | 0.68 (0.63 to 0.73) | 0.50 (0.45 to 0.54) |
+| Normalized current | 0.51 (0.44 to 0.57) | 0.67 (0.61 to 0.71) | 0.48 (0.43 to 0.52) |
+| Source strength (model input) | 0.48 (0.42 to 0.53) | 0.63 (0.60 to 0.67) | 0.53 (0.48 to 0.57) |
+| 1 / resistance (model input) | 0.48 (0.41 to 0.54) | 0.63 (0.58 to 0.66) | 0.46 (0.41 to 0.51) |
+| Current, against random points instead | 0.44 | 0.78 | 0.58 |
+| Records per group record in the top fifth of the area by current, against the overall rate | 0.83 times | 1.76 times | 0.93 times |
+
+Bobcat, current with every typed culvert closed: 0.50 (0.45 to 0.55); open: 0.50 (0.44 to 0.55).
+
+What it says:
+
+- **Flycatcher: supported.** Its records sit on higher current than other
+  birds' records. The circuit model scores a little above its own inputs
+  (0.68 against 0.63), but the ranges overlap, so it is not shown that the
+  moving window adds to the habitat surface.
+- **Bobcat: not distinguishable from chance.** Bobcat records fall on the
+  same kind of ground as other mammal records. Against random points the
+  score is below 0.5: sightings are where people live, and current is
+  highest in open desert. This is not evidence the map is wrong, but nothing
+  here shows it is right. The costs rest on the collar study's findings, not
+  on this check.
+- **Queen: not distinguishable from chance.** The queen surface gives washes
+  the lowest cost by assumption, and 97% of wash cells come out as
+  intensified or channelled. Queen records are no more common there than
+  other butterflies' are. The source surface alone scores 0.64 against
+  random points and 0.53 against other butterflies: butterflies of all kinds
+  are recorded on green ground.
+
+The page reports these three scores as they are.
+
+#### Limits
+
+- Every resistance number is a judgement. The check above tests the result
+  against sightings; it does not tune the numbers, and a sighting is evidence
+  of presence, not of movement.
+- The box has no buffer. A window near the edge has less ground to draw on,
+  so current falls away within one radius of the edge. Normalized current
+  shares the same windows and is less affected.
+- Built ground comes from a 30 m layer. A wash 10 m wide between back walls
+  is carried by its own cells and by canopy, not by the impervious layer.
+- The flycatcher map is the 1.5 km reach drawn around each patch of turf with
+  trees. Where patches are further apart than that the map shows separate
+  islands, and the edge of each island is the radius, not a finding.
+- Culvert size is unknown. The two bobcat runs with every typed culvert
+  closed and every one open bracket that; see the table.
+- The bobcat collar study's ground lies mostly south and west of the box; its
+  findings set the costs but its locations were not used.
 
 ### Things that came up while building it
 
@@ -261,18 +424,31 @@ raster work will run in ArcGIS Pro's Python, as in Project 1.
 | 6a | `11_check_sample.py` | propy | Stratified hand-check sample of crossings and channel beds, with image chips from the 30 cm imagery |
 | 6a | `label_server.py` + `tools/washes-label/` | py | Local page for labelling the sample without seeing the rule's answer |
 | 6b | `12_check_score.py` | py | Scores the rules against the labels, re-chooses the cut-offs with leave-one-out, writes `rules.json` and `work/check/results.json` |
-| 7 | `08_reaches.py --export` | propy | Writes `data/channels.geojson`, `data/crossings.geojson` and `data/washes.json` for the page |
+| 8a | `13_get_landcover.py` | py | NLCD 2021 impervious surface, NHD ponds, and every research-grade iNaturalist mammal, bird and butterfly record in the box (position and accuracy only) as the measure of observer effort |
+| 8b | `14_surfaces.py` | propy | Ground layers on a 10 m grid, then a resistance and a source surface per species from `resistance.json`; `--layers` rebuilds the ground layers, `--look` writes check pictures |
+| 8c | `15_omniscape.py` | py + Julia | Runs Omniscape for each species, and for the bobcat with every typed culvert closed and every one open |
+| 8d | `16_connectivity.py` | propy | Reads the runs back, writes `data/funnel_<species>.png` for the map, the mean normalized current along each wash reach (`flow_<species>` on `reaches`) and `work/connectivity/summary.json` |
+| 8e | `17_validate.py` | py | Scores each current map against sightings, corrected for observer effort; writes `work/connectivity/validation.json` |
+| 9 | `08_reaches.py --export` | propy | Writes `data/channels.geojson`, `data/crossings.geojson` and `data/washes.json` for the page |
 
 `propy` is ArcGIS Pro's Python:
 
     "%LOCALAPPDATA%\Programs\ArcGIS\Pro\bin\Python\envs\arcgispro-py3\python.exe"
 
-Run order after a change to `rules.json`: 08, 09, 10, then 08 with
-`--export`. Steps 11 and 12 are the one-off hand check; do not redraw the
-sample.
+Run order after a change to `rules.json`: 08, 09, 10, then 14 with
+`--layers`, 15, 16, 17 and 08 with `--export` (08 rebuilds `reaches`, which
+drops the `flow_` fields until 16 is run again). After a change to
+`resistance.json` only: 14, 15, 16, 17, 08 with `--export`. Steps 11 and 12
+are the one-off hand check; do not redraw the sample.
 
-Still to build: resistance surfaces, connectivity runs, validation and gap
-ranking (stages 3 and 4).
+Julia is a portable install (1.10.13, unzipped under
+`%LOCALAPPDATA%\Programs\Julia`); `15_omniscape.py` finds it there, or set
+`JULIA`. The package environment is `tools/washes/julia/`. Run times on 30
+threads: bobcat 50 minutes, queen 29, flycatcher 3.5, each culvert variant 13.
+Omniscape must run in double precision here; single fails the solver's
+accuracy check.
+
+Still to build: gap shortlist, repair runs and ranking (stage 4).
 
 ### Geodatabase (`work/washes.gdb`)
 
@@ -285,6 +461,10 @@ ranking (stages 3 and 4).
 | `reaches` | The same lines with every attribute the page uses, plus `bed_rule` and the bed measures |
 | `crossings` | Wash and road crossings: road class, hump and step from the lidar, rule type, inventory type where there is one |
 | `sightings_bobcat`, `sightings_flycatcher`, `sightings_queen` | iNaturalist records placed to 100 m or better |
+
+The connectivity grids are in `work/connectivity/`: `layers_10m.npz` (ground
+layers), `<species>_resistance.tif` and `<species>_source.tif`,
+`run_<name>/` (Omniscape output), `arrays/` and the two JSON summaries.
 
 Rasters sit beside it in `work/dem/` (elevation, cut and filled versions,
 flow direction and accumulation, reach ids, Strahler order, and the county
@@ -303,9 +483,8 @@ identifications are mostly to genus. A fuller study would add them.
 
 ## Needs from Ben
 
-- Go-ahead to install Julia and Omniscape.
-- About an hour of hand-checking crossings and channel types on imagery,
-  once the sample is drawn.
+Nothing outstanding. Julia and Omniscape were installed on 15 November with
+his go-ahead, and the hand check is done.
 
 ## Limits to state in the write-up
 
