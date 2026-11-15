@@ -9,37 +9,105 @@ application. Brought into this repo on 14 November 2026 from an outline
 written outside it (`02-tucson-wash-corridors.md`); this file replaces that
 outline. Project 1 is `tucson-canopy/`.
 
-## Where it stands (14 November 2026)
+## Where it stands (15 November 2026)
 
-Stage 1, the wash field guide, is built: the channel network, its attributes,
-and the page at `/tucson-washes/` with a full-page map at `/tucson-washes/map/`
-and a home page entry. Stages 2 to 4 (barriers, connectivity, gaps) are not
-started.
+Stages 1 and 2 are built. The page at `/tucson-washes/` (with `/map/` and a
+home page entry) shows the wash network, its attributes and the road
+crossings, and reports a hand check of all three. Stage 1 was published on
+14 November; the stage 2 version of the page is built and checked locally.
+Stages 3 and 4 (connectivity, gaps) are not started.
 
-### Stage 1 results
+### Results
 
 | | |
 | --- | --- |
-| Wash channel traced from lidar, 2 ha and up | 3,335 km in 14,392 reaches |
-| Of that, more than 15 m from any county-mapped wash | 1,657 km (50%) |
-| Traced flow running down streets, kept apart | 429 km |
-| County Wash Network in the box | 1,826 km, 84 named washes with at least 0.5 km of open channel |
+| Flow line traced from lidar, 2 ha and up | 3,765 km in 14,392 reaches |
+| Kept as wash (cut 20 cm or more into the ground, or county-mapped) | 2,522 km in 9,378 reaches |
+| Flow paths with no channel | 814 km |
+| Storm water running down streets | 429 km |
+| Wash more than 15 m from any county-mapped wash | 921 km (37%) |
+| County Wash Network in the box | 1,826 km, 83 named washes with at least 0.5 km of open channel |
 | Share of the county network the lidar channels land on | 91% (89 to 98% by flow class) |
-| Tree canopy within 10 m of a wash | 16.1%, against 11.0% across the study area |
-| Wash length inside mapped riparian habitat | 30% |
-| Records within 50 m of a wash | 180 of 393 bobcat, 619 of 1,512 flycatcher, 210 of 684 queen |
+| Tree canopy within 10 m of a wash | 16.7%, against 11.0% across the study area |
+| Wash length inside mapped riparian habitat | 38% |
+| Road crossings on washes | 2,637: 102 open spans, 996 culverts, 1,539 at-grade |
 
-Canopy rule, set against Project 1's lidar canopy: NDVI 0.16 or more,
-near-infrared brightness 70 or more, 5 m spread 7 or more. It agrees with
-the lidar map on 91% of cells in Dunbar Spring and 95% in Western Hills II,
-finds about three quarters of the lidar canopy, and 71 to 79% of what it
-calls canopy is. Most of its false canopy is low vegetation.
+### The hand check (14 and 15 November 2026)
 
-Things that came up while building it:
+Ben labelled 340 items from the 30 cm imagery without seeing what the rules
+had said: 160 channel reaches (at their midpoints) and 180 crossings. One
+reach and four crossings were "can't tell". The labelling took about 37
+minutes of active time, a median of 2.5 seconds an item. Figures below are
+weighted back to the population each stratum was drawn from; brackets are
+95% ranges from resampling within strata.
+
+**What it found, before any rule was changed.** 79% (69 to 87) of traced
+reaches were washes to the eye; the rest were yards, lots and road edges.
+The first-pass colour rule for concrete was right on 3 of the 60 reaches it
+flagged. Of 60 points first typed at-grade, 37 were labelled "no crossing
+here".
+
+**What was changed because of it** (`12_check_score.py` writes `rules.json`):
+
+- A reach is a wash only if its line sits at least 20 cm below the average
+  ground within 7 m, or at least half of it is on the county wash layer or
+  riparian map; and under a fifth of it is on street pavement. The 20 cm was
+  chosen from the labels (grid 10 to 30 cm); the other three numbers were
+  set by looking at the labels and not cross-validated.
+- Crossing cut-offs moved from a 1.2 m step and 0.6 m hump to 1.8 m and
+  1.2 m.
+- Crossings are found only on reaches kept as washes.
+- Bed material is not mapped. It is reported as shares from the sample.
+
+**How the changed rules score**, leave-one-out (each item typed by cut-offs
+chosen without it):
+
+| | |
+| --- | --- |
+| Reaches the wash rule keeps that are washes | 86% (76 to 94) |
+| Real washes the rule keeps | 90% (81 to 98) |
+| Reaches it drops that are not washes | 57% (33 to 83) |
+| Wash rule agrees with the label | 81% (71 to 89) |
+| Mapped crossings on kept reaches that are real crossings | 68% (57 to 79) |
+| ... typed open span | 97% (89 to 100) |
+| ... typed culvert | 68% (50 to 84) |
+| ... typed at-grade | 66% (50 to 82) |
+| Type agrees with the label, where the crossing is real | 77% (66 to 88); 72% with the first cut-offs |
+| Beds of real washes: natural | 80% (69 to 90) |
+| Beds of real washes: natural bed, built banks | 17% (8 to 27) |
+| Beds of real washes: concrete | 3% (0 to 7) |
+
+Against the inventories, after the change: 39 of 46 inventoried bridges come
+out as open span (85%), and 119 of 142 inventoried culverts as culvert, with
+15 more as open span (the Bridge Inventory lists only culverts of 20 ft and
+over).
+
+Limits of the check:
+
+- The same labels chose the cut-offs and scored them. Leave-one-out guards
+  the 20 cm, the step and the hump, but not the form of the rule or the
+  three numbers set by eye.
+- One labeller, working fast, from photos. "No crossing here" covers several
+  things: no visible wash, a wash that runs alongside, and county street
+  lines that are driveways.
+- The sample was drawn before the wash rule existed, so each item's measures
+  were frozen when drawn (`work/check/sample_attrs.json`) and the scoring
+  reads those, not the current geodatabase.
+- Channel-bed marks under a bridge or road were labelled as the channel is on
+  either side. They were going to be scored apart from the rest; with only
+  7 concrete labels in 160 there was no bed rule to score, so they are not.
+
+Labelling rules agreed while labelling:
+
+- A channel-bed mark that lands on a bridge deck or a road over the wash is
+  labelled as the channel is on either side of it; "can't tell" if the sides
+  differ or neither can be seen.
+
+### Things that came up while building it
 
 - Saving the flow accumulation raster in place failed on the full area
   (ERROR 010240); copying it out with Copy Raster works. The whole channel
-  build takes about 15 minutes, not the hour first estimated.
+  build takes about 15 minutes.
 - With one 15 m tolerance, reaches of the Santa Cruz took the name of
   tributaries at their confluences, and the big rivers were found only 78%
   of the time. The tolerance now widens to 30 m and 60 m for the county's
@@ -48,12 +116,21 @@ Things that came up while building it:
   reaches that carry the name, which counted side threads in wide beds twice.
 - The imagery was flown on three dates (3 September, 15 and 18 October
   2023), so greenness is not strictly comparable across the area.
+- Crossings: the bed line is fitted from 15 to 80 m either side with samples
+  on the road fill trimmed out, because a flat 20 to 40 m window sat on top
+  of wide fills. The step is tested before the hump and searched further
+  along the road on big washes, because long bridges put the abutment 100 m
+  from the channel line.
+- The pale granite sand in the washes off the Catalinas is as grey and as
+  bright as concrete in the imagery. Texture, lidar bed roughness and
+  straightness are stored per reach (`10_channel_type.py`) but nothing was
+  fitted to them.
 - `work/first_look.jpg` and `work/first_look.json` are the pre-modelling
   check of the study area and the sightings.
 
-Not done in stage 1, though the outline lists them under channel attributes:
-channel width and channel type (natural, soil cement, concrete). Channel type
-moves to stage 2 with the crossings, where it shares the hand-checked sample.
+Still open from the outline: channel width; culvert size; permeability scores
+per species, which belong with the resistance surfaces in stage 3 and will
+have to carry the crossing uncertainty above.
 
 ## Study area (Ben's pick, 14 November 2026)
 
@@ -178,14 +255,24 @@ raster work will run in ArcGIS Pro's Python, as in Project 1.
 | 2a | `05_get_imagery.py` | py | 2023 NAIP, four bands at 1 m, over the study area and over Project 1's two neighborhoods |
 | 2b | `06_channels.py` | propy | Culvert cuts at county wash crossings, pit filling, flow direction and accumulation, channels of 2 ha and up split into reaches. `--window x0 y0 x1 y1` runs a small box for testing |
 | 2c | `07_canopy.py` | propy | Sets the imagery canopy rule against Project 1's lidar canopy, applies it to the study area, and writes the canopy share within 10 m |
-| 3 | `08_reaches.py` | propy | Name, county and street share, riparian class, canopy and sightings for every reach; the county-network completeness check; `data/channels.geojson` and `data/washes.json` for the page |
+| 3 | `08_reaches.py` | propy | Name, county and street share, riparian class, canopy, channel depth and sightings for every reach; wash, flow path or street by the cut-offs in `rules.json`; the county-network completeness check |
+| 4 | `09_crossings.py` | propy | Every wash and road crossing, measured on the lidar and typed open span, culvert or at-grade; compared with the flood-map structures and the National Bridge Inventory |
+| 5 | `10_channel_type.py` | propy | First-pass bed type from imagery colour, plus texture, lidar bed roughness and straightness for each reach |
+| 6a | `11_check_sample.py` | propy | Stratified hand-check sample of crossings and channel beds, with image chips from the 30 cm imagery |
+| 6a | `label_server.py` + `tools/washes-label/` | py | Local page for labelling the sample without seeing the rule's answer |
+| 6b | `12_check_score.py` | py | Scores the rules against the labels, re-chooses the cut-offs with leave-one-out, writes `rules.json` and `work/check/results.json` |
+| 7 | `08_reaches.py --export` | propy | Writes `data/channels.geojson`, `data/crossings.geojson` and `data/washes.json` for the page |
 
 `propy` is ArcGIS Pro's Python:
 
     "%LOCALAPPDATA%\Programs\ArcGIS\Pro\bin\Python\envs\arcgispro-py3\python.exe"
 
-Still to build (stages 2 to 4): crossings and channel type, resistance
-surfaces, connectivity runs, validation, gap ranking.
+Run order after a change to `rules.json`: 08, 09, 10, then 08 with
+`--export`. Steps 11 and 12 are the one-off hand check; do not redraw the
+sample.
+
+Still to build: resistance surfaces, connectivity runs, validation and gap
+ranking (stages 3 and 4).
 
 ### Geodatabase (`work/washes.gdb`)
 
@@ -195,7 +282,8 @@ surfaces, connectivity runs, validation, gap ranking.
 | `crossings_county` | Points where a county wash meets a street or the railroad |
 | `culvert_cuts` | The strips lowered to channel-bed level at those crossings |
 | `channels_raw` | Lidar channels, one line per reach, with Strahler order and drainage area |
-| `reaches` | The same lines with every attribute the page uses |
+| `reaches` | The same lines with every attribute the page uses, plus `bed_rule` and the bed measures |
+| `crossings` | Wash and road crossings: road class, hump and step from the lidar, rule type, inventory type where there is one |
 | `sightings_bobcat`, `sightings_flycatcher`, `sightings_queen` | iNaturalist records placed to 100 m or better |
 
 Rasters sit beside it in `work/dem/` (elevation, cut and filled versions,

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Wash Crossings and Channel Beds Check</title>
+<style>
+  :root {
+    --bg: #f4f2ec; --panel: #ffffff; --ink: #1d1d1b; --muted: #5d5c57;
+    --line: #cfccc2; --accent: #1f5f8f; --accent-ink: #ffffff; --warn: #9a5b00;
+    --mark: #ffe600;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181a; --panel: #212325; --ink: #ecebe6; --muted: #a3a29b;
+      --line: #3a3d40; --accent: #6db3e0; --accent-ink: #0c1a24; --warn: #e2a74a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.45 system-ui, "Segoe UI", sans-serif; }
+  main { max-width: 1340px; margin: 0 auto; padding: 16px; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; }
+  h1 { font-size: 20px; margin: 0; }
+  #count { color: var(--muted); font-variant-numeric: tabular-nums; }
+  #bar { height: 8px; background: var(--line); border-radius: 4px; margin: 10px 0 12px;
+         overflow: hidden; }
+  #bar i { display: block; height: 100%; width: 0; background: var(--accent); }
+  #ask { font-size: 18px; font-weight: 600; margin: 0 0 10px; }
+  #ask small { font-weight: 400; color: var(--muted); font-size: 14px; margin-left: 8px; }
+  .views { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  figure { margin: 0; background: var(--panel); border: 1px solid var(--line);
+           border-radius: 6px; padding: 8px; }
+  figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  .img { position: relative; aspect-ratio: 1; background: #000; }
+  .img img { width: 100%; height: 100%; display: block; }
+  .img svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .keys { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px;
+          margin: 14px 0 10px; }
+  button, a.btn { font: inherit; color: var(--ink); background: var(--panel);
+           border: 1px solid var(--line); border-radius: 6px; padding: 10px 8px;
+           cursor: pointer; min-height: 44px; text-decoration: none; display: inline-flex; align-items: center; }
+  button:hover, a.btn:hover { border-color: var(--accent); }
+  button:focus-visible, a.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .keys button { text-align: left; display: flex; gap: 8px; align-items: center; }
+  .keys button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink);
+                                      border-color: var(--accent); }
+  kbd { font: 600 13px ui-monospace, Consolas, monospace; border: 1px solid currentColor;
+        border-radius: 4px; padding: 0 6px; opacity: .8; }
+  .nav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  #status { color: var(--muted); margin-left: auto; font-size: 14px; }
+  #status.bad { color: var(--warn); font-weight: 600; }
+  details { margin-top: 16px; background: var(--panel); border: 1px solid var(--line);
+            border-radius: 6px; padding: 10px 14px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details li { margin: 4px 0; }
+  details h2 { font-size: 16px; margin: 12px 0 4px; }
+  #done { display: none; padding: 14px; border: 2px solid var(--accent); border-radius: 6px;
+          margin-bottom: 14px; background: var(--panel); }
+  @media (max-width: 860px) {
+    .views { grid-template-columns: 1fr; }
+    .keys { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Wash Crossings and Channel Beds Check</h1>
+    <span id="count">Loading</span>
+  </header>
+  <div id="bar" role="progressbar" aria-label="Items labelled"><i></i></div>
+  <div id="done"><strong>Every item has a label.</strong> You can close this page; the labels are
+    already saved. Use Back to revisit any item.</div>
+  <p id="ask">&nbsp;</p>
+
+  <div class="views">
+    <figure>
+      <div class="img"><img id="rgb" alt="Close view, natural colour"><svg id="x1" viewBox="0 0 420 420"></svg></div>
+      <figcaption id="cap1">&nbsp;</figcaption>
+    </figure>
+    <figure>
+      <div class="img"><img id="cir" alt="Close view, colour infrared"><svg id="x2" viewBox="0 0 420 420"></svg></div>
+      <figcaption>Colour infrared, same view. Living plants show red; concrete, sand and asphalt do not.</figcaption>
+    </figure>
+    <figure>
+      <div class="img"><img id="wide" alt="Wide view, natural colour"><svg id="x3" viewBox="0 0 420 420"></svg></div>
+      <figcaption id="cap3">&nbsp;</figcaption>
+    </figure>
+  </div>
+
+  <div class="keys" id="keys"></div>
+  <div class="nav">
+    <button id="back" type="button">&larr; Back</button>
+    <button id="next" type="button">Next &rarr;</button>
+    <button id="todo" type="button">Next unlabelled</button>
+    <button id="clear" type="button">Clear this label</button>
+    <button id="hide" type="button" aria-pressed="false">Hide marks (H)</button>
+    <a class="btn" id="gmap" target="_blank" rel="noopener">Open this spot in Google Maps</a>
+    <span id="status" role="status"></span>
+  </div>
+
+  <details open>
+    <summary>How to label</summary>
+    <p>Photos are from autumn 2023. The yellow ticks point at the spot; nothing is drawn on it. If the photo does not settle it, the Google Maps button opens the same spot, where Street View usually does.</p>
+    <h2>Crossings: how does the wash get past the road?</h2>
+    <ul>
+      <li><strong>Bridge</strong>: the road is carried over on a deck, open underneath. Count a wide box culvert you could walk through upright as a bridge.</li>
+      <li><strong>Culvert</strong>: the road sits on fill and the wash goes through a pipe or low box. Headwalls, a pipe mouth, or a channel that stops at one road edge and restarts at the other.</li>
+      <li><strong>At-grade</strong>: the road dips through the wash bed. Sand or stain across the pavement, &ldquo;Do not enter when flooded&rdquo; country.</li>
+      <li><strong>No crossing here</strong>: there is no wash at this spot, or it runs alongside the road without crossing.</li>
+    </ul>
+    <h2>Channel beds: what is the channel made of at the mark?</h2>
+    <ul>
+      <li><strong>Natural</strong>: sand, soil, rock or plants on the bed, and banks nobody has built.</li>
+      <li><strong>Natural bed, built banks</strong>: an earthen or sandy bed between soil cement, riprap, gabions or walls.</li>
+      <li><strong>Concrete</strong>: a poured or paved floor.</li>
+      <li><strong>Not a wash</strong>: a street, parking lot, yard or roof drain. Nothing you would call a channel.</li>
+      <li>If the mark lands on a bridge deck or a road over the wash, label the channel as it is on either side, since that is what runs underneath. If the two sides differ, or you cannot see either, choose <strong>Can't tell</strong>.</li>
+    </ul>
+    <ul>
+      <li>If you honestly cannot say, choose <strong>Can't tell</strong>. Those are counted and reported, not guessed.</li>
+      <li>Keys: <kbd>1</kbd> to <kbd>4</kbd> for a class, <kbd>0</kbd> for can't tell, <kbd>H</kbd> to hide the marks, <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to move. A label saves at once and moves to the next unlabelled item.</li>
+    </ul>
+  </details>
+</main>
+
+<script>
+const TASKS = {
+  x: { ask: "How does the wash get past the road here?", tag: "Crossing",
+       classes: [[1, "Bridge"], [2, "Culvert"], [3, "At-grade"], [4, "No crossing here"], [0, "Can't tell"]] },
+  b: { ask: "What is the channel made of at the mark?", tag: "Channel bed",
+       classes: [[1, "Natural"], [2, "Natural bed, built banks"], [3, "Concrete"], [4, "Not a wash"], [0, "Can't tell"]] },
+};
+const $ = id => document.getElementById(id);
+let ids = [], labels = {}, at = 0, meta = {}, hidden = false;
+
+function marks(task) {
+  const c = 210, g = 26, t = 40;
+  const lines = [[c - g - t, c, c - g, c], [c + g, c, c + g + t, c],
+                 [c, c - g - t, c, c - g], [c, c + g, c, c + g + t]]
+    .map(l => `<line x1="${l[0]}" y1="${l[1]}" x2="${l[2]}" y2="${l[3]}"/>`).join("");
+  const close = hidden ? "" : `<g fill="none" stroke="#000" stroke-width="4" opacity=".65">${lines}</g>
+    <g fill="none" stroke="var(--mark)" stroke-width="2">${lines}</g>`;
+  $("x1").innerHTML = close;
+  $("x2").innerHTML = close;
+  const w = 420 / meta.wide_m * meta.close_m[task], o = c - w / 2;
+  $("x3").innerHTML = hidden ? "" : `<rect x="${o}" y="${o}" width="${w}" height="${w}" fill="none" stroke="#000" stroke-width="4" opacity=".6"/>
+    <rect x="${o}" y="${o}" width="${w}" height="${w}" fill="none" stroke="var(--mark)" stroke-width="2"/>`;
+}
+
+function show() {
+  const id = ids[at], item = meta.items[id], task = TASKS[item.task], n = Object.keys(labels).length;
+  for (const k of ["rgb", "cir", "wide"]) $(k).src = `/chips/${id}_${k}.jpg`;
+  $("count").textContent = `Item ${at + 1} of ${ids.length} · ${n} labelled`;
+  $("bar").firstElementChild.style.width = `${n / ids.length * 100}%`;
+  $("bar").setAttribute("aria-valuenow", n);
+  $("bar").setAttribute("aria-valuemax", ids.length);
+  $("ask").innerHTML = `${task.ask}<small>${task.tag}</small>`;
+  $("cap1").textContent = `Natural colour, ${meta.close_m[item.task]} m across. The spot is where the ticks point.`;
+  $("cap3").textContent = `Wide view, ${meta.wide_m} m across. The yellow box is the close view.`;
+  $("gmap").href = `https://www.google.com/maps/@?api=1&map_action=map&center=${item.lat},${item.lon}&zoom=20&basemap=satellite`;
+  const cur = labels[id] ? labels[id].label : null;
+  $("keys").textContent = "";
+  for (const [v, name] of task.classes) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(v === cur));
+    b.innerHTML = `<kbd>${v}</kbd><span>${name}</span>`;
+    b.addEventListener("click", () => save(v));
+    $("keys").appendChild(b);
+  }
+  marks(item.task);
+  $("done").style.display = n === ids.length ? "block" : "none";
+  try { localStorage.setItem("washes-label-at", String(at)); } catch (e) {}
+}
+
+function go(i) { at = Math.max(0, Math.min(ids.length - 1, i)); show(); }
+function nextTodo() {
+  for (let k = 1; k <= ids.length; k++) {
+    const i = (at + k) % ids.length;
+    if (!labels[ids[i]]) return go(i);
+  }
+  show();
+}
+
+async function save(label) {
+  const id = ids[at], stamp = new Date().toISOString();
+  $("status").className = "";
+  $("status").textContent = "Saving";
+  try {
+    const r = await fetch("/labels", { method: "POST", headers: { "Content-Type": "application/json" },
+                                       body: JSON.stringify({ id, label, at: stamp }) });
+    if (!r.ok) throw new Error(await r.text());
+    if (label === null) delete labels[id]; else labels[id] = { label, at: stamp };
+    $("status").textContent = "Saved";
+    if (label === null) show(); else nextTodo();
+  } catch (err) {
+    $("status").className = "bad";
+    $("status").textContent = "Not saved: is the label server still running? Your label was not recorded.";
+  }
+}
+
+function toggleMarks() {
+  hidden = !hidden;
+  $("hide").setAttribute("aria-pressed", String(hidden));
+  show();
+}
+$("back").addEventListener("click", () => go(at - 1));
+$("next").addEventListener("click", () => go(at + 1));
+$("todo").addEventListener("click", nextTodo);
+$("clear").addEventListener("click", () => save(null));
+$("hide").addEventListener("click", toggleMarks);
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (/^[0-4]$/.test(e.key)) { e.preventDefault(); save(Number(e.key)); }
+  else if (e.key === "h" || e.key === "H") toggleMarks();
+  else if (e.key === "ArrowLeft") go(at - 1);
+  else if (e.key === "ArrowRight") go(at + 1);
+});
+
+(async function start() {
+  try {
+    meta = await (await fetch("/points.json")).json();
+    labels = await (await fetch("/labels")).json();
+  } catch (err) {
+    $("count").textContent = "Could not load the items. Start the label server and reload.";
+    return;
+  }
+  ids = meta.ids;
+  let saved = 0;
+  try { saved = Number(localStorage.getItem("washes-label-at")) || 0; } catch (e) {}
+  at = Math.min(saved, ids.length - 1);
+  if (labels[ids[at]]) nextTodo(); else show();
+})();
+</script>
+</body>
+</html>

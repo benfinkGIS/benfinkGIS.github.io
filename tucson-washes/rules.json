@@ -1,0 +1,14 @@
+{
+  "_about": "Cut-offs set from the hand check of 340 crossings and channel beds (tools/washes/12_check_score.py). Steps 3 and 4 read this file.",
+  "set_on": "2026-11-15",
+  "wash": {
+    "incision_min_cm": 20,
+    "county_min": 0.5,
+    "riparian_min": 0.5,
+    "street_max": 0.2
+  },
+  "crossing": {
+    "step_min_m": 1.8,
+    "hump_min_m": 1.2
+  }
+}

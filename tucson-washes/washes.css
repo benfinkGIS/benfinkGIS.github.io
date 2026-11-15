@@ -12,6 +12,9 @@
   /* who has mapped it */
   --src-county: #4cc9f0; --src-new: #ff5d8f;
   --street: #ffffff;
+  --path: #cdb8ff;
+  /* road crossings: told apart by fill and ring, not by hue alone */
+  --x-open: #ffffff; --x-culvert: #ff3df2; --x-grade: #111111;
   --pick: #ffff00;
 }
 
@@ -43,6 +46,9 @@
 }
 .legend .ln::after { content: ""; position: absolute; left: 2px; right: 2px; top: 2px; height: 3px; background: var(--k); }
 .legend .ln.dashed::after { background: repeating-linear-gradient(90deg, var(--k) 0 4px, transparent 4px 7px); }
+.legend .ln.dotted::after { background: repeating-linear-gradient(90deg, var(--k) 0 2px, transparent 2px 5px); }
+.legend .dot { width: 12px; height: 12px; flex: none; border-radius: 50%; background: var(--k); border: 2px solid #000; }
+.legend .dot.grade { border-color: #fff; box-shadow: 0 0 0 1px #000; }
 .legend .ramp {
   width: 70px; height: 8px; flex: none; border: 1px solid #000;
   background: linear-gradient(90deg, var(--can-0), var(--can-1) 25%, var(--can-2) 55%, var(--can-3));
@@ -50,6 +56,8 @@
 .legend .wide { font-style: italic; }
 
 .groupbox .toolbar button .sw.small { height: 0; border: 0; border-top: 2px solid #000; vertical-align: 3px; }
+.groupbox .toolbar button .sw.path { height: 0; border: 0; border-top: 3px dotted #7a5cc7; vertical-align: 3px; }
+.groupbox .toolbar button .sw.cross { border-radius: 50%; background: #ff3df2; }
 .groupbox .toolbar button .sw.street { height: 0; border: 0; border-top: 3px dashed #777; vertical-align: 3px; }
 
 #t-wash th button { font: inherit; font-weight: bold; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }

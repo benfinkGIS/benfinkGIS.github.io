@@ -13,8 +13,14 @@ Each gets:
   county_share  share of the reach within NEAR_M of any county-mapped wash
   street_share  share of the reach on street pavement (centerline buffered
                 by a half-width that depends on the road class)
+  incision_cm   how far the channel line sits below the average ground
+                within 7 m of it
   kind          "street" when street_share is over half: storm water running
-                down a road, not a wash. Otherwise "wash"
+                down a road. "wash" when the channel is cut into the ground
+                by at least the cut-off in rules.json, or the county maps a
+                wash or riparian habitat along it, and under a fifth of it is
+                on pavement. Otherwise "path": the lidar says water would run
+                here, but there is no channel to speak of
   canopy_pct    average share of tree canopy within 10 m, along the reach
   rip_class     the county riparian class that covers most of the reach
                 (H, A, B, C or D), blank when under RIP_MIN of it is mapped
@@ -31,9 +37,10 @@ sighting figures are over every reach that carries its name.
 It also measures the reverse: how much of the county wash network the lidar
 channels find (within NEAR_M), by flow class.
 
-Writes the reaches to the geodatabase, then tucson-washes/data/channels.geojson
-(every reach, for the map) and washes.json (named washes and the figures on
-the page).
+Writes the reaches to the geodatabase. Run again with --export, after the
+crossings of step 4 exist, to write tucson-washes/data/channels.geojson (every
+reach, for the map), crossings.geojson and washes.json (named washes and the
+figures on the page).
 """
 import argparse
 import json
@@ -41,7 +48,8 @@ import time
 from collections import defaultdict
 
 import arcpy
-from arcpy.sa import (Con, EucDistance, IsNull, Raster, ZonalStatisticsAsTable)
+from arcpy.sa import (Con, EucDistance, FocalStatistics, IsNull, NbrRectangle, Raster,
+                      ZonalStatisticsAsTable)
 
 from common import BBOX, EPSG, PROJECT, SIGHTINGS, SPECIES, WORK
 
@@ -50,6 +58,13 @@ NEAR_M = 15
 # lidar's low-flow thread, so the larger county washes get a wider tolerance.
 NEAR_BIG_M = {4: 30, 5: 30, 6: 60}     # by county flow class: 2,000 cfs and up; over 10,000
 MIN_NAMED_KM = 0.5
+INCISION_M = 7           # a channel's depth is measured against the ground this far either side
+# Which traced channels count as washes. The cut-offs come from the hand check
+# (12_check_score.py writes rules.json); these are used until that has been run.
+WASH_RULE = dict(incision_min_cm=20, county_min=0.5, riparian_min=0.5, street_max=0.2)
+if (PROJECT / "rules.json").exists():
+    WASH_RULE = json.loads((PROJECT / "rules.json").read_text())["wash"]
+EXTRA = WORK / "reaches_extra.json"
 SIGHT_M = 50
 RIP_MIN = 0.3
 RIP_CODE = {"D": 1, "C": 2, "B": 3, "A": 4, "H": 5}
@@ -182,6 +197,11 @@ def run(gdb, folder, box, web):
     street = zonal(links, ras["street"], "MAXIMUM", "memory/z_st")
     county = zonal(links, ras["county"], "MAXIMUM", "memory/z_cty")
     named = zonal(links, ras["name"], "MAJORITY", "memory/z_name")
+    msg("channel depth")
+    dem = Raster(str(folder / "dem_1m.tif"))
+    side = 2 * INCISION_M + 1
+    depth = FocalStatistics(dem, NbrRectangle(side, side, "CELL"), "MEAN", "DATA") - dem
+    incision = zonal(links, depth, "MEAN", "memory/z_inc")
 
     msg("reaches")
     fc = f"{gdb}/reaches"
@@ -189,12 +209,14 @@ def run(gdb, folder, box, web):
     for name, kind, length in (("name", "TEXT", 60), ("kind", "TEXT", 8), ("rip_class", "TEXT", 2),
                                ("county_share", "FLOAT", None), ("street_share", "FLOAT", None),
                                ("rip_share", "FLOAT", None), ("canopy_pct", "FLOAT", None),
+                               ("incision_cm", "FLOAT", None),
                                ("bobcat", "SHORT", None), ("flycatcher", "SHORT", None),
                                ("queen", "SHORT", None)):
         arcpy.management.AddField(fc, name, kind, field_length=length)
     code_of = {v: k for k, v in RIP_CODE.items()}
     fields = ["grid_code", "name", "kind", "rip_class", "county_share", "street_share",
-              "rip_share", "canopy_pct"]
+              "rip_share", "canopy_pct", "incision_cm"]
+    rule = WASH_RULE
     with arcpy.da.UpdateCursor(fc, fields) as cur:
         for row in cur:
             g = row[0]
@@ -202,11 +224,19 @@ def run(gdb, folder, box, web):
             share = lambda t: round(min(t.get(g, (0, 0))[0] / n, 1.0), 3)
             row[1] = name_of[named[g][1]].title() if g in named and named[g][0] / n >= 0.5 else None
             row[5] = share(street)
-            row[2] = "street" if row[5] > 0.5 else "wash"
             row[6] = share(rip)
             row[3] = code_of.get(rip[g][1]) if g in rip and row[6] >= RIP_MIN else None
             row[4] = share(county)
             row[7] = round(canopy[g][1], 1) if g in canopy else None
+            row[8] = round(100 * incision[g][1], 1) if g in incision else 0.0
+            cut = row[8] >= rule["incision_min_cm"]
+            mapped = row[4] >= rule["county_min"] or row[6] >= rule["riparian_min"]
+            if row[5] > 0.5:
+                row[2] = "street"
+            elif (cut or mapped) and row[5] < rule["street_max"]:
+                row[2] = "wash"
+            else:
+                row[2] = "path"
             cur.updateRow(row)
 
     msg("sightings")
@@ -244,8 +274,11 @@ def run(gdb, folder, box, web):
         county_len[(name or "").strip().title()] += length
     completeness["all"]["km"] = round(total / 1000)
 
-    msg("summaries and web files")
-    export(fc, web, seen, completeness, box, county_len)
+    EXTRA.write_text(json.dumps(dict(
+        completeness=completeness, county_len=dict(county_len),
+        sightings={k: dict(placed_to_100m=v["used"], within_50m_of_a_wash=v["near"])
+                   for k, v in seen.items()}), indent=1))
+    msg("done; run 09_crossings.py, then this script with --export")
 
 
 def blurb(w, avg, top_five):
@@ -282,7 +315,48 @@ def blurb(w, avg, top_five):
     return " ".join(out)
 
 
-def export(fc, web, seen, completeness, box, county_len):
+HIGHWAY = ("Interstate highway", "Interstate ramp", "State route", "State route ramp", "Railroad")
+MAJOR = ("Major local road", "Frontage road")
+
+
+def crossings_out(gdb, web, wgs):
+    """Write crossings.geojson; return the page's crossing figures and counts per wash."""
+    fc = f"{gdb}/crossings"
+    if not arcpy.Exists(fc):
+        return None, {}
+    sr = arcpy.SpatialReference(EPSG)
+    short = {"open span": "open", "culvert": "culvert", "at-grade": "grade"}
+    feats, by_type, by_road, per_wash = [], defaultdict(int), {}, {}
+    fields = ["SHAPE@XY", "way_class", "street", "hump_m", "rule_type", "assumed", "wash",
+              "inventory", "inv_source"]
+    for (x, y), way, street, hump, kind, assumed, wash, inv, src in arcpy.da.SearchCursor(fc, fields):
+        p = arcpy.PointGeometry(arcpy.Point(x, y), sr).projectAs(wgs).firstPoint
+        props = dict(t=short[kind], w=way, h=round(hump, 1))
+        if street:
+            props["s"] = street.title()
+        if wash:
+            props["n"] = wash
+            c = per_wash.setdefault(wash, dict(open=0, culvert=0, grade=0))
+            c[short[kind]] += 1
+        if inv:
+            props["i"] = f"{inv}, {src}"
+        if assumed:
+            props["a"] = 1
+        feats.append(dict(type="Feature", properties=props,
+                          geometry=dict(type="Point", coordinates=[round(p.X, 5), round(p.Y, 5)])))
+        by_type[short[kind]] += 1
+        road = "highway or rail" if way in HIGHWAY else "major road" if way in MAJOR else "local street"
+        group = by_road.setdefault(road, dict(open=0, culvert=0, grade=0))
+        group[short[kind]] += 1
+    (web / "crossings.geojson").write_text(json.dumps(dict(type="FeatureCollection", features=feats),
+                                                      separators=(",", ":")))
+    return dict(total=len(feats), by_type=dict(by_type), by_road=by_road), per_wash
+
+
+def export(gdb, web, box):
+    fc = f"{gdb}/reaches"
+    extra = json.loads(EXTRA.read_text())
+    completeness, county_len, seen_totals = extra["completeness"], extra["county_len"], extra["sightings"]
     wgs = arcpy.SpatialReference(4326)
     fields = ["SHAPE@", "name", "kind", "rip_class", "county_share", "street_share", "rip_share",
               "canopy_pct", "drain_ha", "strahler", "bobcat", "flycatcher", "queen", "SHAPE@LENGTH"]
@@ -290,15 +364,18 @@ def export(fc, web, seen, completeness, box, county_len):
     washes = defaultdict(lambda: dict(m=0.0, can=0.0, rip=defaultdict(float), ripm=0.0, ha=0.0,
                                       bobcat=0, flycatcher=0, queen=0, county_m=0.0,
                                       box=[180, 90, -180, -90]))
-    tot = dict(wash_m=0.0, street_m=0.0, new_m=0.0, named_m=0.0, can=0.0, rip_m=0.0,
-               new_can=0.0, links=0)
+    tot = dict(wash_m=0.0, street_m=0.0, path_m=0.0, new_m=0.0, named_m=0.0, can=0.0, rip_m=0.0,
+               new_can=0.0, links=0, wash_links=0)
     with arcpy.da.SearchCursor(fc, fields) as cur:
         for (shape, name, kind, rc, cty, st, rs, can, ha, order, bob, fly, qn, length) in cur:
             can = can or 0.0
             tot["links"] += 1
             if kind == "street":
                 tot["street_m"] += length
+            elif kind == "path":
+                tot["path_m"] += length
             else:
+                tot["wash_links"] += 1
                 tot["wash_m"] += length
                 tot["can"] += can * length
                 tot["rip_m"] += (rs or 0) * length
@@ -309,7 +386,7 @@ def export(fc, web, seen, completeness, box, county_len):
                     tot["named_m"] += length
             geom = shape.generalize(1.5).projectAs(wgs)
             lines = [[[round(p.X, 5), round(p.Y, 5)] for p in part if p] for part in geom]
-            props = dict(ha=round(ha, 1), o=order, c=round(can), k=1 if kind == "street" else 0,
+            props = dict(ha=round(ha, 1), o=order, c=round(can), k={"wash": 0, "street": 1}.get(kind, 2),
                          cty=1 if (cty or 0) >= 0.5 else 0, km=round(length / 1000, 2))
             if name:
                 props["n"] = name
@@ -338,6 +415,7 @@ def export(fc, web, seen, completeness, box, county_len):
     web.mkdir(parents=True, exist_ok=True)
     (web / "channels.geojson").write_text(json.dumps(dict(type="FeatureCollection", features=feats),
                                                      separators=(",", ":")))
+    crossing_figures, crossings_by_wash = crossings_out(gdb, web, wgs)
     rows = []
     for name, w in sorted(washes.items()):
         if w["m"] < MIN_NAMED_KM * 1000:
@@ -349,6 +427,7 @@ def export(fc, web, seen, completeness, box, county_len):
             classes={k: round(100 * v / w["m"]) for k, v in sorted(w["rip"].items(), reverse=True)},
             drains_km2=round(w["ha"] / 100, 1),
             sightings=dict(bobcat=w["bobcat"], flycatcher=w["flycatcher"], queen=w["queen"]),
+            crossings=crossings_by_wash.get(name, dict(open=0, culvert=0, grade=0)),
             box=[round(v, 5) for v in w["box"]]))
     avg = tot["can"] / tot["wash_m"]
     longest = sorted((r["km"] for r in rows), reverse=True)[:5]
@@ -361,16 +440,21 @@ def export(fc, web, seen, completeness, box, county_len):
         built=time.strftime("%Y-%m-%d"),
         box=[round(wgs_box.XMin, 5), round(wgs_box.YMin, 5), round(wgs_box.XMax, 5), round(wgs_box.YMax, 5)],
         area_km2=round((box[2] - box[0]) * (box[3] - box[1]) / 1e6),
-        reaches=tot["links"],
+        reaches=tot["wash_links"], traced_reaches=tot["links"],
         wash_km=round(tot["wash_m"] / 1000), street_km=round(tot["street_m"] / 1000),
+        path_km=round(tot["path_m"] / 1000),
+        traced_km=round((tot["wash_m"] + tot["street_m"] + tot["path_m"]) / 1000),
         new_km=round(tot["new_m"] / 1000), named_km=round(tot["named_m"] / 1000),
         canopy_along_washes_pct=round(tot["can"] / tot["wash_m"], 1),
         canopy_along_new_pct=round(tot["new_can"] / max(tot["new_m"], 1), 1),
         canopy_study_area_pct=canopy_info.get("study_area_canopy_pct"),
         riparian_share_of_wash_length_pct=round(100 * tot["rip_m"] / tot["wash_m"]),
         county_found=completeness,
-        sightings={k: dict(placed_to_100m=v["used"], within_50m_of_a_wash=v["near"])
-                   for k, v in seen.items()},
+        sightings=seen_totals,
+        crossings=crossing_figures,
+        check=json.loads((WORK / "check" / "results.json").read_text())
+        if (WORK / "check" / "results.json").exists() else None,
+        wash_rule=WASH_RULE,
         canopy_rule=canopy_info, imagery_dates=naip.get("acquired"),
         settings=dict(min_area_ha=2, near_m=NEAR_M, near_big_m=sorted(set(NEAR_BIG_M.values())),
                       min_named_km=MIN_NAMED_KM, sight_m=SIGHT_M, rip_min=RIP_MIN,
@@ -383,6 +467,8 @@ def export(fc, web, seen, completeness, box, county_len):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag")
+    ap.add_argument("--export", action="store_true",
+                    help="only write the page data files from the geodatabase as it stands")
     a = ap.parse_args()
     arcpy.CheckOutExtension("Spatial")
     if a.tag:
@@ -392,7 +478,10 @@ def main():
         web = folder / "web"
     else:
         folder, gdb, box, web = WORK / "dem", WORK / "washes.gdb", BBOX, PROJECT / "data"
-    run(str(gdb), folder, box, web)
+    if a.export:
+        export(str(gdb), web, box)
+    else:
+        run(str(gdb), folder, box, web)
 
 
 if __name__ == "__main__":
