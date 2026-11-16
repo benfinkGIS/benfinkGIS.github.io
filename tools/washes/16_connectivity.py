@@ -8,6 +8,9 @@ For each species (the main runs):
                                        how many times the movement that uniform
                                        ground would carry
   tucson-washes/data/funnel_<species>.png normalized current by class, in Web Mercator
+For the three together:
+  tucson-washes/data/funnel_all.png      how many of the three animals' movement each
+                                         cell gathers (normalized current of 1.3 or more)
 
 The page shows normalized current, not current itself. Current piles up in
 the large blocks of open desert at the corners of the box, where there are
@@ -44,6 +47,8 @@ MAP_RGBA = [(0, 0, 0, 0), (140, 41, 129, 150), (222, 73, 104, 185), (254, 159, 1
 # (doi 10.1111/csp2.12698), read in a secondary source.
 FUNNEL_BREAKS = [0.7, 1.3, 1.7]
 FUNNEL_NAMES = ["impeded", "diffuse", "intensified", "channelled"]
+# The composite: cells that are intensified or channelled for one, two or all three animals.
+ALL_RGBA = [(0, 0, 0, 0), (140, 41, 129, 140), (254, 159, 109, 205), (252, 253, 191, 245)]
 NEAR_WASH_M = 30
 
 
@@ -161,6 +166,16 @@ def main():
         rid = np.unique(grid[cells])
         flow[sp] = {int(r): float(v) for r, v in zip(rid, ndimage.mean(norm, grid, rid))}
         msg(sp, json.dumps(info))
+    if len(done) == len(MAIN):
+        count = sum((classes(arrays[sp]["normalized"], FUNNEL_BREAKS) >= 2).astype("uint8") for sp in MAIN)
+        np.save(OUT / "arrays" / "count.npy", count)
+        summary["overlays"]["funnel_all"] = overlay(count, ALL_RGBA, "funnel_all")
+        wash = L["wash"] > 0
+        summary["all_three"] = dict(
+            share_of_area=[round(float((count == i).mean()), 4) for i in range(4)],
+            share_of_wash_cells=[round(float((count[wash] == i).mean()), 4) for i in range(4)],
+            two_or_more_near_wash=round(float(near_wash[count >= 2].mean()), 4))
+        msg("all three", json.dumps(summary["all_three"]))
     # how much the bobcat result depends on what the typed culverts really are
     if all(k in arrays for k in ("bobcat", "bobcat_closed", "bobcat_open")):
         lo, hi = arrays["bobcat_closed"]["normalized"], arrays["bobcat_open"]["normalized"]

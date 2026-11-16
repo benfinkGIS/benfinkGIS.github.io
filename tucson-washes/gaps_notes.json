@@ -1,0 +1,99 @@
+{
+  "_about": "Hand-written place, present state and recommended action for each gap the page lists, keyed by the candidate id from tools/washes/18_gaps.py. Written from the 2023 aerial photos and the county street and park layers; none of these places has been visited. 'short' is the place again in a line that fits the static map.",
+  "b4888858376": {
+    "where": "Interstate 10 between Twin Peaks Road and Avra Valley Road",
+    "short": "I-10 between Twin Peaks Road and Avra Valley Road",
+    "now": "Drainage culverts under the freeway and the railroad, in open desert beside the Santa Cruz River",
+    "action": "A wildlife underpass under the freeway, frontage road and railroad together, with fencing to lead animals to it"
+  },
+  "b4901658180": {
+    "where": "Hardy Wash at Interstate 10, 800 m south-east of Twin Peaks Road",
+    "short": "Hardy Wash at I-10, south-east of Twin Peaks Road",
+    "now": "Culverts under the freeway and the railroad, between a shopping centre and a gravel pit",
+    "action": "Enlarge the Hardy Wash culverts to a span an animal can walk through, and fence the approaches"
+  },
+  "b4930157875": {
+    "where": "Interstate 10, 900 m north-west of Ina Road",
+    "short": "I-10 north-west of Ina Road",
+    "now": "A culvert under the freeway and the railroad, with industrial yards on the west side",
+    "action": "Enlarge the culvert to a walk-through span; the yards on the west side limit what it would reach"
+  },
+  "b4917657993": {
+    "where": "Interstate 10, 350 m south-east of Cortaro Road",
+    "short": "I-10 south-east of Cortaro Road",
+    "now": "A culvert under the freeway, with a shopping centre on the west side",
+    "action": "Enlarge the culvert to a walk-through span; least promising of the freeway sites on the ground"
+  },
+  "b4955858696": {
+    "where": "Thornydale Road, 450 m south of Tangerine Road",
+    "short": "Thornydale Road south of Tangerine Road",
+    "now": "A two-lane road crossing the wash at grade, open desert on both sides",
+    "action": "A box culvert large enough to walk through when the road is next widened; until then the crossing is at road level"
+  },
+  "b5033158231": {
+    "where": "Oracle Road by James D. Kriegh Park, 1.3 km north of Hardy Road",
+    "short": "Oracle Road by James D. Kriegh Park",
+    "now": "A culvert under the state route, desert on one side and playing fields on the other",
+    "action": "Replace the culvert with a box large enough to walk through, with a dry floor"
+  },
+  "f4980858000": {
+    "where": "Cañada del Oro Wash between golf fairways, west of La Cholla Boulevard",
+    "short": "Cañada del Oro between fairways, west of La Cholla Boulevard",
+    "now": "Wide sandy bed with 13% tree canopy along it, fairways on both sides",
+    "action": "Plant native bank trees (mesquite, desert willow) along 870 m so the trees on the two sides become one strip"
+  },
+  "f4947858224": {
+    "where": "Unnamed wash through the golf course by Arthur Pack Regional Park",
+    "short": "Wash through the golf course by Arthur Pack Regional Park",
+    "now": "Desert wash between fairways and two ponds, 11% canopy",
+    "action": "Plant trees along 710 m of the wash, pond to pond"
+  },
+  "f4899858092": {
+    "where": "Side channel on the Santa Cruz floodplain, between Twin Peaks and Cortaro roads",
+    "short": "Santa Cruz side channel, Twin Peaks Road to Cortaro Road",
+    "now": "Bare floodplain between the river and a golf course, under 1% canopy",
+    "action": "Plant a line of trees along 960 m of the side channel, from the golf course to the river"
+  },
+  "f4976257102": {
+    "where": "Santa Cruz River between Sweetwater Wetlands and Silverbell Golf Course",
+    "short": "Santa Cruz, Sweetwater Wetlands to Silverbell Golf Course",
+    "now": "Banked river channel with 8% canopy along it",
+    "action": "Plant the bank tops along 1.3 km to join the wetland's trees to the golf course's"
+  },
+  "f4989858534": {
+    "where": "Unnamed wash east of La Cholla Boulevard, south of Naranja Drive",
+    "short": "Wash east of La Cholla Boulevard, south of Naranja Drive",
+    "now": "Short desert wash between houses and a fairway, 15% canopy",
+    "action": "Fill in trees along 290 m of wash"
+  },
+  "q5065457012": {
+    "where": "Christmas Wash north of Fort Lowell Road, west of Country Club Road",
+    "short": "Christmas Wash north of Fort Lowell Road",
+    "now": "The wash runs down residential streets for 580 m",
+    "action": "Curb-cut rain gardens along the streets, planted with native milkweeds and nectar plants"
+  },
+  "q5045458482": {
+    "where": "Unnamed wash through apartments off La Reserve Drive, east of Oracle Road",
+    "short": "Wash through apartments off La Reserve Drive",
+    "now": "240 m through parking courts",
+    "action": "A planted swale through the parking courts"
+  },
+  "q5013457616": {
+    "where": "Unnamed wash south of Orange Grove Road, between La Cañada Drive and Oracle Road",
+    "short": "Wash south of Orange Grove Road, west of Oracle Road",
+    "now": "No channel for 650 m, along the road and through a neighbourhood",
+    "action": "A roadside swale and yard-edge planting to carry the strip through"
+  },
+  "q5006058412": {
+    "where": "Unnamed wash by the shops at La Cañada Drive and Lambert Lane",
+    "short": "Wash by the shops at La Cañada Drive and Lambert Lane",
+    "now": "340 m across Lambert Lane and an apartment car park",
+    "action": "A planted strip along the car park edge, down to the wash"
+  },
+  "q4906058078": {
+    "where": "Unnamed wash across a residential street west of Interstate 10, north of Cortaro Road",
+    "short": "Wash across a street west of I-10, north of Cortaro Road",
+    "now": "150 m of street and house lots between two green strips",
+    "action": "Street-side planting to join the two strips"
+  }
+}

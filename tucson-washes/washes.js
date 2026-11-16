@@ -1,7 +1,8 @@
 /* Tucson Wash Field Guide: map, figures and table.
    Reads data/washes.json, data/channels.geojson and data/crossings.geojson
    (written by tools/washes/08_reaches.py --export), and the modelled-movement
-   overlays data/funnel_<species>.png (written by tools/washes/16_connectivity.py).
+   overlays data/funnel_<species>.png (written by tools/washes/16_connectivity.py), and the
+   ranked gaps data/gaps.json (written by tools/washes/18_gaps.py).
    MapLibre GL JS 4.7.1 is loaded by the page. */
 (function () {
   "use strict";
@@ -28,14 +29,20 @@
              ["D", "Class D xeroriparian (sparsest)", "--rip-d"]];
   var MODES = [["rip", "County riparian class"], ["canopy", "Tree canopy"], ["source", "Who has mapped it"]];
   var SHOW = [["small", "Small channels (under 20 ha)", "small"], ["cross", "Road crossings", "cross"],
-              ["path", "Flow paths with no channel", "path"], ["street", "Storm water in streets", "street"]];
+              ["path", "Flow paths with no channel", "path"], ["street", "Storm water in streets", "street"],
+              ["gaps", "Top gaps", "gaps"]];
   var XTYPE = { open: ["Open span", "open span", "--x-open"], culvert: ["Culvert", "culvert", "--x-culvert"],
                 grade: ["At-grade crossing", "at-grade", "--x-grade"] };
   var SPECIES = [["bobcat", "bobcat", "b"], ["flycatcher", "vermilion flycatcher", "f"], ["queen", "queen butterfly", "q"]];
   var SMALL_HA = 20;
-  var FLOW = [["off", "Off"], ["bobcat", "Bobcat"], ["flycatcher", "Vermilion flycatcher"], ["queen", "Queen butterfly"]];
+  var FLOW = [["off", "Off"], ["bobcat", "Bobcat"], ["flycatcher", "Vermilion flycatcher"], ["queen", "Queen butterfly"],
+              ["all", "All three"]];
+  var GAPKIND = { bobcat: "Bobcat: road crossings rebuilt as open spans",
+                  flycatcher: "Vermilion flycatcher: stretches of wash planted with trees",
+                  queen: "Queen butterfly: breaks in a wash planted as a strip" };
 
-  var d, map, popup, mode = "rip", on = { small: true, cross: false, path: false, street: false }, pick = null, sat = true, flow = "off";
+  var d, map, popup, mode = "rip", on = { small: true, cross: false, path: false, street: false, gaps: true }, pick = null, sat = true, flow = "off";
+  var gaps = null, gapPick = null, gapMarks = [];
   var sortKey = "km", sortDir = -1, byName = {};
 
   function setMsg(t) { $("sb-msg").textContent = t; }
@@ -48,11 +55,12 @@
     if (show !== null) { var want = show.split(","); SHOW.forEach(function (s) { on[s[0]] = want.indexOf(s[0]) >= 0; }); }
     if (q.get("wash")) pick = q.get("wash");
     if (FLOW.some(function (x) { return x[0] === q.get("flow"); })) flow = q.get("flow");
+    if (q.get("gap")) gapPick = q.get("gap");
   }
   function writeQuery() {
     var show = SHOW.filter(function (s) { return on[s[0]]; }).map(function (s) { return s[0]; }).join(",");
     var q = "?color=" + mode + "&show=" + show + (flow !== "off" ? "&flow=" + flow : "") +
-      (pick ? "&wash=" + encodeURIComponent(pick) : "");
+      (pick ? "&wash=" + encodeURIComponent(pick) : "") + (gapPick ? "&gap=" + gapPick : "");
     history.replaceState(null, "", location.pathname + q);
     document.querySelectorAll("a[data-carry]").forEach(function (a) { a.href = a.getAttribute("data-carry") + q; });
   }
@@ -225,6 +233,13 @@
     map.setFilter("pa", pathFilter());
     map.setLayoutProperty("pa", "visibility", on.path ? "visible" : "none");
     map.setLayoutProperty("xs", "visibility", on.cross ? "visible" : "none");
+    ["gp-case", "gp"].forEach(function (id) {
+      if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", on.gaps ? "visible" : "none");
+    });
+    gapMarks.forEach(function (m) {
+      m.getElement().style.display = on.gaps ? "" : "none";
+      m.getElement().setAttribute("aria-pressed", m.label === gapPick ? "true" : "false");
+    });
     showFlow();
     // With a movement overlay on, the wash lines step back so the overlay under them can be read.
     map.setPaintProperty("ch", "line-opacity", flow === "off" ? 1 : 0.4);
@@ -303,10 +318,15 @@
         } });
       map.addLayer({ id: "places", type: "raster", source: "places" });
       map.addLayer({ id: "roads", type: "raster", source: "roads", layout: { visibility: "none" } });
+      addGaps();
       applyFilters();
       setMsg("Loading channels…");
       map.on("sourcedata", function loaded(e) {
-        if (e.sourceId === "ch" && map.isSourceLoaded("ch")) { map.off("sourcedata", loaded); setMsg(ready()); if (pick) choose(pick, true); }
+        if (e.sourceId === "ch" && map.isSourceLoaded("ch")) {
+          map.off("sourcedata", loaded);
+          setMsg(ready());
+          if (gapPick) chooseGap(gapPick, true); else if (pick) choose(pick, true);
+        }
       });
     });
     var tier = null;
@@ -345,6 +365,25 @@
       map.setLayoutProperty("places", "visibility", sat ? "visible" : "none");
       map.setLayoutProperty("gray", "visibility", sat ? "none" : "visible");
       map.setLayoutProperty("roads", "visibility", sat ? "none" : "visible");
+    });
+  }
+  /* The listed gaps: the repaired stretch as a line, and a lettered tag to click. */
+  function addGaps() {
+    if (!gaps) return;
+    map.addSource("gp", { type: "geojson", data: { type: "FeatureCollection", features: gaps.gaps.filter(function (g) { return g.lines.length; })
+      .map(function (g) { return { type: "Feature", properties: {}, geometry: { type: "MultiLineString", coordinates: g.lines } }; }) } });
+    map.addLayer({ id: "gp-case", type: "line", source: "gp", layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": "#000", "line-width": ["interpolate", ["linear"], ["zoom"], 10, 5, 15, 11] } });
+    map.addLayer({ id: "gp", type: "line", source: "gp", layout: { "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": css("--gap"), "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2.5, 15, 7] } });
+    gaps.gaps.forEach(function (g) {
+      var b = el("button", "gapmark", g.label);
+      b.type = "button";
+      b.title = g.where;
+      b.addEventListener("click", function (e) { e.stopPropagation(); chooseGap(g.label, false); });
+      var m = new maplibregl.Marker({ element: b, anchor: "bottom", offset: [0, -4] }).setLngLat(g.at).addTo(map);
+      m.label = g.label;
+      gapMarks.push(m);
     });
   }
   function fail(text) { var m = $("map-error"); m.textContent = text; m.hidden = false; setMsg("Not loaded"); }
@@ -399,6 +438,100 @@
     if (popup) popup.remove();
     popup = new maplibregl.Popup({ maxWidth: "300px" }).setLngLat(f.geometry.coordinates).setDOMContent(box).addTo(map);
   }
+  function speciesName(id) { return SPECIES.filter(function (s) { return s[0] === id; })[0][1]; }
+  function showGap(g) {
+    var box = el("div"), ul = el("ul"), name = speciesName(g.species);
+    box.appendChild(el("strong", null, g.label + ". " + g.where));
+    box.appendChild(el("p", null, g.action));
+    line(ul, "There now: " + g.now);
+    line(ul, "Modelled " + name + " movement through it, as a multiple of what open ground would carry: " +
+      one(g.before) + " now, " + one(g.after) + " with the repair");
+    line(ul, "Added movement: " + g.index + " (the best " + name + " gap is 100); number " + g.rank + " of " + g.rank_of + " tried");
+    if (g.near_edge) line(ul, "Close to the edge of the map, where the model sees only part of the surroundings, so this is likely understated");
+    if (g.species !== "flycatcher") line(ul, "The " + name + " model scored no better than chance against sightings: this is what the chosen costs imply, not a tested result");
+    box.appendChild(ul);
+    if (popup) popup.remove();
+    popup = new maplibregl.Popup({ maxWidth: "300px", offset: 18 }).setLngLat(g.at).setDOMContent(box).addTo(map);
+    popup.on("close", function () { if (gapPick === g.label) { gapPick = null; render(); } });
+  }
+  function chooseGap(label, zoom) {
+    var g = gaps && gaps.gaps.filter(function (x) { return x.label === label; })[0];
+    if (!g) { gapPick = null; render(); return; }
+    gapPick = label;
+    on.gaps = true;
+    if (zoom) flow = g.species;
+    render();
+    if (!map) return;
+    if (zoom) {
+      map.fitBounds([[g.box[0], g.box[1]], [g.box[2], g.box[3]]], { padding: 90, maxZoom: 15.5 });
+      if (!FULL) $("map").scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+    showGap(g);
+  }
+  function renderGaps() {
+    var t = $("t-gaps");
+    t.textContent = "";
+    if (!gaps) return;
+    var head = el("tr"), thead = el("thead"), body = el("tbody");
+    [["Gap", ""], ["Where", ""], ["There now", ""], ["Repair", ""], ["Movement, now and with repair", "num"], ["Added", "num"]]
+      .forEach(function (c) { var th = el("th", c[1] || null, c[0]); th.scope = "col"; head.appendChild(th); });
+    thead.appendChild(head);
+    t.appendChild(thead);
+    SPECIES.forEach(function (s) {
+      var grp = el("tr", "grp"), th = el("th", null, GAPKIND[s[0]]);
+      th.colSpan = 6;
+      th.scope = "colgroup";
+      grp.appendChild(th);
+      body.appendChild(grp);
+      gaps.gaps.filter(function (g) { return g.species === s[0]; }).forEach(function (g) {
+        var tr = el("tr", g.label === gapPick ? "on" : null), first = el("td"), b = el("button", null, g.label);
+        b.type = "button";
+        b.addEventListener("click", function () { chooseGap(g.label, true); });
+        first.appendChild(b);
+        tr.appendChild(first);
+        tr.appendChild(el("td", null, g.where + (g.near_edge ? " (near the map edge)" : "")));
+        tr.appendChild(el("td", null, g.now));
+        tr.appendChild(el("td", null, g.action));
+        tr.appendChild(el("td", "num flowpair", one(g.before) + " → " + one(g.after)));
+        tr.appendChild(el("td", "num", g.index));
+        body.appendChild(tr);
+      });
+    });
+    t.appendChild(body);
+  }
+  function fillGaps() {
+    var a3 = d.flow && d.flow.all_three;
+    if (a3) {
+      fill("fl-two", pct(a3.share_of_area[2] + a3.share_of_area[3]));
+      fill("fl-three", (100 * a3.share_of_area[3]).toFixed(1) + "%");
+      fill("fl-two-near", pct(a3.two_or_more_near_wash));
+    }
+    if (!gaps) return;
+    var tried = gaps.tried, b = tried.bobcat || {};
+    var sum = function (o) { return Object.keys(o || {}).reduce(function (a, k) { return a + o[k]; }, 0); };
+    fill("gp-b-int", b.interstate || 0);
+    fill("gp-b-state", b["state route"] || 0);
+    fill("gp-b-major", b["major road"] || 0);
+    fill("gp-f-n", sum(tried.flycatcher));
+    fill("gp-q-n", sum(tried.queen));
+    fill("gp-all-n", sum(b) + sum(tried.flycatcher) + sum(tried.queen));
+    fill("gp-listed", gaps.gaps.length);
+    fill("gp-measure", gaps.measure_m);
+    fill("gp-apart", gaps.apart_m / 1000);
+    fill("gp-plant-m", gaps.plant_within_m);
+    fill("gp-plant-to", Math.round(gaps.plant_to * 100) + "%");
+    if (gaps.bobcat_best) {
+      fill("gp-b-state-idx", gaps.bobcat_best["state route"] + "%");
+      fill("gp-b-major-idx", gaps.bobcat_best["major road"] + "%");
+      fill("gp-b-near", gaps.bobcat_near_best);
+    }
+    var queens = gaps.gaps.filter(function (g) { return g.species === "queen"; });
+    if (queens.length) fill("gp-q-last", queens[queens.length - 1].index + "%");
+    if (gaps.fine_check) {
+      fill("gp-fine-n", gaps.fine_check.n);
+      fill("gp-fine-change", Math.round(gaps.fine_check.largest_change * 100) + "%");
+    }
+  }
   function crossTotal(w) { var c = w.crossings || {}; return (c.open || 0) + (c.culvert || 0) + (c.grade || 0); }
   function classMix(w) {
     var keys = Object.keys(w.classes).filter(function (k) { return w.classes[k] >= 5; });
@@ -427,11 +560,14 @@
       host.appendChild(key("ln", "--src-county", "On the county's wash layer"));
       host.appendChild(key("ln", "--src-new", "Traced from lidar only"));
     }
-    if (flow !== "off" && d.flow) {
-      var name = SPECIES.filter(function (s) { return s[0] === flow; })[0][1];
+    if (flow === "all" && d.flow) {
+      host.appendChild(key("ramp flow3", null, "Ground that gathers the modelled movement of one, two or all three animals"));
+    } else if (flow !== "off" && d.flow) {
+      var name = speciesName(flow);
       var b = d.flow.map_breaks;
       host.appendChild(key("ramp flow", null, "Modelled " + name + " movement gathered into a strip: " + b[0] + " to over " + b[b.length - 1] + " times what open ground would carry"));
     }
+    if (on.gaps && gaps) host.appendChild(key("gapkey", null, "Top gaps: B bobcat crossing, F flycatcher planting, Q queen butterfly link"));
     if (on.cross) Object.keys(XTYPE).forEach(function (k) { host.appendChild(key("dot " + k, XTYPE[k][2], XTYPE[k][0])); });
     if (on.path) host.appendChild(key("ln dotted", "--path", "Flow path with no channel"));
     if (on.street) host.appendChild(key("ln dashed", "--street", "Storm water running down a street"));
@@ -503,14 +639,17 @@
     renderSettings();
     renderLegend();
     renderTable();
+    renderGaps();
     if (map && map.getLayer("ch")) {
       map.setPaintProperty("ch", "line-color", colour());
       applyFilters();
     }
   }
 
-  function start(data) {
+  function start(data, gapData) {
     d = data;
+    gaps = gapData && gapData.gaps && gapData.gaps.length ? gapData : null;
+    if (!gaps) { on.gaps = false; SHOW = SHOW.filter(function (s) { return s[0] !== "gaps"; }); }
     d.washes.forEach(function (w) {
       byName[w.name] = w;
       var keys = Object.keys(w.classes);
@@ -522,13 +661,17 @@
     buildSettings();
     fillStatic();
     fillFlow();
+    fillGaps();
     renderLead();
     if (window.maplibregl) buildMap(); else fail("The map library did not load.");
     render();
   }
 
+  var gapsReady = fetch(BASE + "data/gaps.json")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; });
   fetch(BASE + "data/washes.json")
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(start)
+    .then(function (data) { return gapsReady.then(function (g) { start(data, g); }); })
     .catch(function () { fail("The wash data did not load. Try reloading the page."); });
 })();

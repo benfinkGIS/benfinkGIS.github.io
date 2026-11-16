@@ -16,6 +16,7 @@
   /* road crossings: told apart by fill and ring, not by hue alone */
   --x-open: #ffffff; --x-culvert: #ff3df2; --x-grade: #111111;
   --pick: #ffff00;
+  --gap: #00e5ff;
 }
 
 .washviz #map { height: 620px; }
@@ -56,7 +57,30 @@
 .legend .ramp.flow {
   background: linear-gradient(90deg, #8c2981 0 25%, #de4968 25% 50%, #fe9f6d 50% 75%, #fcfdbf 75%);
 }
+.legend .ramp.flow3 {
+  background: linear-gradient(90deg, #8c2981 0 33%, #fe9f6d 33% 67%, #fcfdbf 67%);
+}
+.legend .gapkey { width: 22px; height: 8px; flex: none; background: var(--gap); border: 2px solid #000; }
 .legend .wide { font-style: italic; }
+
+/* a listed gap: a lettered tag over the repaired stretch */
+.washviz .gapmark {
+  font: bold 11px/1 Tahoma, Verdana, sans-serif; color: #000; background: #ffffe1;
+  border: 2px solid #000; padding: 2px 4px; cursor: pointer; box-shadow: 1px 1px 0 rgba(0, 0, 0, .6);
+}
+.washviz .gapmark[aria-pressed="true"] { background: var(--gap); }
+.washviz .gapmark:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
+.groupbox .toolbar button .sw.gaps { background: #00e5ff; border: 1px solid #000; }
+
+#t-gaps td button { font: inherit; font-weight: bold; color: var(--link); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
+#t-gaps tr.on td { background: #ffffe1; }
+#t-gaps tr.grp th { text-align: left; background: #d4d0c8; }
+#t-gaps td { vertical-align: top; }
+#t-gaps td.flowpair { white-space: nowrap; }
+#t-gaps td:nth-child(2), #t-gaps td:nth-child(3), #t-gaps td:nth-child(4) { min-width: 150px; }
+.hero-map { margin: 0 0 12px; }
+.hero-map img { display: block; width: 100%; height: auto; border: 1px solid #000; }
+.hero-map figcaption { font-size: 12px; margin-top: 4px; }
 
 .groupbox .toolbar button .sw.small { height: 0; border: 0; border-top: 2px solid #000; vertical-align: 3px; }
 .groupbox .toolbar button .sw.path { height: 0; border: 0; border-top: 3px dotted #7a5cc7; vertical-align: 3px; }

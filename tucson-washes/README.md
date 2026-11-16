@@ -11,12 +11,12 @@ outline. Project 1 is `tucson-canopy/`.
 
 ## Where it stands (15 November 2026)
 
-Stages 1 to 3 are built. The page at `/tucson-washes/` (with `/map/` and a
+All four stages are built. The page at `/tucson-washes/` (with `/map/` and a
 home page entry) shows the wash network, its attributes and the road
-crossings, reports a hand check of all three, and carries a movement model
-for the three species with a check against sightings. Stages 1 and 2 were
-published on 14 and 15 November; the stage 3 version of the page is built and
-checked locally. Stage 4 (gaps) is not started.
+crossings, reports a hand check of all three, carries a movement model for
+the three species with a check against sightings, and ranks the gaps where a
+repair would add the most movement. Stages 1 to 3 were published on 14 and
+15 November; the stage 4 version of the page is built and checked locally.
 
 ### Results
 
@@ -32,6 +32,8 @@ checked locally. Stage 4 (gaps) is not started.
 | Tree canopy within 10 m of a wash | 16.7%, against 11.0% across the study area |
 | Wash length inside mapped riparian habitat | 38% |
 | Road crossings on washes | 2,637: 102 open spans, 996 culverts, 1,539 at-grade |
+| Candidate gaps rerun with a repair | 99; fifteen listed, five for each animal |
+| Candidate gaps rerun with a repair | 99; fifteen listed, five for each animal |
 | Movement model checked against sightings (0.5 is chance) | Flycatcher 0.68 (0.63 to 0.73); bobcat 0.50 (0.45 to 0.55); queen 0.50 (0.45 to 0.54) |
 
 ### The hand check (14 and 15 November 2026)
@@ -266,6 +268,153 @@ The page reports these three scores as they are.
 - The bobcat collar study's ground lies mostly south and west of the box; its
   findings set the costs but its locations were not used.
 
+### Stage 4: gaps (15 November 2026)
+
+The question is the outline's step 7: where would one repair add the most
+movement? It is answered by making the repair in the model and running it
+again, 99 times.
+
+#### Candidates (`18_gaps.py --shortlist`)
+
+Each animal is stopped by different things, so each has its own kind of gap.
+A repair changes that animal's resistance surface in a few cells and leaves
+its habitat (source) surface alone.
+
+| Animal | Gap | Repair in the model | Candidates |
+| --- | --- | --- | --- |
+| Bobcat | A wash meeting the Interstate 10 corridor: freeway, ramps, frontage roads and railroad crossings within 250 m of each other are one place | A straight strip 30 m wide across the whole corridor, square to the freeway, at the cost of an open span (2) | 16, every one not already under an inventoried river bridge |
+| Bobcat | A wash crossing a state route (Oracle Road) that is not an open span | The cells within 25 m of the crossing at the cost of an open span | 13, every one |
+| Bobcat | A wash of 20 ha or more crossing a major road, not an open span | The same | 20, the best by first guess, 300 m apart |
+| Vermilion flycatcher | A stretch of wash, 200 to 800 m, with little perch cover | Canopy raised to 30% within 20 m of the line, which takes the perch term of the resistance to zero | 25, the best by first guess, 500 m apart |
+| Queen butterfly | A run of street flow or unchannelled flow path, 50 to 800 m, with wash at both ends | The cells within 10 m of the line at the cost of a wash (1) | 25, the best by first guess, 400 m apart |
+
+The first guess is the flow potential on the repair's cells (what uniform
+ground would carry) times the share of the resistance the repair removes.
+It only decides which candidates are run; the ranking comes from the reruns.
+
+Lined channels, which the outline lists as a kind of gap, are not here: bed
+material could not be mapped reach by reach (stage 2).
+
+#### Reruns (`18_gaps.py --run`, `julia/gaps.jl`)
+
+A repair can only change the moving windows that contain a repaired cell,
+and each of those windows reaches one radius further. So each candidate is
+run on a cut-out reaching two radii beyond it, once as the ground is and
+once repaired, and only on the windows centred within one radius of it.
+`gaps.jl` adds a method to Omniscape's `get_targets` that drops the other
+windows. The difference between the two runs is then the same as the
+difference between two runs of the whole grid.
+
+That was tested on one candidate of each kind by also running every window
+on the cut-out: the largest difference in any cell was 4 billionths of a
+unit of current, against changes of up to 2,409 units. A bobcat candidate
+took about 50 seconds for the pair of runs, a flycatcher or queen candidate
+about 15, on 30 threads; the full bobcat grid takes 50 minutes once.
+
+Bobcat reruns step the window 51 cells at a time, as its
+culvert runs do, instead of 25. 7 bobcat candidates (ranks 1, 2, 3, 5, 7, 9, 13) were rerun at the main run's step of 25 cells. The added movement changed by at most 6% and the order did not change.
+
+#### Measure (`18_gaps.py --score`)
+
+Added movement is the change in current summed over the repair and the
+ground within 50 m of it, divided by the repair's length along
+the wash, in units of the study area's mean current per cell. Counting the
+50 m either side cancels movement that only steps sideways onto
+the repaired strip. "Movement now" and "with repair" are normalized current
+on the repair's own cells (current over flow potential; flow potential does
+not change with the repair).
+
+Spread of added movement by kind:
+
+| Animal | Kind of gap | Tried | Best | Median | Worst |
+| --- | --- | --- | --- | --- | --- |
+| Bobcat | interstate | 16 | 228.3 | 39.8 | 2.7 |
+| Bobcat | major road | 20 | 19.7 | 12.6 | 5.4 |
+| Bobcat | state route | 13 | 17.7 | 2.9 | 0.0 |
+| Vermilion flycatcher | planting | 25 | 92.6 | 37.0 | 5.7 |
+| Queen butterfly | link | 25 | 9.8 | 6.6 | 3.6 |
+
+#### The listed gaps
+
+The best five for each animal with no two closer than
+1.5 km. "Added" is relative to that animal's best gap
+(100). Place, present state and repair are hand-written in
+`gaps_notes.json` from the 2023 photos and the county street and park
+layers. Nobody has visited these places.
+
+| Gap | Where | There now | Repair | Movement now | With repair | Added | Rank of those tried |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| B1 | Interstate 10 between Twin Peaks Road and Avra Valley Road (near the map edge) | Drainage culverts under the freeway and the railroad, in open desert beside the Santa Cruz River | A wildlife underpass under the freeway, frontage road and railroad together, with fencing to lead animals to it | 0.8 | 20.5 | 100 | 1 of 49 |
+| B2 | Hardy Wash at Interstate 10, 800 m south-east of Twin Peaks Road | Culverts under the freeway and the railroad, between a shopping centre and a gravel pit | Enlarge the Hardy Wash culverts to a span an animal can walk through, and fence the approaches | 1.0 | 21.1 | 52 | 5 of 49 |
+| B3 | Interstate 10, 900 m north-west of Ina Road | A culvert under the freeway and the railroad, with industrial yards on the west side | Enlarge the culvert to a walk-through span; the yards on the west side limit what it would reach | 0.9 | 12.8 | 22 | 7 of 49 |
+| B4 | Interstate 10, 350 m south-east of Cortaro Road | A culvert under the freeway, with a shopping centre on the west side | Enlarge the culvert to a walk-through span; least promising of the freeway sites on the ground | 1.0 | 14.6 | 17 | 9 of 49 |
+| B5 | Thornydale Road, 450 m south of Tangerine Road (near the map edge) | A two-lane road crossing the wash at grade, open desert on both sides | A box culvert large enough to walk through when the road is next widened; until then the crossing is at road level | 0.9 | 2.2 | 9 | 12 of 49 |
+| F1 | Cañada del Oro Wash between golf fairways, west of La Cholla Boulevard | Wide sandy bed with 13% tree canopy along it, fairways on both sides | Plant native bank trees (mesquite, desert willow) along 870 m so the trees on the two sides become one strip | 1.3 | 1.9 | 100 | 1 of 25 |
+| F2 | Unnamed wash through the golf course by Arthur Pack Regional Park | Desert wash between fairways and two ponds, 11% canopy | Plant trees along 710 m of the wash, pond to pond | 1.2 | 1.9 | 84 | 2 of 25 |
+| F3 | Side channel on the Santa Cruz floodplain, between Twin Peaks and Cortaro roads | Bare floodplain between the river and a golf course, under 1% canopy | Plant a line of trees along 960 m of the side channel, from the golf course to the river | 0.9 | 2.2 | 72 | 8 of 25 |
+| F4 | Santa Cruz River between Sweetwater Wetlands and Silverbell Golf Course | Banked river channel with 8% canopy along it | Plant the bank tops along 1.3 km to join the wetland's trees to the golf course's | 1.3 | 2.1 | 56 | 11 of 25 |
+| F5 | Unnamed wash east of La Cholla Boulevard, south of Naranja Drive | Short desert wash between houses and a fairway, 15% canopy | Fill in trees along 290 m of wash | 1.2 | 2.1 | 41 | 12 of 25 |
+| Q1 | Christmas Wash north of Fort Lowell Road, west of Country Club Road | The wash runs down residential streets for 580 m | Curb-cut rain gardens along the streets, planted with native milkweeds and nectar plants | 1.0 | 4.0 | 100 | 1 of 25 |
+| Q2 | Unnamed wash through apartments off La Reserve Drive, east of Oracle Road | 240 m through parking courts | A planted swale through the parking courts | 0.9 | 3.0 | 85 | 2 of 25 |
+| Q3 | Unnamed wash south of Orange Grove Road, between La Cañada Drive and Oracle Road | No channel for 650 m, along the road and through a neighbourhood | A roadside swale and yard-edge planting to carry the strip through | 0.9 | 3.2 | 84 | 3 of 25 |
+| Q4 | Unnamed wash by the shops at La Cañada Drive and Lambert Lane | 340 m across Lambert Lane and an apartment car park | A planted strip along the car park edge, down to the wash | 0.7 | 2.5 | 82 | 4 of 25 |
+| Q5 | Unnamed wash across a residential street west of Interstate 10, north of Cortaro Road | 150 m of street and house lots between two green strips | Street-side planting to join the two strips | 0.8 | 2.6 | 80 | 5 of 25 |
+
+What it says:
+
+- **Bobcat.** 5 of the six best candidates are
+  within 3 km of B1 on Interstate 10, from Avra Valley Road to just past
+  Twin Peaks Road; the spacing rule lists them as B1 and B2. Opening a culvert there takes it from about
+  the movement of open ground to about twenty times that, because the
+  freeway is otherwise closed between the river bridges. The best Oracle
+  Road crossing adds 8% as much as B1 and the best
+  major-road crossing 9%: by the collar study's
+  findings those roads slow bobcats and do not stop them, and the costs
+  follow that.
+- **Independent support for B1.** Arizona Sonoran News (17 April 2025,
+  https://arizonasonorannews.com/?p=40156, first published by Arizona
+  Luminaria) reports an Arizona Game and Fish biologist describing the
+  stretch between Twin Peaks Road and West Avra Valley Road as one of the
+  few places along I-10 where wildlife can cross, an existing underpass
+  there, and Pima County's Santa Cruz River Wildlife Ramp beside El Rio
+  Preserve, then expected to be finished by June 2025. Tucson Spotlight
+  (21 April 2025, https://www.tucsonspotlight.org/rta-budget-cut/) mentions
+  the same abandoned underpass. Neither is in the model: it has open spans
+  only at inventoried bridges over water. A site visit should start at that
+  underpass. Whether the ramp was finished was not confirmed.
+- **Flycatcher.** The gaps are washes that pass between golf courses, parks
+  and ponds with few trees of their own. This is the only list resting on a
+  model the sightings support.
+- **Queen.** Every listed gap is a wash that was built over and now runs
+  down a street or through a car park. The gains are close together, so the
+  order means little.
+
+#### The static map (`19_hero_map.py`)
+
+`downloads/wash_corridors_gaps.png` (3840 x 2160) and a 1600-pixel JPEG for
+the page: the 2023 imagery in grey, ground that is intensified or channelled
+for one, two or all three animals (`data/funnel_all.png` on the web map,
+"All three"), the freeway and Oracle Road, and the fifteen gaps with the
+list beside them. Tag positions that collide are moved by hand in `NUDGE`.
+
+#### Limits
+
+- The sighting check carries over: only the flycatcher model beat chance, so
+  the bobcat and queen lists show what the chosen costs imply.
+- Omniscape injects a fixed current, so a repair shows up as movement drawn
+  to the gap from somewhere harder. A gap that is already the only way
+  through gains little by this measure even where opening it would help.
+- Only resistance changes. Planting that would itself become habitat (a
+  source) is undercounted, most of all for the queen.
+- One repair at a time. Two repairs on the same wash may be worth more or
+  less together than their sum; combinations were not run.
+- Candidates within one window radius of the edge of the box are understated
+  (marked in the table).
+- The queen's washes cost 1 whatever grows in them, so a bare wash is not a
+  gap for it. Only missing stretches can register.
+- No costs, ownership, flood engineering or feasibility. The list is a
+  shortlist for a site visit.
+
 ### Things that came up while building it
 
 - Saving the flow accumulation raster in place failed on the full area
@@ -385,9 +534,11 @@ Two things the first look showed about the records:
 8. **Sightings on the public map.** Many bobcat records are in people's
    yards. The map shows counts per wash reach and leaves the dots out.
 9. **Gap ranking.** "Connectivity gain if fixed" means re-running the model
-   with each candidate gap repaired. That is practical for 10 to 20
-   candidates per species on a 10 m grid, so candidates are shortlisted
-   first from pinch points, lined reaches and poor crossings.
+   with each candidate gap repaired. A repair can only change the moving
+   windows that contain it, so each rerun covers a cut-out around the gap and
+   takes seconds to a minute, not the whole grid; 99 candidates were run.
+   Lined reaches are not among them: bed material could not be mapped
+   (stage 2), so there is no list of lined reaches to repair.
 10. **Field guide blurbs.** 94 named washes is a lot of pop-ups to write
     well. The first release writes up the 20 or so that matter most as
     corridors; the rest get their figures without a blurb.
@@ -430,6 +581,8 @@ raster work will run in ArcGIS Pro's Python, as in Project 1.
 | 8d | `16_connectivity.py` | propy | Reads the runs back, writes `data/funnel_<species>.png` for the map, the mean normalized current along each wash reach (`flow_<species>` on `reaches`) and `work/connectivity/summary.json` |
 | 8e | `17_validate.py` | py | Scores each current map against sightings, corrected for observer effort; writes `work/connectivity/validation.json` |
 | 9 | `08_reaches.py --export` | propy | Writes `data/channels.geojson`, `data/crossings.geojson` and `data/washes.json` for the page |
+| 10 | `18_gaps.py` + `julia/gaps.jl` | propy + Julia | `--shortlist` picks candidate gaps, `--run` reruns Omniscape around each with and without its repair, `--score` ranks them and writes `data/gaps.json`. Place names and actions for the listed gaps are hand-written in `gaps_notes.json` |
+| 11 | `19_hero_map.py` | py | The static 16:9 map with the gap list, `downloads/wash_corridors_gaps.jpg` and a 1600-pixel copy |
 
 `propy` is ArcGIS Pro's Python:
 
@@ -438,8 +591,10 @@ raster work will run in ArcGIS Pro's Python, as in Project 1.
 Run order after a change to `rules.json`: 08, 09, 10, then 14 with
 `--layers`, 15, 16, 17 and 08 with `--export` (08 rebuilds `reaches`, which
 drops the `flow_` fields until 16 is run again). After a change to
-`resistance.json` only: 14, 15, 16, 17, 08 with `--export`. Steps 11 and 12
-are the one-off hand check; do not redraw the sample.
+`resistance.json` only: 14, 15, 16, 17, 08 with `--export`, then 18 (all three
+flags) and 19. Steps 11 and 12 are the one-off hand check; do not redraw the
+sample. If the listed gaps change, their ids change with them: add notes for
+the new ids to `gaps_notes.json` and run 18 with `--score` again.
 
 Julia is a portable install (1.10.13, unzipped under
 `%LOCALAPPDATA%\Programs\Julia`); `15_omniscape.py` finds it there, or set
@@ -448,7 +603,7 @@ threads: bobcat 50 minutes, queen 29, flycatcher 3.5, each culvert variant 13.
 Omniscape must run in double precision here; single fails the solver's
 accuracy check.
 
-Still to build: gap shortlist, repair runs and ranking (stage 4).
+All four stages are built.
 
 ### Geodatabase (`work/washes.gdb`)
 
