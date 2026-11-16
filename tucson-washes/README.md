@@ -32,7 +32,7 @@ checked locally. Stage 4 (gaps) is not started.
 | Tree canopy within 10 m of a wash | 16.7%, against 11.0% across the study area |
 | Wash length inside mapped riparian habitat | 38% |
 | Road crossings on washes | 2,637: 102 open spans, 996 culverts, 1,539 at-grade |
-| Movement model checked against sightings (0.5 is chance) | Flycatcher 0.68 (0.63 to 0.73); bobcat 0.50 (0.45 to 0.55); queen 0.50 (0.46 to 0.54) |
+| Movement model checked against sightings (0.5 is chance) | Flycatcher 0.68 (0.63 to 0.73); bobcat 0.50 (0.45 to 0.55); queen 0.50 (0.45 to 0.54) |
 
 ### The hand check (14 and 15 November 2026)
 
