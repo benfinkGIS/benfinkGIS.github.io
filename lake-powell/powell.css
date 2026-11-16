@@ -1,0 +1,60 @@
+/* Lake Powell year slider. Loaded after /assets/style.css, which supplies the
+   windows, toolbar buttons, status bar and notes. */
+
+/* this page is wider than the rest of the site so the picture has room */
+.powellviz .page { max-width: 1240px; }
+
+.powellviz .scene { position: relative; width: 100%; background: #0d0e10; overflow: hidden; }
+.powellviz .scene img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+
+/* the year and its numbers, as the classic pale-yellow tooltip */
+.powellviz .readout {
+  position: absolute; left: 10px; top: 10px;
+  padding: 6px 10px 7px;
+  background: #ffffe1; color: #000;
+  border: 1px solid #000;
+  font: 13px/1.45 Tahoma, Verdana, sans-serif;
+  max-width: calc(100% - 20px);
+}
+.powellviz .readout .yr { display: block; font-size: 30px; line-height: 1.1; font-weight: bold; font-variant-numeric: tabular-nums; }
+.powellviz .readout .big { font-weight: bold; }
+.powellviz .readout span { display: block; }
+/* on a phone the box would hide half the picture, so it sits underneath instead */
+@media (max-width: 700px) {
+  .powellviz .readout { position: static; max-width: none; border-width: 1px 0 0; padding: 5px 8px 6px; }
+  .powellviz .readout .yr { font-size: 24px; }
+}
+
+/* full-page viewer: the picture takes whatever height the window has left, shown whole */
+.powellviz.fullmap .scene { flex: 1 1 auto; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+.powellviz.fullmap .scene img { flex: 1 1 0; min-height: 0; height: auto; aspect-ratio: auto; object-fit: contain; }
+.powellviz.fullmap .scene .readout { flex: none; }
+.powellviz.fullmap .viewer > .map-canvas { background: #0d0e10; min-height: 200px; }
+
+.powellviz .toolbar { align-items: center; }
+.powellviz .yearrow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; padding: 2px 4px 6px; font-size: 13px; }
+.powellviz .yearrow .track { flex: 1 1 260px; display: flex; align-items: center; gap: 6px; min-width: 0; }
+.powellviz .yearrow input[type="range"] { flex: 1 1 auto; min-width: 60px; accent-color: var(--navy); }
+.powellviz .yearrow .ends { color: var(--dk); font-size: 12px; font-variant-numeric: tabular-nums; }
+.powellviz .statusbar { flex-wrap: wrap; }
+.powellviz .statusbar span { flex: 1 1 auto; }
+
+/* the level chart under the picture; it also works as a second slider */
+.powellviz .chart {
+  background: #fff;
+  border: 2px solid;
+  border-color: var(--lo) var(--hi) var(--hi) var(--lo);
+  margin: 0 0 4px;
+  touch-action: pan-y;
+  cursor: ew-resize;
+}
+.powellviz .chart svg { display: block; width: 100%; height: auto; }
+/* a white edge keeps the lettering readable where a line crosses it */
+.powellviz .chart text { font: 11px Tahoma, Verdana, sans-serif; fill: #404040; paint-order: stroke; stroke: #fff; stroke-width: 3px; }
+.powellviz .chart .ref { stroke: #808080; stroke-width: 1; stroke-dasharray: 4 3; }
+.powellviz .chart .grid { stroke: #e4e4e4; stroke-width: 1; }
+.powellviz .chart .range { fill: #b7d3f6; }
+.powellviz .chart .avg { fill: none; stroke: #000080; stroke-width: 2; stroke-linejoin: round; }
+.powellviz .chart .cursor { stroke: #000; stroke-width: 1; }
+.powellviz .chart .dot { fill: #000080; stroke: #fff; stroke-width: 2; }
+.powellviz .chart .now { fill: #000; font-weight: bold; }

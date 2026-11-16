@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lake Powell, Year by Year | Fink Geospatial</title>
+  <meta name="description" content="A 3D model of Lake Powell with a slider for every year since 1964. The water sits at each year's real level, and the pale ground shows how far it has dropped below full.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lake Powell, Year by Year | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/lake-powell/">
+  <meta property="og:image" content="https://finkgeo.com/lake-powell/frames/2026.jpg">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/lake-powell/powell.css">
+</head>
+<body class="powellviz">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="page">
+    <header class="banner">
+      <picture>
+        <source srcset="/assets/globe.svg" media="(prefers-reduced-motion: reduce)">
+        <img src="/assets/globe.gif" alt="" width="64" height="64">
+      </picture>
+      <div>
+        <p class="logo"><a href="/">Fink Geospatial</a></p>
+        <p class="tagline">GIS Portfolio &bull; Personal Projects &bull; Sandbox</p>
+      </div>
+    </header>
+
+    <div class="ticker" role="note">
+      <p>*** Lake Powell, year by year *** Drag the slider from 1964 to today *** The pale ground is what the water used to cover ***</p>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="win" aria-label="Site contents">
+          <div class="titlebar">
+            <img src="/assets/globe.svg" alt="" width="16" height="16">
+            <span class="t">Contents</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body tight">
+            <ul class="layers">
+              <li><a href="/">Home</a></li>
+              <li><a href="/#projects" aria-current="true">Projects</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </aside>
+
+      <main id="main">
+        <section class="win">
+          <div class="titlebar">
+            <img src="/assets/folder.svg" alt="" width="16" height="16">
+            <span class="t">Project: Lake Powell, Year by Year</span>
+            <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+          </div>
+          <div class="win-body">
+            <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; Lake Powell, Year by Year</p>
+            <h1>Lake Powell, Year by Year</h1>
+
+            <p>Lake Powell began filling behind Glen Canyon Dam in 1963 and took seventeen years to fill. It first reached full pool, 3,700 feet above sea level, in June 1980. Since 2000 it has mostly gone down.</p>
+            <p>This is a 3D model of the lower end of the lake, looking up-lake from above the dam. Drag the slider and the water moves to that year&rsquo;s average level. The pale ground is the &ldquo;bathtub ring&rdquo;: land that is under water when the lake is full and was dry that year.</p>
+            <noscript><div class="note"><p>The slider needs JavaScript. Without it this page shows the latest year only.</p></div></noscript>
+
+            <div class="viewer">
+              <div class="titlebar">
+                <img src="/assets/globe.svg" alt="" width="16" height="16">
+                <span class="t">Lake Powell Water Level</span>
+                <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+              </div>
+              <div class="toolbar">
+                <button type="button" id="play" aria-pressed="false">Play</button>
+                <button type="button" id="prev" aria-label="Previous year">&laquo; Year</button>
+                <button type="button" id="next" aria-label="Next year">Year &raquo;</button>
+                <button type="button" id="go-full">Fullest Year (1983)</button>
+                <button type="button" id="go-now">Latest Year</button>
+                <a class="tb-link" href="/lake-powell/viewer/" data-carry="/lake-powell/viewer/">Full-Page Viewer &raquo;</a>
+              </div>
+              <div class="yearrow">
+                <label for="year">Year</label>
+                <span class="track">
+                  <span class="ends" id="end-first">1964</span>
+                  <input type="range" id="year" min="1964" max="2026" step="1" value="2026">
+                  <span class="ends" id="end-last">2026</span>
+                </span>
+              </div>
+              <div class="map-canvas">
+                <div class="scene">
+                  <img id="frame" src="/lake-powell/frames/2026.jpg" alt="Rendered view of the lower end of Lake Powell at its latest level." width="1600" height="900">
+                  <div class="readout" aria-live="polite">
+                    <span class="yr" id="r-year">&nbsp;</span>
+                    <span class="big" id="r-below">&nbsp;</span>
+                    <span id="r-level">&nbsp;</span>
+                    <span id="r-cap">&nbsp;</span>
+                  </div>
+                </div>
+                <p id="scene-error" class="map-error" role="alert" hidden></p>
+              </div>
+              <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-range">&nbsp;</span></div>
+            </div>
+            <p class="cap">Looking north-east from above Glen Canyon Dam, which is at the bottom of the picture. Wahweap Bay is the broad water on the left. Heights are stretched 2.5 times so the canyon walls show.</p>
+
+            <h2 class="sec">The level each year</h2>
+            <div class="chart" id="chart" role="img" aria-label="Line chart of Lake Powell's average water level each year from 1964, with the yearly high and low as a band. It rises to full pool by 1980, dips in the early 1990s, recovers by the late 1990s, then falls from 2000.">
+              <svg id="chart-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+            <p class="cap">The line is each year&rsquo;s average level in feet above sea level. The band runs from that year&rsquo;s lowest day to its highest. Drag across the chart to move the year.</p>
+
+            <hr>
+            <h2 class="sec">What this does and does not show</h2>
+            <ul class="notes">
+              <li><strong>One level per year.</strong> Each picture uses the average of that year&rsquo;s daily readings. The lake also rises each spring and falls through autumn and winter, by 20 to 35 feet in a typical year. The status bar under the picture gives the year&rsquo;s high and low.</li>
+              <li><strong>The lake bed is today&rsquo;s.</strong> The underwater ground was surveyed in 2017 and 2018. Sediment has been building up since 1963, most of it at the upper ends of the lake, so pictures of early years flood today&rsquo;s lake bed, not the canyon as it was.</li>
+              <li><strong>The colours are not a photograph.</strong> The ground is coloured by height and steepness. The pale ring is drawn wherever the ground lies between that year&rsquo;s water and the full pool line.</li>
+              <li><strong>Recent readings are provisional.</strong> The Bureau of Reclamation revises its latest figures, and the latest year is a year to date.</li>
+              <li><strong>Capacity is measured against today&rsquo;s lake.</strong> &ldquo;Usable capacity&rdquo; is water above dead pool (3,370 feet, below which the dam cannot release water) as a share of the same at full pool, from the 2018 survey.</li>
+            </ul>
+
+            <hr>
+            <h2 class="sec">Data sources and methods</h2>
+            <ul class="notes">
+              <li><strong>Water levels:</strong> daily elevations from the Bureau of Reclamation, Upper Colorado Region, from 28 December 1963, the first day on record.</li>
+              <li><strong>Lake bed and shore:</strong> the U.S. Geological Survey&rsquo;s one-metre model of Lake Powell (Jones and Root, 2021), which joins a 2017 sonar survey of the bottom to 2018 lidar of the shore.</li>
+              <li><strong>Surrounding country:</strong> USGS 3D Elevation Program, 10 m cells. The model covers 139 km by 139 km at 30 m cells.</li>
+              <li><strong>Matching the two:</strong> Reclamation measures from an older sea-level reference (NGVD29) than the terrain uses (NAVD88). The levels are raised 2.913 feet to match, the figure the USGS and Reclamation both use at the dam.</li>
+              <li><strong>Check:</strong> flooding the model to full pool covers 640 km&sup2;; the USGS figure for the same survey is 645 km&sup2;. Landsat satellite images from 4 July 1984 and 11 April 2023 put the shoreline within 2 and 5 feet of the level Reclamation recorded on those days.</li>
+              <li><strong>Pictures:</strong> rendered in Blender, one per year, with the sun in the south-west.</li>
+            </ul>
+
+            <hr>
+            <p>Questions or corrections? <a href="/#contact">Get in touch</a>.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="win footer">
+      <div class="badges">
+        <span class="badge b1">ANY<br>BROWSER</span>
+        <span class="badge b2">NO<br>COOKIES</span>
+        <span class="badge b3">PLAIN<br>HTML</span>
+      </div>
+      <p>&copy; 2026 Fink Geospatial &bull; Last updated: 15 November 2026</p>
+    </footer>
+  </div>
+
+  <script src="/lake-powell/powell.js"></script>
+</body>
+</html>

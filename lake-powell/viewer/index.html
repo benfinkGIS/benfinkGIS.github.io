@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lake Powell, Year by Year: Full-Page Viewer | Fink Geospatial</title>
+  <meta name="description" content="The Lake Powell year slider at full size: a 3D model of the lake with the water at each year's real level since 1964.">
+  <meta name="theme-color" content="#008080">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lake Powell, Year by Year: Full-Page Viewer | Fink Geospatial">
+  <meta property="og:url" content="https://finkgeo.com/lake-powell/viewer/">
+  <meta property="og:image" content="https://finkgeo.com/lake-powell/frames/2026.jpg">
+  <link rel="canonical" href="https://finkgeo.com/lake-powell/">
+  <link rel="icon" href="/assets/globe.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/lake-powell/powell.css">
+</head>
+<body class="powellviz fullmap">
+  <main class="viewer">
+    <h1 class="sr-only">Lake Powell, Year by Year: full-page viewer</h1>
+    <div class="titlebar">
+      <img src="/assets/globe.svg" alt="" width="16" height="16">
+      <span class="t">Lake Powell Water Level</span>
+      <span class="ctl" aria-hidden="true"><i>_</i><i>&#9633;</i><i>&times;</i></span>
+    </div>
+    <div class="toolbar">
+      <button type="button" id="play" aria-pressed="false">Play</button>
+      <button type="button" id="prev" aria-label="Previous year">&laquo; Year</button>
+      <button type="button" id="next" aria-label="Next year">Year &raquo;</button>
+      <button type="button" id="go-full">Fullest Year (1983)</button>
+      <button type="button" id="go-now">Latest Year</button>
+      <a class="tb-link" href="/lake-powell/" data-carry="/lake-powell/">&laquo; Back to Project Page</a>
+    </div>
+    <noscript><div class="note"><p>The slider needs JavaScript. <a href="/lake-powell/">Back to the project page</a>.</p></div></noscript>
+    <div class="yearrow">
+      <label for="year">Year</label>
+      <span class="track">
+        <span class="ends" id="end-first">1964</span>
+        <input type="range" id="year" min="1964" max="2026" step="1" value="2026">
+        <span class="ends" id="end-last">2026</span>
+      </span>
+    </div>
+    <div class="map-canvas">
+      <div class="scene">
+        <img id="frame" src="/lake-powell/frames/2026.jpg" alt="Rendered view of the lower end of Lake Powell at its latest level." width="1600" height="900">
+        <div class="readout" aria-live="polite">
+          <span class="yr" id="r-year">&nbsp;</span>
+          <span class="big" id="r-below">&nbsp;</span>
+          <span id="r-level">&nbsp;</span>
+          <span id="r-cap">&nbsp;</span>
+        </div>
+      </div>
+      <p id="scene-error" class="map-error" role="alert" hidden></p>
+    </div>
+    <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-range">&nbsp;</span></div>
+  </main>
+
+  <script src="/lake-powell/powell.js"></script>
+</body>
+</html>

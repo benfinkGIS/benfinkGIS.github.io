@@ -56,7 +56,11 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tucson-canopy/README.md`, `sites.json`, `species.json`, `carbon_factors.json` | The project's method, every figure, and the settings its scripts read |
 | `tools/canopy/`, `tools/screen_canopy_sites.py` | The canopy analysis, numbered in run order (see `tucson-canopy/README.md`). Downloads run in the system Python; the analysis runs in ArcGIS Pro's Python. Not used by the site at runtime |
 | `tools/canopy-label/` | Local page for labelling land cover accuracy points. Marked noindex; not linked from the site |
-| `<project>/map/index.html` | Full-page map for each project (`catalinas-3d/viewer/` for the 3D model): only the viewer, filling the window. Same script and data as the project page; the settings carry over in the address. See "Full-page maps" below |
+| `lake-powell/index.html` | Lake Powell, Year by Year page: a rendered 3D view of the lower lake for every year since 1964, a year slider, a level chart, data notes |
+| `lake-powell/powell.js`, `powell.css` | The slider, readout and chart. Plain script, no libraries |
+| `lake-powell/frames/`, `data/years.json` | One picture per year and the yearly figures the page reads. Written by `tools/powell/11_publish_slider.py`; don't edit by hand |
+| `tools/powell/` | The Lake Powell pipeline, numbered in run order, and `METADATA.md` with every source, figure and check (see below). Open-source tools only. Not used by the site at runtime |
+| `<project>/map/index.html` | Full-page map for each project (`catalinas-3d/viewer/` and `lake-powell/viewer/` for the 3D models): only the viewer, filling the window. Same script and data as the project page; the settings carry over in the address. See "Full-page maps" below |
 | `tools/loop-review/` | Working pages for checking the Loop analysis (a satellite review map and a plain draft of the charts). Marked noindex; not linked from the site |
 | `404.html` | Not-found page |
 | `assets/style.css` | Shared styles (late-90s desktop look; plain CSS, no web fonts) |
@@ -251,9 +255,28 @@ which is not in the repository.
 - Counts cover Pima County residents only: the county's street network and the cached blocks stop
   at the Pinal County line.
 
+## Rebuilding the Lake Powell page
+
+```
+py tools/powell/run.py            # every step, from the downloads to the page's pictures
+py tools/powell/run.py --from 8   # yearly table, Landsat check, renders and page files only
+```
+
+Needs Python with the packages in `tools/powell/requirements.txt` and Blender 5.2 (its path is at
+the top of `run.py`). No ArcGIS. Downloads, the terrain and the renders go to `lake-powell/work/`,
+which is not in the repository (about 10 GB; the USGS terrain file alone is 3.4 GB).
+
+- Water levels are the Bureau of Reclamation's daily elevations; the lake bed is the USGS one-metre
+  model of Lake Powell; the country around it is USGS 3DEP. `tools/powell/METADATA.md` records the
+  sources, the datum conversion (Reclamation's feet are NGVD29, the terrain is NAVD88, 2.913 ft
+  apart) and the checks against the USGS area table and Landsat.
+- Step 10 renders one picture per year in Blender (about 8 seconds each on the GPU) and step 11
+  writes `lake-powell/frames/` and `data/years.json`. Re-running in a new year adds that year.
+- Recent Reclamation figures are provisional and get revised; re-run step 1 before quoting them.
+
 ## Full-page maps
 
-Each project has a second page (`map/index.html`, or `viewer/index.html` for the Catalinas) that
+Each project has a second page (`map/index.html`, or `viewer/index.html` for the Catalinas and Lake Powell) that
 holds only the viewer window, with `fullmap` on the body. `assets/style.css` stretches it to the
 window. The page loads the same script as the project page, so:
 

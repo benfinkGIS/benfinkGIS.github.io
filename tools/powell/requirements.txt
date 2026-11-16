@@ -1,0 +1,8 @@
+# Lake Powell drawdown animation. Python 3.12; Blender 5.2 is installed separately.
+numpy
+pandas
+requests
+matplotlib
+pyproj
+rasterio          # wheels include GDAL
+imageio-ffmpeg    # bundles an ffmpeg binary for encoding the video
