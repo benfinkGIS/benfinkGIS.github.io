@@ -70,6 +70,7 @@ hr {
   border-color: var(--hi) var(--dk) var(--dk) var(--hi);
 }
 .banner picture { flex: none; line-height: 0; }
+.banner > div { flex: 1; min-width: 0; text-align: center; }
 .banner img { width: 64px; height: 64px; flex: none; image-rendering: pixelated; }
 .logo {
   margin: 0;
@@ -247,6 +248,7 @@ h2.sec {
 /* ---------- Projects list ---------- */
 .files { list-style: none; margin: 0; padding: 0; }
 .files li { display: flex; gap: 10px; align-items: flex-start; }
+.files li + li { margin-top: 18px; }
 .files img { width: 32px; height: 32px; flex: none; margin-top: 2px; }
 .files .meta { color: var(--dk); font-size: 13px; }
 
