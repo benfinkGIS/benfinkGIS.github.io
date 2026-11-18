@@ -14,9 +14,9 @@ and writes tucson-canopy/data/3d/:
                        ground in tenths of a meter (0 = no canopy)
   <site>_photo.jpg     the 2023 aerial photo over the block
   <site>.json          block size, where it is, and every proposed tree
-                       (meters east and north of the block centre, ground
+                       (meters east and north of the block center, ground
                        height, species, scenario), plus each species' mature
-                       size and colour
+                       size and color
 
 Images are used as number containers because browsers decode them fast and
 they compress well. They must stay PNG: a JPEG would smear the heights.
@@ -29,8 +29,8 @@ from PIL import Image
 from common import PROJECT, site_dir, sites
 
 OUT = PROJECT / "data" / "3d"
-# foliage and bloom colours, as in the Blender render
-COLOURS = {"Velvet mesquite": "#96b281", "Blue palo verde": "#e3d55b",
+# foliage and bloom colors, as in the Blender render
+COLORS = {"Velvet mesquite": "#96b281", "Blue palo verde": "#e3d55b",
            "Foothill palo verde": "#c2d26f", "Desert willow": "#e6a6c3"}
 
 
@@ -53,14 +53,14 @@ def main():
         species = []
         for i, sp in enumerate(scene["species"]):
             mine = [t for t in scene["trees"] if t[3] == i]
-            species.append(dict(name=sp["name"], colour=COLOURS[sp["name"]],
+            species.append(dict(name=sp["name"], color=COLORS[sp["name"]],
                                 radius=mine[0][4] if mine else 3.0,
                                 height=mine[0][5] if mine else 6.0))
         doc = dict(
             id=s["id"], name=s["name"], size_m=scene["size_m"], cell_m=scene["cell_m"],
             cells=int(cm.shape[0]), lonlat=s["center_lonlat"],
             crown_base_m=scene["crown_base_m"], species=species,
-            # east, north (meters from the block centre), ground height, species, scenario
+            # east, north (meters from the block center), ground height, species, scenario
             trees=[[round(t[0] - half, 1), round(t[1] - half, 1),
                     round(t[2] - scene["ground_min"], 1), t[3], t[6]] for t in scene["trees"]])
         (OUT / f"{s['id']}.json").write_text(json.dumps(doc, separators=(",", ":")))

@@ -452,7 +452,7 @@ code { font: 13px "Courier New", Courier, monospace; }
 .b2 { background: #ffcc00; color: #000; }
 .b3 { background: #000; color: #33ff33; font-family: "Courier New", Courier, monospace; }
 
-/* ---------- Full-page maps (/<project>/map/): the viewer as a maximised window ---------- */
+/* ---------- Full-page maps (/<project>/map/): the viewer as a maximized window ---------- */
 /* a link in the toolbar, dressed as a toolbar button: to the full-page map and back again */
 .toolbar .tb-link, .toolbar .tb-link:visited {
   margin-left: auto;

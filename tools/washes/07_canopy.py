@@ -51,7 +51,7 @@ def features(img):
 
 def rule(ndvi, nir, tex, cut):
     mask = (ndvi >= cut[0]) & (nir >= cut[1]) & (tex >= cut[2])
-    # A cell stays canopy only if most of its 3 x 3 neighbours agree.
+    # A cell stays canopy only if most of its 3 x 3 neighbors agree.
     return ndimage.uniform_filter(mask.astype("float32"), 3) >= 0.5
 
 

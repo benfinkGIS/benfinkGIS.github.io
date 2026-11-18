@@ -1,14 +1,14 @@
-"""Step 3c: score the land cover against the hand-labelled points.
+"""Step 3c: score the land cover against the hand-labeled points.
 
 Runs in ArcGIS Pro's Python:
 
   <Pro python> tools/canopy/08_accuracy.py [--labels path]
 
-Reads work/accuracy/labels.json (written by the labelling page) and
+Reads work/accuracy/labels.json (written by the labeling page) and
 key.json, writes each label into the GrndTruth field of that site's
 accuracy_points layer, and reports, for each site and for both together:
 
-  * the error matrix (rows: mapped class; columns: labelled class)
+  * the error matrix (rows: mapped class; columns: labeled class)
   * user's accuracy (of the cells mapped as X, the share that are X)
   * producer's accuracy (of the ground that is X, the share mapped as X)
   * overall accuracy with a 95% interval, and kappa
@@ -21,7 +21,7 @@ The sample put the same number of points in every mapped class, so common
 classes are under-sampled. Every figure except the raw matrix and kappa
 therefore weights each mapped class by its share of the map (Olofsson et al.
 2014, "Good practices for estimating area and assessing accuracy of land
-change"). Points labelled "can't tell" or not labelled are left out and
+change"). Points labeled "can't tell" or not labeled are left out and
 counted separately.
 
 Also runs Esri's Compute Confusion Matrix on each site's points, as a
@@ -55,7 +55,7 @@ GROUPINGS = {
 
 
 def score(points, weights, group):
-    """points: (stratum, mapped, labelled). weights: stratum -> share of map.
+    """points: (stratum, mapped, labeled). weights: stratum -> share of map.
     Strata are the mapped classes the sample was drawn from (per site)."""
     cats = list(dict.fromkeys(group.values()))
     idx = {c: i for i, c in enumerate(cats)}
@@ -112,7 +112,7 @@ def main():
     labels = {k: v["label"] for k, v in json.loads(Path(args.labels).read_text()).items()}
 
     cells, pts = {}, {}
-    skipped = dict(not_labelled=0, cant_tell=0)
+    skipped = dict(not_labeled=0, cant_tell=0)
     for s in sites():
         d = site_dir(s)
         gdb = str(d / f"{s['id']}.gdb")
@@ -145,7 +145,7 @@ def main():
         for k in mine:
             lab = labels.get(k["id"])
             if lab is None:
-                skipped["not_labelled"] += 1
+                skipped["not_labeled"] += 1
             elif lab == 0:
                 skipped["cant_tell"] += 1
             else:

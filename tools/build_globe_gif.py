@@ -106,7 +106,7 @@ ICE = [
     [(-45, 63), (-50, 68), (-55, 76), (-45, 81), (-28, 79), (-27, 72), (-38, 67)],
 ]
 
-# Palette index 0 is the transparent colour.
+# Palette index 0 is the transparent color.
 PALETTE = [
     (255, 0, 255),                                        # 0 transparent
     (0, 0, 0),                                            # 1 outline
@@ -175,7 +175,7 @@ def frame(surface, lon0):
     ice = pool((cls == 2) & inside) / np.maximum(cover, 1e-6)
     shade = pool(shade * inside) / np.maximum(cover, 1e-6)
 
-    # Four shade levels per surface, ordered-dithered between neighbours.
+    # Four shade levels per surface, ordered-dithered between neighbors.
     yy, xx = np.mgrid[0:SIZE, 0:SIZE]
     level = np.clip(np.floor(shade * 3.4 + BAYER[yy % 4, xx % 4]), 0, 3).astype(int)
 
@@ -211,7 +211,7 @@ def frame(surface, lon0):
 
 def main():
     surface = surface_map()
-    # Earth turns west to east, so the centre longitude falls as time passes.
+    # Earth turns west to east, so the center longitude falls as time passes.
     frames = [frame(surface, -i * 360 / FRAMES) for i in range(FRAMES)]
     frames[0].save(OUT, save_all=True, append_images=frames[1:], duration=FRAME_MS,
                    loop=0, transparency=0, disposal=2, optimize=False)

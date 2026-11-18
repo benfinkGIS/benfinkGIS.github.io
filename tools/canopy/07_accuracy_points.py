@@ -15,14 +15,14 @@ Outputs
                                            names (Classified, GrndTruth), so
                                            Compute Confusion Matrix reads it
   work/accuracy/chips/<id>_{rgb,cir,wide}.jpg
-  work/accuracy/points.json   what the labelling page loads: ids only, in
+  work/accuracy/points.json   what the labeling page loads: ids only, in
                               shuffled order, with no hint of the mapped class
   work/accuracy/key.json      id to site, cell and mapped class. The page
                               never loads this
   work/accuracy/strata.json   cells in each mapped class when the sample was
                               drawn, which step 08 uses as weights
 
-The person labelling sees only the 2023 photo. They do not see the map, the
+The person labeling sees only the 2023 photo. They do not see the map, the
 lidar, or which class a point was drawn from.
 
 Re-running draws the same points (fixed seed) unless the map has changed.
@@ -44,7 +44,7 @@ CHIP_PX = 420
 
 
 def chip(img, x, y, x0, y1, width_m):
-    """Square crop of the mosaic centred on a map coordinate."""
+    """Square crop of the mosaic centered on a map coordinate."""
     half = width_m / 2 / NAIP_CELL
     cx, cy = (x - x0) / NAIP_CELL, (y1 - y) / NAIP_CELL
     box = (round(cx - half), round(cy - half), round(cx + half), round(cy + half))

@@ -1,5 +1,5 @@
 {
-  "_about": "Resistance and source settings for the connectivity model (tools/washes/14_surfaces.py and 15_omniscape.py). Resistance is how hard a 10 m cell is to cross, 1 being easiest. These numbers are set by judgement, with the published findings they lean on listed in the README; none is fitted to data.",
+  "_about": "Resistance and source settings for the connectivity model (tools/washes/14_surfaces.py and 15_omniscape.py). Resistance is how hard a 10 m cell is to cross, 1 being easiest. These numbers are set by judgment, with the published findings they lean on listed in the README; none is fitted to data.",
   "cell_m": 10,
   "bobcat": {
     "radius_m": 2500,

@@ -80,7 +80,7 @@ CRS = "EPSG:5070"
 HIGH = 7.0  # the cutoff used for KitFox_HighSuitability in the project
 BLOCK = 3   # 30 m cells averaged into 90 m cells
 
-# code, label, LAND_MNGR values, colour for the review map, counts as open public land
+# code, label, LAND_MNGR values, color for the review map, counts as open public land
 MANAGERS = [
     (1, "Private or undetermined", {"PVT", "UND", "", None}, (200, 200, 200), False),
     (2, "BLM", {"BLM"}, (254, 230, 121), True),

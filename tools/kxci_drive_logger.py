@@ -21,7 +21,7 @@ needs the WinUSB driver, installed with Zadig). The GPS option needs pyserial
 
 What a row means
 ----------------
-chan_db   power in the 200 kHz channel centred on 91.3 MHz, in rtl_power's dB.
+chan_db   power in the 200 kHz channel centered on 91.3 MHz, in rtl_power's dB.
 floor_db  the quietest tenth of the bins in the same sweep, scaled to 200 kHz:
           a rough noise floor for that moment.
 snr_db    chan_db minus floor_db.
@@ -49,7 +49,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DRIVES = ROOT / "kxci-signal" / "drives"
 
-CENTRE_HZ = 91.3e6
+CENTER_HZ = 91.3e6
 HALF_CHANNEL_HZ = 100e3       # FM channels are 200 kHz wide
 SPAN_HZ = 400e3               # sweep 90.9 to 91.7 MHz
 BIN_HZ = 12.5e3
@@ -80,8 +80,8 @@ def parse_sweep(line):
 def channel_power(low, step, dbs):
     """Channel power and noise floor (both dB, in 200 kHz) from one sweep."""
     lin = [10 ** (d / 10) for d in dbs]
-    centres = [low + (i + 0.5) * step for i in range(len(dbs))]
-    inside = [p for f, p in zip(centres, lin) if abs(f - CENTRE_HZ) <= HALF_CHANNEL_HZ]
+    centers = [low + (i + 0.5) * step for i in range(len(dbs))]
+    inside = [p for f, p in zip(centers, lin) if abs(f - CENTER_HZ) <= HALF_CHANNEL_HZ]
     if not inside:
         return None
     chan = 10 * math.log10(sum(inside))
@@ -186,7 +186,7 @@ def cmd_log(args):
         threading.Thread(target=gps.read_port, args=(args.gps, args.baud), daemon=True).start()
     DRIVES.mkdir(parents=True, exist_ok=True)
     out = DRIVES / f"drive_{utc_now():%Y%m%dT%H%M%SZ}.csv"
-    lo, hi = CENTRE_HZ - SPAN_HZ, CENTRE_HZ + SPAN_HZ
+    lo, hi = CENTER_HZ - SPAN_HZ, CENTER_HZ + SPAN_HZ
     cmd = [exe, "-f", f"{lo:.0f}:{hi:.0f}:{BIN_HZ:.0f}", "-i", str(args.interval),
            "-g", str(args.gain), "-d", str(args.device), "-"]
     print(" ".join(cmd))

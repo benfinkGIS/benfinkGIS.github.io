@@ -151,7 +151,7 @@ def level_node(nt):
 
 
 def terrain_material():
-    """Rock colour by height and steepness, with a pale ring between the water and full pool."""
+    """Rock color by height and steepness, with a pale ring between the water and full pool."""
     mat = bpy.data.materials.new("Ground")
     mat.use_nodes = True
     nt = mat.node_tree
@@ -199,7 +199,7 @@ def terrain_material():
 
 
 def water_material():
-    """Colour by depth: turquoise in the shallows, dark blue over the old river channel."""
+    """Color by depth: turquoise in the shallows, dark blue over the old river channel."""
     mat = bpy.data.materials.new("Water")
     mat.use_nodes = True
     nt = mat.node_tree
@@ -210,15 +210,15 @@ def water_material():
     level = level_node(nt)
     depth = math_node(nt, "SUBTRACT", level.outputs[0], bed.outputs["Fac"])
     t = math_node(nt, "DIVIDE", depth, 150.0, clamp=True)
-    colour = ramp(nt, [(0.0, (0.10, 0.36, 0.38)), (0.03, (0.035, 0.20, 0.27)), (0.2, (0.012, 0.085, 0.17)),
+    color = ramp(nt, [(0.0, (0.10, 0.36, 0.38)), (0.03, (0.035, 0.20, 0.27)), (0.2, (0.012, 0.085, 0.17)),
                        (1.0, (0.004, 0.030, 0.085))])
-    nt.links.new(t, colour.inputs["Fac"])
-    nt.links.new(colour.outputs["Color"], bsdf.inputs["Base Color"])
+    nt.links.new(t, color.inputs["Fac"])
+    nt.links.new(color.outputs["Color"], bsdf.inputs["Base Color"])
     return mat
 
 
 def build_terrain():
-    """Elevation samples sit at cell centres, so the mesh starts half a cell in."""
+    """Elevation samples sit at cell centers, so the mesh starts half a cell in."""
     z, xs, ys = grid()
     rows, cols = z.shape
     verts = np.column_stack([xs.ravel() * K, ys.ravel() * K, to_z(z).ravel()])

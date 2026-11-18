@@ -16,7 +16,7 @@
   }
   var plural = function (n, one, many) { return n + " " + (n === 1 ? one : many); };
 
-  // fixed order: a kind keeps its colour whatever else is switched on
+  // fixed order: a kind keeps its color whatever else is switched on
   var KINDS = [
     ["brewery", "Breweries and cideries", "Brewery or cidery"],
     ["bar", "Bars", "Bar"],
@@ -114,7 +114,7 @@
     ride.appendChild(document.createTextNode(" by bike, " + mi(s.mi) + " from the " + s.section + " path"));
     ride.appendChild(el("div", "src", mi(s.crow_mi) + " from the path in a straight line"));
     box.appendChild(ride);
-    box.appendChild(el("div", "src", "Licence: " + s.lic.join(", ").toLowerCase()));
+    box.appendChild(el("div", "src", "License: " + s.lic.join(", ").toLowerCase()));
     if (s.hours) box.appendChild(el("div", "src", "Hours (OpenStreetMap): " + s.hours));
     if (/^https?:\/\//.test(s.web)) {
       var a = el("a", null, "Website");
@@ -160,7 +160,7 @@
     imagery = L.tileLayer(ESRI + "World_Imagery/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom: 18, maxZoom: 18,
       attribution: "Imagery &copy; Esri, Maxar, Earthstar Geographics, and the GIS user community" });
     map.attributionControl.setPrefix(false);
-    map.attributionControl.addAttribution('Places: Arizona liquor licences via City of Tucson GIS; paths &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors');
+    map.attributionControl.addAttribution('Places: Arizona liquor licenses via City of Tucson GIS; paths &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors');
     L.control.scale({ imperial: true, metric: false }).addTo(map);
 
     var lines = loop.lines.map(function (ln) { return ln.map(function (c) { return [c[1], c[0]]; }); });
@@ -349,7 +349,7 @@
 
   function fill() {
     var moved = (meta.moved || []).length;
-    var values = { licences: meta.licences_downloaded, mph: meta.speed_mph, moved: plural(moved, "place", "places") };
+    var values = { licenses: meta.licenses_downloaded, mph: meta.speed_mph, moved: plural(moved, "place", "places") };
     document.querySelectorAll("[data-fill]").forEach(function (n) {
       var v = values[n.getAttribute("data-fill")];
       if (v != null) n.textContent = v;

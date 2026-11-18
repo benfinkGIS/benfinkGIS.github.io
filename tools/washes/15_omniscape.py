@@ -2,7 +2,7 @@
 
 Omniscape moves a circular window across the grid. At each stop it injects
 current at every source cell in the window, in proportion to its source
-strength, and draws it out at the centre; the current through each cell,
+strength, and draws it out at the center; the current through each cell,
 summed over all stops, is the output. Run with resistance 1 everywhere, the
 same sum is the "flow potential"; current divided by flow potential shows
 where the ground concentrates or blocks movement.

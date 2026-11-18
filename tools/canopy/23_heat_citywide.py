@@ -24,7 +24,7 @@ Two fits are reported. The plain fit compares blocks across the whole city.
 The local fit compares each block only with others in the same square of
 about 1.8 km, which removes whatever differs between parts of town (soil,
 irrigation, distance from the mountains). Intervals come from resampling
-2.7 km squares, so neighbouring blocks are not counted as independent.
+2.7 km squares, so neighboring blocks are not counted as independent.
 
 Still surface temperature at about 11 a.m., and still an association, not an
 experiment: leafier blocks differ from bare ones in more than their trees.

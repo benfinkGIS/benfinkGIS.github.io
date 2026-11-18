@@ -43,7 +43,7 @@ def fetch(job):
     path = tile_path(r, c)
     if path.exists() and path.stat().st_size > 10000:
         return f"r{r} c{c}: have it"
-    # 26912 (NAD83) is asked for because the service is known to honour it. It
+    # 26912 (NAD83) is asked for because the service is known to honor it. It
     # differs from the lake DEM's NAD83(2011) by about a meter, far below a 10 m cell.
     params = {"bbox": ",".join(str(v) for v in bbox), "bboxSR": 26912, "imageSR": 26912, "size": f"{w},{h}",
               "format": "tiff", "pixelType": "F32", "noDataInterpretation": "esriNoDataMatchAny",

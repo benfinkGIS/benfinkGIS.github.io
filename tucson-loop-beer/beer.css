@@ -3,7 +3,7 @@
    toolbar buttons, group box, counter, chart panel, legend, map frame and tooltip. */
 
 .beerviz {
-  /* one colour per kind of place: the first five categorical slots of the dataviz palette, in order */
+  /* one color per kind of place: the first five categorical slots of the dataviz palette, in order */
   --k-bar: #2a78d6;
   --k-brewery: #eb6834;
   --k-beerwine: #1baf7a;
@@ -12,7 +12,7 @@
   --route: #000080;
 }
 
-/* kind buttons carry their colour as a swatch, never as text colour */
+/* kind buttons carry their color as a swatch, never as text color */
 .groupbox .toolbar button .sw,
 .kind .sw {
   display: inline-block; width: 10px; height: 10px; margin-right: 5px;
@@ -25,7 +25,7 @@
 
 .stat .num.small { font-size: 19px; line-height: 1.25; overflow-wrap: anywhere; }
 
-/* map markers: breweries are diamonds, so kind is never colour alone */
+/* map markers: breweries are diamonds, so kind is never color alone */
 .beerviz #map { height: 540px; }
 @media (max-width: 700px) { .beerviz #map { height: 420px; } }
 .spot-mark { background: none; border: 0; }

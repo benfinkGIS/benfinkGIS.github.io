@@ -226,7 +226,7 @@ def build(site):
         yy, xx = np.ogrid[r0 - r:r1 - r, c0 - c:c1 - c]
         crown = np.hypot(yy, xx) * CELL <= R
         base[r0:r1, c0:c1][crown] = (base[r0:r1, c0:c1][crown] * 0.25 +
-                                     np.array(SPECIES[k]["colour"]) * 0.75)
+                                     np.array(SPECIES[k]["color"]) * 0.75)
     Image.fromarray(base.clip(0, 255).astype(np.uint8)).save(str(d / "ql_scenario.jpg"),
                                                              quality=90)
 

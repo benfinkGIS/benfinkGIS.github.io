@@ -111,8 +111,8 @@ def display_layers(site):
     return gdb
 
 
-def style_raster(lyr, colours):
-    """Unique-value colours for a raster with a Class_name field."""
+def style_raster(lyr, colors):
+    """Unique-value colors for a raster with a Class_name field."""
     sym = lyr.symbology
     sym.updateColorizer("RasterUniqueValueColorizer")
     sym.colorizer.field = "Class_name"
@@ -120,8 +120,8 @@ def style_raster(lyr, colours):
     sym = lyr.symbology
     for grp in sym.colorizer.groups:
         for item in grp.items:
-            if item.label in colours:
-                item.color = rgb(colours[item.label])
+            if item.label in colors:
+                item.color = rgb(colors[item.label])
     lyr.symbology = sym
 
 
@@ -131,7 +131,7 @@ def style_crowns(lyr):
     sym.renderer.fields = ["Species"]
     lyr.symbology = sym
     sym = lyr.symbology
-    look = {s["common"]: tuple(s["colour"]) for s in SPECIES}
+    look = {s["common"]: tuple(s["color"]) for s in SPECIES}
     for grp in sym.renderer.groups:
         for item in grp.items:
             item.symbol.color = rgb(look[item.label])
@@ -195,7 +195,7 @@ def box(aprx, lyt, x, y, w, h, fill, stroke, stroke_width):
 
 def make_layout(aprx, name, title, subtitle, panels, legend, note):
     """panels: two (map, heading, site) tuples, drawn left and right.
-    legend: (fill colour or None for an outline, label) pairs."""
+    legend: (fill color or None for an outline, label) pairs."""
     lyt = aprx.createLayout(PAGE_W, PAGE_H, "INCH", name)
     text(aprx, lyt, 0.45, PAGE_H - 0.62, title, 24, "Bold")
     text(aprx, lyt, 0.45, PAGE_H - 0.98, subtitle, 12.5)
@@ -275,7 +275,7 @@ def main():
         "Trees and roofs come from lidar structure; a Random Trees classifier sorts the ground.",
         [(maps[ref["id"]], ref["name"], ref), (maps[cand["id"]], cand["name"], cand)],
         [(c, n) for _, n, c in COVER] + [OUTLINE],
-        f"Checked against {acc['all classes']['points']} hand-labelled points: tree canopy or "
+        f"Checked against {acc['all classes']['points']} hand-labeled points: tree canopy or "
         f"not {acc['tree canopy or not']['overall_accuracy']:.0%} right, roof or pavement or not "
         f"{acc['impervious or not']['overall_accuracy']:.0%}, five classes "
         f"{acc['open ground merged']['overall_accuracy']:.0%}. Open ground is bare ground and low plants together.")))
@@ -295,7 +295,7 @@ def main():
             [(today, f"Today: {sc['existing']['canopy_pct']}% canopy", site),
              (planted, f"With street trees: {st['canopy_pct']}% canopy", site)],
             [(CANOPY, "Tree canopy today")] +
-            [(tuple(sp["colour"]), sp["common"]) for sp in SPECIES] + [OUTLINE],
+            [(tuple(sp["color"]), sp["common"]) for sp in SPECIES] + [OUTLINE],
             "A planning sketch, not a planting plan: no check of buried utilities, ownership or "
             "irrigation. Tree sizes are published mature sizes."))
 

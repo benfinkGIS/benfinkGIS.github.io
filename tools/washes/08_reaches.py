@@ -94,7 +94,7 @@ def code_field(fc, field, mapping, source):
 
 
 def rasters(gdb, folder):
-    """Rasterise the county layers the reaches are compared with."""
+    """Rasterize the county layers the reaches are compared with."""
     made = {}
     # Riparian class; where polygons overlap the richer class wins.
     arcpy.management.CopyFeatures(f"{gdb}/riparian", "memory/rip")
@@ -370,7 +370,7 @@ def export(gdb, web, box):
     wgs = arcpy.SpatialReference(4326)
     fields = ["SHAPE@", "name", "kind", "rip_class", "county_share", "street_share", "rip_share",
               "canopy_pct", "drain_ha", "strahler", "bobcat", "flycatcher", "queen", "SHAPE@LENGTH"]
-    # Modelled movement along each reach (16_connectivity.py), where it has been run.
+    # Modeled movement along each reach (16_connectivity.py), where it has been run.
     flow_keys = [k for k in ("bobcat", "flycatcher", "queen")
                  if f"flow_{k}" in [f.name for f in arcpy.ListFields(fc)]]
     fields += [f"flow_{k}" for k in flow_keys]

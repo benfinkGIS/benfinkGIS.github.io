@@ -6,12 +6,12 @@ Usage (from the repo root, after build_kxci.py and model_kxci_terrain.py):
 
 Writes
 ------
-kxci-signal/data/kxci.json   licence, counts, the town table, both contours, map bounds
-kxci-signal/data/field.png   the modelled field as a data image in Web Mercator:
+kxci-signal/data/kxci.json   license, counts, the town table, both contours, map bounds
+kxci-signal/data/field.png   the modeled field as a data image in Web Mercator:
                                red   = field at 9.1 m, dBu x 2 (0 = no value)
                                green = field at 1.5 m, dBu x 2
                                blue  = 255 inside the FCC 60 dBu contour
-                             The page colours it in the browser and reads it on hover.
+                             The page colors it in the browser and reads it on hover.
 kxci-signal/kxci-reach.png   static map (rooftop height)
 """
 import json
@@ -48,7 +48,7 @@ def main():
     summary = json.loads((WORK / "summary.json").read_text())
     if "terrain" not in summary:
         sys.exit("run tools/model_kxci_terrain.py first")
-    lic, terrain = summary["licence"], summary["terrain"]
+    lic, terrain = summary["license"], summary["terrain"]
     f = np.load(WORK / "field.npz")
     field, rx_d, (tx_x, tx_y) = f["field"], f["d"], f["tx"]
     contours = gpd.read_file(WORK / "kxci.gpkg", layer="contours")
@@ -91,7 +91,7 @@ def main():
     lookup = summary["callsign_lookup"]
     places = [p for p in terrain["by_place"] if p["population"] >= PLACE_MIN_POP]
     out = dict(
-        licence=lic,
+        license=lic,
         auxiliary=[dict(lat=o["lat"], lon=o["lon"], erp_kw=o["erp_kw"], service=o["service"])
                    for o in summary["other_records"]],
         lookup=dict(file_number=lookup["file_number"], erp_kw=lookup["erp"],
@@ -187,12 +187,12 @@ def static_map(v, inside, extent, lon, lat, cur, lic, to_ll, summary, terrain):
     labels = ["40 to 50 dBu", "50 to 60", "60 to 70", "70 to 80", "80 or more"]
     handles = [Patch(fc=c, ec="#000", lw=0.5, label=t) for (_, c), t in zip(BANDS, labels)]
     handles.append(Patch(fc=SHADOW, ec="#000", lw=0.5,
-                         label="Inside the contour, modelled under 60 dBu"))
+                         label="Inside the contour, modeled under 60 dBu"))
     handles.append(plt.Line2D([], [], color="#000", lw=1.6, label="FCC 60 dBu service contour"))
     fig.legend(handles=handles, loc="lower left", bbox_to_anchor=(0.03, 0.025), ncol=4,
-               fontsize=8.5, frameon=False, title="Modelled field strength at a rooftop antenna",
+               fontsize=8.5, frameon=False, title="Modeled field strength at a rooftop antenna",
                title_fontsize=9, alignment="left")
-    fig.text(0.97, 0.012, "Fink Geospatial | FCC licence data, USGS 3DEP elevation, "
+    fig.text(0.97, 0.012, "Fink Geospatial | FCC license data, USGS 3DEP elevation, "
              "2020 Census | Longley-Rice terrain model", ha="right", fontsize=7.5)
     fig.savefig(SITE / "kxci-reach.png", facecolor=fig.get_facecolor())
     print("kxci-reach.png")

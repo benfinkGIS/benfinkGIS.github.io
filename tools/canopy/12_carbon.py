@@ -15,7 +15,7 @@ amount of carbon per square meter of urban tree cover (carbon_factors.json).
 
 Everything is for the trees once mature, which takes decades, and counts only
 the trees themselves: not soil, not the energy saved by shade, not the
-emissions of planting and watering. Tonnes are metric. CO2 = carbon x 3.667.
+emissions of planting and watering. Tons are metric tons. CO2 = carbon x 3.667.
 
 Writes carbon.json beside each site's geodatabase.
 """

@@ -1,6 +1,6 @@
 /* Tucson Wash Field Guide: map, figures and table.
    Reads data/washes.json, data/channels.geojson and data/crossings.geojson
-   (written by tools/washes/08_reaches.py --export), and the modelled-movement
+   (written by tools/washes/08_reaches.py --export), and the modeled-movement
    overlays data/funnel_<species>.png (written by tools/washes/16_connectivity.py), and the
    ranked gaps data/gaps.json (written by tools/washes/18_gaps.py).
    MapLibre GL JS 4.7.1 is loaded by the page. */
@@ -140,9 +140,9 @@
       fill("xgrade", fmt(x.by_type.grade || 0));
     }
     if (k) {
-      var w = k.wash_rule, b = k.bed_material.of_reaches_labelled_a_wash, c2 = k.crossings;
+      var w = k.wash_rule, b = k.bed_material.of_reaches_labeled_a_wash, c2 = k.crossings;
       fill("chk-items", k.items);
-      fill("chk-wash", rng(w.labelled_a_wash));
+      fill("chk-wash", rng(w.labeled_a_wash));
       fill("chk-kept", rng(w.kept_that_are_washes));
       fill("chk-recall", rng(w.washes_kept));
       fill("chk-agree", rng(w.agreement_cross_validated));
@@ -150,7 +150,7 @@
       fill("bed-nat", rng(b.natural));
       fill("bed-banks", rng(b["natural bed, built banks"]));
       fill("bed-conc", rng(b.concrete));
-      fill("bed-colour", k.bed_material.colour_rule.of_which_concrete + " of " + k.bed_material.colour_rule.called_concrete);
+      fill("bed-color", k.bed_material.color_rule.of_which_concrete + " of " + k.bed_material.color_rule.called_concrete);
       fill("x-real", rng(c2.real_crossing_on_kept_reaches));
       fill("x-real-open", rng(c2.real_crossing_by_type["open span"]));
       fill("x-real-culvert", rng(c2.real_crossing_by_type.culvert));
@@ -172,9 +172,9 @@
       if (!sp) return;
       fill(k + "near", pct(sp.top_tenth_near_wash));
       fill(k + "km", f.settings[s[0]].radius_m / 1000);
-      fill(k + "chan", pct(sp.funnel_share_of_area.channelled));
-      fill(k + "chan-near", pct(sp.channelled_near_wash));
-      fill(k + "fun", pct(sp.funnel_share_of_area.intensified + sp.funnel_share_of_area.channelled));
+      fill(k + "chan", pct(sp.funnel_share_of_area.channeled));
+      fill(k + "chan-near", pct(sp.channeled_near_wash));
+      fill(k + "fun", pct(sp.funnel_share_of_area.intensified + sp.funnel_share_of_area.channeled));
       fill(k + "fun-near", pct(sp.funnelled_near_wash));
       fill(k + "washfun", pct(sp.wash_cells_funnelled));
       if (!v) return;
@@ -203,7 +203,7 @@
 
   // ---- map ----
   function esri(path) { return "https://server.arcgisonline.com/ArcGIS/rest/services/" + path + "/MapServer/tile/{z}/{y}/{x}"; }
-  function colour() {
+  function color() {
     if (mode === "canopy") {
       return ["interpolate", ["linear"], ["get", "c"], 0, css("--can-0"), 10, css("--can-1"), 25, css("--can-2"), 45, css("--can-3")];
     }
@@ -305,7 +305,7 @@
       map.addLayer({ id: "ch-pick", type: "line", source: "ch", layout: { "line-cap": "round", "line-join": "round" },
         paint: { "line-color": css("--pick"), "line-width": width(6), "line-opacity": 0.95 } });
       map.addLayer({ id: "ch", type: "line", source: "ch", layout: { "line-cap": "round", "line-join": "round" },
-        paint: { "line-color": colour(), "line-width": width(0) } });
+        paint: { "line-color": color(), "line-width": width(0) } });
       map.addLayer({ id: "ch-hit", type: "line", source: "ch",
         paint: { "line-color": "#000", "line-width": 14, "line-opacity": 0 } });
       map.addSource("xs", { type: "geojson", data: BASE + "data/crossings.geojson" });
@@ -404,7 +404,7 @@
       line(ul, "Drains " + one(w.drains_km2) + " km² inside the study area");
       if (classMix(w)) line(ul, "Riparian classes by length: " + classMix(w));
       line(ul, "Records within " + d.settings.sight_m + " m: " + SPECIES.map(function (s) { return w.sightings[s[0]] + " " + s[1]; }).join(", "));
-      if (w.flow && Object.keys(w.flow).length) line(ul, "Modelled movement, as a multiple of what open ground would carry: " +
+      if (w.flow && Object.keys(w.flow).length) line(ul, "Modeled movement, as a multiple of what open ground would carry: " +
         SPECIES.filter(function (s) { return w.flow[s[0]] != null; }).map(function (s) { return s[0] + " " + one(w.flow[s[0]]); }).join(", "));
       if (w.crossings) line(ul, "Road crossings: " + crossTotal(w) + " (" + w.crossings.open + " open spans, " + w.crossings.culvert + " culverts, " + w.crossings.grade + " at-grade)");
       box.appendChild(ul);
@@ -418,7 +418,7 @@
     box.appendChild(r);
     var ranks = SPECIES.filter(function (s) { return p["f" + s[2]] != null; })
       .map(function (s) { return s[0] + " " + one(p["f" + s[2]]); });
-    if (ranks.length) box.appendChild(el("div", "reach", "Modelled movement along this reach, as a multiple of what open ground would carry: " + ranks.join(", ") + "."));
+    if (ranks.length) box.appendChild(el("div", "reach", "Modeled movement along this reach, as a multiple of what open ground would carry: " + ranks.join(", ") + "."));
     if (popup) popup.remove();
     popup = new maplibregl.Popup({ maxWidth: "300px" }).setLngLat(lngLat).setDOMContent(box).addTo(map);
   }
@@ -444,7 +444,7 @@
     box.appendChild(el("strong", null, g.label + ". " + g.where));
     box.appendChild(el("p", null, g.action));
     line(ul, "There now: " + g.now);
-    line(ul, "Modelled " + name + " movement through it, as a multiple of what open ground would carry: " +
+    line(ul, "Modeled " + name + " movement through it, as a multiple of what open ground would carry: " +
       one(g.before) + " now, " + one(g.after) + " with the repair");
     line(ul, "Added movement: " + g.index + " (the best " + name + " gap is 100); number " + g.rank + " of " + g.rank_of + " tried");
     if (g.near_edge) line(ul, "Close to the edge of the map, where the model sees only part of the surroundings, so this is likely understated");
@@ -561,11 +561,11 @@
       host.appendChild(key("ln", "--src-new", "Traced from lidar only"));
     }
     if (flow === "all" && d.flow) {
-      host.appendChild(key("ramp flow3", null, "Ground that gathers the modelled movement of one, two or all three animals"));
+      host.appendChild(key("ramp flow3", null, "Ground that gathers the modeled movement of one, two or all three animals"));
     } else if (flow !== "off" && d.flow) {
       var name = speciesName(flow);
       var b = d.flow.map_breaks;
-      host.appendChild(key("ramp flow", null, "Modelled " + name + " movement gathered into a strip: " + b[0] + " to over " + b[b.length - 1] + " times what open ground would carry"));
+      host.appendChild(key("ramp flow", null, "Modeled " + name + " movement gathered into a strip: " + b[0] + " to over " + b[b.length - 1] + " times what open ground would carry"));
     }
     if (on.gaps && gaps) host.appendChild(key("gapkey", null, "Top gaps: B bobcat crossing, F flycatcher planting, Q queen butterfly link"));
     if (on.cross) Object.keys(XTYPE).forEach(function (k) { host.appendChild(key("dot " + k, XTYPE[k][2], XTYPE[k][0])); });
@@ -641,7 +641,7 @@
     renderTable();
     renderGaps();
     if (map && map.getLayer("ch")) {
-      map.setPaintProperty("ch", "line-color", colour());
+      map.setPaintProperty("ch", "line-color", color());
       applyFilters();
     }
   }

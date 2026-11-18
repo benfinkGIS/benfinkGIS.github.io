@@ -33,7 +33,7 @@ VECTORS = {
              "where that is 50 m2 or more; InBoundary = 1 inside the neighborhood",
     "tree_crowns": "The proposed trees inside the boundary as mature crown circles",
     "accuracy_points": "Stratified random accuracy sample. Classified = mapped class, GrndTruth = class "
-                       "labelled by hand from the 2023 photo (-1 = could not tell). Classes: 1 tree canopy, "
+                       "labeled by hand from the 2023 photo (-1 = could not tell). Classes: 1 tree canopy, "
                        "2 roof, 3 pavement, 4 low vegetation, 5 bare ground, 6 water",
     "street_corners": "Street intersections used for the corner setback (Pima County streets)",
     "washes": "Wash network within 1 km (Pima County Regional Flood Control District)",

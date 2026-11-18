@@ -255,7 +255,7 @@ def main():
     wc.append([])
     m0 = wc.max_row + 1
     classes = both["all classes"]["classes"]
-    wc.append(["Error matrix, both neighborhoods", "Mapped \\ labelled"] + classes + ["Row total"])
+    wc.append(["Error matrix, both neighborhoods", "Mapped \\ labeled"] + classes + ["Row total"])
     for c in wc[m0]:
         c.font = Font(bold=True)
         c.fill = HEAD
@@ -270,7 +270,7 @@ def main():
     for c in wc[r]:
         c.font = Font(bold=True)
     wc.append([])
-    wc.append([f"{acc['skipped']['cant_tell']} points the labeller could not call are left out. Overall "
+    wc.append([f"{acc['skipped']['cant_tell']} points the labeler could not call are left out. Overall "
                "accuracy weights each mapped class by its share of the map; the matrix is raw counts. "
                "The map was revised once after the first scoring and re-scored against the same labels."])
     wc.cell(wc.max_row, 1).font = Font(italic=True)

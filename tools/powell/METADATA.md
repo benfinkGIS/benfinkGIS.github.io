@@ -112,7 +112,7 @@ Built 2026-11-15 by `06_get_context.py` and `07_build_terrain.py`.
 ## Blender scene and year slider
 
 - `08_blender_scene.py`, Blender 5.2, Cycles. One unit is 1 km. Vertical exaggeration 2.5. Sun azimuth 235, elevation 28.
-- Ground colour is procedural (height and steepness). Ground inside the reservoir between the water and full pool is drawn pale. Water colour is by depth.
+- Ground color is procedural (height and steepness). Ground inside the reservoir between the water and full pool is drawn pale. Water color is by depth.
 - Yearly table: `09_yearly_levels.py`, calendar-year mean of the daily elevations, 1964 onward. The current year is a year to date.
 - Slider page: `lake-powell/index.html` with `frames/<year>.jpg` and `data/years.json`, written by `11_publish_slider.py`.
 

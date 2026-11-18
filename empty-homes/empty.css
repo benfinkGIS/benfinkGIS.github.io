@@ -12,7 +12,7 @@
 .emptyviz #map { height: 560px; }
 @media (max-width: 700px) { .emptyviz #map { height: 430px; } }
 
-/* markers: shape tells them apart, not colour alone */
+/* markers: shape tells them apart, not color alone */
 .site-mark { background: none; border: 0; }
 .site-mark svg { display: block; overflow: visible; }
 .legend .sq { width: 11px; height: 11px; background: var(--people); border: 2px solid #000; flex: none; }

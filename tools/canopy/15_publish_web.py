@@ -51,12 +51,12 @@ def to_lonlat(points):
     return [[round(p.Y, 6), round(p.X, 6)] for p in mp.projectAs(WGS)]
 
 
-def save(index, colours, path):
+def save(index, colors, path):
     """Palette PNG: index 0 is transparent."""
     im = Image.fromarray(index.astype(np.uint8), "P")
     pal = [0, 0, 0]
     for k in range(1, 256):
-        pal += list(colours.get(k, (0, 0, 0)))
+        pal += list(colors.get(k, (0, 0, 0)))
     im.putpalette(pal)
     im.save(path, transparency=0, optimize=True)
 
@@ -72,9 +72,9 @@ def main():
         species=[dict(name=s["common"], latin=s["latin"], height_ft=s["height_ft"],
                       width_ft=s["width_ft"], radius_m=s["radius_m"], water=s["water"],
                       needs_runoff=s["needs_runoff"], share=s["share"], url=s["url"],
-                      colour="#%02x%02x%02x" % tuple(s["colour"])) for s in SPECIES["species"]],
+                      color="#%02x%02x%02x" % tuple(s["color"])) for s in SPECIES["species"]],
         scenarios=SCEN,
-        colours=dict(canopy="#%02x%02x%02x" % CANOPY_RGB, shade="#%02x%02x%02x" % SHADE_RGB,
+        colors=dict(canopy="#%02x%02x%02x" % CANOPY_RGB, shade="#%02x%02x%02x" % SHADE_RGB,
                      cover={name: "#%02x%02x%02x" % c for name, c in COVER.values()}),
         carbon=dict(storage=CARBON["storage_kgC_per_m2"], low=CARBON["storage_city_range"][0],
                     high=CARBON["storage_city_range"][1],

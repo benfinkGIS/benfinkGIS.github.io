@@ -1,7 +1,7 @@
 /* KXCI Signal Reach: map, figures and tables.
    Reads data/kxci.json and data/field.png (both written by tools/publish_kxci.py).
-   field.png is a data image: red = modelled dBu x 2 at 9.1 m, green = the same at 1.5 m,
-   blue = 255 inside the FCC contour. It is coloured here and read back on hover.
+   field.png is a data image: red = modeled dBu x 2 at 9.1 m, green = the same at 1.5 m,
+   blue = 255 inside the FCC contour. It is colored here and read back on hover.
    Leaflet 1.9.4 is loaded by the page. */
 (function () {
   "use strict";
@@ -21,7 +21,7 @@
 
   var RX = [["roof", "A rooftop antenna (9.1 m)", "at rooftop height", 0],
             ["car", "A car or table radio (1.5 m)", "at car height", 1]];
-  var SHOW = [["field", "Modelled signal", "field"], ["shadow", "Shadows inside the contour", "hatch"],
+  var SHOW = [["field", "Modeled signal", "field"], ["shadow", "Shadows inside the contour", "hatch"],
               ["contour", "FCC contour", "cl"], ["old", "1991 contour", "ol"]];
   var BAND_LABELS = ["40 to 50 dBu", "50 to 60", "60 to 70", "70 to 80", "80 or more"];
 
@@ -81,7 +81,7 @@
     document.querySelectorAll('[data-fill="' + key + '"]').forEach(function (n) { n.textContent = text; });
   }
   function fillStatic() {
-    var lic = d.licence, ov = d.places.filter(function (p) { return p.place === "Oro Valley"; })[0];
+    var lic = d.license, ov = d.places.filter(function (p) { return p.place === "Oro Valley"; })[0];
     fill("erp", fmt(lic.erp_kw * 1000));
     fill("agl", d.antenna_agl_m);
     fill("amsl", fmt(lic.rcamsl_m));
@@ -158,7 +158,7 @@
       tr.appendChild(th);
       tr.appendChild(el("td", "num", fmt(p.population)));
       tr.appendChild(el("td", "num", fmt(p.inside_fcc)));
-      [p.modelled_9m, p.modelled_1p5m].forEach(function (v) {
+      [p.modeled_9m, p.modeled_1p5m].forEach(function (v) {
         // marked when the model serves under three quarters of the residents the contour takes in
         var gap = p.inside_fcc >= 500 && v < 0.75 * p.inside_fcc;
         var td = el("td", "num" + (gap ? " gap" : ""), fmt(v) + (gap ? " ▼" : ""));
@@ -170,13 +170,13 @@
     t.appendChild(body);
   }
   function renderOld() {
-    var t = $("t-old"), lic = d.licence, o = d.lookup;
+    var t = $("t-old"), lic = d.license, o = d.lookup;
     var rows = [
-      ["", "Licence on file now", "What the call-sign lookup returns"],
-      ["Licence file", lic.file_number, o.file_number],
+      ["", "License on file now", "What the call-sign lookup returns"],
+      ["License file", lic.file_number, o.file_number],
       ["Site", "Southeast of Tucson (" + lic.lat.toFixed(4) + ", " + lic.lon.toFixed(4) + ")", "Mt. Bigelow (" + o.lat.toFixed(4) + ", " + o.lon.toFixed(4) + ")"],
       ["Power", fmt(lic.erp_kw * 1000) + " watts", fmt(o.erp_kw * 1000) + " watts"],
-      ["Antenna centre above sea level", fmt(lic.rcamsl_m) + " m", fmt(o.rcamsl_m) + " m"],
+      ["Antenna center above sea level", fmt(lic.rcamsl_m) + " m", fmt(o.rcamsl_m) + " m"],
       ["Residents inside the 60 dBu contour", fmt(d.fcc.population), fmt(d.fcc_1991.population)],
       ["Households inside", fmt(d.fcc.households), fmt(d.fcc_1991.households)]
     ];
@@ -211,7 +211,7 @@
     node.addEventListener("blur", hideTip);
   }
 
-  // ---- the signal layer: colour the data image for the chosen height ----
+  // ---- the signal layer: color the data image for the chosen height ----
   function paint() {
     if (!px) return;
     var ch = rxRow()[3], out = canvas.getContext("2d").createImageData(W, H), o = out.data;
@@ -223,7 +223,7 @@
         if (!raw) continue;
         var v = raw / 2, inside = px[i + 2] > 127, c = null, a = 170;
         if (on.shadow && inside && v < th) {
-          c = (x + y) % 5 < 2 ? shDk : sh;               // striped, so it is never colour alone
+          c = (x + y) % 5 < 2 ? shDk : sh;               // striped, so it is never color alone
           a = 215;
         } else if (on.field) {
           for (var k = bands.length - 1; k >= 0; k--) { if (v >= bands[k][0]) { c = bands[k][1]; break; } }
@@ -273,7 +273,7 @@
     return box;
   }
   function buildMap() {
-    var mapEl = $("map"), lic = d.licence;
+    var mapEl = $("map"), lic = d.license;
     var ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/";
     map = L.map(mapEl, { zoomControl: false, minZoom: 8, maxZoom: 14, zoomSnap: 0.25, scrollWheelZoom: FULL });
     map.on("click focus", function () { map.scrollWheelZoom.enable(); });
@@ -300,16 +300,16 @@
     oldLayer = L.layerGroup([
       L.polyline(oldRing, { pane: "lines", interactive: false, color: "#ffffff", weight: 5, opacity: 0.9 }),
       L.polyline(oldRing, { pane: "lines", interactive: false, color: "#5b2a86", weight: 2.5, dashArray: "7 5" }),
-      L.marker([d.lookup.lat, d.lookup.lon], { icon: txIcon("old"), title: "Mt. Bigelow: the 1991 licence", alt: "Mt. Bigelow, the 1991 licence" })
-        .bindPopup(popup("Mt. Bigelow (1991 licence)", [fmt(d.lookup.erp_kw * 1000) + " watts, antenna " + fmt(d.lookup.rcamsl_m) + " m above sea level",
-          "Licence file " + d.lookup.file_number, "Still what the FCC's contour lookup returns for KXCI."]), { maxWidth: 250 })
+      L.marker([d.lookup.lat, d.lookup.lon], { icon: txIcon("old"), title: "Mt. Bigelow: the 1991 license", alt: "Mt. Bigelow, the 1991 license" })
+        .bindPopup(popup("Mt. Bigelow (1991 license)", [fmt(d.lookup.erp_kw * 1000) + " watts, antenna " + fmt(d.lookup.rcamsl_m) + " m above sea level",
+          "License file " + d.lookup.file_number, "Still what the FCC's contour lookup returns for KXCI."]), { maxWidth: 250 })
     ]);
     L.marker([lic.lat, lic.lon], { icon: txIcon("main"), title: "KXCI tower", alt: "KXCI tower", zIndexOffset: 1000 })
       .bindPopup(popup("KXCI 91.3 FM", [fmt(lic.erp_kw * 1000) + " watts, non-directional", "Antenna " + d.antenna_agl_m + " m above the ground, " + fmt(lic.rcamsl_m) + " m above sea level",
-        "Class " + lic.station_class + ", licence file " + lic.file_number]), { maxWidth: 250 }).addTo(map);
+        "Class " + lic.station_class + ", license file " + lic.file_number]), { maxWidth: 250 }).addTo(map);
     d.auxiliary.forEach(function (a) {
       L.marker([a.lat, a.lon], { icon: txIcon("aux"), title: "KXCI backup transmitter", alt: "KXCI backup transmitter" })
-        .bindPopup(popup("Backup transmitter", [fmt(a.erp_kw * 1000) + " watts, directional", "Licensed as an auxiliary. Not modelled here."]), { maxWidth: 230 }).addTo(map);
+        .bindPopup(popup("Backup transmitter", [fmt(a.erp_kw * 1000) + " watts, directional", "Licensed as an auxiliary. Not modeled here."]), { maxWidth: 230 }).addTo(map);
     });
     fullBounds = L.latLngBounds(ring).pad(0.12);
     map.fitBounds(fullBounds, { animate: false });
@@ -347,7 +347,7 @@
     map.on("click", function (e) { var c = describe(readAt(e.latlng)); setMsg(c[0] + ". " + c[1]); });   // touch screens
     pos.textContent = coord(map.getCenter());
   }
-  function statusText() { return "Modelled signal " + rxRow()[2] + ". Point at the map for a reading."; }
+  function statusText() { return "Modeled signal " + rxRow()[2] + ". Point at the map for a reading."; }
   function renderMap() {
     paint();
     [[contourLayer, on.contour], [oldLayer, on.old]].forEach(function (x) {
@@ -357,9 +357,9 @@
     setMsg(statusText());
     var legend = $("map-legend");
     legend.textContent = "";
-    function item(cls, text, colour) {
+    function item(cls, text, color) {
       var li = el("li"), s = el("span", cls);
-      if (colour) s.style.background = colour;
+      if (color) s.style.background = color;
       li.appendChild(s);
       li.appendChild(el("span", null, text));
       legend.appendChild(li);

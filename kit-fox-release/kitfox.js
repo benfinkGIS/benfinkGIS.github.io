@@ -1,6 +1,6 @@
 /* Kit fox release page: the wizard, the map and the charts.
    Everything it shows comes from /kit-fox-release/data/, written by tools/publish_kitfox.py.
-   The eight criterion scores arrive as three PNGs (one criterion per colour channel), so the
+   The eight criterion scores arrive as three PNGs (one criterion per color channel), so the
    weighted average can be recomputed here whenever a weight changes. */
 (function () {
   "use strict";
@@ -11,7 +11,7 @@
   var RAMP = ["#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7", "#3987e5",
               "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b"];
   var CAND = "#eb6834";
-  /* designation kinds: plural name, colour, how a sentence refers to one */
+  /* designation kinds: plural name, color, how a sentence refers to one */
   var KINDS = {
     wilderness: ["Wilderness", "#006300", "wilderness"],
     wsa: ["Wilderness study areas", "#00574f", "a wilderness study area"],
@@ -339,7 +339,7 @@
         return "<h3>The shortlist</h3>" +
           "<p>A high score is not enough. A release area also has to be somewhere a release could happen.</p>" +
           "<p>Every possible " + s.radius_km + " km circle was scored, then kept only if it is nearly all open public land, close to flat, and away from highways.</p>" +
-          "<p>The orange rings are the " + D.shortlist.length + " best that are left. Each ring is drawn large and off-centre on purpose: it shows the general area, not the spot.</p>" +
+          "<p>The orange rings are the " + D.shortlist.length + " best that are left. Each ring is drawn large and off-center on purpose: it shows the general area, not the spot.</p>" +
           "<p>The outlines are wilderness and other designated areas. Use the Designations button to hide them.</p>" +
           (FULL ? '<p><a href="/kit-fox-release/#shortlist" data-carry="/kit-fox-release/" data-hash="#shortlist">See the table on the project page</a>.</p>'
                 : '<p><a href="#shortlist">See the table below</a>.</p>') +

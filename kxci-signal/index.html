@@ -69,7 +69,7 @@
             <p class="crumbs"><a href="/">Home</a> &raquo; <a href="/#projects">Projects</a> &raquo; KXCI Signal Reach</p>
             <h1>Who Can Hear KXCI?</h1>
 
-            <p>KXCI 91.3 FM is Tucson&rsquo;s community radio station. Its licence allows <span data-fill="erp">&hellip;</span> watts from an antenna <span data-fill="agl">&hellip;</span> meters up a tower southeast of the city, a few miles north of Corona de Tucson.</p>
+            <p>KXCI 91.3 FM is Tucson&rsquo;s community radio station. Its license allows <span data-fill="erp">&hellip;</span> watts from an antenna <span data-fill="agl">&hellip;</span> meters up a tower southeast of the city, a few miles north of Corona de Tucson.</p>
             <p>The FCC draws every FM station&rsquo;s service area as a single line, the 60&nbsp;dBu contour. It works that line out from the station&rsquo;s power, the height of its antenna, and the average height of the ground 3 to 16&nbsp;km out in each direction. A ridge 30&nbsp;km away does not come into it. Tucson has four mountain ranges in the way, so this page runs a terrain model over the same ground and counts who the line misses.</p>
             <noscript><div class="note"><p>The figures, map and tables on this page need JavaScript. <a href="/kxci-signal/kxci-reach.png">The static map</a> works without it.</p></div></noscript>
 
@@ -114,13 +114,13 @@
                 <a class="tb-link" href="/kxci-signal/map/" data-carry="/kxci-signal/map/">Full-Page Map &raquo;</a>
               </div>
               <div class="map-canvas">
-                <div id="map" role="region" aria-label="Map of KXCI's predicted and terrain-modelled signal"></div>
+                <div id="map" role="region" aria-label="Map of KXCI's predicted and terrain-modeled signal"></div>
                 <p id="map-error" class="map-error" role="alert" hidden></p>
               </div>
               <ul class="legend" id="map-legend"></ul>
               <div class="statusbar"><span id="sb-msg" aria-live="polite">Loading&hellip;</span><span id="sb-pos">&nbsp;</span></div>
             </div>
-            <p class="cap">Point at the map to read the modelled signal there. Click a marker for the transmitter&rsquo;s details.</p>
+            <p class="cap">Point at the map to read the modeled signal there. Click a marker for the transmitter&rsquo;s details.</p>
 
             <h2 class="sec">Three ways to count the audience</h2>
             <div class="chartbox">
@@ -140,19 +140,19 @@
             <p>Oro Valley is the largest gap. The FCC&rsquo;s line takes in <span data-fill="ov-fcc">&hellip;</span> of its <span data-fill="ov-pop">&hellip;</span> residents, and the terrain model puts <span data-fill="ov-shadow">&hellip;</span> of those under 60&nbsp;dBu: the town sits behind the west end of the Santa Catalinas as seen from the tower. On the west side, in the Tucson Mountains foothills and Valencia West, most residents clear 60&nbsp;dBu at rooftop height and most do not at car height.</p>
 
             <h2 class="sec">Ask for KXCI, get 1991</h2>
-            <p>The FCC has a public service that returns a station&rsquo;s contour by call sign. Ask it for KXCI and it answers with a licence from 1991: <span data-fill="old-erp">&hellip;</span> watts on Mt.&nbsp;Bigelow in the Catalinas, <span data-fill="old-km">&hellip;</span> km from where the station&rsquo;s licence puts it now. The FCC&rsquo;s own licence database shows the present site, licensed on 4 April 2024. The contour on this page is computed from that record. The old one is on the map as a dashed line (switch it on under Settings).</p>
+            <p>The FCC has a public service that returns a station&rsquo;s contour by call sign. Ask it for KXCI and it answers with a license from 1991: <span data-fill="old-erp">&hellip;</span> watts on Mt.&nbsp;Bigelow in the Catalinas, <span data-fill="old-km">&hellip;</span> km from where the station&rsquo;s license puts it now. The FCC&rsquo;s own license database shows the present site, licensed on 4 April 2024. The contour on this page is computed from that record. The old one is on the map as a dashed line (switch it on under Settings).</p>
             <div class="chartbox">
               <div class="table-wrap"><table class="grid wrap" id="t-old"></table></div>
             </div>
 
             <h2 class="sec">Static map</h2>
-            <p><a href="/kxci-signal/kxci-reach.png"><img class="static" src="/kxci-signal/kxci-reach.png" alt="Map of KXCI's modelled field strength at rooftop height around Tucson, with the FCC 60 dBu contour and the shadowed areas inside it." width="1170" height="1326" loading="lazy"></a></p>
+            <p><a href="/kxci-signal/kxci-reach.png"><img class="static" src="/kxci-signal/kxci-reach.png" alt="Map of KXCI's modeled field strength at rooftop height around Tucson, with the FCC 60 dBu contour and the shadowed areas inside it." width="1170" height="1326" loading="lazy"></a></p>
 
             <hr>
             <h2 class="sec">Data sources and methods</h2>
             <ul class="notes">
-              <li><strong>Licence:</strong> the FCC&rsquo;s FM Query (licence file <span data-fill="file">&hellip;</span>, facility <span data-fill="facility">&hellip;</span>): class <span data-fill="class">&hellip;</span>, <span data-fill="erp">&hellip;</span> watts, non-directional, antenna centre <span data-fill="amsl">&hellip;</span> m above sea level. The elevation data puts the ground at the tower <span data-fill="agl">&hellip;</span> m below that, which matches the licence. The station also holds a licence for a backup transmitter in central Tucson, shown on the map and not modelled.</li>
-              <li><strong>FCC contour:</strong> the 60 dBu F(50,50) contour from the FCC&rsquo;s Contours API, computed from the licence figures along 360 radials with 1 arc-second terrain. It runs <span data-fill="kmmin">&hellip;</span> to <span data-fill="kmmax">&hellip;</span> km from the tower and covers <span data-fill="area">&hellip;</span> square km. It is a prediction, not a measurement.</li>
+              <li><strong>License:</strong> the FCC&rsquo;s FM Query (license file <span data-fill="file">&hellip;</span>, facility <span data-fill="facility">&hellip;</span>): class <span data-fill="class">&hellip;</span>, <span data-fill="erp">&hellip;</span> watts, non-directional, antenna center <span data-fill="amsl">&hellip;</span> m above sea level. The elevation data puts the ground at the tower <span data-fill="agl">&hellip;</span> m below that, which matches the license. The station also holds a license for a backup transmitter in central Tucson, shown on the map and not modeled.</li>
+              <li><strong>FCC contour:</strong> the 60 dBu F(50,50) contour from the FCC&rsquo;s Contours API, computed from the license figures along 360 radials with 1 arc-second terrain. It runs <span data-fill="kmmin">&hellip;</span> to <span data-fill="kmmax">&hellip;</span> km from the tower and covers <span data-fill="area">&hellip;</span> square km. It is a prediction, not a measurement.</li>
               <li><strong>People:</strong> 2020 Census blocks: residents, and occupied housing units as households (PL 94-171 table H1). A block wholly inside the contour counts in full, and a block the contour cuts counts by the share of its area inside.</li>
               <li><strong>Terrain model:</strong> the Irregular Terrain Model (Longley-Rice) in point-to-point mode, run with the itmlogic Python package over USGS 3DEP elevation at 30&nbsp;m. 720 radials from the tower, a terrain profile every 100&nbsp;m, a receiver every 200&nbsp;m out to <span data-fill="radius">&hellip;</span> km. Median in time, place and situation, to line up with the FCC&rsquo;s F(50,50). Each block takes the value at its internal point.</li>
               <li><strong>Receiver heights:</strong> 9.1&nbsp;m is the rooftop antenna the FCC&rsquo;s curves assume, so it is the fair comparison with the contour. 1.5&nbsp;m is a car aerial or a radio on a table.</li>

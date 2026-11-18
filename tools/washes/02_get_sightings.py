@@ -1,7 +1,7 @@
 """Step 1b: research-grade iNaturalist records of the focal species.
 
 Keeps the observation id (which links back to the record and its observer on
-iNaturalist), date, position, stated accuracy and licence. Observer names are
+iNaturalist), date, position, stated accuracy and license. Observer names are
 not kept. Records whose position the observer or iNaturalist has obscured are
 left out, since an obscured point can be 20 km off.
 
@@ -59,7 +59,7 @@ def inat_records(taxon_id, box):
                 geometry=dict(type="Point", coordinates=[float(lon), float(lat)]),
                 properties=dict(id=o["id"], date=o.get("observed_on"),
                                 accuracy_m=o.get("positional_accuracy"),
-                                licence=o.get("license_code"))))
+                                license=o.get("license_code"))))
         if len(page) < 200:
             return out
         above = page[-1]["id"]

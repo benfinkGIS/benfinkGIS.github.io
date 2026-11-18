@@ -97,7 +97,7 @@
    "county_min": 0.5,
    "riparian_min": 0.5,
    "street_max": 0.2,
-   "labelled_a_wash": {
+   "labeled_a_wash": {
     "pct": 78.5,
     "low": 69.2,
     "high": 86.7,
@@ -161,7 +161,7 @@
      "n": 159
     }
    },
-   "of_reaches_labelled_a_wash": {
+   "of_reaches_labeled_a_wash": {
     "natural": {
      "pct": 79.7,
      "low": 69.1,
@@ -181,7 +181,7 @@
      "n": 107
     }
    },
-   "colour_rule": {
+   "color_rule": {
     "called_concrete": 60,
     "of_which_concrete": 3,
     "concrete_labels_in_sample": 7
@@ -274,7 +274,7 @@
     }
    }
   },
-  "labelled_between": [
+  "labeled_between": [
    "2026-11-14",
    "2026-11-15"
   ]
@@ -304,7 +304,7 @@
    "impeded",
    "diffuse",
    "intensified",
-   "channelled"
+   "channeled"
   ],
   "near_wash_share_of_area": 0.2834,
   "species": {
@@ -322,9 +322,9 @@
      "impeded": 0.3567,
      "diffuse": 0.5287,
      "intensified": 0.0901,
-     "channelled": 0.0245
+     "channeled": 0.0245
     },
-    "channelled_near_wash": 0.5258,
+    "channeled_near_wash": 0.5258,
     "funnelled_near_wash": 0.449,
     "wash_cells_funnelled": 0.2278,
     "normalized_on_wash_cells": 1.068,
@@ -351,9 +351,9 @@
      "impeded": 0.7205,
      "diffuse": 0.23,
      "intensified": 0.0247,
-     "channelled": 0.0248
+     "channeled": 0.0248
     },
-    "channelled_near_wash": 0.4904,
+    "channeled_near_wash": 0.4904,
     "funnelled_near_wash": 0.4454,
     "wash_cells_funnelled": 0.104,
     "normalized_on_wash_cells": 0.351,
@@ -373,9 +373,9 @@
      "impeded": 0.2233,
      "diffuse": 0.5696,
      "intensified": 0.0925,
-     "channelled": 0.1146
+     "channeled": 0.1146
     },
-    "channelled_near_wash": 0.7769,
+    "channeled_near_wash": 0.7769,
     "funnelled_near_wash": 0.6617,
     "wash_cells_funnelled": 0.9677,
     "normalized_on_wash_cells": 1.987,
@@ -481,7 +481,7 @@
   },
   "reaches_ranked": 9202,
   "settings": {
-   "_about": "Resistance and source settings for the connectivity model (tools/washes/14_surfaces.py and 15_omniscape.py). Resistance is how hard a 10 m cell is to cross, 1 being easiest. These numbers are set by judgement, with the published findings they lean on listed in the README; none is fitted to data.",
+   "_about": "Resistance and source settings for the connectivity model (tools/washes/14_surfaces.py and 15_omniscape.py). Resistance is how hard a 10 m cell is to cross, 1 being easiest. These numbers are set by judgment, with the published findings they lean on listed in the README; none is fitted to data.",
    "cell_m": 10,
    "bobcat": {
     "radius_m": 2500,

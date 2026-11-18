@@ -211,8 +211,8 @@
   }
   function renderMap() {
     var cap = $("map-cap");
-    if (cap) cap.textContent = "Each cell is coloured by how many of its residents are more than " + T() +
-      " minutes from the Loop. Grey cells have residents, all of them within " + T() + " minutes.";
+    if (cap) cap.textContent = "Each cell is colored by how many of its residents are more than " + T() +
+      " minutes from the Loop. Gray cells have residents, all of them within " + T() + " minutes.";
     hexLayers.forEach(function (p) { p[0].setStyle(cellStyle(p[1])); });
     var legend = $("map-legend");
     if (!legend) return;

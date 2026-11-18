@@ -1,4 +1,4 @@
-"""Local server for the accuracy labelling page.
+"""Local server for the accuracy labeling page.
 
 Serves tools/canopy-label/ and the image chips, and saves each label to
 tucson-canopy/work/accuracy/labels.json as it is made, so nothing has to be
@@ -74,5 +74,5 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8770
-    print(f"labelling page on http://localhost:{port}/", flush=True)
+    print(f"labeling page on http://localhost:{port}/", flush=True)
     ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()

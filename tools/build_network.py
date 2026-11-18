@@ -261,7 +261,7 @@ def private_pass(prep, t_pub):
 
 
 def time_to_loop(g, loop_nodes):
-    """Minutes from every node to the nearest Loop node, travelling legally toward it.
+    """Minutes from every node to the nearest Loop node, traveling legally toward it.
     Returns (minutes, minutes on public streets only, nodes that have no public street)."""
     prep = prepare_search(g)
     t_pub = dijkstra(prep["public"], directed=True, indices=loop_nodes, min_only=True)

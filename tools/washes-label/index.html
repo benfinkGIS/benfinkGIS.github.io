@@ -70,22 +70,22 @@
     <h1>Wash Crossings and Channel Beds Check</h1>
     <span id="count">Loading</span>
   </header>
-  <div id="bar" role="progressbar" aria-label="Items labelled"><i></i></div>
+  <div id="bar" role="progressbar" aria-label="Items labeled"><i></i></div>
   <div id="done"><strong>Every item has a label.</strong> You can close this page; the labels are
     already saved. Use Back to revisit any item.</div>
   <p id="ask">&nbsp;</p>
 
   <div class="views">
     <figure>
-      <div class="img"><img id="rgb" alt="Close view, natural colour"><svg id="x1" viewBox="0 0 420 420"></svg></div>
+      <div class="img"><img id="rgb" alt="Close view, natural color"><svg id="x1" viewBox="0 0 420 420"></svg></div>
       <figcaption id="cap1">&nbsp;</figcaption>
     </figure>
     <figure>
-      <div class="img"><img id="cir" alt="Close view, colour infrared"><svg id="x2" viewBox="0 0 420 420"></svg></div>
-      <figcaption>Colour infrared, same view. Living plants show red; concrete, sand and asphalt do not.</figcaption>
+      <div class="img"><img id="cir" alt="Close view, color infrared"><svg id="x2" viewBox="0 0 420 420"></svg></div>
+      <figcaption>Color infrared, same view. Living plants show red; concrete, sand and asphalt do not.</figcaption>
     </figure>
     <figure>
-      <div class="img"><img id="wide" alt="Wide view, natural colour"><svg id="x3" viewBox="0 0 420 420"></svg></div>
+      <div class="img"><img id="wide" alt="Wide view, natural color"><svg id="x3" viewBox="0 0 420 420"></svg></div>
       <figcaption id="cap3">&nbsp;</figcaption>
     </figure>
   </div>
@@ -94,7 +94,7 @@
   <div class="nav">
     <button id="back" type="button">&larr; Back</button>
     <button id="next" type="button">Next &rarr;</button>
-    <button id="todo" type="button">Next unlabelled</button>
+    <button id="todo" type="button">Next unlabeled</button>
     <button id="clear" type="button">Clear this label</button>
     <button id="hide" type="button" aria-pressed="false">Hide marks (H)</button>
     <a class="btn" id="gmap" target="_blank" rel="noopener">Open this spot in Google Maps</a>
@@ -121,7 +121,7 @@
     </ul>
     <ul>
       <li>If you honestly cannot say, choose <strong>Can't tell</strong>. Those are counted and reported, not guessed.</li>
-      <li>Keys: <kbd>1</kbd> to <kbd>4</kbd> for a class, <kbd>0</kbd> for can't tell, <kbd>H</kbd> to hide the marks, <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to move. A label saves at once and moves to the next unlabelled item.</li>
+      <li>Keys: <kbd>1</kbd> to <kbd>4</kbd> for a class, <kbd>0</kbd> for can't tell, <kbd>H</kbd> to hide the marks, <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to move. A label saves at once and moves to the next unlabeled item.</li>
     </ul>
   </details>
 </main>
@@ -153,12 +153,12 @@ function marks(task) {
 function show() {
   const id = ids[at], item = meta.items[id], task = TASKS[item.task], n = Object.keys(labels).length;
   for (const k of ["rgb", "cir", "wide"]) $(k).src = `/chips/${id}_${k}.jpg`;
-  $("count").textContent = `Item ${at + 1} of ${ids.length} · ${n} labelled`;
+  $("count").textContent = `Item ${at + 1} of ${ids.length} · ${n} labeled`;
   $("bar").firstElementChild.style.width = `${n / ids.length * 100}%`;
   $("bar").setAttribute("aria-valuenow", n);
   $("bar").setAttribute("aria-valuemax", ids.length);
   $("ask").innerHTML = `${task.ask}<small>${task.tag}</small>`;
-  $("cap1").textContent = `Natural colour, ${meta.close_m[item.task]} m across. The spot is where the ticks point.`;
+  $("cap1").textContent = `Natural color, ${meta.close_m[item.task]} m across. The spot is where the ticks point.`;
   $("cap3").textContent = `Wide view, ${meta.wide_m} m across. The yellow box is the close view.`;
   $("gmap").href = `https://www.google.com/maps/@?api=1&map_action=map&center=${item.lat},${item.lon}&zoom=20&basemap=satellite`;
   const cur = labels[id] ? labels[id].label : null;

@@ -3,7 +3,7 @@
 // surface with the aerial photo on it, today's canopy as the lidar canopy surface, and the
 // proposed trees at mature size. The sun slider moves real shadows through 15 July.
 // Reads data/3d/ (written by tools/canopy/24_web3d_export.py). Units are meters.
-// +X is east, +Y is up, north is -Z. The block is centred on the origin.
+// +X is east, +Y is up, north is -Z. The block is centered on the origin.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
@@ -224,14 +224,14 @@ function buildSite(data) {
   const has = (i) => k.a[i] > 0;
   const crowns = surface(n, cell, (i) => has(i) ? g.a[i] + Math.max(smooth[i], 1.2) : g.a[i] - 1.5,
     (a, b, d, e) => has(a) || has(b) || has(d) || has(e));
-  const colours = new Float32Array(crowns.attributes.position.count * 3);
+  const colors = new Float32Array(crowns.attributes.position.count * 3);
   const dark = new THREE.Color(TODAY_GREEN[0]), light = new THREE.Color(TODAY_GREEN[1]), tmp = new THREE.Color();
-  for (let i = 0; i < colours.length / 3; i++) {
+  for (let i = 0; i < colors.length / 3; i++) {
     const x = crowns.attributes.position.getX(i), z = crowns.attributes.position.getZ(i);
     tmp.copy(dark).lerp(light, 0.5 + 0.5 * Math.sin(x * 0.31) * Math.cos(z * 0.27));
-    colours.set([tmp.r, tmp.g, tmp.b], i * 3);
+    colors.set([tmp.r, tmp.g, tmp.b], i * 3);
   }
-  crowns.setAttribute('color', new THREE.BufferAttribute(colours, 3));
+  crowns.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   const canopy = new THREE.Mesh(crowns, new THREE.MeshLambertMaterial({ vertexColors: true }));
   canopy.castShadow = true; canopy.receiveShadow = true;
   group.add(canopy);
@@ -243,7 +243,7 @@ function buildSite(data) {
   let rand = 7;
   const random = () => { rand = (rand * 16807) % 2147483647; return rand / 2147483647; };
   meta.species.forEach((sp, s) => {
-    const geo = crownGeometry(s), mat = new THREE.MeshLambertMaterial({ color: sp.colour });
+    const geo = crownGeometry(s), mat = new THREE.MeshLambertMaterial({ color: sp.color });
     const half = (sp.height - base) / 2;
     for (let tier = 1; tier <= 3; tier++) {
       const mine = meta.trees.filter((t) => t[3] === s && t[4] === tier);

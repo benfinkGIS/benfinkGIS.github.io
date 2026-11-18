@@ -3,29 +3,29 @@
 
 Usage (from the repo root, after tools/build_loop.py and tools/build_network.py):
     py tools/build_loop_beer.py             # uses cached downloads where it has them
-    py tools/build_loop_beer.py --refresh   # download the licences and OSM places again
+    py tools/build_loop_beer.py --refresh   # download the licenses and OSM places again
 
 Needs Python 3 with numpy, scipy and shapely.
 
 What it does
 ------------
-Places    Active Arizona liquor licences in Pima County, from the City of Tucson's public
-          "Liquor License - Active" map layer (the state's licence list, downloaded daily
-          and geocoded by the City and Pima County). Only licences to pour on the premises
+Places    Active Arizona liquor licenses in Pima County, from the City of Tucson's public
+          "Liquor License - Active" map layer (the state's license list, downloaded daily
+          and geocoded by the City and Pima County). Only licenses to pour on the premises
           are used: series 3 (microbrewery), 6 (bar), 7 (beer and wine bar), 11 (hotel) and
           12 (restaurant). Shops, wholesalers, private clubs, government and one-off permits
-          are left out. Several licences at one address under one name are one place.
-          Licensee names are never read: only the business name, address and licence number.
+          are left out. Several licenses at one address under one name are one place.
+          Licensee names are never read: only the business name, address and license number.
 
-Kinds     brewery     holds a microbrewery licence, or has "brewing", "brewery" or
+Kinds     brewery     holds a microbrewery license, or has "brewing", "brewery" or
                       "cider house" in its name
-          bar         bar licence (series 6)
-          beerwine    beer and wine bar licence (series 7)
-          restaurant  restaurant licence (series 12)
+          bar         bar license (series 6)
+          beerwine    beer and wine bar license (series 7)
+          restaurant  restaurant license (series 12)
           venue       hotels, resorts, golf clubs, cinemas and the like, picked out by name
-                      (VENUE_RE), whatever licence they hold
+                      (VENUE_RE), whatever license they hold
 
-Names     The licence list is in capitals. Where OpenStreetMap has a bar, pub, brewery or
+Names     The license list is in capitals. Where OpenStreetMap has a bar, pub, brewery or
           restaurant of a similar name within OSM_MATCH_M, its spelling, website and opening
           hours are used; otherwise the name is put in title case by rule.
 
@@ -38,14 +38,14 @@ Ride      The fastest legal ride from the Loop to each place over the street-and
 Section   The part of the Loop a route leaves from, named after the nearest of the rivers
           and washes the Loop follows (from OpenStreetMap), or the Loop path's own name.
 
-Location  The licence points are the City's geocoding of the licence addresses, and about one
+Location  The license points are the City's geocoding of the license addresses, and about one
           in a hundred is well off (for example a few East Congress addresses placed on West
           Congress). Where OpenStreetMap has the only similarly named place within OSM_FAR_M
           and its house number agrees (or it has none and the place is not a numbered chain
           store), the place is moved there. Every move is listed in the output's metadata.
 
 Edits     tools/loop_beer_edits.json, if present, can drop places by name, change kinds and
-          move places the rule above cannot fix (names as in the licence list, in capitals):
+          move places the rule above cannot fix (names as in the license list, in capitals):
           {"exclude": ["NAME", ...], "kind": {"NAME": "bar", ...}, "move": {"NAME": [lon, lat], ...}}
 
 Output
@@ -79,12 +79,12 @@ from build_network import M_LAT, M_LON, SPEED_MPH, STUDY_BBOX, fastest_matrix
 
 MAX_MIN = 10.0              # places farther than this from the Loop are left out
 FAR_SNAP_M = 150            # a place attached to the network from farther than this is flagged
-SAME_PLACE_M = 60           # licences this close together under one name are one place
-OSM_MATCH_M = 200           # how far an OSM place may be from the licence point and still match
+SAME_PLACE_M = 60           # licenses this close together under one name are one place
+OSM_MATCH_M = 200           # how far an OSM place may be from the license point and still match
 OSM_FAR_M = 2000            # ...and how far away a lone namesake is looked for when the point may be wrong
 SECTION_NEAR_M = 500        # an exit this close to a river or wash takes its name
 THIN_DEG = 0.00003          # about 3 m: route lines are thinned this much for drawing
-LICENCES = "https://gis.tucsonaz.gov/public/rest/services/PublicMaps/PermitsCode/MapServer/16/query"
+LICENSES = "https://gis.tucsonaz.gov/public/rest/services/PublicMaps/PermitsCode/MapServer/16/query"
 SERIES = {3: "Microbrewery", 6: "Bar", 7: "Beer and wine bar", 11: "Hotel or motel", 12: "Restaurant"}
 KINDS = ("brewery", "bar", "beerwine", "restaurant", "venue")
 BREW_RE = re.compile(r"BREWING|BREWERY|BREWERS|BREW ?HOUSE|CIDER HOUSE")
@@ -163,7 +163,7 @@ def dist_m(a, b):
     return math.hypot((a["lon"] - b["lon"]) * M_LON, (a["lat"] - b["lat"]) * M_LAT)
 
 
-# ---- licences ------------------------------------------------------------------------
+# ---- licenses ------------------------------------------------------------------------
 def series_of(no):
     no = (no or "").strip()
     if re.fullmatch(r"0\d{11}", no):            # current numbering: three digits of series first
@@ -173,7 +173,7 @@ def series_of(no):
     return None                                 # interim permits, growler and sampling add-ons, and so on
 
 
-def fetch_licences(cache, refresh):
+def fetch_licenses(cache, refresh):
     f = cache / "tucson_liquor_active.json"
     if f.exists() and not refresh:
         return json.loads(f.read_text(encoding="utf-8"))
@@ -184,17 +184,17 @@ def fetch_licences(cache, refresh):
             "outSR": 4326, "orderByFields": "OBJECTID", "resultOffset": offset, "resultRecordCount": page, "f": "json"})
         for attempt in range(4):
             try:
-                req = urllib.request.Request(LICENCES + "?" + q, headers={"User-Agent": UA})
+                req = urllib.request.Request(LICENSES + "?" + q, headers={"User-Agent": UA})
                 with urllib.request.urlopen(req, timeout=120) as r:
                     d = json.loads(r.read().decode("utf-8"))
                 if "error" in d:
                     raise RuntimeError(d["error"])
                 break
             except Exception as e:
-                print("  licence layer: %s" % e, file=sys.stderr)
+                print("  license layer: %s" % e, file=sys.stderr)
                 time.sleep(5 * (attempt + 1))
         else:
-            raise SystemExit("The licence layer did not answer; nothing written.")
+            raise SystemExit("The license layer did not answer; nothing written.")
         feats = d.get("features", [])
         rows += [dict(ft["attributes"], lon=ft["geometry"]["x"], lat=ft["geometry"]["y"]) for ft in feats if ft.get("geometry")]
         offset += len(feats)
@@ -205,7 +205,7 @@ def fetch_licences(cache, refresh):
     return data
 
 
-def places_from_licences(rows, edits):
+def places_from_licenses(rows, edits):
     s, w, n, e = STUDY_BBOX
     exclude = {x.strip().upper() for x in edits.get("exclude", [])}
     forced = {k.strip().upper(): v for k, v in edits.get("kind", {}).items()}
@@ -291,7 +291,7 @@ def way_geometries(cache, wanted):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--refresh", action="store_true", help="download the licences and OSM places again")
+    ap.add_argument("--refresh", action="store_true", help="download the licenses and OSM places again")
     ap.add_argument("--cache-dir", default=str(Path(tempfile.gettempdir()) / "finkgeo_loop_cache"))
     ap.add_argument("--server", help="Overpass interpreter URL to try first")
     args = ap.parse_args()
@@ -305,10 +305,10 @@ def main():
         OVERPASS.insert(0, args.server)
     edits = json.loads(EDITS_FILE.read_text(encoding="utf-8")) if EDITS_FILE.exists() else {}
 
-    print("1/5 liquor licences (City of Tucson layer)", flush=True)
-    lic = fetch_licences(cache, args.refresh)
-    places, dropped = places_from_licences(lic["rows"], edits)
-    print("  %d licences in the county, %d places to pour in the study area" % (len(lic["rows"]), len(places)), flush=True)
+    print("1/5 liquor licenses (City of Tucson layer)", flush=True)
+    lic = fetch_licenses(cache, args.refresh)
+    places, dropped = places_from_licenses(lic["rows"], edits)
+    print("  %d licenses in the county, %d places to pour in the study area" % (len(lic["rows"]), len(places)), flush=True)
 
     print("2/5 names and rivers from OpenStreetMap", flush=True)
     osm, osm_date = fetch_osm(cache, args.refresh)
@@ -320,7 +320,7 @@ def main():
         hits = sorted((dist_m(p, osm[j]), j) for j in near if similar(p["key"], osm[j]["key"]))
         o = osm[hits[0][1]] if hits else None
         if o and hits[0][0] > OSM_MATCH_M:
-            # A namesake, but not close. Trust it over the licence point only when it is the only one around
+            # A namesake, but not close. Trust it over the license point only when it is the only one around
             # and the house numbers agree (or OSM has none and this is not one branch of a numbered chain).
             house = re.match(r"\d+", p["addr"])
             agree = o["house"] == house.group(0) if (o["house"] and house) else (not o["house"] and "#" not in p["raw"])
@@ -434,8 +434,8 @@ def main():
     out.sort(key=lambda s: (s["min"], s["name"]))
 
     meta = {"generated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-            "status": "Places as the licence list has them, not checked on the ground",
-            "licences_downloaded": lic["downloaded"], "osm_names_as_of": osm_date,
+            "status": "Places as the license list has them, not checked on the ground",
+            "licenses_downloaded": lic["downloaded"], "osm_names_as_of": osm_date,
             "max_minutes": MAX_MIN, "speed_mph": SPEED_MPH["bike"],
             "places_in_study_area": len(places), "places_within_max": len(out),
             "by_kind": {kd: sum(s["kind"] == kd for s in out) for kd in KINDS},

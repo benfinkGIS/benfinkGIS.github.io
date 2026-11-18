@@ -1,4 +1,4 @@
-"""Local server for the crossing and channel-bed labelling page.
+"""Local server for the crossing and channel-bed labeling page.
 
 Serves tools/washes-label/ and the image chips, and saves each label to
 tucson-washes/work/check/labels.json as it is made, so nothing has to be
@@ -74,5 +74,5 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8771
-    print(f"labelling page on http://localhost:{port}/", flush=True)
+    print(f"labeling page on http://localhost:{port}/", flush=True)
     ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()

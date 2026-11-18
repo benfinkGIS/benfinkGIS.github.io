@@ -6,7 +6,7 @@ strip to strip. Instead of assuming one sun, this fits the brightness of the
 photo against the direction each slope faces, separately around every spot
 (a smooth moving window), and divides that pattern out:
 
-    brightness = ground colour x (c0 + c1*nx + c2*ny + c3*(1 - nz))
+    brightness = ground color x (c0 + c1*nx + c2*ny + c3*(1 - nz))
 
 where (nx, ny, nz) is the surface normal from the elevation grid. That is
 what sunlight plus skylight on a matte surface looks like, whatever the sun
@@ -17,9 +17,9 @@ ground is left as it is.
 Slopes in full shadow do not follow that pattern (they get no sun at all), so
 they are handled separately: pixels on sloping ground that are both darker
 and bluer than their surroundings are marked as shadow, left out of the fit,
-and then given the colour of the sunlit ground around them, keeping only
+and then given the color of the sunlit ground around them, keeping only
 their own light-and-dark detail. Flat ground is never treated as shadow, so
-streets and roofs keep their colour.
+streets and roofs keep their color.
 
 Limits: slopes that are darker because more grows on them (north-facing
 ones) are lightened along with the shading, detail inside deep shadow stays
@@ -74,7 +74,7 @@ def log_lum_blue(rgb):
 
 
 def fit_coefficients(rgb, nx, ny, nz, cell, weight):
-    """Moving-window weighted least squares of each colour band on
+    """Moving-window weighted least squares of each color band on
     (1, nx, ny, 1 - nz). Returns an array (rows, cols, 4 terms, 3 bands)."""
     feats = [np.ones_like(nx), nx, ny, 1.0 - nz]
     sigma = WINDOW_M / cell
@@ -136,7 +136,7 @@ def main():
                           + up(rel[:, :, 2, c]) * (1.0 - unz) for c in range(3)], -1)
         return np.clip(shade, 1 / GAIN[1], 1 / GAIN[0])
 
-    # Inside shadow: the colour of sunlit ground nearby (after flattening),
+    # Inside shadow: the color of sunlit ground nearby (after flattening),
     # plus the pixel's own brightness relative to the shadow around it
     flat10 = small / shade_at(lum.shape)
     sun_w = np.maximum(blur(sunlit, SHADOW_WIN_M), 1e-3)

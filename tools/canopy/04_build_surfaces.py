@@ -279,7 +279,7 @@ def build(site):
 def main():
     for ext in ("Spatial", "3D"):
         if arcpy.CheckOutExtension(ext) != "CheckedOut":
-            raise SystemExit(f"{ext} Analyst licence not available")
+            raise SystemExit(f"{ext} Analyst license not available")
     for s in sites(sys.argv[1:]):
         build(s)
 

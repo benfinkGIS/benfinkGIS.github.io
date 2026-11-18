@@ -122,7 +122,7 @@
     b.appendChild(document.createTextNode(" residents (" + pct(farTotal(), data.meta.population) + ") are more than " + T() + " min away"));
   }
 
-  // ---- map: hexagons coloured by residents far from the Loop ----
+  // ---- map: hexagons colored by residents far from the Loop ----
   function cellClass(far) {
     if (far <= 0) return 0;
     for (var k = BREAKS.length - 1; k >= 0; k--) if (far >= BREAKS[k]) return k + 1;
@@ -180,8 +180,8 @@
     map.fitBounds(group.getBounds(), { padding: [10, 10] });
   }
   function renderMap() {
-    $("map-cap").textContent = "Each cell is coloured by how many of its residents are more than " + T() +
-      " minutes from the Loop. Grey cells have residents, all of them within " + T() + " minutes.";
+    $("map-cap").textContent = "Each cell is colored by how many of its residents are more than " + T() +
+      " minutes from the Loop. Gray cells have residents, all of them within " + T() + " minutes.";
     if (!map) return;
     setBasemap();
     hexLayers.forEach(function (p) { p[0].setStyle(cellStyle(p[1])); });
@@ -381,13 +381,13 @@
     var o = data.meta.outside_study_area, b = data.meta.study_bbox_south_west_north_east, host = $("notes");
     [["Ride time", "the shortest legal route from home to the nearest point on the Loop, over streets and paths from OpenStreetMap, at " + SPEED_MPH +
         " mph. Nothing is added for traffic: a mile on a fast arterial counts the same as a mile on a quiet street. Most people would not ride every one of these routes, so the true reach is smaller than shown."],
-     ["Residents", "2020 Census counts by block. Each block's people are placed at the block's centre point, which is rough for the large blocks at the desert edge."],
+     ["Residents", "2020 Census counts by block. Each block's people are placed at the block's center point, which is rough for the large blocks at the desert edge."],
      ["The Loop", "a draft extent of " + data.meta.loop_miles + " miles assembled from OpenStreetMap. It has not been checked section by section."],
      ["Study area", "latitude " + b[0] + " to " + b[2] + ", longitude " + b[1] + " to " + b[3] + ". Another " + fmt(o.population) +
         " Pima County residents live outside it (Green Valley, Sahuarita, Ajo and other places). The closest of them is " + o.nearest_straight_line_miles +
         " miles from the Loop in a straight line, and " + fmt(o.population_within_5_straight_line_miles) + " are within 5 straight-line miles. They are not in any figure above."],
      ["Communities", "2020 Census cities, towns and census-designated places. “Tucson” means inside the city limits."],
-     ["Map cells", "hexagons " + data.meta.hex_radius_m + " m from centre to corner, about 0.6 square miles each."]
+     ["Map cells", "hexagons " + data.meta.hex_radius_m + " m from center to corner, about 0.6 square miles each."]
     ].concat(segs ? [["Candidate segments", "every named wash in OpenStreetMap (leaving out the parts within " + segs.meta.loop_near_m +
         " m of the Loop) and every existing paved bike path of " + segs.meta.min_path_miles + " miles or more that is not part of the Loop was scored as if it were Loop. " +
         "An existing path is entered at its real junctions. A path that does not exist yet is assumed reachable from any public street or path within " + segs.meta.access_m +

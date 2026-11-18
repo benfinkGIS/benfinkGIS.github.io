@@ -91,7 +91,7 @@ def detail(a):
     return np.where(ok & (share > 0.3), a - total / np.maximum(share, 1e-6), np.nan)
 
 
-def standardise(a):
+def standardize(a):
     return np.nan_to_num((a - np.nanmean(a)) / np.nanstd(a))
 
 
@@ -193,7 +193,7 @@ def main():
 
     # ---- 4. where each scene sits, against Landsat's fine detail ------------
     ref_detail = detail(city["lst"].astype(float))
-    ref_z = standardise(ref_detail)
+    ref_z = standardize(ref_detail)
     stack, used, dropped = [], [], []
     for s in scenes:
         blocks = to_blocks(s)
@@ -202,7 +202,7 @@ def main():
         if clear < MIN_CLEAR:
             dropped.append(dict(local=when, clear=round(clear, 2), why="cloud"))
             continue
-        down, right, agree, agree_as_placed = best_shift(ref_z, standardise(detail(blocks.astype(float))))
+        down, right, agree, agree_as_placed = best_shift(ref_z, standardize(detail(blocks.astype(float))))
         east, north = right * BLOCK, -down * BLOCK
         if agree < MIN_DETAIL_R:
             dropped.append(dict(local=when, clear=round(clear, 2), why="detail does not match",

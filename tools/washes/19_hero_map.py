@@ -1,7 +1,7 @@
 """Step 11: the static map for slides and the top of the write-up.
 
-One 16:9 picture: the 2023 imagery in grey, the ground that gathers the
-modelled movement of one, two or all three animals, the interstate and the
+One 16:9 picture: the 2023 imagery in gray, the ground that gathers the
+modeled movement of one, two or all three animals, the interstate and the
 state route, and the listed gaps with their tags; beside it the gap list.
 
 Writes downloads/wash_corridors_gaps.jpg (3840 x 2160) and a 1600-pixel copy
@@ -39,7 +39,7 @@ PLACES = [("Tucson Mountains", 490300, 3570200, 0), ("Santa Catalina\nMountains"
 LINES = [("Interstate 10", 493900, 3576500, -53), ("Oracle Road", 501650, 3570300, 90),
          ("Rillito River", 505000, 3572650, -8), ("Cañada del Oro", 500250, 3582950, 42),
          ("Santa Cruz River", 494050, 3574600, -55)]
-# where each tag sits relative to its gap, in meters, so that neighbours do not collide
+# where each tag sits relative to its gap, in meters, so that neighbors do not collide
 NUDGE = {"F3": (-750, 300), "Q5": (450, -520), "B2": (350, 450), "B4": (500, 350), "B3": (500, 350)}
 
 
@@ -57,16 +57,16 @@ def base_image():
         BASE.parent.mkdir(exist_ok=True)
         np.save(BASE, out)
     a = np.load(BASE).astype("float32")
-    grey = a @ np.array([0.30, 0.59, 0.11], "float32")
+    gray = a @ np.array([0.30, 0.59, 0.11], "float32")
     bad = a[..., 2] == 0                      # two small squares with no blue band in the source tiles
-    grey[bad] = np.median(grey)
-    grey = np.clip((grey - 40) / 170, 0, 1) ** 1.15
-    tint = np.array([0.50, 0.52, 0.50], "float32")          # dark, slightly cool, so the colours carry
-    return (grey[..., None] * tint * 255).astype("uint8")
+    gray[bad] = np.median(gray)
+    gray = np.clip((gray - 40) / 170, 0, 1) ** 1.15
+    tint = np.array([0.50, 0.52, 0.50], "float32")          # dark, slightly cool, so the colors carry
+    return (gray[..., None] * tint * 255).astype("uint8")
 
 
-def halo(width=2.2, colour=PAPER):
-    return [patheffects.withStroke(linewidth=width, foreground=colour)]
+def halo(width=2.2, color=PAPER):
+    return [patheffects.withStroke(linewidth=width, foreground=color)]
 
 
 def main():
@@ -124,7 +124,7 @@ def main():
     panel.text(0, y, "Where northwest Tucson’s washes\ncarry wildlife, and where they break", color=INK,
                fontsize=17.5, fontweight="bold", va="top", linespacing=1.15)
     y -= 0.105
-    panel.text(0, y, "Modelled movement of bobcat, vermilion flycatcher and queen butterfly\n"
+    panel.text(0, y, "Modeled movement of bobcat, vermilion flycatcher and queen butterfly\n"
                      "between the Tucson Mountains and the Catalinas, Grant Road to Tangerine Road",
                color=MUTED, fontsize=8.6, va="top", linespacing=1.35)
     y -= 0.075
@@ -132,7 +132,7 @@ def main():
         x = (i - 1) * 0.2
         panel.add_patch(Rectangle((x, y - 0.018), 0.035, 0.018, fc=np.array(COUNT_RGBA[i][:3]) / 255, ec=INK, lw=0.4))
         panel.text(x + 0.045, y - 0.009, label, color=INK, fontsize=8.6, va="center")
-    panel.text(0.62, y - 0.009, "Ground that gathers\nmodelled movement", color=MUTED, fontsize=7.6, va="center",
+    panel.text(0.62, y - 0.009, "Ground that gathers\nmodeled movement", color=MUTED, fontsize=7.6, va="center",
                linespacing=1.2)
     y -= 0.05
     for sp, name, what in SPECIES:
@@ -153,7 +153,7 @@ def main():
     panel.plot([0, 1], [y, y], color=MUTED, lw=0.5)
     y -= 0.014
     auc = {sp: valid[sp]["against_group"]["current"] for sp, _, _ in SPECIES}
-    note = ("Figures at right: modelled movement through the gap now and with the repair, as a multiple of what "
+    note = ("Figures at right: modeled movement through the gap now and with the repair, as a multiple of what "
             "uniform open ground would carry. Each gap was found by rerunning the model with that one repair made. "
             f"Checked against iNaturalist records, only the flycatcher model beats chance ({100 * auc['flycatcher']['auc']:.0f}% "
             f"against {100 * auc['bobcat']['auc']:.0f}% for the bobcat and {100 * auc['queen']['auc']:.0f}% for the queen, "

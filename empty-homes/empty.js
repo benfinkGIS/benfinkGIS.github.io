@@ -345,9 +345,9 @@
     setMsg(statusText());
     var legend = $("map-legend");
     legend.textContent = "";
-    function item(cls, text, colour) {
+    function item(cls, text, color) {
       var li = el("li"), s = el("span", cls);
-      if (colour) s.style.background = colour;
+      if (color) s.style.background = color;
       li.appendChild(s);
       li.appendChild(el("span", null, text));
       legend.appendChild(li);

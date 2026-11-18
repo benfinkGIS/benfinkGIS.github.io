@@ -30,7 +30,7 @@ STEPS = [
     (6, "06_get_context.py", [], "Download USGS 3DEP terrain around the lake"),
     (7, "07_build_terrain.py", [], "Merge the lake DEM and 3DEP into the 30 m whole-lake terrain"),
     (8, "09_yearly_levels.py", [], "Make the one-row-per-year level table"),
-    (9, "10_check_landsat.py", [], "Check the modelled shoreline against Landsat on two days"),
+    (9, "10_check_landsat.py", [], "Check the modeled shoreline against Landsat on two days"),
     (10, "08_blender_scene.py", ["--view", "dam", "--levels", YEARLY], "Render one picture per year in Blender"),
     (11, "11_publish_slider.py", ["--view", "dam"], "Write the slider page's pictures and data"),
 ]

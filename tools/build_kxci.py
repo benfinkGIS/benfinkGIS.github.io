@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""KXCI 91.3 FM signal reach, step 1: licence, FCC contour and who lives inside it.
+"""KXCI 91.3 FM signal reach, step 1: license, FCC contour and who lives inside it.
 
 Usage (from the repo root):
     py tools/build_kxci.py              # uses cached downloads where it has them
@@ -10,13 +10,13 @@ Run tools/model_kxci_terrain.py next.
 
 Sources (all public, no key needed)
 -----------------------------------
-FM Query   transition.fcc.gov/fcc-bin/fmq, the FCC's licence database (LMS). This is
+FM Query   transition.fcc.gov/fcc-bin/fmq, the FCC's license database (LMS). This is
            where the current transmitter site, power and antenna height come from.
 Contours   geo.fcc.gov/api/contours. Two calls:
              coverage.json  the 60 dBu F(50,50) contour computed from the CURRENT
-                            licence figures, 360 radials, 1 arc-second terrain.
+                            license figures, 360 radials, 1 arc-second terrain.
              entity.json    what the API returns for call sign KXCI. As of November
-                            2026 that is still the 1991 Mt. Bigelow licence (0.34 kW),
+                            2026 that is still the 1991 Mt. Bigelow license (0.34 kW),
                             which the station left in April 2024. Kept for comparison,
                             never used as the service contour.
 Census     TIGER/Line 2020 tabulation blocks for Arizona (population and housing
@@ -25,7 +25,7 @@ Census     TIGER/Line 2020 tabulation blocks for Arizona (population and housing
 
 Method
 ------
-Everything is analysed in NAD83 / UTM 12N (EPSG:26912). A block wholly inside the
+Everything is analyzed in NAD83 / UTM 12N (EPSG:26912). A block wholly inside the
 contour counts in full; a block the contour cuts counts by the share of its area
 inside (areal weighting).
 
@@ -93,8 +93,8 @@ def cached(path, fetch, refresh=False):
     return path
 
 
-def licence_records(refresh):
-    """Current licence records for the call sign, from FM Query's pipe-delimited list."""
+def license_records(refresh):
+    """Current license records for the call sign, from FM Query's pipe-delimited list."""
     path = cached(RAW / "fmq_kxci.txt",
                   lambda: get(FMQ_URL, dict(call=CALL, list=4, size=9)).content, refresh)
     out = []
@@ -172,10 +172,10 @@ def main():
     args = ap.parse_args()
     RAW.mkdir(parents=True, exist_ok=True)
 
-    print("licence")
-    lic, others = licence_records(args.refresh)
+    print("license")
+    lic, others = license_records(args.refresh)
     print(f"  {lic['callsign']} {lic['frequency_mhz']} MHz class {lic['station_class']}: "
-          f"{lic['erp_kw']} kW, HAAT {lic['haat_m']} m, centre {lic['rcamsl_m']} m AMSL, "
+          f"{lic['erp_kw']} kW, HAAT {lic['haat_m']} m, center {lic['rcamsl_m']} m AMSL, "
           f"{lic['lat']}, {lic['lon']} (file {lic['file_number']})")
 
     print("contours")
@@ -185,7 +185,7 @@ def main():
              or abs(oldp["erp"] - lic["erp_kw"]) > 0.01)
     print(f"  call-sign lookup returns file {oldp['file_number']}: {oldp['erp']} kW at "
           f"{oldp['antenna_lat']:.4f}, {oldp['antenna_lon']:.4f}"
-          + ("  <-- NOT the current licence" if stale else ""))
+          + ("  <-- NOT the current license" if stale else ""))
     contours = gpd.GeoDataFrame(
         dict(name=["current", "callsign_lookup"],
              file_number=[lic["file_number"], oldp["file_number"]],
@@ -265,7 +265,7 @@ def main():
     by_place.sort(key=lambda r: -r["population"])
 
     summary = dict(
-        licence=lic, other_records=others,
+        license=lic, other_records=others,
         callsign_lookup=dict(oldp, stale=bool(stale)),
         contour_field_dbu=FIELD_DBU,
         contour_area_sqkm=round(cur_poly.area / 1e6),

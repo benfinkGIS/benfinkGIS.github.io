@@ -170,7 +170,7 @@ def build(site, when):
 
 
 def check_photo(site, date):
-    """Find the time of day at which modelled shadows best match the photo."""
+    """Find the time of day at which modeled shadows best match the photo."""
     d = site_dir(site)
     gdb = str(d / f"{site['id']}.gdb")
     x0, y0, x1, y1 = work_bbox(site)
@@ -214,7 +214,7 @@ def main():
     ap.add_argument("--date", default="2026-07-15")
     ap.add_argument("--time", default="16:00")
     ap.add_argument("--check-photo", metavar="FLIGHT_DATE",
-                    help="match modelled shadows to the photo, e.g. 2023-10-18")
+                    help="match modeled shadows to the photo, e.g. 2023-10-18")
     ap.add_argument("site", nargs="*")
     args = ap.parse_args()
     if args.check_photo:

@@ -13,7 +13,7 @@
 .stationviz #map { height: 580px; }
 @media (max-width: 700px) { .stationviz #map { height: 440px; } }
 
-/* Esri's road overlay draws highways in orange, the colour used here for sites: grey it out */
+/* Esri's road overlay draws highways in orange, the color used here for sites: gray it out */
 .stationviz .leaflet-labels-pane .leaflet-tile { filter: grayscale(1) brightness(1.15); }
 
 /* lettered site markers: a small beveled tag */

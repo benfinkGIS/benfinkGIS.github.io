@@ -13,16 +13,16 @@ Two samples, both stratified random with a fixed seed:
               some of it, little of it. The item is the reach's midpoint.
 
 For each item three 420 px chips come from the USGS NAIP service at its
-native 0.3 m: natural colour and colour infrared close up, and natural colour
+native 0.3 m: natural color and color infrared close up, and natural color
 wide. Writes to work/check/:
 
   points.json   item ids in shuffled order, with task and position only
-  key.json      what the rule said about each item. The labelling page is
+  key.json      what the rule said about each item. The labeling page is
                 never given this file.
   chips/        <id>_rgb.jpg, <id>_cir.jpg, <id>_wide.jpg
   sample_attrs.json   each item's measures as they were when it was drawn
 
-Once labelling has started a re-run only fetches chips that are still missing;
+Once labeling has started a re-run only fetches chips that are still missing;
 it never draws a new sample, which would orphan the labels.
 """
 import json
@@ -106,7 +106,7 @@ def main():
     if labels.exists() and json.loads(labels.read_text()):
         if not (OUT / "points.json").exists():
             raise SystemExit("labels exist but the sample is missing; not drawing a new one")
-        # Labelling has started: only fetch chips that are still missing.
+        # Labeling has started: only fetch chips that are still missing.
         pts = json.loads((OUT / "points.json").read_text())
         sr0, wgs0 = arcpy.SpatialReference(EPSG), arcpy.SpatialReference(4326)
         jobs = []

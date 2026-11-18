@@ -15,7 +15,7 @@ no vertical exaggeration:
   * today's trees: the lidar canopy surface itself, as green masses, so every
     crown has the size and shape the laser measured
   * proposed trees: one simple tree per planting spot, at its published
-    mature height and width, in each species' own foliage or bloom colour
+    mature height and width, in each species' own foliage or bloom color
   * light: a physical sky with the sun where it is at 4 p.m. on 15 July, the
     same position the shade analysis uses, so the shadows here are the ones
     counted there
@@ -57,11 +57,11 @@ SAMPLES = 48 if DRAFT else 256
 BASE_Z = -5.0                       # underside of the block
 BACKDROP = (0.80, 0.80, 0.78)
 EXISTING_GREEN = ((0.07, 0.17, 0.05), (0.13, 0.26, 0.08))
-# Proposed trees in the colours the plants themselves show, lighter than
-# today's canopy so they stand apart: grey-green mesquite, yellow and
+# Proposed trees in the colors the plants themselves show, lighter than
+# today's canopy so they stand apart: gray-green mesquite, yellow and
 # yellow-green palo verdes in bloom, pink desert willow. (The maps use the
-# site's chart colours instead; a blue tree looks wrong in a rendered scene.)
-RENDER_COLOURS = {
+# site's chart colors instead; a blue tree looks wrong in a rendered scene.)
+RENDER_COLORS = {
     "Velvet mesquite": (0.33, 0.47, 0.24),
     "Blue palo verde": (0.78, 0.68, 0.10),
     "Foothill palo verde": (0.55, 0.66, 0.17),
@@ -104,7 +104,7 @@ def new_mesh_object(name, verts, faces, uvs=None, smooth=False):
 
 
 def grid(z):
-    """Vertices at cell centres and the quads between them."""
+    """Vertices at cell centers and the quads between them."""
     yy, xx = np.mgrid[0:N, 0:N]
     verts = np.stack([(xx + 0.5) * CELL, (yy + 0.5) * CELL, z], -1).reshape(-1, 3)
     i = (yy[:-1, :-1] * N + xx[:-1, :-1]).ravel()
@@ -231,7 +231,7 @@ def build_new_trees():
         radius = next((t[4] for t in S["trees"] if t[3] == i), 3.0)
         height = next((t[5] for t in S["trees"] if t[3] == i), 6.0)
         mesh = tree_mesh(i, radius, height)
-        mesh.materials.append(matte(sp["name"], RENDER_COLOURS.get(sp["name"], (0.30, 0.45, 0.18))))
+        mesh.materials.append(matte(sp["name"], RENDER_COLORS.get(sp["name"], (0.30, 0.45, 0.18))))
         mesh.materials.append(bark)
         meshes.append(mesh)
     rng = np.random.default_rng(7)
@@ -337,7 +337,7 @@ def main():
         scene.view_settings.view_transform = arg("--transform", "Standard")
         scene.view_settings.look = "None"
     except Exception as exc:
-        print("colour settings:", exc)
+        print("color settings:", exc)
     scene.render.resolution_x, scene.render.resolution_y = RENDER
     scene.render.image_settings.file_format = "PNG"
     out = os.path.join(WORK, "renders")

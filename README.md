@@ -22,7 +22,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tucson-loop-beer/index.html` | A Beer Off The Loop: places licensed to pour within a short ride of The Loop (map, list, long-way-round table) |
 | `tucson-loop-beer/beer.js`, `beer.css` | Map and list for that page (Leaflet). Also loads `tucson-loop-access/loop.css` and `data/loop.json` |
 | `tucson-loop-beer/data/spots.json` | What the page reads. Written by `tools/build_loop_beer.py`; don't edit by hand |
-| `tools/build_loop_beer.py`, `loop_beer_edits.json` | Builds `spots.json` from the state liquor licence list and the Loop network (see below). The JSON file holds hand edits: places to drop, re-class or move |
+| `tools/build_loop_beer.py`, `loop_beer_edits.json` | Builds `spots.json` from the state liquor license list and the Loop network (see below). The JSON file holds hand edits: places to drop, re-class or move |
 | `catalinas-3d/index.html` | Santa Catalinas 3D page: the interactive model, two rendered stills, data notes |
 | `catalinas-3d/viewer.js`, `catalinas.css` | The 3D viewer (three.js). Lifts a flat grid from the height image and works out light and shadows in the shader |
 | `catalinas-3d/data/` | What the viewer loads: `height.png`, `texture_4k.jpg`, `texture_8k.jpg`, `meta.json`. Written by `tools/export_catalinas_web.py`; don't edit by hand |
@@ -35,8 +35,8 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tools/build_kitfox_shortlist.py`, `publish_kitfox.py` | The kit fox shortlist and page data (see below). Not used by the site at runtime |
 | `tools/kitfox-review/` | Local review map of the shortlisted areas at full detail. Git-ignored on purpose: never publish it |
 | `kxci-signal/index.html` | KXCI Signal Reach page: headline counts, signal map, town table, data notes |
-| `kxci-signal/kxci.js`, `kxci.css` | The map (Leaflet), figures and tables. Colours the signal layer in the browser from `data/field.png` |
-| `kxci-signal/data/` | What the page reads: `kxci.json` (licence, counts, contours) and `field.png` (the modelled field as a data image). Written by `tools/publish_kxci.py`; don't edit by hand |
+| `kxci-signal/kxci.js`, `kxci.css` | The map (Leaflet), figures and tables. Colors the signal layer in the browser from `data/field.png` |
+| `kxci-signal/data/` | What the page reads: `kxci.json` (license, counts, contours) and `field.png` (the modeled field as a data image). Written by `tools/publish_kxci.py`; don't edit by hand |
 | `kxci-signal/kxci-reach.png` | Static map, also written by `tools/publish_kxci.py` |
 | `tools/build_kxci.py`, `model_kxci_terrain.py`, `publish_kxci.py`, `kxci_drive_logger.py` | The KXCI pipeline and the drive-test logger (see below). Not used by the site at runtime |
 | `empty-homes/index.html` | Empty Homes page: winter homes, vacant homes and unfinished buildings in Pima County, set against the homeless count |
@@ -55,7 +55,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | `tucson-canopy/downloads/` | Map layouts exported from ArcGIS Pro (PDF and PNG) and the Excel summary of results. Written by `tools/canopy/18_layouts.py` and `19_summary_workbook.py` |
 | `tucson-canopy/README.md`, `sites.json`, `species.json`, `carbon_factors.json` | The project's method, every figure, and the settings its scripts read |
 | `tools/canopy/`, `tools/screen_canopy_sites.py` | The canopy analysis, numbered in run order (see `tucson-canopy/README.md`). Downloads run in the system Python; the analysis runs in ArcGIS Pro's Python. Not used by the site at runtime |
-| `tools/canopy-label/` | Local page for labelling land cover accuracy points. Marked noindex; not linked from the site |
+| `tools/canopy-label/` | Local page for labeling land cover accuracy points. Marked noindex; not linked from the site |
 | `lake-powell/index.html` | Lake Powell, Year by Year page: a rendered 3D view of the lower lake for every year since 1964, a year slider, a level chart, data notes |
 | `lake-powell/powell.js`, `powell.css` | The slider, readout and chart. Plain script, no libraries |
 | `lake-powell/frames/`, `data/years.json` | One picture per year and the yearly figures the page reads. Written by `tools/powell/11_publish_slider.py`; don't edit by hand |
@@ -71,7 +71,7 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 ## TODO
 
 - Replace the About placeholder text in `index.html` (search for `TODO`).
-- Tucson golf map: water use is in popups and the table only. Next: map layers (for example colour by supply, size by use).
+- Tucson golf map: water use is in popups and the table only. Next: map layers (for example color by supply, size by use).
 - Tucson Loop Access: check the draft Loop extent section by section (use `tools/loop-review/`), then count traffic stress in the ride times.
 - Santa Catalinas 3D: close-up views from 1 m lidar; roads, trails and canyon names; test touch gestures on a real phone.
 - Kit Fox Release Sites: the center is left unnamed until they agree (keep its name out of the page, the scripts and this file); say what the soil score is based on (`TODO` in `kitfox.js`); decide whether wilderness and monument land should be screened out of the shortlist.
@@ -100,7 +100,7 @@ py tools/publish_loop_access.py
 ```
 
 Needs Python with numpy, scipy and shapely. In order, these assemble a draft extent of The Loop from
-OpenStreetMap, build the street-and-path network and attach 2020 Census blocks to it, summarise residents
+OpenStreetMap, build the street-and-path network and attach 2020 Census blocks to it, summarize residents
 by ride time, score candidate new segments, and copy the results into `tucson-loop-access/data/`.
 Downloads are cached in the system temp folder (`finkgeo_loop_cache`), and the network itself is kept
 there, not in the repo. If the main Overpass servers are down, pass
@@ -119,9 +119,9 @@ py tools/build_loop_beer.py --refresh
 
 Run it after the Loop access scripts above, because it reuses their network (`network.npz` in the temp
 cache) and the draft Loop. It downloads the City of Tucson's "Liquor License - Active" layer (the state
-licence list for Pima County, read-only queries, business name and address only, never the licensee
-names), keeps the licences to pour on the premises, tidies the names against OpenStreetMap, and works
-out the ride from the Loop to each place. The licence points are the City's geocoding and a few are
+license list for Pima County, read-only queries, business name and address only, never the licensee
+names), keeps the licenses to pour on the premises, tidies the names against OpenStreetMap, and works
+out the ride from the Loop to each place. The license points are the City's geocoding and a few are
 wrong: the script moves the ones OpenStreetMap can vouch for and lists every move in `spots.json`.
 Fix the rest, drop closed places, or change a place's kind in `tools/loop_beer_edits.json`.
 
@@ -158,7 +158,7 @@ py tools/export_catalinas_web.py     # writes catalinas-3d/data/ for the viewer
   and retries. Tiles are cached in `catalinas-3d/work/tiles/`.
 - The aerial photos were flown at different times, so there is no single sun direction to remove.
   `deshade_catalinas.py` fits brightness against slope direction in a moving window instead, and
-  recolours fully shadowed slopes from the sunlit ground beside them. Its docstring lists the limits.
+  recolors fully shadowed slopes from the sunlit ground beside them. Its docstring lists the limits.
 - `blender_catalinas.py --draft` renders a quick look in a few seconds. The stills in
   `catalinas-3d/img/` are the 4K renders scaled to 1920 pixels.
 - Summit positions come from the USGS Geographic Names service; heights shown are read from the
@@ -200,10 +200,10 @@ py tools/publish_kxci.py
 Needs Python with requests, pandas, geopandas, shapely, numpy, scipy, pillow, pyproj, matplotlib and
 itmlogic. Downloads go to `kxci-signal/work/`, which is not in the repository (about 500 MB).
 
-- `build_kxci.py` reads the station's licence from the FCC's FM Query, asks the FCC Contours API for
+- `build_kxci.py` reads the station's license from the FCC's FM Query, asks the FCC Contours API for
   the 60 dBu contour computed from those figures, and counts 2020 Census residents and households
   inside it (blocks cut by the contour count by area).
-- Do not fetch the contour by call sign: as of November 2026 the API answers with a 1991 licence on
+- Do not fetch the contour by call sign: as of November 2026 the API answers with a 1991 license on
   Mt. Bigelow. The script keeps that contour only for the comparison on the page.
 - `model_kxci_terrain.py` downloads USGS 3DEP elevation and runs the Irregular Terrain Model
   (Longley-Rice) along 720 radials at two receiver heights, then reads the result at every block.

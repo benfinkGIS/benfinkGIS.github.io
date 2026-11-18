@@ -94,8 +94,8 @@ LATER = {
                          "drawn by rule", "Derived"),
     "accuracy_points": ("vector", False, None,
                         "Stratified random accuracy sample. Classified = mapped "
-                        "class, GrndTruth = class labelled by a person from the "
-                        "2023 imagery (-1 = not labelled or could not tell)", "Derived"),
+                        "class, GrndTruth = class labeled by a person from the "
+                        "2023 imagery (-1 = not labeled or could not tell)", "Derived"),
     "plantable": ("raster", True, (0, 3),
                   "Where a trunk could go: 0 none, 1 street right-of-way strip, "
                   "2 residential yard, 3 park or school edge. Open ground clear of "

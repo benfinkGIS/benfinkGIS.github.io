@@ -10,7 +10,7 @@ the ArcGIS Pro project (read only), scores each one exactly as the Suitability M
 did, and averages them onto one coarse grid the browser can redraw quickly:
 
     kit-fox-release/data/crit1.png, crit2.png, crit3.png
-        the eight criterion scores, one per colour channel (score x 25; 0 = no data),
+        the eight criterion scores, one per color channel (score x 25; 0 = no data),
         on a Web Mercator grid of 600 m cells (about 500 m on the ground)
     kit-fox-release/data/model.json
         weights from the model file, grid position, study-area figures and the shortlist

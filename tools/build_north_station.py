@@ -68,12 +68,12 @@ ROW_GAP_FT = 100.0       # site edge within this of the railroad's own land
 MIN_FRONTAGE_FT = 800.0  # track length beside the site, enough for a platform
 MIN_ACRES = 5.0          # platform, building, bus loop and a few hundred spaces
 MIN_DEPTH_FT = 300.0     # land narrower than this is a strip, not a station site
-HIGHWAY_INSIDE_FT = 300.0  # this much highway centre line inside a parcel = right-of-way
+HIGHWAY_INSIDE_FT = 300.0  # this much highway center line inside a parcel = right-of-way
 MAX_FLOODWAY_SHARE = 0.25
 MAX_BUILT_SHARE = 0.03   # building footprint share of an "open" site
 STRAIGHT_FT = 15.0       # track may bow this far from a straight line per platform
 
-# free-flow speeds by county road category, mph (signals are not modelled)
+# free-flow speeds by county road category, mph (signals are not modeled)
 SPEED = {
     "INTERSTATE": 65, "RMP_INT": 30, "RMP_STRT": 30, "RMP_RDMJ": 25,
     "FRNT_RD": 40, "ST_RT": 36, "LRD_MJ": 30, "LRD_MN": 20, "IND_RT": 35,
@@ -462,7 +462,7 @@ def times_to(net, node: int) -> np.ndarray:
     return dijkstra(net["rgraph"], directed=True, indices=node)
 
 
-def analyse(refresh: bool):
+def analyze(refresh: bool):
     north, _ = load_mainline(refresh)
     parcels = load_parcels(north, refresh)
     buildings = [g for _, g in chunked(BUILDINGS, north, "bldg", "OBJECTID", refresh)]
@@ -668,7 +668,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--refresh", action="store_true")
     args = ap.parse_args()
-    north, sites, row, net, blocks, total_pop = analyse(args.refresh)
+    north, sites, row, net, blocks, total_pop = analyze(args.refresh)
     write_outputs(north, sites, net, blocks, total_pop)
     D, bpop = blocks["D"], blocks["pop"]
     print(f"\nwithin 20 min of the downtown depot: {int(bpop[D <= 20].sum()):,} of {total_pop:,}")

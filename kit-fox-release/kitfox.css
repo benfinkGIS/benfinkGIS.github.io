@@ -130,7 +130,7 @@ details.tables table { margin-top: 8px; font-size: 13px; }
 #t-short tbody tr { cursor: pointer; }
 #t-short tbody tr:hover, #t-short tbody tr:focus-visible { background: #ffffe1; }
 
-/* designations: a coloured line on a white casing, so it reads on any score */
+/* designations: a colored line on a white casing, so it reads on any score */
 .scalebar .desig { gap: 4px 10px; flex-wrap: wrap; }
 .scalebar .desig b { display: flex; align-items: center; gap: 5px; font-weight: normal; }
 .scalebar .desig i { width: 18px; height: 0; border-top: 3px solid; }
@@ -150,7 +150,7 @@ details.tables table { margin-top: 8px; font-size: 13px; }
 }
 .toolbar .tb-link:active { border-color: var(--dk) var(--hi) var(--hi) var(--dk); box-shadow: inset 1px 1px var(--lo); }
 
-/* ---------- Full-page map (/kit-fox-release/map/): the wizard as a maximised window ---------- */
+/* ---------- Full-page map (/kit-fox-release/map/): the wizard as a maximized window ---------- */
 html:has(body.kitfull) { height: 100%; }
 body.kitfull { height: 100%; padding: 0; overflow: hidden; }
 .kitfull .viewer { margin: 0; height: 100vh; height: 100dvh; display: flex; flex-direction: column; }

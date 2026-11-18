@@ -38,17 +38,17 @@ repair would add the most movement. Stages 1 to 3 were published on 14 and
 
 ### The hand check (14 and 15 November 2026)
 
-Ben labelled 340 items from the 30 cm imagery without seeing what the rules
+Ben labeled 340 items from the 30 cm imagery without seeing what the rules
 had said: 160 channel reaches (at their midpoints) and 180 crossings. One
-reach and four crossings were "can't tell". The labelling took about 37
+reach and four crossings were "can't tell". The labeling took about 37
 minutes of active time, a median of 2.5 seconds an item. Figures below are
 weighted back to the population each stratum was drawn from; brackets are
 95% ranges from resampling within strata.
 
 **What it found, before any rule was changed.** 79% (69 to 87) of traced
 reaches were washes to the eye; the rest were yards, lots and road edges.
-The first-pass colour rule for concrete was right on 3 of the 60 reaches it
-flagged. Of 60 points first typed at-grade, 37 were labelled "no crossing
+The first-pass color rule for concrete was right on 3 of the 60 reaches it
+flagged. Of 60 points first typed at-grade, 37 were labeled "no crossing
 here".
 
 **What was changed because of it** (`12_check_score.py` writes `rules.json`):
@@ -91,20 +91,20 @@ Limits of the check:
 - The same labels chose the cut-offs and scored them. Leave-one-out guards
   the 20 cm, the step and the hump, but not the form of the rule or the
   three numbers set by eye.
-- One labeller, working fast, from photos. "No crossing here" covers several
+- One labeler, working fast, from photos. "No crossing here" covers several
   things: no visible wash, a wash that runs alongside, and county street
   lines that are driveways.
 - The sample was drawn before the wash rule existed, so each item's measures
   were frozen when drawn (`work/check/sample_attrs.json`) and the scoring
   reads those, not the current geodatabase.
-- Channel-bed marks under a bridge or road were labelled as the channel is on
+- Channel-bed marks under a bridge or road were labeled as the channel is on
   either side. They were going to be scored apart from the rest; with only
   7 concrete labels in 160 there was no bed rule to score, so they are not.
 
-Labelling rules agreed while labelling:
+Labeling rules agreed while labeling:
 
 - A channel-bed mark that lands on a bridge deck or a road over the wash is
-  labelled as the channel is on either side of it; "can't tell" if the sides
+  labeled as the channel is on either side of it; "can't tell" if the sides
   differ or neither can be seen.
 
 ### Stage 3: connectivity (15 November 2026)
@@ -114,7 +114,7 @@ cells) with two surfaces: resistance, the cost of crossing a cell (1 is
 easiest), and source strength, how much the cell counts as habitat (0 to 1).
 Omniscape 0.6.2 (Julia 1.10.13) moves a circular window over the grid; at
 each stop current is injected at the source cells inside the window and drawn
-out at the centre, and the current through every cell is summed over all
+out at the center, and the current through every cell is summed over all
 stops. Dividing by the same sum run with resistance 1 everywhere ("flow
 potential") gives normalized current, which shows where the ground
 concentrates movement or blocks it.
@@ -132,7 +132,7 @@ Ground layers behind the surfaces (`14_surfaces.py`, all on the 10 m grid):
 | Standing water | NHDPlus HR ponds and reservoirs (7,506 cells) plus water seen in the imagery on flat ground in patches of 300 m2 or more (280 cells) |
 | Crossings | Stage 2 types within 25 m of each crossing point, plus the 43 National Bridge Inventory bridges over water as open spans across the whole road |
 
-The numbers are in `resistance.json`. They are set by judgement. What each
+The numbers are in `resistance.json`. They are set by judgment. What each
 leans on:
 
 **Bobcat** (window radius 2.5 km; one solve per 25 by 25 cells).
@@ -184,7 +184,7 @@ Roads carry no extra cost. Habitat is green cover within 100 m, with a floor
 of 0.7 within 50 m of a wash or riparian strip.
 
 Normalized current is classed impeded (under 0.7), diffuse (0.7 to 1.3),
-intensified (1.3 to 1.7) and channelled (over 1.7). The breaks are attributed
+intensified (1.3 to 1.7) and channeled (over 1.7). The breaks are attributed
 to Cameron and others 2022 (doi 10.1111/csp2.12698); they were read in a
 secondary source, not the paper.
 
@@ -197,9 +197,9 @@ secondary source, not the paper.
 | Area impeded (normalized current under 0.7) | 36% | 72% | 22% |
 | Area diffuse (0.7 to 1.3) | 53% | 23% | 57% |
 | Area intensified (1.3 to 1.7) | 9.0% | 2.5% | 9.2% |
-| Area channelled (over 1.7) | 2.5% | 2.5% | 11.5% |
-| Intensified or channelled ground within 30 m of a wash (28% of the area is) | 45% | 45% | 66% |
-| Wash cells that are intensified or channelled | 23% | 10% | 97% |
+| Area channeled (over 1.7) | 2.5% | 2.5% | 11.5% |
+| Intensified or channeled ground within 30 m of a wash (28% of the area is) | 45% | 45% | 66% |
+| Wash cells that are intensified or channeled | 23% | 10% | 97% |
 | Median normalized current on wash cells | 1.07 | 0.35 | 1.99 |
 
 Interstate 10 (bobcat run): 290 of 14,970 interstate cells are under an inventoried river bridge (the Rillito and the Canada del Oro). They carry 22% of the current on interstate cells, at 3.6 times the area's mean; the rest of the interstate carries 0.26 times the mean. Omniscape injects a fixed current, so a barrier redirects movement to the nearest weak point inside the window and cannot stop it; current on the closed cells is the model forcing its way through, not a prediction that cats cross there.
@@ -243,7 +243,7 @@ What it says:
   on this check.
 - **Queen: not distinguishable from chance.** The queen surface gives washes
   the lowest cost by assumption, and 97% of wash cells come out as
-  intensified or channelled. Queen records are no more common there than
+  intensified or channeled. Queen records are no more common there than
   other butterflies' are. The source surface alone scores 0.64 against
   random points and 0.53 against other butterflies: butterflies of all kinds
   are recorded on green ground.
@@ -252,7 +252,7 @@ The page reports these three scores as they are.
 
 #### Limits
 
-- Every resistance number is a judgement. The check above tests the result
+- Every resistance number is a judgment. The check above tests the result
   against sightings; it does not tune the numbers, and a sighting is evidence
   of presence, not of movement.
 - The box has no buffer. A window near the edge has less ground to draw on,
@@ -286,7 +286,7 @@ its habitat (source) surface alone.
 | Bobcat | A wash crossing a state route (Oracle Road) that is not an open span | The cells within 25 m of the crossing at the cost of an open span | 13, every one |
 | Bobcat | A wash of 20 ha or more crossing a major road, not an open span | The same | 20, the best by first guess, 300 m apart |
 | Vermilion flycatcher | A stretch of wash, 200 to 800 m, with little perch cover | Canopy raised to 30% within 20 m of the line, which takes the perch term of the resistance to zero | 25, the best by first guess, 500 m apart |
-| Queen butterfly | A run of street flow or unchannelled flow path, 50 to 800 m, with wash at both ends | The cells within 10 m of the line at the cost of a wash (1) | 25, the best by first guess, 400 m apart |
+| Queen butterfly | A run of street flow or unchanneled flow path, 50 to 800 m, with wash at both ends | The cells within 10 m of the line at the cost of a wash (1) | 25, the best by first guess, 400 m apart |
 
 The first guess is the flow potential on the repair's cells (what uniform
 ground would carry) times the share of the resistance the repair removes.
@@ -300,7 +300,7 @@ material could not be mapped reach by reach (stage 2).
 A repair can only change the moving windows that contain a repaired cell,
 and each of those windows reaches one radius further. So each candidate is
 run on a cut-out reaching two radii beyond it, once as the ground is and
-once repaired, and only on the windows centred within one radius of it.
+once repaired, and only on the windows centered within one radius of it.
 `gaps.jl` adds a method to Omniscape's `get_targets` that drops the other
 windows. The difference between the two runs is then the same as the
 difference between two runs of the whole grid.
@@ -345,9 +345,9 @@ layers. Nobody has visited these places.
 | Gap | Where | There now | Repair | Movement now | With repair | Added | Rank of those tried |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | B1 | Interstate 10 between Twin Peaks Road and Avra Valley Road (near the map edge) | Drainage culverts under the freeway and the railroad, in open desert beside the Santa Cruz River | A wildlife underpass under the freeway, frontage road and railroad together, with fencing to lead animals to it | 0.8 | 20.5 | 100 | 1 of 49 |
-| B2 | Hardy Wash at Interstate 10, 800 m south-east of Twin Peaks Road | Culverts under the freeway and the railroad, between a shopping centre and a gravel pit | Enlarge the Hardy Wash culverts to a span an animal can walk through, and fence the approaches | 1.0 | 21.1 | 52 | 5 of 49 |
+| B2 | Hardy Wash at Interstate 10, 800 m south-east of Twin Peaks Road | Culverts under the freeway and the railroad, between a shopping center and a gravel pit | Enlarge the Hardy Wash culverts to a span an animal can walk through, and fence the approaches | 1.0 | 21.1 | 52 | 5 of 49 |
 | B3 | Interstate 10, 900 m north-west of Ina Road | A culvert under the freeway and the railroad, with industrial yards on the west side | Enlarge the culvert to a walk-through span; the yards on the west side limit what it would reach | 0.9 | 12.8 | 22 | 7 of 49 |
-| B4 | Interstate 10, 350 m south-east of Cortaro Road | A culvert under the freeway, with a shopping centre on the west side | Enlarge the culvert to a walk-through span; least promising of the freeway sites on the ground | 1.0 | 14.6 | 17 | 9 of 49 |
+| B4 | Interstate 10, 350 m south-east of Cortaro Road | A culvert under the freeway, with a shopping center on the west side | Enlarge the culvert to a walk-through span; least promising of the freeway sites on the ground | 1.0 | 14.6 | 17 | 9 of 49 |
 | B5 | Thornydale Road, 450 m south of Tangerine Road (near the map edge) | A two-lane road crossing the wash at grade, open desert on both sides | A box culvert large enough to walk through when the road is next widened; until then the crossing is at road level | 0.9 | 2.2 | 9 | 12 of 49 |
 | F1 | Cañada del Oro Wash between golf fairways, west of La Cholla Boulevard | Wide sandy bed with 13% tree canopy along it, fairways on both sides | Plant native bank trees (mesquite, desert willow) along 870 m so the trees on the two sides become one strip | 1.3 | 1.9 | 100 | 1 of 25 |
 | F2 | Unnamed wash through the golf course by Arthur Pack Regional Park | Desert wash between fairways and two ponds, 11% canopy | Plant trees along 710 m of the wash, pond to pond | 1.2 | 1.9 | 84 | 2 of 25 |
@@ -356,7 +356,7 @@ layers. Nobody has visited these places.
 | F5 | Unnamed wash east of La Cholla Boulevard, south of Naranja Drive | Short desert wash between houses and a fairway, 15% canopy | Fill in trees along 290 m of wash | 1.2 | 2.1 | 41 | 12 of 25 |
 | Q1 | Christmas Wash north of Fort Lowell Road, west of Country Club Road | The wash runs down residential streets for 580 m | Curb-cut rain gardens along the streets, planted with native milkweeds and nectar plants | 1.0 | 4.0 | 100 | 1 of 25 |
 | Q2 | Unnamed wash through apartments off La Reserve Drive, east of Oracle Road | 240 m through parking courts | A planted swale through the parking courts | 0.9 | 3.0 | 85 | 2 of 25 |
-| Q3 | Unnamed wash south of Orange Grove Road, between La Cañada Drive and Oracle Road | No channel for 650 m, along the road and through a neighbourhood | A roadside swale and yard-edge planting to carry the strip through | 0.9 | 3.2 | 84 | 3 of 25 |
+| Q3 | Unnamed wash south of Orange Grove Road, between La Cañada Drive and Oracle Road | No channel for 650 m, along the road and through a neighborhood | A roadside swale and yard-edge planting to carry the strip through | 0.9 | 3.2 | 84 | 3 of 25 |
 | Q4 | Unnamed wash by the shops at La Cañada Drive and Lambert Lane | 340 m across Lambert Lane and an apartment car park | A planted strip along the car park edge, down to the wash | 0.7 | 2.5 | 82 | 4 of 25 |
 | Q5 | Unnamed wash across a residential street west of Interstate 10, north of Cortaro Road | 150 m of street and house lots between two green strips | Street-side planting to join the two strips | 0.8 | 2.6 | 80 | 5 of 25 |
 
@@ -392,7 +392,7 @@ What it says:
 #### The static map (`19_hero_map.py`)
 
 `downloads/wash_corridors_gaps.png` (3840 x 2160) and a 1600-pixel JPEG for
-the page: the 2023 imagery in grey, ground that is intensified or channelled
+the page: the 2023 imagery in gray, ground that is intensified or channeled
 for one, two or all three animals (`data/funnel_all.png` on the web map,
 "All three"), the freeway and Oracle Road, and the fifteen gaps with the
 list beside them. Tag positions that collide are moved by hand in `NUDGE`.
@@ -433,11 +433,11 @@ list beside them. Tag positions that collide are moved by hand in `NUDGE`.
   of wide fills. The step is tested before the hump and searched further
   along the road on big washes, because long bridges put the abutment 100 m
   from the channel line.
-- The pale granite sand in the washes off the Catalinas is as grey and as
+- The pale granite sand in the washes off the Catalinas is as gray and as
   bright as concrete in the imagery. Texture, lidar bed roughness and
   straightness are stored per reach (`10_channel_type.py`) but nothing was
   fitted to them.
-- `work/first_look.jpg` and `work/first_look.json` are the pre-modelling
+- `work/first_look.jpg` and `work/first_look.json` are the pre-modeling
   check of the study area and the sightings.
 
 Still open from the outline: channel width; culvert size; permeability scores
@@ -513,7 +513,7 @@ Two things the first look showed about the records:
    crossings are typed by rule first: embankment height from the lidar
    (bridge or culvert against at-grade dip crossing), opening size where the
    inventories give it, road class for traffic. Then a sample is checked by
-   hand on the imagery, using the same labelling page as Project 1's accuracy
+   hand on the imagery, using the same labeling page as Project 1's accuracy
    check, so the crossing types come with an accuracy figure.
 5. **Channel type.** No layer says natural, soil cement or concrete. It comes
    from what covers the channel floor in the imagery and elevation (flat,
@@ -571,9 +571,9 @@ raster work will run in ArcGIS Pro's Python, as in Project 1.
 | 2c | `07_canopy.py` | propy | Sets the imagery canopy rule against Project 1's lidar canopy, applies it to the study area, and writes the canopy share within 10 m |
 | 3 | `08_reaches.py` | propy | Name, county and street share, riparian class, canopy, channel depth and sightings for every reach; wash, flow path or street by the cut-offs in `rules.json`; the county-network completeness check |
 | 4 | `09_crossings.py` | propy | Every wash and road crossing, measured on the lidar and typed open span, culvert or at-grade; compared with the flood-map structures and the National Bridge Inventory |
-| 5 | `10_channel_type.py` | propy | First-pass bed type from imagery colour, plus texture, lidar bed roughness and straightness for each reach |
+| 5 | `10_channel_type.py` | propy | First-pass bed type from imagery color, plus texture, lidar bed roughness and straightness for each reach |
 | 6a | `11_check_sample.py` | propy | Stratified hand-check sample of crossings and channel beds, with image chips from the 30 cm imagery |
-| 6a | `label_server.py` + `tools/washes-label/` | py | Local page for labelling the sample without seeing the rule's answer |
+| 6a | `label_server.py` + `tools/washes-label/` | py | Local page for labeling the sample without seeing the rule's answer |
 | 6b | `12_check_score.py` | py | Scores the rules against the labels, re-chooses the cut-offs with leave-one-out, writes `rules.json` and `work/check/results.json` |
 | 8a | `13_get_landcover.py` | py | NLCD 2021 impervious surface, NHD ponds, and every research-grade iNaturalist mammal, bird and butterfly record in the box (position and accuracy only) as the measure of observer effort |
 | 8b | `14_surfaces.py` | propy | Ground layers on a 10 m grid, then a resistance and a source surface per species from `resistance.json`; `--layers` rebuilds the ground layers, `--look` writes check pictures |
@@ -647,7 +647,7 @@ his go-ahead, and the hand check is done.
   pavement mask.
 - The riparian classes were adopted in 2005 and edited since; spot-check
   against the 2023 imagery.
-- Resistance values are assigned by judgement; the write-up lists them.
+- Resistance values are assigned by judgment; the write-up lists them.
 - iNaturalist records are presence-only and follow where people go.
 - Canopy over the whole area comes from imagery, not lidar, and is scored
   only at Project 1's two sites.

@@ -2,7 +2,7 @@
 
 Draws the draft study area with the county washes, mapped riparian habitat,
 parks, protected lands, main roads and the iNaturalist records, and writes
-work/first_look.jpg and work/first_look.json. Nothing here is modelled; it is
+work/first_look.jpg and work/first_look.json. Nothing here is modeled; it is
 a check on the extent and on whether the records have anything to say.
 
 Run:  py tools/washes/03_first_look.py
@@ -22,8 +22,8 @@ from common import BBOX, CONTEXT, EPSG, SIGHTINGS, SPECIES, WORK
 NEAR_M = 50          # "along a wash" for the count below
 FLOW_WIDTH = {"UNDER 500 CFS": 0.5, "500-1000 CFS": 0.9, "1000-2000 CFS": 1.3,
               "2000-5000 CFS": 1.9, "5000-10000 CFS": 2.6, "OVER 10000 CFS": 3.4}
-RIP_COLOUR = {"H": "#1b7837", "A": "#5aae61", "B": "#a6dba0", "C": "#d9f0d3", "D": "#f1f7e8"}
-SP_COLOUR = {"bobcat": "#d95f02", "flycatcher": "#e7298a", "queen": "#7570b3"}
+RIP_COLOR = {"H": "#1b7837", "A": "#5aae61", "B": "#a6dba0", "C": "#d9f0d3", "D": "#f1f7e8"}
+SP_COLOR = {"bobcat": "#d95f02", "flycatcher": "#e7298a", "queen": "#7570b3"}
 
 
 def layer(name):
@@ -43,8 +43,8 @@ def main():
     ax.set_facecolor("#f4efe6")
     protected.plot(ax=ax, color="#dfe8cf", edgecolor="none")
     parks.plot(ax=ax, color="#c3dba6", edgecolor="none")
-    for cls, colour in RIP_COLOUR.items():
-        riparian[riparian["base"] == cls].plot(ax=ax, color=colour, edgecolor="none")
+    for cls, color in RIP_COLOR.items():
+        riparian[riparian["base"] == cls].plot(ax=ax, color=color, edgecolor="none")
     big = streets[streets["ROADCAT_DS"] != "Minor local road"]
     streets[streets["ROADCAT_DS"] == "Minor local road"].plot(ax=ax, color="#d8d2c6", linewidth=0.2)
     big.plot(ax=ax, color="#9a948a", linewidth=0.7)
@@ -65,7 +65,7 @@ def main():
             records=len(pts), accuracy_100m_or_better=len(good),
             near_a_wash=round(float(good.within(near).mean()), 3),
             in_mapped_riparian=round(float(good.within(rip_all).mean()), 3))
-        good.plot(ax=ax, color=SP_COLOUR[sp["id"]], markersize=7, alpha=0.75,
+        good.plot(ax=ax, color=SP_COLOR[sp["id"]], markersize=7, alpha=0.75,
                   edgecolor="white", linewidth=0.2, zorder=5)
 
     # Name the washes that carry the most water, once each, at their midpoint.
@@ -85,7 +85,7 @@ def main():
     ax.set_xticks([])
     ax.set_yticks([])
     ax.set_title("Draft study area: county washes, mapped riparian habitat and "
-                 "iNaturalist records (first look, nothing modelled)", fontsize=12)
+                 "iNaturalist records (first look, nothing modeled)", fontsize=12)
     handles = [
         Line2D([], [], color="black", linestyle="--",
                label=f"Draft study area, {(BBOX[2] - BBOX[0]) / 1000:.0f} x "
@@ -98,7 +98,7 @@ def main():
         Patch(color="#c3dba6", label="Parks"),
         Patch(color="#dfe8cf", label="Protected lands"),
         Line2D([], [], color="#9a948a", linewidth=1, label="Main roads"),
-    ] + [Line2D([], [], marker="o", linestyle="", color=SP_COLOUR[s["id"]],
+    ] + [Line2D([], [], marker="o", linestyle="", color=SP_COLOR[s["id"]],
                 label=f"{s['common']} ({stats['species'][s['id']]['accuracy_100m_or_better']})")
          for s in SPECIES]
     ax.legend(handles=handles, loc="lower left", fontsize=8, framealpha=0.92)

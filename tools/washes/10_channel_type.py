@@ -5,7 +5,7 @@ Runs in ArcGIS Pro's Python:
   <Pro python> tools/washes/10_channel_type.py
 
 Looks at the 3 m strip along every reach in the 1 m NAIP imagery and counts
-the cells that look like concrete: grey (little difference between red,
+the cells that look like concrete: gray (little difference between red,
 green and blue), bright, and not green. A reach is typed
 
   concrete   when at least CONCRETE_SHARE of the strip looks like concrete
@@ -16,8 +16,8 @@ left out, and a reach with under SEEN_MIN of its strip in view is typed
 "hidden".
 
 This is a first pass for the hand check in step 6, and a weak one: the
-washes off the Catalinas run on pale granite sand, which is as grey and as
-bright as concrete, so the colour rule calls stretches of Pima, Finger Rock
+washes off the Catalinas run on pale granite sand, which is as gray and as
+bright as concrete, so the color rule calls stretches of Pima, Finger Rock
 and Sutherland washes concrete. It also cannot see bank protection (soil
 cement, riprap, walls) beside an earthen bed. Three more measures are
 therefore stored for each reach, for a rule to be fitted to the hand labels:
@@ -40,7 +40,7 @@ from scipy import ndimage
 
 from common import BBOX, WORK
 
-GREY_MAX = 0.10          # (max - min) / max of red, green, blue
+GRAY_MAX = 0.10          # (max - min) / max of red, green, blue
 BRIGHT_MIN = 115         # mean of red, green, blue, out of 255
 NDVI_MAX = 0.08
 CONCRETE_SHARE = 0.5
@@ -77,11 +77,11 @@ def main():
             continue
         rgb = a[:3]
         hi, lo = rgb.max(axis=0), rgb.min(axis=0)
-        grey = (hi - lo) / np.maximum(hi, 1)
+        gray = (hi - lo) / np.maximum(hi, 1)
         bright = rgb.mean(axis=0)
         ndvi = (a[3] - a[0]) / np.maximum(a[3] + a[0], 1)
         view = on & (can == 0)
-        like = view & (grey <= GREY_MAX) & (bright >= BRIGHT_MIN) & (ndvi <= NDVI_MAX)
+        like = view & (gray <= GRAY_MAX) & (bright >= BRIGHT_MIN) & (ndvi <= NDVI_MAX)
         strip += np.bincount(ids[on], minlength=top)
         seen += np.bincount(ids[view], minlength=top)
         conc += np.bincount(ids[like], minlength=top)
@@ -140,7 +140,7 @@ def main():
               "concrete_pct": round(100 * c["concrete"] / sum(c.values()))}
              for n, c in by_name.items() if sum(c.values()) >= 1),
             key=lambda d: -d["concrete_pct"])[:20],
-        settings=dict(grey_max=GREY_MAX, bright_min=BRIGHT_MIN, ndvi_max=NDVI_MAX,
+        settings=dict(grey_max=GRAY_MAX, bright_min=BRIGHT_MIN, ndvi_max=NDVI_MAX,
                       concrete_share=CONCRETE_SHARE, seen_min=SEEN_MIN))
     (WORK / "channel_type.json").write_text(json.dumps(stats, indent=2))
     msg(json.dumps(stats, indent=1))

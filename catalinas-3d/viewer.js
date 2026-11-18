@@ -1,7 +1,7 @@
 // Santa Catalinas 3D viewer.
 // Terrain from a height image, lit live: the sun slider moves real shadows,
 // which the fragment shader finds by stepping across the height image toward the sun.
-// Units are kilometers. +X is east, +Y is up, north is -Z. The block is centred on the origin.
+// Units are kilometers. +X is east, +Y is up, north is -Z. The block is centered on the origin.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
@@ -89,7 +89,7 @@ const terrainFragment = /* glsl */`
     float lit = 1.0;
     if (facing > 0.0 && uSun.y > 0.0) {
       float h0 = ground(vUv) + 0.006;
-      vec2 step = uSun.xz / uSize;            // uv travelled per km along the ground
+      vec2 step = uSun.xz / uSize;            // uv traveled per km along the ground
       float t = 0.03 * (1.0 + hash(gl_FragCoord.xy));
       float top = uTop * uExag;
       for (int i = 0; i < 64; i++) {
@@ -218,7 +218,7 @@ async function main() {
     uSkyColor: { value: new THREE.Vector3(0.2, 0.25, 0.35) },
   };
 
-  // terrain: a flat grid; the vertex shader lifts it. Height samples sit at cell centres.
+  // terrain: a flat grid; the vertex shader lifts it. Height samples sit at cell centers.
   const meshCols = MESH_COLS, meshRows = Math.round(MESH_COLS * H / W);
   const pos = new Float32Array(meshCols * meshRows * 3);
   const uvs = new Float32Array(meshCols * meshRows * 2);

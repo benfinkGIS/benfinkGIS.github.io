@@ -1,4 +1,4 @@
-"""Step 8d: read the Omniscape runs back, summarise them, and write what the
+"""Step 8d: read the Omniscape runs back, summarize them, and write what the
 page and the validation need.
 
 For each run:
@@ -46,8 +46,8 @@ MAP_RGBA = [(0, 0, 0, 0), (140, 41, 129, 150), (222, 73, 104, 185), (254, 159, 1
 # Normalized current (current / flow potential). Breaks attributed to Cameron et al. 2022
 # (doi 10.1111/csp2.12698), read in a secondary source.
 FUNNEL_BREAKS = [0.7, 1.3, 1.7]
-FUNNEL_NAMES = ["impeded", "diffuse", "intensified", "channelled"]
-# The composite: cells that are intensified or channelled for one, two or all three animals.
+FUNNEL_NAMES = ["impeded", "diffuse", "intensified", "channeled"]
+# The composite: cells that are intensified or channeled for one, two or all three animals.
 ALL_RGBA = [(0, 0, 0, 0), (140, 41, 129, 140), (254, 159, 109, 205), (252, 253, 191, 245)]
 NEAR_WASH_M = 30
 
@@ -86,7 +86,7 @@ def overlay(cls, rgba, name):
     m = arcpy.Raster(merc)
     a = arcpy.RasterToNumPyArray(m, nodata_to_value=0)
     lut = np.zeros((256, 4), "uint8")
-    lut[:len(rgba)] = rgba          # one colour per class, class 0 first
+    lut[:len(rgba)] = rgba          # one color per class, class 0 first
     Image.fromarray(lut[a], "RGBA").save(WEB / f"{name}.png", optimize=True)
     e = m.extent
     wgs = arcpy.SpatialReference(4326)
@@ -147,13 +147,13 @@ def main():
             top_tenth_in_riparian=round(float((L["rip"][top] > 0).mean()), 4),
             riparian_share_of_area=round(float((L["rip"] > 0).mean()), 4),
             funnel_share_of_area={n: round(float((fun == i).mean()), 4) for i, n in enumerate(FUNNEL_NAMES)},
-            channelled_near_wash=round(float(near_wash[fun == 3].mean()), 4) if (fun == 3).any() else None,
+            channeled_near_wash=round(float(near_wash[fun == 3].mean()), 4) if (fun == 3).any() else None,
             funnelled_near_wash=round(float(near_wash[fun >= 2].mean()), 4) if (fun >= 2).any() else None,
             wash_cells_funnelled=round(float((fun[L["wash"] > 0] >= 2).mean()), 4),
             normalized_on_wash_cells=round(float(np.median(norm[L["wash"] > 0])), 3),
             current_on_wash_cells_vs_all=round(float(cur[L["wash"] > 0].mean() / cur.mean()), 3))
         if sp == "bobcat":
-            # Where the modelled movement gets across the interstate.
+            # Where the modeled movement gets across the interstate.
             hw = L["road"] == 7
             info["interstate"] = dict(
                 cells=int(hw.sum()), open_span_cells=int((hw & (L["xing"] == 1)).sum()),

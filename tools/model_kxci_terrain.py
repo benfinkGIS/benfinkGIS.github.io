@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""KXCI 91.3 FM signal reach, step 2: terrain-modelled field strength.
+"""KXCI 91.3 FM signal reach, step 2: terrain-modeled field strength.
 
 Usage (from the repo root, after tools/build_kxci.py):
     py tools/model_kxci_terrain.py            # elevation, model, block tallies
@@ -19,7 +19,7 @@ What it does
 3. Turns ITM's attenuation relative to free space into field strength:
        E (dBu) = 106.92 + 10 log10(ERP kW) - 20 log10(d km) - A
    using the median in time, location and situation, to line up with F(50,50).
-4. Reads the modelled field at every census block's internal point and counts who is
+4. Reads the modeled field at every census block's internal point and counts who is
    at or above 60 dBu, inside and outside the FCC contour.
 
 Assumptions worth knowing
@@ -31,7 +31,7 @@ Assumptions worth knowing
   adjacent-channel interference.
 - Ground: relative permittivity 15, conductivity 0.005 S/m (average ground);
   continental temperate climate; surface refractivity 301 N-units reduced for the
-  mean elevation of each path; horizontal polarisation.
+  mean elevation of each path; horizontal polarization.
 
 Output
 ------
@@ -166,7 +166,7 @@ def itm_attenuation(elev, step, h_tx, h_rx):
     prop["ens"] = ENS0 * math.exp(-(sum(elev) / len(elev)) / 9460)
     prop["gme"] = 157e-9 * (1 - 0.04665 * math.exp(prop["ens"] / 179.3))
     zq = complex(EPS, 376.62 * SGM / prop["wn"])
-    prop["zgnd"] = cmath.sqrt(zq - 1)          # horizontal polarisation
+    prop["zgnd"] = cmath.sqrt(zq - 1)          # horizontal polarization
     prop["hg"] = [h_tx, h_rx]
     prop["klimx"], prop["mdvarx"], prop["lvar"] = KLIM, MDVAR, 5
     prop["klim"], prop["mdvar"] = KLIM, MDVAR
@@ -223,7 +223,7 @@ def run_model(z, meta, tx_x, tx_y, h_tx, erp_kw):
 
 
 def field_at(field2d, rx_d, tx_x, tx_y, x, y):
-    """Modelled field (dBu) at UTM points, bilinear on the polar grid. NaN off the grid."""
+    """Modeled field (dBu) at UTM points, bilinear on the polar grid. NaN off the grid."""
     from scipy.ndimage import map_coordinates
     dx, dy = np.asarray(x) - tx_x, np.asarray(y) - tx_y
     dist = np.hypot(dx, dy)
@@ -270,8 +270,8 @@ def tally_blocks(field, rx_d, tx_x, tx_y):
         by_place.append(dict(
             place=name, population=total,
             inside_fcc=round(float((sub["pop"] * sub.in_fcc).sum())),
-            modelled_9m=round(float((sub["pop"] * ok).sum())),
-            modelled_1p5m=round(float((sub["pop"] * ok_car).sum())),
+            modeled_9m=round(float((sub["pop"] * ok).sum())),
+            modeled_1p5m=round(float((sub["pop"] * ok_car).sum())),
             shadowed_9m=round(float((sub["pop"] * sub.in_fcc * (1 - ok)).sum())),
             median_dbu_9m=round(float(np.average(
                 sub.dbu_9m.fillna(0), weights=np.maximum(sub["pop"], 1e-9))), 1)))
@@ -290,14 +290,14 @@ def main():
     if not summary_path.exists():
         sys.exit("run tools/build_kxci.py first")
     summary = json.loads(summary_path.read_text())
-    lic = summary["licence"]
+    lic = summary["license"]
     tx_x, tx_y = Transformer.from_crs(4269, 26912, always_xy=True).transform(lic["lon"], lic["lat"])
 
     print("elevation")
     z, meta = fetch_dem(tx_x, tx_y)
     ground = float(sample_dem(z, meta, [tx_x], [tx_y])[0])
     h_tx = lic["rcamsl_m"] - ground
-    print(f"  ground at the tower {ground:.0f} m, antenna centre {h_tx:.0f} m above it")
+    print(f"  ground at the tower {ground:.0f} m, antenna center {h_tx:.0f} m above it")
 
     npz = WORK / "field.npz"
     if npz.exists() and not args.rerun:
@@ -333,7 +333,7 @@ def main():
           f"failed: {terrain['failed_share'] * 100:.2f}%")
     for p in terrain["by_place"][:20]:
         print(f"  {p['place']:26s} pop {p['population']:>8,}  fcc {p['inside_fcc']:>8,}  "
-              f"itm9 {p['modelled_9m']:>8,}  itm1.5 {p['modelled_1p5m']:>8,}  "
+              f"itm9 {p['modeled_9m']:>8,}  itm1.5 {p['modeled_1p5m']:>8,}  "
               f"mean {p['median_dbu_9m']:5.1f} dBu")
 
 

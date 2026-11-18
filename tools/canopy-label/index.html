@@ -70,21 +70,21 @@
     <h1>Land Cover Accuracy Check</h1>
     <span id="count">Loading</span>
   </header>
-  <div id="bar" role="progressbar" aria-label="Points labelled"><i></i></div>
+  <div id="bar" role="progressbar" aria-label="Points labeled"><i></i></div>
   <div id="done"><strong>Every point has a label.</strong> You can close this page; the labels are
     already saved. Use Back to revisit any point.</div>
 
   <div class="views">
     <figure>
-      <div class="img"><img id="rgb" alt="Close view, natural colour"><svg id="x1" viewBox="0 0 420 420"></svg></div>
-      <figcaption>Natural colour, 30 m across. Label what is inside the small yellow square.</figcaption>
+      <div class="img"><img id="rgb" alt="Close view, natural color"><svg id="x1" viewBox="0 0 420 420"></svg></div>
+      <figcaption>Natural color, 30 m across. Label what is inside the small yellow square.</figcaption>
     </figure>
     <figure>
-      <div class="img"><img id="cir" alt="Close view, colour infrared"><svg id="x2" viewBox="0 0 420 420"></svg></div>
-      <figcaption>Colour infrared, same view. Living plants show red; dead grass, soil and paint do not.</figcaption>
+      <div class="img"><img id="cir" alt="Close view, color infrared"><svg id="x2" viewBox="0 0 420 420"></svg></div>
+      <figcaption>Color infrared, same view. Living plants show red; dead grass, soil and paint do not.</figcaption>
     </figure>
     <figure>
-      <div class="img wide"><img id="wide" alt="Wide view, natural colour"><svg id="x3" viewBox="0 0 420 420"></svg></div>
+      <div class="img wide"><img id="wide" alt="Wide view, natural color"><svg id="x3" viewBox="0 0 420 420"></svg></div>
       <figcaption>Wide view, 150 m across. The yellow box is the close view.</figcaption>
     </figure>
   </div>
@@ -93,7 +93,7 @@
   <div class="nav">
     <button id="back" type="button">&larr; Back</button>
     <button id="next" type="button">Next &rarr;</button>
-    <button id="todo" type="button">Next unlabelled</button>
+    <button id="todo" type="button">Next unlabeled</button>
     <button id="clear" type="button">Clear this label</button>
     <span id="status" role="status"></span>
   </div>
@@ -101,7 +101,7 @@
   <details open>
     <summary>How to label</summary>
     <ul>
-      <li>Label only what is inside the small yellow square at the centre (half a meter across), as seen from above in the October 2023 photo.</li>
+      <li>Label only what is inside the small yellow square at the center (half a meter across), as seen from above in the October 2023 photo.</li>
       <li><strong>Tree canopy</strong>: the crown of a tree or tall cactus, roughly taller than a person can reach (2.5 m).</li>
       <li><strong>Roof</strong>: any building or carport roof.</li>
       <li><strong>Pavement</strong>: asphalt, concrete, sidewalks, driveways, patios, sport courts.</li>
@@ -113,7 +113,7 @@
       <li>A vehicle, bin or other object: label the surface it is sitting on.</li>
       <li>A shadow: label the surface the shadow falls on, using the wide view to judge.</li>
       <li>If you honestly cannot say, choose <strong>Can't tell</strong>. Those points are counted and reported, not guessed.</li>
-      <li>Keys: <kbd>1</kbd> to <kbd>6</kbd> for a class, <kbd>0</kbd> for can't tell, <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to move. A label saves at once and moves to the next unlabelled point.</li>
+      <li>Keys: <kbd>1</kbd> to <kbd>6</kbd> for a class, <kbd>0</kbd> for can't tell, <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to move. A label saves at once and moves to the next unlabeled point.</li>
     </ul>
   </details>
 </main>
@@ -147,7 +147,7 @@ function marks() {
 function show() {
   const id = ids[at], n = Object.keys(labels).length;
   for (const k of ["rgb", "cir", "wide"]) $(k).src = `/chips/${id}_${k}.jpg`;
-  $("count").textContent = `Point ${at + 1} of ${ids.length} · ${n} labelled`;
+  $("count").textContent = `Point ${at + 1} of ${ids.length} · ${n} labeled`;
   $("bar").firstElementChild.style.width = `${n / ids.length * 100}%`;
   $("bar").setAttribute("aria-valuenow", n);
   $("bar").setAttribute("aria-valuemax", ids.length);
@@ -183,10 +183,10 @@ async function save(label) {
   }
 }
 
-for (const [v, name, colour] of CLASSES) {
+for (const [v, name, color] of CLASSES) {
   const b = document.createElement("button");
   b.type = "button"; b.dataset.v = v; b.setAttribute("aria-pressed", "false");
-  b.innerHTML = `<kbd>${v}</kbd><span class="sw" style="background:${colour}"></span><span>${name}</span>`;
+  b.innerHTML = `<kbd>${v}</kbd><span class="sw" style="background:${color}"></span><span>${name}</span>`;
   b.addEventListener("click", () => save(v));
   $("keys").appendChild(b);
 }

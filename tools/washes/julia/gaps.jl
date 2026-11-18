@@ -5,9 +5,9 @@
 # A repair changes resistance in a few cells. Only moving windows that contain
 # one of those cells can give a different answer, and each of those windows
 # reaches one radius further. So each job is run on a cut-out of the grid that
-# reaches two radii beyond the repair, and only on the windows centred within
+# reaches two radii beyond the repair, and only on the windows centered within
 # one radius of it. The difference between the two runs is then the same as the
-# difference between two runs of the whole grid on the same window centres.
+# difference between two runs of the whole grid on the same window centers.
 #
 #   julia --project=tools/washes/julia -t N tools/washes/julia/gaps.jl <folder>
 #
@@ -19,13 +19,13 @@ using Omniscape
 const DIR = ARGS[1]
 const SCRATCH = joinpath(DIR, "_omniscape")
 
-# The cells of the repair in cut-out coordinates, and how far a window centre
+# The cells of the repair in cut-out coordinates, and how far a window center
 # may be from them. Nothing: keep every window.
 const NEAR = Ref{Union{Nothing, Tuple{Vector{Int}, Vector{Int}, Int}}}(nothing)
 
-# Omniscape picks its window centres in get_targets. This method takes the
+# Omniscape picks its window centers in get_targets. This method takes the
 # place of the package's for double precision, calls the package's own, and
-# drops the centres too far from the repair to be changed by it.
+# drops the centers too far from the repair to be changed by it.
 function Omniscape.get_targets(s::Array{Union{Float64, Missing}, 2}, a::Dict{String, Int64},
                                p::Type{Float64})
     t = invoke(Omniscape.get_targets,

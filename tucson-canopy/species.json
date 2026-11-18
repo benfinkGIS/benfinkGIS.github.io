@@ -1,5 +1,5 @@
 {
-  "_about": "Native tree palette for the planting scenario. Mature height and width are as published by the Arizona Municipal Water Users Association plant pages (read 13 November 2026), converted from feet. 'share' is the target mix the placement step steers toward; 'needs_runoff' restricts a species to spots that collect street or roof runoff. The shares and the runoff rule are modelling choices, not from the source. Colours are the site palette's categorical slots (blue, yellow, orange, magenta); existing canopy takes the aqua slot.",
+  "_about": "Native tree palette for the planting scenario. Mature height and width are as published by the Arizona Municipal Water Users Association plant pages (read 13 November 2026), converted from feet. 'share' is the target mix the placement step steers toward; 'needs_runoff' restricts a species to spots that collect street or roof runoff. The shares and the runoff rule are modeling choices, not from the source. Colors are the site palette's categorical slots (blue, yellow, orange, magenta); existing canopy takes the aqua slot.",
   "source": "https://www.amwua.org/plants",
   "crown_base_m": 1.8,
   "species": [
@@ -14,7 +14,7 @@
       "water": "Very Low",
       "share": 0.3,
       "needs_runoff": false,
-      "colour": [
+      "color": [
         42,
         120,
         214
@@ -32,7 +32,7 @@
       "water": "Very Low",
       "share": 0.25,
       "needs_runoff": false,
-      "colour": [
+      "color": [
         237,
         161,
         0
@@ -50,7 +50,7 @@
       "water": "Very Low",
       "share": 0.25,
       "needs_runoff": false,
-      "colour": [
+      "color": [
         235,
         104,
         52
@@ -68,7 +68,7 @@
       "water": "Low",
       "share": 0.2,
       "needs_runoff": true,
-      "colour": [
+      "color": [
         232,
         123,
         164

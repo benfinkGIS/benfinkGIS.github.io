@@ -102,7 +102,7 @@
     var head = el("thead"), body = el("tbody");
     function cooler(v) { return v.toFixed(1).replace("-", "−"); }
     head.appendChild(row(["", "Trees planted", "Tree canopy", "Street edge in shade", "Pavement in shade",
-                          "Carbon stored, tonnes", "Surface at 11 a.m.", "Surface at " + afternoonHour()], true));
+                          "Carbon stored, metric tons", "Surface at 11 a.m.", "Surface at " + afternoonHour()], true));
     body.appendChild(row(["Today", "", p1(s.today.canopy), p0(s.today.edge), p0(s.today.pavement), "",
                           s.lst.toFixed(1) + " °C", ""]));
     s.scenarios.forEach(function (p, i) {
@@ -147,7 +147,7 @@
     head.appendChild(row(["Species", "Mature height", "Mature width", "Water need", "In this planting", "Share"], true));
     d.species.forEach(function (sp, i) {
       var name = document.createDocumentFragment(), dot = el("span", "dot");
-      dot.style.background = sp.colour;
+      dot.style.background = sp.color;
       var a = el("a", null, sp.name);
       a.href = sp.url;
       name.appendChild(dot);
@@ -305,7 +305,7 @@
         if (t[3] !== tier) return;
         var sp = d.species[t[2]];
         L.circle([t[0], t[1]], { radius: sp.radius_m, renderer: canvas, pane: "right", color: "#fff", weight: 1,
-                                 fillColor: sp.colour, fillOpacity: 0.92, tree: t }).addTo(g);
+                                 fillColor: sp.color, fillOpacity: 0.92, tree: t }).addTo(g);
       });
       g.on("click", function (e) {
         var t = e.layer.options.tree, sp = d.species[t[2]];
@@ -348,20 +348,20 @@
   function renderLegend() {
     var lg = $("map-legend");
     lg.textContent = "";
-    function item(cls, text, colour, shape) {
+    function item(cls, text, color, shape) {
       var li = el("li"), sw = el("span", shape || "sw " + (cls || ""));
-      if (colour) sw.style.background = colour;
+      if (color) sw.style.background = color;
       li.appendChild(sw);
       li.appendChild(document.createTextNode(text));
       lg.appendChild(li);
     }
     if (view === "canopy") {
       item("canopy", "Tree canopy today");
-      d.species.forEach(function (sp) { item(null, sp.name, sp.colour, "dot"); });
+      d.species.forEach(function (sp) { item(null, sp.name, sp.color, "dot"); });
     } else if (view === "shade") {
       item("shade", "Ground in shade at 4 p.m., 15 July (roofs left clear)");
     } else {
-      Object.keys(d.colours.cover).forEach(function (k) { item(null, k, d.colours.cover[k]); });
+      Object.keys(d.colors.cover).forEach(function (k) { item(null, k, d.colors.cover[k]); });
     }
     item(null, "Neighborhood boundary", null, "ring");
   }

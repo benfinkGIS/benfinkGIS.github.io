@@ -1,4 +1,4 @@
-"""Check the modelled shoreline against what Landsat saw on real days.
+"""Check the modeled shoreline against what Landsat saw on real days.
 
 For each test scene it reads the green and shortwave-infrared bands for the
 lower lake straight from the public Landsat archive (Microsoft Planetary
@@ -8,7 +8,7 @@ elevation for the same day. This is the one check that does not depend on the
 DEM: it tests the datum conversion and the terrain together.
 
 Writes processed/landsat_check.json and one picture per scene,
-processed/landsat_check_<date>.png (Landsat water in blue, the modelled
+processed/landsat_check_<date>.png (Landsat water in blue, the modeled
 shoreline as a line).
 
     py -I tools/powell/10_check_landsat.py
@@ -109,8 +109,8 @@ def main():
 
         fig = plt.figure(figsize=(cols / 110, rows / 110), dpi=110)
         ax = fig.add_axes((0, 0, 1, 1))
-        grey = np.clip(swir / np.nanpercentile(swir[seen], 99), 0, 1) if seen.any() else swir
-        img = np.dstack([grey, grey, grey])
+        gray = np.clip(swir / np.nanpercentile(swir[seen], 99), 0, 1) if seen.any() else swir
+        img = np.dstack([gray, gray, gray])
         img[water] = (0.16, 0.47, 0.84)
         ax.imshow(img)
         ax.contour(model.astype(float), levels=[0.5], colors="#eb6834", linewidths=0.6)

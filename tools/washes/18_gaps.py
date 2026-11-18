@@ -72,7 +72,7 @@ PLANT_KEEP, PLANT_APART_M = 25, 500
 LINK_WITHIN_CELLS = 1
 LINK_MIN_M, LINK_MAX_M = 50, 800
 LINK_KEEP, LINK_APART_M = 25, 400
-JOIN_SHARE = 0.5                    # a neighbouring reach joins a stretch at this share of the seed's score
+JOIN_SHARE = 0.5                    # a neighboring reach joins a stretch at this share of the seed's score
 MEASURE_CELLS = 5                   # added movement is counted this far either side of the repair
 PUBLISH, PUBLISH_APART_M = 5, 1500  # the page lists this many per animal, no two closer than this
 LETTER = {"bobcat": "B", "flycatcher": "F", "queen": "Q"}
@@ -318,7 +318,7 @@ def planting_candidates(reaches, base, fixed, pot):
 
 
 def link_candidates(reaches, base, fixed, pot):
-    """Runs of street flow or unchannelled flow path with wash at both ends."""
+    """Runs of street flow or unchanneled flow path with wash at both ends."""
     by_from, by_to = defaultdict(list), defaultdict(list)
     for o, r in reaches.items():
         by_from[r["fn"]].append(o)

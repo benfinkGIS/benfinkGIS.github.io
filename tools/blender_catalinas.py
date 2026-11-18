@@ -126,7 +126,7 @@ def default_texture():
 
 
 def build_terrain():
-    """Elevation samples sit at cell centres, so the mesh starts half a cell in."""
+    """Elevation samples sit at cell centers, so the mesh starts half a cell in."""
     z = (DEM[::STEP, ::STEP] - Z0) * Z_EXAG * K
     rows, cols = z.shape
     x = (np.arange(cols) * STEP + 0.5) * CELL
@@ -297,11 +297,11 @@ def main():
     scene.cycles.max_bounces = 4
     scene.cycles.volume_bounces = 2
     scene.view_settings.exposure = EXPOSURE
-    try:    # keep the imagery's own colours rather than a film-style curve
+    try:    # keep the imagery's own colors rather than a film-style curve
         scene.view_settings.view_transform = arg("--transform", "Standard")
         scene.view_settings.look = arg("--look", "None")
     except Exception as exc:
-        print("colour settings:", exc)
+        print("color settings:", exc)
         vs = scene.view_settings
         print("looks:", [e.identifier for e in vs.bl_rna.properties["look"].enum_items])
     scene.render.resolution_x, scene.render.resolution_y = RENDER

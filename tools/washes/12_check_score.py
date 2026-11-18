@@ -10,7 +10,7 @@ than its share.
 
 Three things come out of it:
 
-  1. Is it a wash at all?  A third of the sampled spots were labelled "not a
+  1. Is it a wash at all?  A third of the sampled spots were labeled "not a
      wash" or "no crossing here": the lidar traces where water would run, and
      much of that is across yards, lots and streets with no channel. A reach
      is kept as a wash when it is cut at least INCISION cm below the ground
@@ -61,7 +61,7 @@ def cross_type(c, step_min, hump_min):
 
 
 def set_weights(universe):
-    """Each labelled item stands for (stratum size / items labelled in it) members."""
+    """Each labeled item stands for (stratum size / items labeled in it) members."""
     n = Counter(it["stratum"] for it in universe)
     for it in universe:
         it["w"] = it["pop"] / n[it["stratum"]]
@@ -72,7 +72,7 @@ def share(universe, good, within=lambda it: True, reps=2000):
 
     The subset can cut across strata (reaches the rule kept, say), so this is
     a ratio of two weighted totals. The 95% interval comes from resampling
-    the labelled items within each stratum.
+    the labeled items within each stratum.
     """
     def ratio(sample):
         den = sum(it["w"] for it in sample if within(it))
@@ -132,7 +132,7 @@ def main():
     kept = lambda it: loo[it["id"]]
     out["wash_rule"] = dict(
         incision_min_cm=incision, county_min=COUNTY_MIN, riparian_min=RIP_MIN, street_max=STREET_MAX,
-        labelled_a_wash=share(told, truth),
+        labeled_a_wash=share(told, truth),
         reaches_kept=share(told, kept),
         agreement_cross_validated=share(told, lambda it: kept(it) == truth(it)),
         kept_that_are_washes=share(told, truth, kept),
@@ -142,9 +142,9 @@ def main():
     # ---- 3. what the beds are made of ----
     out["bed_material"] = dict(
         of_all_reaches={name: share(told, lambda it, v=v: it["label"] == v) for v, name in BED.items()},
-        of_reaches_labelled_a_wash={name: share(told, lambda it, v=v: it["label"] == v, truth)
+        of_reaches_labeled_a_wash={name: share(told, lambda it, v=v: it["label"] == v, truth)
                                     for v, name in BED.items() if v != 4},
-        colour_rule=dict(called_concrete=sum(it["stratum"] == "most" for it in told),
+        color_rule=dict(called_concrete=sum(it["stratum"] == "most" for it in told),
                          of_which_concrete=sum(it["stratum"] == "most" and it["label"] == 3 for it in told),
                          concrete_labels_in_sample=sum(it["label"] == 3 for it in told)))
 
@@ -185,8 +185,8 @@ def main():
                               for k in kinds},
         counts_rule_by_label={k: dict(c) for k, c in matrix.items()})
 
-    labelled = [labels[k]["at"] for k in labels if labels[k].get("at") and labels[k]["at"] != "test"]
-    out["labelled_between"] = [min(labelled)[:10], max(labelled)[:10]]
+    labeled = [labels[k]["at"] for k in labels if labels[k].get("at") and labels[k]["at"] != "test"]
+    out["labeled_between"] = [min(labeled)[:10], max(labeled)[:10]]
     (CHECK / "results.json").write_text(json.dumps(out, indent=2))
     (PROJECT / "rules.json").write_text(json.dumps(dict(
         _about="Cut-offs set from the hand check of 340 crossings and channel beds "

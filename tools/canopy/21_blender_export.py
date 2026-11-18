@@ -5,7 +5,7 @@ Runs in ArcGIS Pro's Python:
   <Pro python> tools/canopy/21_blender_export.py [--size 400] [site_id ...]
 
 Blender cannot read a geodatabase, so this writes plain arrays for a square
-block of each site (centre in BLOCKS below) to work/<site>/blender/:
+block of each site (center in BLOCKS below) to work/<site>/blender/:
 
   ground.npy    bare-ground elevation, meters, row 0 = north
   roof.npy      roof height above ground (0 where there is no building)
@@ -30,7 +30,7 @@ from scipy import ndimage
 from common import PROJECT, site_dir, sites, work_bbox
 
 CELL = 0.5
-# block centres, UTM 12N: a stretch of ordinary streets in each neighborhood
+# block centers, UTM 12N: a stretch of ordinary streets in each neighborhood
 BLOCKS = {"dunbar_spring": (502330, 3566150), "western_hills_ii": (505655, 3560845)}
 
 
@@ -80,7 +80,7 @@ def main():
             site=s["id"], name=s["name"], cell_m=CELL, size_m=args.size, origin=[x0, y0],
             ground_min=float(dtm.min()), sun_azimuth=shade["sun_azimuth"],
             sun_elevation=shade["sun_elevation"], crown_base_m=species["crown_base_m"],
-            species=[dict(name=sp["common"], colour=sp["colour"]) for sp in species["species"]],
+            species=[dict(name=sp["common"], color=sp["color"]) for sp in species["species"]],
             trees=trees)))
         print(s["id"], f"block {args.size:.0f} m at {x0:.0f}, {y0:.0f};",
               f"canopy {float((canopy > 0).mean()) * 100:.1f}%, roofs {float((roof > 0).mean()) * 100:.1f}%;",

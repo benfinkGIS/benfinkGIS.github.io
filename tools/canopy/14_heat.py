@@ -22,7 +22,7 @@ Read the result as an estimate of direction and rough size, no more:
   * the relationship comes from two neighborhoods, not the whole city. The
     original plan was a citywide fit, but canopy at this detail exists only
     where the lidar has been processed
-  * neighbouring blocks share blurred pixels, so the coefficients are pulled
+  * neighboring blocks share blurred pixels, so the coefficients are pulled
     toward zero and their standard errors are too small
   * new trees are at mature size and treated like today's canopy
 

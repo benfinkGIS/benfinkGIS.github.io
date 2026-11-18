@@ -22,11 +22,11 @@ How it decides
   The classifier is trained on samples the script draws itself, from places
   where the answer is not in doubt:
     pavement        flat ground within 2.5 m of a street centerline that is
-                    dark to the lidar (asphalt), plus flat, bright, grey
+                    dark to the lidar (asphalt), plus flat, bright, gray
                     ground (concrete)
     low vegetation  green, bright in the near infrared, and under 2.5 m
     bare ground     flat, not green, bright to the lidar, inside a parcel and
-                    well away from the street, and not grey
+                    well away from the street, and not gray
   "Dark" and "bright" are split at the natural break in the site's own ground
   intensity (Otsu's method), so nothing is tuned by hand per site.
 
@@ -44,11 +44,11 @@ How it decides
 
   Water is a rule: flat, open, and much brighter in green than near infrared.
 
-No training polygon is digitised by hand, so a new site needs no new labels.
-The map is checked afterwards against points labelled by a person who has not
+No training polygon is digitized by hand, so a new site needs no new labels.
+The map is checked afterwards against points labeled by a person who has not
 seen it (steps 07 and 08).
 
-Writes to work/<site>/<site>.gdb: land_cover (with class names and colours)
+Writes to work/<site>/<site>.gdb: land_cover (with class names and colors)
 and land_cover_seeds (the training points). Beside it: land_cover.json,
 ql_land_cover.png and the classifier definition.
 """
@@ -129,7 +129,7 @@ def classify(site):
     # NDVI is stored as (ndvi + 1) x 10000 and height in centimeters
     feats = str(tmp / "features.tif")
     # Height counts only where the cell is green and porous to the lidar, so
-    # a parked car or a wall (solid) is judged by its colour, not as a shrub
+    # a parked car or a wall (solid) is judged by its color, not as a shrub
     multi = grab(f"{gdb}/multi_return")
     shrubby = (ndvi >= 0.10) & (multi >= POROUS)
     green_h = np.where(shrubby, veg, 0)
@@ -153,7 +153,7 @@ def classify(site):
     parcel = grab(str(tmp / "parcel.tif"), 0) > 0
 
     bright = (R + G + B) / 3
-    red = (R - B) / np.maximum(R + B, 1)          # soil is tan, concrete grey
+    red = (R - B) / np.maximum(R + B, 1)          # soil is tan, concrete gray
     ndwi = (G - N) / np.maximum(G + N, 1)
     open_flat = (chm < FLAT_M) & ~roof & ~tree
     # Shadows and dark paint have a high NDVI without being plants. Real
@@ -165,14 +165,14 @@ def classify(site):
     lit = N >= LIT_SHARE * np.median(N[core])
     dry = open_flat & ((ndvi < 0.08) | ~lit)
     split = otsu(inten[dry])
-    grey = (red < 0.06) & (bright > 150)
+    gray = (red < 0.06) & (bright > 150)
 
     seeds = {
         3: (dry & (street_m <= STREET_CORE_M) & (inten < split)) |
-           (dry & (ndvi < 0.05) & grey & (inten >= split)),
+           (dry & (ndvi < 0.05) & gray & (inten >= split)),
         4: ~roof & ~tree & (veg < TREE_MIN_M) & lit &
            ((ndvi >= 0.20) | ((veg >= 0.5) & shrubby)),
-        5: dry & parcel & (street_m >= STREET_CLEAR_M) & (inten >= split) & ~grey,
+        5: dry & parcel & (street_m >= STREET_CLEAR_M) & (inten >= split) & ~gray,
     }
     rng = np.random.default_rng(SEED)
     pts = f"{gdb}/land_cover_seeds"
@@ -261,7 +261,7 @@ def classify(site):
 
 def main():
     if arcpy.CheckOutExtension("Spatial") != "CheckedOut":
-        raise SystemExit("Spatial Analyst licence not available")
+        raise SystemExit("Spatial Analyst license not available")
     for s in sites(sys.argv[1:]):
         classify(s)
 

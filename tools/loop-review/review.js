@@ -76,7 +76,7 @@
     host.appendChild(lab);
   }
 
-  // Census blocks coloured by baseline ride time (tools/build_network.py). Drawn first so the Loop stays on top.
+  // Census blocks colored by baseline ride time (tools/build_network.py). Drawn first so the Loop stays on top.
   var BANDS = [
     [5, "5 min or less", "#ffffb2"], [10, "5 to 10 min", "#fecc5c"], [20, "10 to 20 min", "#fd8d3c"],
     [30, "20 to 30 min", "#f03b20"], [Infinity, "Over 30 min", "#bd0026"]
@@ -88,7 +88,7 @@
       var bits = ["<strong>Census block " + esc(p.geoid) + "</strong>",
         p.pop.toLocaleString("en-US") + " residents &bull; " + p.hu.toLocaleString("en-US") + " housing units",
         "Baseline: " + p.min.toFixed(1) + " min to the Loop",
-        "Attached to a street " + p.snap_m.toLocaleString("en-US") + " m from the block's centre point"];
+        "Attached to a street " + p.snap_m.toLocaleString("en-US") + " m from the block's center point"];
       if (p.private) bits.push("<em>Attached to a private street: the trip starts there and joins the public streets at a gate.</em>");
       if (p.island) bits.push("<em>The nearest street cannot reach the Loop in the network, so a farther one was used.</em>");
       return bits.join("<br>");

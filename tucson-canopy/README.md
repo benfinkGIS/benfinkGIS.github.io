@@ -31,7 +31,7 @@ Why these two:
   (<https://dunbarspringneighborhoodforesters.org/be-a-neighborhood-forester/>,
   <https://dunbarspringneighborhoodforesters.org/welcome/accomplishments/>,
   read 13 November 2026). It is a working local example of the scenario being
-  modelled, not an irrigated lawn-and-shade-tree neighborhood. Those are the
+  modeled, not an irrigated lawn-and-shade-tree neighborhood. Those are the
   group's own figures; the species list on their home page (mesquites, palo
   verde, desert hackberry) still needs reading in full before the page names
   species.
@@ -50,7 +50,7 @@ is one more entry, not a new workflow.
 ## Results so far (13 November 2026)
 
 Steps 0 to 9c and step 4 have run for both sites, and the land cover has been scored
-against 300 hand-labelled points. Still to do: canopy change over time, and the remaining products.
+against 300 hand-labeled points. Still to do: canopy change over time, and the remaining products.
 
 Land cover inside each neighborhood boundary. "Mapped" is what the map says;
 "corrected" is the share after allowing for the errors the accuracy check
@@ -70,7 +70,7 @@ crown edges that the power-line cleanup trims.
 
 ### Accuracy
 
-Ben labelled all 300 points from the 2023 photo on 13 November without seeing
+Ben labeled all 300 points from the 2023 photo on 13 November without seeing
 the map. Six were marked "can't tell" and are left out, leaving 294.
 
 | Question | Both sites | Dunbar Spring | Western Hills |
@@ -103,7 +103,7 @@ What that means for using the map:
 - **Pavement is over-mapped inside parcels.** Of 28 pavement points that were
   right, 23 were in the street right-of-way; of 16 that were really bare
   ground, 14 were inside parcels: compacted dirt lots, rail ballast, shaded
-  yards. Grey-tan dirt and faded asphalt overlap in every input the classifier
+  yards. Gray-tan dirt and faded asphalt overlap in every input the classifier
   has. For the planting scenario this errs on the safe side: it hides plantable
   ground and does not invent it.
 - **Bare ground mapped where there is pavement** is the error that could put a
@@ -117,8 +117,8 @@ What that means for using the map:
 How the check was run, and its limits:
 
 - The sample is stratified random: 25 points in each mapped class in each
-  neighborhood (`07_accuracy_points.py`). The labelling page shows natural
-  colour, colour infrared and a wide view, and not the map, the lidar or the
+  neighborhood (`07_accuracy_points.py`). The labeling page shows natural
+  color, color infrared and a wide view, and not the map, the lidar or the
   class a point was drawn from.
 - The map was revised once after the first scoring. The first map scored
   69.3% on six classes, 95.4% on tree canopy and 81.0% on impervious. The
@@ -130,8 +130,8 @@ How the check was run, and its limits:
   `work/accuracy/accuracy_first_map.json`.
 - The 300 labels took ten and a half minutes, a median of 1.4 seconds each.
   Of 16 disagreements looked at afterwards, the label was right in most. A
-  slower repeat of a random subset would show how consistent the labelling is.
-- Labelling rules agreed while labelling: go by the surface in the photo, not
+  slower repeat of a random subset would show how consistent the labeling is.
+- Labeling rules agreed while labeling: go by the surface in the photo, not
   the use of the place (dry or dormant turf is bare ground); on an edge, label
   whichever surface fills more of the half-meter square.
 - The lidar is from 2021 and the photo from 2023, so a tree planted or removed
@@ -176,7 +176,7 @@ most roof and street runoff are filled first. A species must fit clear of
 roofs and wires; among those that fit, the one furthest below its target
 share is planted (30% mesquite, 25% each palo verde, 20% desert willow), and
 desert willow goes only where runoff collects. The target shares and the
-runoff rule are modelling choices.
+runoff rule are modeling choices.
 
 | | Dunbar Spring | | Western Hills | |
 | --- | --- | --- | --- | --- |
@@ -199,7 +199,7 @@ about 3,500 gallons before losses, the same order as the 4,500 gallons a year
 the Dunbar Spring foresters say one of their basins harvests.
 
 For scale: the Dunbar Spring foresters report over 1,700 trees planted since
-1996, so 1,317 street trees for Western Hills is a programme of that size.
+1996, so 1,317 street trees for Western Hills is a program of that size.
 
 Known weaknesses of the placement:
 
@@ -240,7 +240,7 @@ gives a clear best match at 12:45 for Western Hills (shaded ground half as
 bright as sunlit, 88% of cells agree) and at 10:45 for Dunbar Spring (weaker:
 shaded ground about a quarter darker, 71% agree). Both are plausible flying
 times, two hours apart on different flight lines. The weaker match at Dunbar
-Spring is expected where more of the "bare ground" is mislabelled and crowns
+Spring is expected where more of the "bare ground" is mislabeled and crowns
 overlap.
 
 Limits: trees are solid in the model, so this is the footprint of shade and
@@ -309,7 +309,7 @@ temperature to tree canopy, pavement and elevation across 60,627 built-up
 | Blocks compared across the whole city | 0.97 C | 0.81 to 1.12 |
 | The two neighborhoods alone (step 14, 309 blocks) | 0.19 C | wide |
 
-Intervals come from resampling 2.7 km squares, so neighbouring blocks are
+Intervals come from resampling 2.7 km squares, so neighboring blocks are
 not treated as independent. Elevation is worth 1.2 C per 100 m.
 
 Change in mean late-morning surface temperature:
@@ -323,7 +323,7 @@ Change in mean late-morning surface temperature:
 
 The page shows the within-1.8-km figure for each hour, with the
 across-the-city figure as "up to". The first is the safer one: it compares each block only with its
-neighbours, so differences between parts of town (soil, how much people
+neighbors, so differences between parts of town (soil, how much people
 water, distance from the mountains) drop out.
 
 What to keep in mind:
@@ -497,7 +497,7 @@ Analyst and 3D Analyst), shown below as `propy`:
 | 2b | `05_check_and_document.py` | propy | Tests every layer (CRS, coverage, geometry, grid, value range) into `qa_report.csv` and writes layer metadata |
 | 3 | `06_land_cover.py` | propy | Six-class land cover. Lidar decides trees and roofs; a Random Trees classifier, trained on samples the script draws itself, decides pavement, low vegetation and bare ground |
 | 3b | `07_accuracy_points.py` | propy | Stratified random accuracy sample (25 points per mapped class per site) and an image chip for each point |
-| 3b | `label_server.py` + `tools/canopy-label/` | py | Local page for labelling the points from the 2023 photo without seeing the map. Preview config `canopy-label`, <http://localhost:8770/> |
+| 3b | `label_server.py` + `tools/canopy-label/` | py | Local page for labeling the points from the 2023 photo without seeing the map. Preview config `canopy-label`, <http://localhost:8770/> |
 | 3c | `08_accuracy.py` | propy | Error matrix, user's and producer's accuracy, area-weighted overall accuracy with a 95% interval, kappa, and error-corrected class shares |
 | 5 | `09_plantable.py` | propy | Plantable ground by zone (street strip, home yard, park edge) after setbacks, and the roof and pavement area draining to each spot |
 | 6-8 | `10_scenarios.py` | propy | Places trees from `species.json`, grows them to mature size, and builds three nested scenarios with canopy cover for each |
@@ -561,7 +561,7 @@ Every site gets the same layer names, so nothing downstream is site-specific.
   change is an estimate from a citywide relationship.
 - Species records reflect where observers go.
 - Carbon figures are estimates for mature trees.
-- The habitat score is illustrative, not a recognised metric for the Sonoran
+- The habitat score is illustrative, not a recognized metric for the Sonoran
   Desert.
 - The scenario is a planning sketch, not a planting plan: no utility locates,
   ownership checks or irrigation design.
@@ -579,7 +579,7 @@ between the two pages.
 
 The page uses Leaflet like the rest of the site: each side of the divider is its own map pane, clipped to its half.
 Overlays are the 0.5 m rasters as transparent images placed by their corner
-coordinates. Colours are the site palette's categorical slots; the palette
+coordinates. Colors are the site palette's categorical slots; the palette
 validator could not be run here (no Node on this machine).
 
 Every figure on the page comes from `data/canopy.json`, so re-running
@@ -622,5 +622,5 @@ Made 14 November 2026.
   the photo draped on it; today's trees are the lidar canopy surface; proposed
   trees are simple crowns at mature size. No vertical exaggeration. The sun
   is where the shade analysis puts it. Proposed trees use foliage and bloom
-  colours here, not the map colours, because a blue tree looks wrong in a
+  colors here, not the map colors, because a blue tree looks wrong in a
   rendered scene. A render takes about nine seconds on the RTX 5080.

@@ -12,7 +12,7 @@ Study area
 ----------
 Golf courses inside Pima County, Arizona (the query is limited to OpenStreetMap's
 Pima County boundary), and within RADIUS_MI of downtown Tucson. The radius only
-matters for Ajo, a Pima County course about 110 miles west. Courses in neighbouring
+matters for Ajo, a Pima County course about 110 miles west. Courses in neighboring
 counties (the SaddleBrooke communities in Pinal County, Tubac, San Manuel) are not
 fetched at all.
 
