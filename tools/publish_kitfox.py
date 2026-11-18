@@ -59,7 +59,7 @@ PROJECT = Path(CFG["project"])
 GDB = str(PROJECT / "Default.gdb")
 SAM = sorted(PROJECT.glob("*.sam"))[0]   # the Suitability Modeler file
 DST = ROOT / "kit-fox-release" / "data"
-RES = 600          # Web Mercator metres per cell
+RES = 600          # Web Mercator meters per cell
 SCALE = 25         # stored byte = score x 25
 ROUND_DEG = 0.1    # candidate positions are rounded to this
 

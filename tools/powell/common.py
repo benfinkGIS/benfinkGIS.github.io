@@ -39,7 +39,7 @@ EPSG_DEM = 6341                         # NAD83(2011) / UTM zone 12N, the DEM's 
 
 # --- Vertical datum -------------------------------------------------------
 # Reclamation reports Lake Powell elevations in feet above NGVD29. The DEM is
-# metres above NAVD88. USGS (Jones and Root, 2022, doi 10.5066/P9O3IPG3) add
+# meters above NAVD88. USGS (Jones and Root, 2022, doi 10.5066/P9O3IPG3) add
 # 2.913 ft to go from NGVD29 to NAVD88, taken from NOAA VERTCON at the USGS
 # reservoir gauge by the dam (09379901); Reclamation's 2022 area and capacity
 # tables adopt the same figure. One constant is right for the whole lake
@@ -48,7 +48,7 @@ NGVD29_TO_NAVD88_FT = 2.913
 
 
 def reclamation_ft_to_dem_m(ft):
-    """Reclamation elevation (ft, NGVD29) to the DEM's metres above NAVD88."""
+    """Reclamation elevation (ft, NGVD29) to the DEM's meters above NAVD88."""
     return (ft + NGVD29_TO_NAVD88_FT) * FT_TO_M
 
 
@@ -64,7 +64,7 @@ EAC_FILE = "Lake_Powell_2018_ElevAreaCap_calc.csv"
 # The DEM's own grid (origin 445521 E, 4206543 N) grown by 4.5 km on every
 # side, in whole 30 m cells, so coarse cells line up with the 1 m cells.
 DEM_X0, DEM_Y1 = 445521.0, 4206543.0
-CELL = 30.0                              # whole-lake terrain cell, metres
+CELL = 30.0                              # whole-lake terrain cell, meters
 PAD_CELLS = 150
 DEM_COLS, DEM_ROWS = 4340, 4331          # 30 m cells that cover the 1 m DEM
 FRAME_COLS, FRAME_ROWS = DEM_COLS + 2 * PAD_CELLS, DEM_ROWS + 2 * PAD_CELLS

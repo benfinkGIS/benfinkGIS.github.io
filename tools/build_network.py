@@ -79,7 +79,7 @@ PRIVATE_ACCESS = {"private", "military", "residents"}   # usable only to leave h
 FAR_SNAP_M = 300                                 # blocks attached from farther than this are flagged
 ISLAND_EXTRA_M = 100                             # ...as are blocks pushed this much past a cut-off street
 
-# metres per degree at the middle of the study area (32.26 N); good to about 0.2% across it
+# meters per degree at the middle of the study area (32.26 N); good to about 0.2% across it
 M_LAT, M_LON = 110895.0, 94225.0
 TIGERWEB = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/12/query"
 HERE = Path(__file__).resolve().parent

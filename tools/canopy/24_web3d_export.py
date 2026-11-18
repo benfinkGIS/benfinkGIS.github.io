@@ -9,12 +9,12 @@ and writes tucson-canopy/data/3d/:
 
   <site>_heights.png   one image, three numbers per 0.5 m cell:
                        red and green hold the ground-plus-roof height above
-                       the block's lowest point in centimetres (red x 256 +
+                       the block's lowest point in centimeters (red x 256 +
                        green); blue holds today's canopy height above the
-                       ground in tenths of a metre (0 = no canopy)
+                       ground in tenths of a meter (0 = no canopy)
   <site>_photo.jpg     the 2023 aerial photo over the block
   <site>.json          block size, where it is, and every proposed tree
-                       (metres east and north of the block centre, ground
+                       (meters east and north of the block centre, ground
                        height, species, scenario), plus each species' mature
                        size and colour
 
@@ -60,7 +60,7 @@ def main():
             id=s["id"], name=s["name"], size_m=scene["size_m"], cell_m=scene["cell_m"],
             cells=int(cm.shape[0]), lonlat=s["center_lonlat"],
             crown_base_m=scene["crown_base_m"], species=species,
-            # east, north (metres from the block centre), ground height, species, scenario
+            # east, north (meters from the block centre), ground height, species, scenario
             trees=[[round(t[0] - half, 1), round(t[1] - half, 1),
                     round(t[2] - scene["ground_min"], 1), t[3], t[6]] for t in scene["trees"]])
         (OUT / f"{s['id']}.json").write_text(json.dumps(doc, separators=(",", ":")))

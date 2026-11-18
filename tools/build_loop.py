@@ -110,7 +110,7 @@ def overpass(query, cache_dir, refresh):
 
 # ---- geometry helpers ------------------------------------------------------------
 def hav(a, b):
-    """Metres between two (lon, lat) points."""
+    """Meters between two (lon, lat) points."""
     p1, p2 = math.radians(a[1]), math.radians(b[1])
     x = math.sin((p2 - p1) / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(math.radians(b[0] - a[0]) / 2) ** 2
     return 2 * 6371000 * math.asin(math.sqrt(x))

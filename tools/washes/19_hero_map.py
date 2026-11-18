@@ -39,7 +39,7 @@ PLACES = [("Tucson Mountains", 490300, 3570200, 0), ("Santa Catalina\nMountains"
 LINES = [("Interstate 10", 493900, 3576500, -53), ("Oracle Road", 501650, 3570300, 90),
          ("Rillito River", 505000, 3572650, -8), ("Cañada del Oro", 500250, 3582950, 42),
          ("Santa Cruz River", 494050, 3574600, -55)]
-# where each tag sits relative to its gap, in metres, so that neighbours do not collide
+# where each tag sits relative to its gap, in meters, so that neighbours do not collide
 NUDGE = {"F3": (-750, 300), "Q5": (450, -520), "B2": (350, 450), "B4": (500, 350), "B3": (500, 350)}
 
 

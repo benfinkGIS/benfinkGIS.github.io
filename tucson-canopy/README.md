@@ -133,7 +133,7 @@ How the check was run, and its limits:
   slower repeat of a random subset would show how consistent the labelling is.
 - Labelling rules agreed while labelling: go by the surface in the photo, not
   the use of the place (dry or dormant turf is bare ground); on an edge, label
-  whichever surface fills more of the half-metre square.
+  whichever surface fills more of the half-meter square.
 - The lidar is from 2021 and the photo from 2023, so a tree planted or removed
   in between counts as a map error.
 
@@ -253,13 +253,13 @@ today); the surface is now crowns and roofs only.
 Tucson's normal annual rainfall is 10.61 inches (1991 to 2020 normals,
 National Weather Service Tucson; Ben supplied a screenshot of the table on
 14 November, page address still to be noted). At that rainfall, 50 m2 of roof
-and pavement sheds about 13 cubic metres a year before losses, roughly 3,500
+and pavement sheds about 13 cubic meters a year before losses, roughly 3,500
 gallons.
 
 ### Carbon
 
 Estimated from canopy area, not tree by tree: the canopy each scenario adds,
-at mature size, times the carbon held per square metre of urban tree cover
+at mature size, times the carbon held per square meter of urban tree cover
 in Nowak and others (2013), read from the paper on 14 November.
 
 | | Dunbar Spring | | Western Hills | |
@@ -350,7 +350,7 @@ source and the hour change.
   everything within 700 m of it is dropped. 17 scenes were still at least
   60% clear over the built-up city: 52 were lost to cloud (July and August
   are the monsoon) and one because its detail matched Landsat nowhere.
-- ECOSTRESS scenes can sit a few hundred metres off. Each scene's fine
+- ECOSTRESS scenes can sit a few hundred meters off. Each scene's fine
   detail (what is left after taking away the 1.9 km average around each
   block) is slid against the same detail in the Landsat map and the scene is
   moved to where they agree best: 123 m at the median, 225 m at most.
@@ -446,14 +446,14 @@ observations and eBird's observation dataset.
 
 These are records, not wildlife counts, and the table is mostly a picture of
 where people look. Western Hills has two records inside it and 109,000
-within a kilometre, 99% of them eBird checklists, almost all from the
+within a kilometer, 99% of them eBird checklists, almost all from the
 detention basin next door (the insect list there is led by dragonflies,
 which fits standing water). Nothing can be said about what lives on Western
 Hills' own streets from this; nobody has recorded there. What it does show
 is that a place with 246 recorded bird species sits a street's width from a
 neighborhood whose canopy does not reach it.
 
-All four trees in the planting have been recorded within a kilometre of both
+All four trees in the planting have been recorded within a kilometer of both
 neighborhoods.
 
 Limits: GBIF's search API has no citable DOI; a formal report should repeat

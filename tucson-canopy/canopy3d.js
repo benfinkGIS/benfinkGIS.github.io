@@ -2,7 +2,7 @@
 // A 400 m block of each neighborhood built from the lidar: ground and buildings as one
 // surface with the aerial photo on it, today's canopy as the lidar canopy surface, and the
 // proposed trees at mature size. The sun slider moves real shadows through 15 July.
-// Reads data/3d/ (written by tools/canopy/24_web3d_export.py). Units are metres.
+// Reads data/3d/ (written by tools/canopy/24_web3d_export.py). Units are meters.
 // +X is east, +Y is up, north is -Z. The block is centred on the origin.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';

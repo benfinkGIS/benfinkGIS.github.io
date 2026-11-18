@@ -38,7 +38,7 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import BLENDER, FULL_POOL_FT, PROCESSED, RENDERS, reclamation_ft_to_dem_m  # noqa: E402
 
-K = 0.001             # metres -> Blender units (km)
+K = 0.001             # meters -> Blender units (km)
 SLAB_M = 600.0        # thickness of the block under the lowest ground
 FLOOR_COLOR = (0.012, 0.013, 0.015)
 SIDE_COLOR = (0.050, 0.036, 0.028)

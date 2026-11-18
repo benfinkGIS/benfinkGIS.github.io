@@ -101,7 +101,7 @@ def preview(path, cell, out_png):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--preview", action="store_true", help="also read the raster coarsely and draw it")
-    ap.add_argument("--cell", type=float, default=60.0, help="preview cell size in metres")
+    ap.add_argument("--cell", type=float, default=60.0, help="preview cell size in meters")
     args = ap.parse_args()
     PROCESSED.mkdir(parents=True, exist_ok=True)
     rasters = find_rasters()

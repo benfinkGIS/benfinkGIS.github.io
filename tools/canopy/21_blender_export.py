@@ -7,17 +7,17 @@ Runs in ArcGIS Pro's Python:
 Blender cannot read a geodatabase, so this writes plain arrays for a square
 block of each site (centre in BLOCKS below) to work/<site>/blender/:
 
-  ground.npy    bare-ground elevation, metres, row 0 = north
+  ground.npy    bare-ground elevation, meters, row 0 = north
   roof.npy      roof height above ground (0 where there is no building)
   canopy.npy    height above ground of today's tree canopy (0 elsewhere)
   texture.png   the 2023 aerial photo over the block
   scene.json    cell size, block size, sun position, the species palette and
-                every proposed tree in the block (position in metres from the
+                every proposed tree in the block (position in meters from the
                 block's south-west corner, ground height, species, mature
                 crown radius and height, scenario)
 
 Roof heights are median-filtered: raw lidar roofs are speckled at half a
-metre and render as rubble.
+meter and render as rubble.
 """
 import argparse
 import json
@@ -36,7 +36,7 @@ BLOCKS = {"dunbar_spring": (502330, 3566150), "western_hills_ii": (505655, 35608
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--size", type=float, default=400, help="block side, metres")
+    ap.add_argument("--size", type=float, default=400, help="block side, meters")
     ap.add_argument("site", nargs="*")
     args = ap.parse_args()
     species = json.loads((PROJECT / "species.json").read_text(encoding="utf-8"))

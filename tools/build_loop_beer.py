@@ -404,10 +404,10 @@ def main():
     sections, out = {}, []
     for p in picked:
         path = p.pop("path")
-        line, metres = [(float(g["lon"][path[0]]), float(g["lat"][path[0]]))], 0.0
+        line, meters = [(float(g["lon"][path[0]]), float(g["lat"][path[0]]))], 0.0
         for a, b in zip(path, path[1:]):
             e = arc[(a, b)]
-            metres += float(g["m"][e])
+            meters += float(g["m"][e])
             piece = None
             w = geoms.get(int(g["way"][e]))
             if w:
@@ -425,7 +425,7 @@ def main():
         out.append({
             "name": p["name"], "kind": p["kind"], "lic": [SERIES[x] for x in sorted(p["series"])],
             "lon": round(p["lon"], 5), "lat": round(p["lat"], 5),
-            "min": round(p["min"], 1), "mi": round((metres + p["snap_m"]) / 1609.344, 2),
+            "min": round(p["min"], 1), "mi": round((meters + p["snap_m"]) / 1609.344, 2),
             "crow_mi": round(p["crow_m"] / 1609.344, 2), "far_snap": bool(p["snap_m"] > FAR_SNAP_M),
             "exit": [round(float(g["lon"][path[0]]), 5), round(float(g["lat"][path[0]]), 5)],
             "section": sections[path[0]],

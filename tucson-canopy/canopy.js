@@ -178,9 +178,9 @@
       : "No mapped wash runs through " + s.name + ". ";
     if (near.length) txt += "The next nearest are " + list(near) + ". ";
     txt += c.riparian.nearest_m == null
-      ? "No mapped riparian habitat lies within a kilometre. "
+      ? "No mapped riparian habitat lies within a kilometer. "
       : "The nearest mapped riparian habitat is " + fmt(c.riparian.nearest_m) + " m from the boundary, with " +
-        fmt(c.riparian.total_ha) + " hectares of it within a kilometre. ";
+        fmt(c.riparian.total_ha) + " hectares of it within a kilometer. ";
     if (parks.length) txt += "The nearest parks and open spaces are " + list(parks) + ".";
     $("ctx-text").textContent = txt;
 
@@ -224,10 +224,10 @@
     });
     $("rec-text").textContent =
       "Inside " + s.name + " there " + (rec.inside.records === 1 ? "is " : "are ") + fmt(rec.inside.records) + " record" + (rec.inside.records === 1 ? "" : "s") +
-      "; within a kilometre there are " + fmt(rec.near.records) + ", " + p0(top.records / rec.near.records * 100) +
+      "; within a kilometer there are " + fmt(rec.near.records) + ", " + p0(top.records / rec.near.records * 100) +
       " of them from " + (/eBird/.test(top.title) ? "eBird" : top.title) + ". " +
-      (palette.length ? "The planting\u2019s own species have been recorded within that kilometre: " + list(palette) + "."
-        : "None of the planting\u2019s four species has been recorded within that kilometre.");
+      (palette.length ? "The planting\u2019s own species have been recorded within that kilometer: " + list(palette) + "."
+        : "None of the planting\u2019s four species has been recorded within that kilometer.");
     fill("gap", String(s.gap_m));
     fill("rec-since", String(rec.since));
     fill("rec-date", new Date(rec.queried + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }));

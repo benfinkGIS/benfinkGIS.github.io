@@ -22,7 +22,7 @@ and Sutherland washes concrete. It also cannot see bank protection (soil
 cement, riprap, walls) beside an earthen bed. Three more measures are
 therefore stored for each reach, for a rule to be fitted to the hand labels:
 
-  img_texture    how much brightness varies from one metre to the next
+  img_texture    how much brightness varies from one meter to the next
   bed_rough_cm   how far the lidar ground along the channel line departs
                  from the 3 x 3 m around it (a poured floor is flat)
   straightness   straight-line distance between the ends over the length

@@ -80,11 +80,11 @@ def build(site):
         arcpy.management.CopyRaster(r, f"{gdb}/{name}")
         arcpy.management.DefineProjection(f"{gdb}/{name}", sr)
 
-    def away(mask, metres):
+    def away(mask, meters):
         """True where the nearest cell of `mask` is at least this far off."""
         if not mask.any():
             return np.ones(mask.shape, bool)
-        return ndimage.distance_transform_edt(~mask) * CELL >= metres
+        return ndimage.distance_transform_edt(~mask) * CELL >= meters
 
     lc = grab(f"{gdb}/land_cover")
     veg = grab(f"{gdb}/veg_height")

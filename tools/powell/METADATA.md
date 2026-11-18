@@ -50,11 +50,11 @@ Read from the file by `04_inspect_dem.py` and checked against the FGDC record:
 | | |
 |---|---|
 | Horizontal CRS | NAD83(2011) / UTM zone 12N, EPSG:6341 |
-| Horizontal units | metres |
+| Horizontal units | meters |
 | Cell size | 1 m |
 | Extent (m) | E 445,521 to 575,695; N 4,076,616 to 4,206,543 |
 | Vertical datum | NAVD88, Geoid 12B (from the FGDC record and the Esri sidecar; the GeoTIFF itself carries no vertical CRS) |
-| Vertical units | metres |
+| Vertical units | meters |
 | Elevation range | 948.28 to 1,440.94 m |
 | Nodata | -3.4028235e+38 |
 | Ground dates | bathymetry autumn 2017, lidar spring 2018, pre-dam contour maps 1947 and 1959 in gaps |
@@ -71,13 +71,13 @@ Things the file showed that the plan has to allow for:
 
 Settled 2026-11-15 by `05_datum.py`; the numbers are in `processed/datum.json`.
 
-- Reclamation's Lake Powell elevations are feet above **NGVD29**. The DEM is metres above **NAVD88**.
-- Conversion used: **NAVD88 = NGVD29 + 2.913 ft (0.888 m)**, then feet to metres at 0.3048.
+- Reclamation's Lake Powell elevations are feet above **NGVD29**. The DEM is meters above **NAVD88**.
+- Conversion used: **NAVD88 = NGVD29 + 2.913 ft (0.888 m)**, then feet to meters at 0.3048.
 - Source: Jones and Root, 2022, Elevation-area-capacity tables for Lake Powell, 2018 (https://doi.org/10.5066/P9O3IPG3). They took it from NOAA VERTCON at the USGS reservoir gauge beside the dam (09379901, 36.9369326, -111.4837694). Reclamation's 2022 area and capacity report adopts the same figure (its Appendix A), and the USGS lake extent polygons (https://doi.org/10.5066/P13OE7QW) use it too.
 - One constant is right for the whole lake: the water surface is level and is measured at the dam.
 - Check against NOAA's service today (VERTCON 3.0): +0.885 m at the dam gauge, 3 mm from the value used. Elsewhere along the lake NOAA gives +0.870 m (San Juan arm) to +0.994 m (Bullfrog), which is how the two datums differ over land there. It does not apply to the water surface.
 
-| | Feet, NGVD29 (Reclamation) | Metres, NAVD88 (DEM) |
+| | Feet, NGVD29 (Reclamation) | Meters, NAVD88 (DEM) |
 |---|---|---|
 | Full pool | 3,700 | 1,128.648 |
 | Minimum power pool | 3,490 | 1,064.640 |
@@ -91,7 +91,7 @@ Built 2026-11-15 by `06_get_context.py` and `07_build_terrain.py`.
 
 - Frame: the lake DEM's extent grown by 4.5 km on every side. E 441,021 to 580,221; N 4,072,113 to 4,211,043 (EPSG:6341). 4,640 x 4,631 cells of 30 m, lined up with the 1 m grid.
 - Lake DEM at 30 m: mean of the 2 m overview level, up to 225 values per cell, with the share of each cell it covers.
-- Surroundings: USGS 3D Elevation Program, `3DEPElevation` image service, 10 m, metres above NAVD88, 49 tiles, averaged to 30 m. Requested in EPSG:26912 (NAD83), which differs from EPSG:6341 by about a metre. Kept as `processed/context_10m.tif`.
+- Surroundings: USGS 3D Elevation Program, `3DEPElevation` image service, 10 m, meters above NAVD88, 49 tiles, averaged to 30 m. Requested in EPSG:26912 (NAD83), which differs from EPSG:6341 by about a meter. Kept as `processed/context_10m.tif`.
 - Merge: lake DEM wherever it has data, 3DEP elsewhere, weighted by coverage in partly covered cells. On dry ground both cover, lake DEM minus 3DEP has a median of 0.09 m (5th to 95th percentile -3.5 to +3.9 m).
 - Glen Canyon Dam is burned back in: cells along its crest take the highest 1 m value inside them.
 - Reservoir mask: cells at or below the record high (3,708.34 ft) plus 2 m that connect to the lake above the dam. The water sheet is drawn only there, so the canyon below the dam never floods.
@@ -118,4 +118,4 @@ Built 2026-11-15 by `06_get_context.py` and `07_build_terrain.py`.
 
 ## Target CRS for Blender
 
-Keep the DEM's own CRS (EPSG:6341, metres). No reprojection is needed.
+Keep the DEM's own CRS (EPSG:6341, meters). No reprojection is needed.

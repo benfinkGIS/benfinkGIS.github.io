@@ -476,7 +476,7 @@ take in the urban washes. The northern box is the better study:
 | Riparian classes | County layer "Riparian classifications, 2005", with edits dated up to 2020. Class codes H, A, B, C, D, some carrying an IRA prefix. 11% of the box | The codes need reading against the county's metadata page before the map legend puts words on them |
 | Culverts for hydro-enforcement | No complete public culvert layer. The county flood maps list 166 structures here (43 bridges, 43 culverts, 41 levees, the rest channels and others); the National Bridge Inventory has 225 bridges and long culverts | Small culverts have to be found from the lidar itself, where a wash meets a road embankment |
 | Lidar elevation | USGS 1 m bare-ground tiles from the 2021 flight: twelve tiles, about 300 MB each, on a fast server | The channel network runs on these, not on the raw point cloud |
-| Land cover and canopy from Project 1 | Project 1 covers two neighborhoods of about half a square kilometre each, and neither is in this area | It cannot be extended. See change 1 below |
+| Land cover and canopy from Project 1 | Project 1 covers two neighborhoods of about half a square kilometer each, and neither is in this area | It cannot be extended. See change 1 below |
 | iNaturalist records, research grade, open position | Bobcat 552, vermilion flycatcher 2,110, queen 893. GBIF adds 59,791 eBird records for the flycatcher and 575 eButterfly records for the queen | Enough to work with; eBird records sit on hotspot pins, not where the bird was |
 | Circuitscape or Omniscape | Both need Julia, which is not installed on this machine | Needs Ben's go-ahead to install |
 
@@ -496,7 +496,7 @@ Two things the first look showed about the records:
 
 ## Changes to the outline
 
-1. **Canopy and land cover.** Rebuilding Project 1's half-metre land cover
+1. **Canopy and land cover.** Rebuilding Project 1's half-meter land cover
    over 525 km2 would take on the order of 900 lidar tiles (roughly 50 GB
    at the server's speed, then many hours of processing). Instead: a 1 m canopy and
    pavement layer from the 2023 NAIP imagery, with its thresholds set and

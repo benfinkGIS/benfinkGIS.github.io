@@ -33,7 +33,7 @@ from common import (CELL, EPSG_DEM, FRAME_X0, FRAME_Y1, PROCESSED, USER_AGENT, d
 
 STAC = "https://planetarycomputer.microsoft.com/api/stac/v1"
 SIGN = "https://planetarycomputer.microsoft.com/api/sas/v1/sign"
-# Lower lake: the dam, Wahweap, Warm Creek and Padre Bays (EPSG:6341 metres)
+# Lower lake: the dam, Wahweap, Warm Creek and Padre Bays (EPSG:6341 meters)
 WINDOW = (448000, 4084000, 488000, 4112000)
 # One day near full pool and one near the 2023 low
 SCENES = ["LT05_L2SP_037034_19840704_02_T1", "LC08_L2SP_037034_20230411_02_T1"]

@@ -43,9 +43,9 @@ VECTORS = {
 RASTERS = {
     "land_cover": ("Land cover: 1 tree canopy, 2 roof, 3 pavement, 4 low vegetation, 5 bare ground, "
                    "6 water. Low vegetation and bare ground are not reliably separated; treat as open ground"),
-    "veg_height": "Height above ground, metres, of lidar returns that are neither ground nor building",
+    "veg_height": "Height above ground, meters, of lidar returns that are neither ground nor building",
     "plantable": "Where a trunk could go: 0 none, 1 street strip, 2 home yard, 3 park or school edge",
-    "runoff_m2": "Square metres of roof and pavement draining to within 2 m of the cell",
+    "runoff_m2": "Square meters of roof and pavement draining to within 2 m of the cell",
     "canopy_s1": "Tree canopy with street trees at mature size (1 = canopy)",
     "canopy_s2": "Tree canopy with streets-and-homes planting at mature size",
     "canopy_s3": "Tree canopy at full build-out",
@@ -68,7 +68,7 @@ def package(site):
     gpkg = str(out / f"{site['id']}.gpkg")
     arcpy.management.CreateSQLiteDatabase(gpkg, "GEOPACKAGE")
     lines = [f"{site['name']}: GIS layers from the Tucson Neighborhood Canopy Scenario",
-             f"Coordinate system: EPSG:{EPSG} (NAD83 / UTM zone 12N), metres. Rasters: 0.5 m cells.",
+             f"Coordinate system: EPSG:{EPSG} (NAD83 / UTM zone 12N), meters. Rasters: 0.5 m cells.",
              "Lidar: USGS 3DEP, autumn 2021. Imagery: USDA NAIP, 18 October 2023.",
              "A planning sketch, not a survey or a planting plan.",
              "Method and results: https://finkgeo.com/tucson-canopy/", "",

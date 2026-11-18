@@ -4,7 +4,7 @@ Runs in the system Python:  py tools/canopy/12_carbon.py [site_id ...]
 
 Carbon is estimated from canopy area, not tree by tree: the new canopy area
 inside each boundary (from scenarios.json, at mature size) times a published
-amount of carbon per square metre of urban tree cover (carbon_factors.json).
+amount of carbon per square meter of urban tree cover (carbon_factors.json).
 
   stored            canopy added x 7.69 kg C per m2, the US urban average.
                     The low and high figures use the lowest and highest city

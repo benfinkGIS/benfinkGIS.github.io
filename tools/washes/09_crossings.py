@@ -170,7 +170,7 @@ def main():
     ground = Ground(WORK / "dem" / "dem_1m.tif")
 
     def along(rid, s):
-        """Point s metres along a reach, carrying on into the next reach up or down."""
+        """Point s meters along a reach, carrying on into the next reach up or down."""
         for _ in range(4):
             line = reach[rid]["line"]
             if s < 0 and up.get(rid):

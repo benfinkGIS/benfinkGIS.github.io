@@ -40,7 +40,7 @@ NHA_URL = ("https://gis.tucsonaz.gov/arcgis/rest/services/PublicMaps/"
            "NeighborhoodsPlans/MapServer/0/query")
 NAIP_URL = ("https://imagery.nationalmap.gov/arcgis/rest/services/"
             "USGSNAIPPlus/ImageServer")
-EPSG = 26912          # NAD83 / UTM zone 12N, metres
+EPSG = 26912          # NAD83 / UTM zone 12N, meters
 TILE_PX = 2000        # 4000 px requests time out on this server
 UA = {"User-Agent": "canopy-screen/1.0"}
 

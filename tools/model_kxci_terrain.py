@@ -60,12 +60,12 @@ TILES = WORK / "tiles"
 
 DEM_URL = ("https://elevation.nationalmap.gov/arcgis/rest/services/"
            "3DEPElevation/ImageServer/exportImage")
-CELL = 30.0               # elevation cell, metres
-HALF = 78_000.0           # half-width of the elevation square, metres
+CELL = 30.0               # elevation cell, meters
+HALF = 78_000.0           # half-width of the elevation square, meters
 TILE_PX = 1300
 
 N_AZ = 720                # radials
-STEP = 100.0              # terrain profile spacing, metres
+STEP = 100.0              # terrain profile spacing, meters
 RX_EVERY = 2              # a receiver every RX_EVERY profile steps (200 m)
 R_MAX = 75_000.0
 R_MIN = 1_000.0           # ITM is not valid closer than 1 km

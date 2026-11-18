@@ -21,7 +21,7 @@ What it does
      the 90 m blocks of step 23, and keeps scenes that are still at least
      60% clear over the built-up city.
   4. Checks where each scene sits. ECOSTRESS scenes can be placed several
-     hundred metres off. The fine detail of each scene (what is left after
+     hundred meters off. The fine detail of each scene (what is left after
      taking away the 1.9 km average around each block) is slid against the
      same detail in the Landsat map, and the scene is moved to where the two
      agree best. Scenes whose detail does not agree with Landsat anywhere
@@ -165,7 +165,7 @@ def main():
 
     # ---- 3. each scene onto the blocks, clear of cloud ----------------------
     def to_blocks(scene, move=(0.0, 0.0)):
-        """Scene on the 90 m blocks in degrees C; move = (metres east, metres north)."""
+        """Scene on the 90 m blocks in degrees C; move = (meters east, meters north)."""
         out = np.full((rows, cols), np.nan, np.float32)
         for tile in TILES:
             if tile not in scene["tiles"]:

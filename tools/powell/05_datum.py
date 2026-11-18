@@ -1,6 +1,6 @@
 """Settle and record the vertical datum conversion for the water levels.
 
-Reclamation's Lake Powell elevations are feet above NGVD29; the DEM is metres
+Reclamation's Lake Powell elevations are feet above NGVD29; the DEM is meters
 above NAVD88. The conversion used everywhere is the USGS one in common.py
 (add 2.913 ft). This script checks it against NOAA's conversion service at
 four places along the lake, downloads the USGS elevation-area-capacity tables

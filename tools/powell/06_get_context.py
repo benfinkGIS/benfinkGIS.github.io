@@ -1,7 +1,7 @@
 """Download USGS 3DEP elevation for the country around Lake Powell.
 
 The lake DEM stops just above full pool, so the canyon rims and mesas come
-from the USGS 3D Elevation Program service instead: 10 m cells, metres above
+from the USGS 3D Elevation Program service instead: 10 m cells, meters above
 NAVD88, in 2,000-pixel tiles covering the scene frame set in common.py.
 Tiles already on disk are skipped.
 
@@ -44,7 +44,7 @@ def fetch(job):
     if path.exists() and path.stat().st_size > 10000:
         return f"r{r} c{c}: have it"
     # 26912 (NAD83) is asked for because the service is known to honour it. It
-    # differs from the lake DEM's NAD83(2011) by about a metre, far below a 10 m cell.
+    # differs from the lake DEM's NAD83(2011) by about a meter, far below a 10 m cell.
     params = {"bbox": ",".join(str(v) for v in bbox), "bboxSR": 26912, "imageSR": 26912, "size": f"{w},{h}",
               "format": "tiff", "pixelType": "F32", "noDataInterpretation": "esriNoDataMatchAny",
               "interpolation": "RSP_BilinearInterpolation", "f": "image"}

@@ -129,7 +129,7 @@ def main():
     loop_buf = loop_geom.buffer(LOOP_NEAR_M)
     s, w, n, e = STUDY_BBOX
     study = box(w * M_LON, s * M_LAT, e * M_LON, n * M_LAT)
-    cands = []                                                     # (name, kind, geometry in metres, source nodes)
+    cands = []                                                     # (name, kind, geometry in meters, source nodes)
 
     # ---- washes ----
     d = overpass('[out:json][timeout:180];way[waterway~"^(river|stream|wash|canal|drain|ditch)$"][name](%s,%s,%s,%s);out geom;'

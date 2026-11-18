@@ -1,7 +1,7 @@
 // Santa Catalinas 3D viewer.
 // Terrain from a height image, lit live: the sun slider moves real shadows,
 // which the fragment shader finds by stepping across the height image toward the sun.
-// Units are kilometres. +X is east, +Y is up, north is -Z. The block is centred on the origin.
+// Units are kilometers. +X is east, +Y is up, north is -Z. The block is centred on the origin.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 

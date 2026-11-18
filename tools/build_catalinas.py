@@ -4,14 +4,14 @@ Downloads USGS 3DEP elevation and NAIP imagery for one rectangle in tiles
 (the servers cap the size of a single image), then writes what Blender needs
 into catalinas-3d/work/:
 
-  dem.npy       float32 elevation in metres, UTM 12N, row 0 is the north edge
+  dem.npy       float32 elevation in meters, UTM 12N, row 0 is the north edge
   texture.jpg   NAIP imagery over the same rectangle
-  scene.json    extent, cell size, elevation range, landmarks in scene metres
+  scene.json    extent, cell size, elevation range, landmarks in scene meters
   preview.png   hillshade with the landmarks, to check the frame
 
 Run:  py tools/build_catalinas.py [--cell 10] [--tex 4]
-        --cell   elevation cell size in metres (default 10)
-        --tex    imagery pixel size in metres (default 4)
+        --cell   elevation cell size in meters (default 10)
+        --tex    imagery pixel size in meters (default 4)
 """
 import argparse
 import json
@@ -31,7 +31,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WORK = os.path.join(ROOT, "catalinas-3d", "work")
 TILES = os.path.join(WORK, "tiles")
 
-# Frame in UTM 12N metres (EPSG:26912): Oro Valley to the San Pedro side,
+# Frame in UTM 12N meters (EPSG:26912): Oro Valley to the San Pedro side,
 # the Rillito to Oracle. 46 km wide, 42 km tall.
 X0, Y0 = 496000, 3568000
 WIDTH_M, HEIGHT_M = 46000, 42000

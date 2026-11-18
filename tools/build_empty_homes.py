@@ -54,7 +54,7 @@ COMPANY = re.compile(r"\b(LLC|L L C|INC|CORP|CORPORATION|LP|LLP|LLLP|LTD|BANK|CO
                      r"REALTY|VENTURES|GROUP|ENTERPRISES|BORROWER|MORTGAGE|FEDERAL|SECRETARY|HOUSING|CHURCH|"
                      r"FOUNDATION|UNIVERSITY|CITY OF|COUNTY|STATE OF|UNITED STATES|RENTALS?|SFR|REO|OWNER)\b")
 LEMMON_ZIP = "85619"
-HEX_M = 800            # hexagon size (centre to corner), metres
+HEX_M = 800            # hexagon size (centre to corner), meters
 HEX_MIN = 5            # hexagons with fewer winter homes are counted but not drawn
 PLACE_MIN_HOMES = 1500
 VACANT_CASE_TYPES = ("Vacant/Nuisance Buildings", "VANS Program", "Lien Foreclosure Program")

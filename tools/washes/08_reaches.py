@@ -30,7 +30,7 @@ Each gets:
                 this one (records placed to 100 m or better only)
 
 A named wash's length is the county's own centerline inside the study area.
-The lidar traces more than that (side threads in a wide bed, the last metres
+The lidar traces more than that (side threads in a wide bed, the last meters
 of each tributary), which is kept as traced_km. Its canopy, riparian and
 sighting figures are over every reach that carries its name.
 

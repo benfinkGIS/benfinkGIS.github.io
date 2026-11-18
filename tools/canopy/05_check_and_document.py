@@ -51,16 +51,16 @@ SCHEMA = {
     "washes": ("vector", False, None, "Wash network within 1 km", COUNTY),
     "parks": ("vector", False, None, "Parks and recreation areas within 1 km", COUNTY),
     "dtm": ("raster", True, (500, 1500),
-            "Bare-ground elevation in metres, from ground-classified lidar returns",
+            "Bare-ground elevation in meters, from ground-classified lidar returns",
             LIDAR_CREDIT),
     "dsm": ("raster", True, (500, 1600),
-            "Top-surface elevation in metres, highest first return per cell",
+            "Top-surface elevation in meters, highest first return per cell",
             LIDAR_CREDIT),
     "chm": ("raster", True, (0, 100),
-            "Height above ground in metres (surface minus bare ground). "
+            "Height above ground in meters (surface minus bare ground). "
             "Includes buildings and wires until they are masked", LIDAR_CREDIT),
     "veg_height": ("raster", True, (0, 100),
-                   "Height above ground in metres of lidar returns that are neither "
+                   "Height above ground in meters of lidar returns that are neither "
                    "ground nor building: trees and shrubs, plus cars, walls, poles "
                    "and wires", LIDAR_CREDIT),
     "roof_lidar": ("raster", True, (0, 1),
@@ -102,7 +102,7 @@ LATER = {
                   "roofs, pavement, existing crowns, overhead lines and street "
                   "corners by the distances in 09_plantable.py", "Derived"),
     "runoff_m2": ("raster", True, (0, 1e9),
-                  "Square metres of roof and pavement draining to within 2 m of "
+                  "Square meters of roof and pavement draining to within 2 m of "
                   "the cell, routed over the lidar ground surface", LIDAR_CREDIT),
     "overhead": ("raster", True, (0, 1),
                  "1 where the lidar shows wires or poles: things 4 m or taller "
@@ -201,7 +201,7 @@ def check(site):
         m.summary = summary
         m.description = (f"{summary}. Part of the Tucson Neighborhood Canopy "
                          f"Scenario, site '{site['name']}' ({site['role']}). "
-                         f"Coordinate system EPSG:{EPSG}, metres.")
+                         f"Coordinate system EPSG:{EPSG}, meters.")
         m.credits = credit
         m.accessConstraints = SKETCH
         m.tags = "tree canopy, lidar, land cover, Tucson, " + site["name"]

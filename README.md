@@ -266,7 +266,7 @@ Needs Python with the packages in `tools/powell/requirements.txt` and Blender 5.
 the top of `run.py`). No ArcGIS. Downloads, the terrain and the renders go to `lake-powell/work/`,
 which is not in the repository (about 10 GB; the USGS terrain file alone is 3.4 GB).
 
-- Water levels are the Bureau of Reclamation's daily elevations; the lake bed is the USGS one-metre
+- Water levels are the Bureau of Reclamation's daily elevations; the lake bed is the USGS one-meter
   model of Lake Powell; the country around it is USGS 3DEP. `tools/powell/METADATA.md` records the
   sources, the datum conversion (Reclamation's feet are NGVD29, the terrain is NAVD88, 2.913 ft
   apart) and the checks against the USGS area table and Landsat.

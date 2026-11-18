@@ -31,6 +31,6 @@ def site_dir(site):
 
 
 def work_bbox(site):
-    """The site's bounding box grown by the buffer, snapped out to whole metres."""
+    """The site's bounding box grown by the buffer, snapped out to whole meters."""
     x0, y0, x1, y1 = site["bbox_utm12n"]
     return (x0 - BUFFER, y0 - BUFFER, x1 + BUFFER, y1 + BUFFER)

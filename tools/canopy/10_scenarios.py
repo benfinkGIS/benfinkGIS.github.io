@@ -15,7 +15,7 @@ Placement
   can be watered by a basin or curb cut go in before the ones that cannot.
 
   A species fits a spot if its mature crown stays clear of roofs and overhead
-  lines, overlaps an existing crown by no more than a metre, and does not
+  lines, overlaps an existing crown by no more than a meter, and does not
   overlap another new crown. New trunks are at least 8 m apart, so gaps
   between crowns are left open and not packed with the smallest tree.
   Crowns may reach over pavement: shading it is the
@@ -30,7 +30,7 @@ Canopy
   of today's crowns and roofs for the shade step that follows.
 
 Writes to <site>.gdb: trees (points, one row per tree with its scenario),
-canopy_s1..s3 (0/1) and height_s0..s3 (metres above ground of tree crowns
+canopy_s1..s3 (0/1) and height_s0..s3 (meters above ground of tree crowns
 and roofs; s0 is today). Beside it:
 scenarios.json and ql_scenario.jpg.
 """

@@ -15,8 +15,8 @@ Writes tucson-canopy/data/ (this folder is published; don't edit it by hand):
 
 The images are the 0.5 m analysis rasters, cut to the neighborhood boundary,
 with transparent backgrounds. The page lays them over a basemap by their
-corner coordinates. They are in UTM; over a square kilometre the difference
-from the web map's projection is under a metre.
+corner coordinates. They are in UTM; over a square kilometer the difference
+from the web map's projection is under a meter.
 
 Nothing here is computed: every number is copied from the JSON files the
 earlier steps wrote.

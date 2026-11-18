@@ -250,7 +250,7 @@ def overlaps(desig, circle):
 # ---------------------------------------------------------------------- roads
 
 def road_distance(shape, transform):
-    """Metres from each cell to the nearest primary or secondary road (TIGER S1100, S1200)."""
+    """Meters from each cell to the nearest primary or secondary road (TIGER S1100, S1200)."""
     geoms = []
     for layer in ("PrimaryRoad_s1100_P", "secondary_s1200_P"):
         g = pyogrio.read_dataframe(GDB, layer=layer, columns=[]).to_crs(CRS)

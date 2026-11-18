@@ -40,7 +40,7 @@ import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WORK = os.path.join(ROOT, "catalinas-3d", "work")
-K = 0.001             # metres -> Blender units (km)
+K = 0.001             # meters -> Blender units (km)
 SLAB_M = 900.0        # thickness of the block under the lowest ground
 FLOOR_COLOR = (0.012, 0.013, 0.015)
 SIDE_COLOR = (0.045, 0.038, 0.033)
@@ -209,7 +209,7 @@ def build_world():
     sky.sun_elevation = math.radians(SUN_EL)
     sky.sun_rotation = math.radians(SUN_AZ)
     sky.sun_size = math.radians(1.2)     # a little soft; the real sun is 0.53
-    sky.altitude = 800                   # metres; Tucson basin
+    sky.altitude = 800                   # meters; Tucson basin
     if VIEW in SKY_VIEWS:    # a landscape view: the camera sees the sky too
         nt.links.new(sky.outputs[0], nt.nodes["Background"].inputs["Color"])
         return

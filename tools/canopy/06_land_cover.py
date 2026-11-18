@@ -126,7 +126,7 @@ def classify(site):
 
     # One stack of everything the classifier sees. It must be integer: on a
     # floating-point stack Classify Raster returns a single class everywhere.
-    # NDVI is stored as (ndvi + 1) x 10000 and height in centimetres
+    # NDVI is stored as (ndvi + 1) x 10000 and height in centimeters
     feats = str(tmp / "features.tif")
     # Height counts only where the cell is green and porous to the lidar, so
     # a parked car or a wall (solid) is judged by its colour, not as a shrub

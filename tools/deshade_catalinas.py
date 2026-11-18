@@ -113,7 +113,7 @@ def main():
     lum = small @ LUMA
 
     # Shadow: darker and bluer than the surroundings
-    blur = lambda a, metres: gaussian_filter(a, metres / cell, mode="nearest")
+    blur = lambda a, meters: gaussian_filter(a, meters / cell, mode="nearest")
     loglum, blue = log_lum_blue(small)
     ref_lum, ref_blue = blur(loglum, REF_M), blur(blue, REF_M)
     sloping = ramp(np.degrees(np.arccos(nz)), SLOPE_DEG)

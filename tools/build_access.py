@@ -13,7 +13,7 @@ Writes  tools/loop-review/access.json         everything the page draws:
           bands    residents by ride-time band (the whole study area split five ways)
           far      residents farther than each threshold in THRESHOLDS
           places   the same, per city / town / census-designated place
-          hexes    the same, per map cell (hexagons HEX_R_M metres from centre to corner)
+          hexes    the same, per map cell (hexagons HEX_R_M meters from centre to corner)
 
 "Ride time" is the unweighted baseline from build_network.py: shortest legal route at 10 mph,
 with no allowance for how stressful the streets are. Treat the numbers as a first cut.
@@ -43,7 +43,7 @@ from build_network import M_LAT, M_LON, SPEED_MPH, STUDY_BBOX, fetch_blocks
 
 THRESHOLDS = (10, 15, 20, 30)                     # minutes; "far" = more than this
 BAND_EDGES = (0, 10, 15, 20, 30, math.inf)        # the five bands of the split bar
-HEX_R_M = 800.0                                   # hexagon size: centre to corner, metres
+HEX_R_M = 800.0                                   # hexagon size: centre to corner, meters
 PLACES = "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Places_CouSub_ConCity_SubMCD/MapServer/%d/query"
 PLACE_LAYERS = {25: "incorporated", 26: "census-designated"}   # Census 2020 vintage
 NO_PLACE = "Outside any city or named community"
@@ -83,7 +83,7 @@ def fetch_places(cache, refresh):
 
 
 def hex_of(x, y):
-    """Axial (q, r) of the pointy-top hexagon containing the point (metres)."""
+    """Axial (q, r) of the pointy-top hexagon containing the point (meters)."""
     q = (math.sqrt(3) / 3 * x - y / 3) / HEX_R_M
     r = (2 / 3 * y) / HEX_R_M
     cx, cz = q, r

@@ -8,7 +8,7 @@ Runs inside Blender (5.2), headless:
   --scenario   0 today, 1 street trees, 2 streets and homes, 3 full build-out
   --draft      1280 px wide and few samples, for checking the framing
 
-The scene is built from the arrays 21_blender_export.py wrote, in metres with
+The scene is built from the arrays 21_blender_export.py wrote, in meters with
 no vertical exaggeration:
   * ground and buildings: one surface, the lidar ground plus roof heights,
     with the 2023 aerial photo draped over it and walls tinted plain

@@ -256,9 +256,9 @@ def layers():
     return L
 
 
-def near_mean(a, metres):
+def near_mean(a, meters):
     """Mean within a circle of the given radius."""
-    k = int(round(metres / CELL))
+    k = int(round(meters / CELL))
     yy, xx = np.mgrid[-k:k + 1, -k:k + 1]
     disc = (yy * yy + xx * xx <= k * k).astype("float32")
     return ndimage.convolve(a.astype("float32"), disc / disc.sum(), mode="nearest")

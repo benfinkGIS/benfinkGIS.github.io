@@ -408,7 +408,7 @@
   function fillPage() {
     var all = D.shortlist.every(function (p) { return p.manager === D.shortlist[0].manager; });
     $("hero-num").textContent = num(D.high_km2);
-    $("hero-lab").textContent = "square kilometres score " + D.high_cutoff + " or more out of 10, of " + num(D.study_km2) + " in the search area";
+    $("hero-lab").textContent = "square kilometers score " + D.high_cutoff + " or more out of 10, of " + num(D.study_km2) + " in the search area";
     $("crit-num").textContent = D.criteria.length;
     $("crit-lab").textContent = "things weighed into one score from 1 to 10";
     $("short-num").textContent = D.shortlist.length;

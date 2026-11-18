@@ -13,7 +13,7 @@ CONTEXT = WORK / "context"
 SIGHTINGS = WORK / "sightings"
 CONFIG = json.loads((PROJECT / "study_area.json").read_text(encoding="utf-8"))
 EPSG = CONFIG["crs_epsg"]
-BBOX = tuple(CONFIG["bbox_utm12n"])          # x0, y0, x1, y1 in metres
+BBOX = tuple(CONFIG["bbox_utm12n"])          # x0, y0, x1, y1 in meters
 SPECIES = CONFIG["species"]
 USER_AGENT = {"User-Agent": "wash-corridor-study/0.1"}
 
