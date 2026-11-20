@@ -1,0 +1,9 @@
+# finkgeo.com welcomes all crawlers, including search engines and AI assistants.
+# To turn one away, add a block for it, for example:
+#   User-agent: GPTBot
+#   Disallow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://finkgeo.com/sitemap.xml

@@ -9,6 +9,8 @@ Plain HTML and CSS, no build step. Edit a file, commit, push, and Pages redeploy
 | Path | What it is |
 | --- | --- |
 | `index.html` | Home page, with the About, Projects, and Contact sections |
+| `robots.txt`, `sitemap.xml`, `llms.txt` | Search and AI discovery files. `robots.txt` is hand-written; `sitemap.xml` and `llms.txt` are written by `tools/build_seo.py`, so don't edit them by hand (see below) |
+| `tools/build_seo.py` | Writes `sitemap.xml` and `llms.txt` and keeps a generated block in each page's `<head>` (canonical link, social-card tags, JSON-LD). Not used by the site at runtime |
 | `tucson-golf-water/index.html` | Tucson golf course water map page: satellite map, course list, data notes |
 | `tucson-golf-water/map.js` | Map code (Leaflet). Loads the GeoJSON and wires up the toolbar, popups and course list |
 | `tucson-golf-water/data/courses.geojson` | Active course boundaries, built from OpenStreetMap by `tools/build_courses.py` |
@@ -286,6 +288,31 @@ window. The page loads the same script as the project page, so:
   fox scripts check for them; the others hand out a spare element for any id that is missing.
 - Links marked `data-carry` are rewritten with the current settings, so they survive the trip
   between the two pages.
+
+## Search and AI discovery files
+
+`robots.txt` welcomes every crawler, search engines and AI assistants alike, and points to the
+sitemap. `tools/build_seo.py` builds the rest from what the pages already say (title, meta
+description, `og:image`) and from git dates:
+
+- `sitemap.xml` and `llms.txt` at the root.
+- A block in the `<head>` of each indexable page, between `<!-- seo:start -->` and
+  `<!-- seo:end -->`: the canonical link, the Twitter card tag, and JSON-LD structured data (the
+  author, an `Article` for each project, breadcrumbs, and a list of projects on the home page).
+  Edit a page's title or description in the page itself, never inside the generated block.
+
+**Run `py tools/build_seo.py` before every publish** and commit what it changed.
+`py tools/build_seo.py --check` changes nothing and exits 1 if a file is out of date.
+
+- A page is listed if git tracks it, has no `noindex`, and its canonical link is itself. That leaves
+  out the `map/` and `viewer/` pages (their canonical is the project page) and everything in `tools/`.
+- The list follows the order of the links on the home page, so a new project needs a home page link.
+- A new project page needs a `<title>` ending in ` | Fink Geospatial` and a meta description. Give it
+  an `og:image` for a larger share card, or add it to `IMAGE_OVERRIDES` at the top of the script.
+  Only the Catalinas, KXCI, Lake Powell, canopy and wash pages have one so far.
+- A page's modified date is the date of the last commit that touched its folder.
+- The script never names anything that is not already on the page. Keep it that way: the kit fox page
+  must not name the wildlife center, and no page may expose owner names or private notes.
 
 ## External services
 

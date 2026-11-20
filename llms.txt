@@ -1,0 +1,22 @@
+# Fink Geospatial
+
+> Personal GIS portfolio of Ben: maps, 3D models and spatial analyses, mostly about Tucson, Arizona and the wider Southwest. Each project is an interactive map or 3D viewer with written notes.
+
+## Projects
+
+- [Tucson Golf Course Water Map](https://finkgeo.com/tucson-golf-water/): Interactive satellite map of the active golf courses in the Tucson area, with the water use each course reported, as compiled by Pima County.
+- [Who Lives Far from The Loop?](https://finkgeo.com/tucson-loop-access/): A network analysis of how long it takes Tucson-area residents to bike from home to the Chuck Huckelberry Loop, and where the people who live far from it are.
+- [Where Could The Loop Grow?](https://finkgeo.com/tucson-loop-access/grow/): A screening of washes and existing bike paths around Tucson: how many residents each would bring within reach of the Chuck Huckelberry Loop if it became part of it.
+- [A Beer Off The Loop](https://finkgeo.com/tucson-loop-beer/): Every brewery, bar and restaurant licensed to pour a beer within a short bike ride of Tucson's Chuck Huckelberry Loop, with the ride off the path to each one.
+- [The Santa Catalinas in 3D](https://finkgeo.com/catalinas-3d/): A true-scale 3D model of the Santa Catalina Mountains north of Tucson, built from USGS elevation and aerial imagery. Orbit, pan and zoom it, and move the sun.
+- [Where Do You Release a Rescued Kit Fox?](https://finkgeo.com/kit-fox-release/): A habitat suitability model for releasing a rehabilitated kit fox within 100 miles of a wildlife rehabilitation center in central Arizona. Step through the eight criteria and change the weights yourself.
+- [KXCI Signal Reach](https://finkgeo.com/kxci-signal/): Who can hear KXCI 91.3 FM in Tucson? The FCC's predicted service contour, set against a terrain model that knows about the mountains, counted in 2020 Census residents.
+- [Empty Homes](https://finkgeo.com/empty-homes/): How much housing in Pima County stands empty: winter homes owned from out of state, homes the Census finds vacant, buildings left unfinished and vacant-building cases, set against the count of people without a home.
+- [A Northern Station for the Phoenix-Tucson Train](https://finkgeo.com/tucson-north-station/): Arizona is studying passenger rail between Phoenix and Tucson. This page screens the land beside the Union Pacific line north of downtown Tucson for a second station, and counts who could drive to each site.
+- [A Field Guide to Northwest Tucson's Washes](https://finkgeo.com/tucson-washes/): Every wash between the Tucson Mountains and the Santa Catalinas, traced from one-meter lidar down to channels no official map shows, with the name, riparian class, tree canopy, road crossings and wildlife records for each, a hand check of how right it is, a movement model for bobcat, vermilion flycatcher and queen butterfly, and a ranked list of the gaps where a repair would add the most.
+- [What Would Street Trees Do for a Bare Tucson Neighborhood?](https://finkgeo.com/tucson-canopy/): Two Tucson neighborhoods mapped from lidar and aerial imagery: one that planted its own native street trees, one with half the canopy. A planting scenario shows where trees would fit and what they would change.
+- [Lake Powell, Year by Year](https://finkgeo.com/lake-powell/): A 3D model of Lake Powell with a slider for every year since 1964. The water sits at each year's real level, and the pale ground shows how far it has dropped below full.
+
+## Site
+
+- [Home](https://finkgeo.com/): About the author and the full project list.
